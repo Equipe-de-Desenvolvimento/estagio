@@ -1,0 +1,92 @@
+.container{
+    width: 100%;
+    grid-template-columns:repeat(auto, minmax(250px, 1fr));
+    grid-template-areas: "conta dataInicio dataFim tipo classe empresa obs action"
+                        "iConta idataIni idataFim  iTipo iClass iEmpresa iObs iAction";
+    column-gap: 1vh;
+}
+.conta {
+    grid-area: conta;
+}
+
+.dataInicio {
+    grid-area: dataInicio;
+}
+.dataFim {
+    grid-area: dataFim;
+}
+.tipo {
+    grid-area: tipo;
+}
+.classe {
+    grid-area: classe;
+}
+.empresa {
+    grid-area: empresa;
+}
+.obs {
+    grid-area: obs;
+}
+.action {
+    grid-area: action;
+    justify-self:center;
+}
+
+.iConta {
+    grid-area: iConta;
+}
+.idataIni {
+    width: 15vh;
+    grid-area: idataIni;
+}
+.idataFim {
+    width: 15vh;
+    grid-area: idataFim;
+}
+.iTipo {
+    grid-area: iTipo;
+}
+.iClass {
+    grid-area: iClass;
+}
+.iEmpresa {
+    grid-area: iEmpresa;
+}
+.iObs {
+    grid-area: iObs;
+}
+.iAction {
+    grid-area: iAction;
+    justify-self: center;
+}
+
+@media(max-width: 756px) {
+    .container{
+        grid-template-areas: "conta iConta"
+                            "dataInicio idataIni"
+                            "dataFim idataFim"
+                            "tipo iTipo"
+                            "classe iClass"
+                            "empresa iEmpresa"
+                            "obs iObs"
+                            "action iAction";
+        column-gap: 1vh;
+    }
+    .form-control{
+        width: 70vh;
+    }
+}
+
+@media(max-width: 628px) {
+
+    .form-control{
+        width: 50vh;
+    }
+}
+
+@media(max-width: 482px) {
+
+    .form-control{
+        width: 30vh;
+    }
+}

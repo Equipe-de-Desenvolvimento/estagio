@@ -1,0 +1,47 @@
+.container{
+    grid-template-columns: repeat(auto, minmax(250px, 0.5fr));
+    grid-template-areas: "product fornecedor armazen nota nota"
+                        "iprod iforn iarmz inota iaction";
+    column-gap: 1vh;
+}
+
+.product{
+    grid-area:product;
+
+}
+.fornecedor{
+    grid-area:fornecedor;
+}
+.armazen{
+    grid-area:armazen;
+}
+.nota{
+    grid-area:nota;
+}
+
+.iprod{
+    grid-area:iprod;
+}
+
+.iforn{
+    grid-area:iforn;
+}
+
+.iarmz{
+    grid-area:iarmz;
+}
+
+.inota{
+    grid-area:inota;
+}
+
+.iaction{
+    grid-area:iaction;
+    justify-self: center;
+    align-self: center;
+    height: 10vh;
+}
+
+.bt_link_new {
+    margin-top: 2.5vh;
+}

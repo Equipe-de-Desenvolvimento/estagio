@@ -1,0 +1,11 @@
+.btnsend {
+    margin-top: 2.5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    height: auto;
+    width: auto;
+}

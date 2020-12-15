@@ -1,0 +1,59 @@
+.container{
+    grid-template-columns:repeat(auto, minmax(250px, 1fr));
+    grid-template-areas:"med actions calend calend"
+                        "medico action calendar calendar"  
+;
+ 
+}
+
+.med {
+    grid-area: med;
+}
+.actions {
+    grid-area: actions;
+}
+.calend {
+    justify-self: center;
+    grid-area: calend;
+}
+.medico {
+    grid-area: medico; 
+}
+.calendar {
+    /* border: 1px solid red; */
+    grid-area: calendar;
+    justify-self: cemter;
+    margin-left: -27vh;
+    margin-right: -3vh;
+}
+.action{
+    grid-area: action;
+    justify-self: start;
+}
+
+body {
+    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+}
+
+/* #calendar {
+    max-width: 1000vh;
+} */
+
+
+@media (max-width: 800px) {
+    .container{
+        grid-template-areas:"med medico"
+                            "actions action"
+                            "calend calend"
+                            "calendar calendar";
+        row-gap: 1vh;
+        margin-right: 1vh;
+    }
+    /* .calendar {
+        justify-self: center;
+        max-width: 60vh;
+        max-height: 60vh;
+    } */
+
+
+}

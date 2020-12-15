@@ -1,0 +1,25 @@
+.panel-body{
+    margin-top: -1vh;
+    margin-left: 5vh;
+    margin-right: 5vh;
+}
+.btn-enviar {
+    width: 13vh;
+}
+
+.form-control{
+    height: 6vh;
+}
+
+@media (max-width: 686px) {
+    .form-control {
+        align-self: center;
+        width: 80vh;
+    }
+}
+
+@media (max-width: 626px) {
+    .form-control {
+        width: 70vh;
+    }
+}

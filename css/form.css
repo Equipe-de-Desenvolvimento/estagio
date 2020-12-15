@@ -1,0 +1,64 @@
+.texto00 {
+   max-width: 20px;
+}
+.texto01 {
+   max-width: 50px;
+    
+}
+
+.texto02 {
+    max-width: 100px;
+}
+
+.texto03 {
+     max-width: 150px;
+}
+
+.texto04 {
+     max-width: 200px;
+}
+
+.texto05 {
+   max-width: 250px;
+}
+
+.texto06 {
+    max-width: 300px;
+}
+
+.texto07 {
+    max-width: 350px;
+}
+
+.texto08 {
+   max-width: 400px;
+}
+
+.texto09 {
+     max-width: 450px;
+}
+
+.texto10 {
+    max-width: 500px;
+}
+
+.texto12 {
+    max-width: 700px;
+}
+
+.texto14 {
+    width: 1000px;
+}
+
+.texto_area {
+    max-width: 900px;
+    height: 100px;
+}
+
+
+
+@media (max-width: 391) {
+    .texto10 {
+        margin-bottom: 3pt; max-width: 250px;
+    }
+}

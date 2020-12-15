@@ -1,0 +1,25 @@
+.container {
+    /* grid-template-columns: 50vh 10vh 20vh; */
+    /* grid-template-areas:    "tb1 tb2 tb3 tb3"; */
+}
+
+.tb1 {
+ /* grid-area: tb1; */
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.tb2 {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+.tb3 {
+    grid-column-start: 3;
+    grid-column-end: 4;
+}
+
+.tb4 {
+    grid-column-start: 1;
+    grid-column-end: 4;
+}

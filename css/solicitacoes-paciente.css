@@ -1,0 +1,46 @@
+.fa-arrow {
+    color: whitesmoke;
+}
+.panel{
+    display: grid;
+}
+
+.alert-info{
+    height:7vh;
+    align-self: center;
+}
+
+.panel-body {
+    margin-left: 5vh;
+    margin-right: 5vh;
+    margin-bottom: 1vw;
+}
+
+.btn-grp {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18vh, 22vh));
+    row-gap: 0.5px;
+    margin-left: 2vh;  
+}
+.btn1{
+    margin-bottom: 1vw;
+    width: 18vh;
+    justify-self: center;
+}
+.btn2{
+    margin-bottom: 1vw;
+    width: 18vh;
+    align-self: center;
+}
+.btn3{
+    margin-bottom: 1vw;
+    width: 18vh;   
+    align-self: center;
+}
+
+@media (max-width:531px){
+
+}
+
+
+ 

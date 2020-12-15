@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "relatorio-dinamico",
+  "private_key_id": "ca0740adf6ef926ea67f89dd6abd18fdd2e12c7a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCliUyj0/A1lXBM\nizIInkdyvaP6U/xIaZ2aTGiHzZ4OpMFEz+Ft/NweGUbEYiF3X4ESDRRITnnY1Slm\nUTYCsev5gx1m1zl6bEAE4HIoyF7oBPtbhf5wdwMJlD7lXBS2D+SRd917nRos51k0\n3kxYBuw16ZluqxuhinwMYHGp7ds4PCfHcR481mYQKxPcWWu6a+ADJ5uA5ioKUjIP\npRPwEXNIXqJC5wGrM2EkKmQ/7n5rHXa6eLBiWaB+8HasAHmM4eWjH4Ge6OwZ70cV\n9+Vk1TaxeCmUl8xmM83uMR1zFVI5JYzTtUDkhudeHoC8TnLJ7WTkOWmL0Ot6yV3g\nx77Ql/y7AgMBAAECggEANYtMQX/H5qUwXmn15KjB5qDl3g51f7y98E9/zlGZqxXq\nuAXf3rJYRtoZNGOjfJflSX/2jA7qRdNpYUGqjUOc1yfshjveyTUjnhA1jPCHFliq\nL2gPrbQpRNtxXsIipuNMJSuW9imScmzgw4OWQTD4DdZCPXRWazG+v0gg6/zWmIED\nJRGvL1Flj+ioRX2v1IihcaFbboIOsQmQnskeJhMrAMtQVuKb/Qyq06J6bhGLuYxY\nNQbpAcMKIha+/OJ16oNKO8plV3MO4k1iziJCvX6wBmQTuvpRdncC0xeX5HaugBcM\n2uoIDoaP/RgaW+4Tb/LruOO1X8e1p/WiGYD8PRf+1QKBgQDfU7WkIyXpooT6hElR\n+RDEMNwzMkvW6prmfFHQ/QSHJB2yz7316zLatNoBuPGjjYO5wAo5/bSeq7ktaYhE\nlvFGlFE20FWUCu35u/7a2JV2MBIi+Lm9io4fVVGMo0tBOLCsQ1dURarDE+xm/p3R\ns+j2Fwhs+L8yyOzXUE3GfGCsZwKBgQC9wSZRtgdN4F1//zxpKqNFYpEZY88aFIlI\nUp4Omi1N3RuyRloMD+QfhEfmhV6p4gaSsEHdO6m5ZU+PBFfw+78DzC3eYzZScd7m\nxNRTHIUNPlfv8/g79CBQSS00XeDkH3Sz5/bBsEKuge1Fp/iyQhwVDXTUB0K1uNHn\nX2ENu7m4jQKBgQDaLLRiUvgh5GTXPM9IZvNLR5SH65YNswp7K27epaB7yfu9iZhC\nHHGFGnN0hVKD/qd2mzciakm/TXJN/DBlGbVCx3kD/MnuJDNS66dR848odFPzmFwU\n4Lxxve86XvkREan/0JYLPThS9i7Ye9yAVqu7ZssTcnuPyJ0gyFIDG9Vx9wKBgEaC\nHtr96Hjnhdap4KizTzfZCFGG5M2sE9br3A9Q+sSUBFaaDZuty/ZqEM13gVVex1J6\na/7ozIg3PPjHhGXnJXMjy2d3Nhgsd8cIHF1Fm6rwH3zqCrM8Y0Vx63op6AbcKWEw\nMGCIPj7ZyHC5mY+jQQwRk/e1OvSLWHPA3S9dMgWBAoGBAMc96yp8km8NMubEd0mT\nmrqZ6Mt7AePu0JwdTp6QUy3MQBkcOmKhVddw6d5z6BjHxULAJdhFQlNgekyEk9JD\n3JcJohOK5V/Qi6ksHdMHXwAqwgw2y0BbvTmVYNOKi3qWemNhkvNZ13nnvhScW+Yk\ntLSKhr+GPjd4SkbLxnABDXv+\n-----END PRIVATE KEY-----\n",
+  "client_email": "relatoriodinamico@relatorio-dinamico.iam.gserviceaccount.com",
+  "client_id": "114705686457263971511",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/relatoriodinamico%40relatorio-dinamico.iam.gserviceaccount.com"
+}

@@ -1,0 +1,61 @@
+.container {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "pagname pagname pagname"
+                        "alert alert alert"
+                        "info info info"
+                        "resid resid resid"
+                        "socialalert socialalert socialalert"
+                        "socialdata socialdata socialdata"
+                        "obsalert obsalert obsalert"
+                        "obsdata obsdata obsdata"
+                        "btngrp btngrp btngrp";
+
+}
+.card-header{
+    padding: 0; !important;
+}
+.alert {
+    grid-area: alert;
+}
+.pagname {
+    grid-area: pagname;
+}
+.infodados{
+    grid-area: info;
+
+}
+.alertresid {
+    grid-area: resid;
+
+}
+.socialalert {
+    grid-area: socialalert;
+}
+
+.socialdata {
+    grid-area: socialdata;
+}
+.obsalert{
+    grid-area:obsalert ;
+}
+.obsdata{
+    grid-area: obsdata;
+}
+.btngrp {
+    grid-area: btngrp;
+}
+.panel-body {
+    grid-column: alert;
+}
+.row {
+    margin-left: 0.5vh;
+    margin-right: 0.5vh;
+}
+
+.fa-camera{
+    color: whitesmoke;
+}
+
+@media (max-width: 391) {
+
+}

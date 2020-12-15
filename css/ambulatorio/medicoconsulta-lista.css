@@ -1,0 +1,68 @@
+.container {
+    grid-template-columns: repeat(auto, minmax(250px, 1fr));
+    grid-template-areas: "date idate calendar";
+}
+
+.name {
+    grid-area: name;
+}
+.date {
+    grid-area: date;
+}
+.action {
+    grid-area: action;
+    /* justify-self: center; */
+}
+.idate {
+    grid-area: idate;
+}
+.iname {
+    grid-area: iname;
+}
+.iaction {
+    grid-area: iaction;
+    /* justify-self: center; */
+}
+
+.calendar {
+    grid-area: calendar;
+}
+
+.urgencia{
+  color: red;
+  font-weight: normal;
+  }
+.prioridade {
+    color: orangered;
+    font-weight: normal;
+}
+.normal {
+    color: blue;
+    font-weight: normal;
+}
+@media (max-width: 612px) {
+    .container { 
+        margin-left: 2vh;
+    }
+}
+@media (max-width: 612px) {
+    .container {
+        margin-left: 2vh;
+        grid-template-areas: "date idate"
+                         "name iname"
+                         "action iaction"
+                         "calendar calendar";
+    }
+    .iaction {
+        grid-area: iaction;
+        justify-self: start;
+    }
+    .action {
+        grid-area: action;
+        justify-self: start;
+    }
+    .form-control {
+        width: 50vh;
+    }
+    
+}

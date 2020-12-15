@@ -1,0 +1,14 @@
+
+.chosen-select{
+    margin-top: 5pt;
+    width: 100%;
+}
+#procedimento {
+    width: 100%;
+}
+.btnsend {
+    margin-top: 2.5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

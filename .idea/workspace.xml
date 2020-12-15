@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e7eedec7-0120-4f34-ae50-6afdde6a3e0e" name="Default Changelist" comment="Yan">
+      <change afterPath="$PROJECT_DIR$/css/ambulatorio/laudo-lista.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/css/ambulatorio/laudoantigo-lista.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/css/ambulatorio/laudoconsulta-lista.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/css/ambulatorio/laudoconsultaantigo-lista.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/css/ambulatorio/laudodigitador-lista.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/css/ambulatorio/multifuncaomedico-lista.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/css/ambulatorio/multifuncaomedicofisioterapia-lista.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/css/ambulatorio/multifuncaomedicoodontologia-lista.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/css/ambulatorio/revisor-lista.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/css/cadastro/fornecedor-lista.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/css/cadastro/paciente-lista.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/stg.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/stg.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/controllers/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/controllers/home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/header.php.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/libraries/mensagem.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/libraries/mensagem.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/libraries/utilitario.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/libraries/utilitario.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/models/ambulatorio/exame_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/models/ambulatorio/exame_model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/ambulatorio/calendarioconsulta.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/ambulatorio/calendarioconsulta.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/ambulatorio/impressaorelatorioalteracaomedico.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/ambulatorio/impressaorelatorioalteracaomedico.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/ambulatorio/impressaorelatorioentradatipo.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/ambulatorio/impressaorelatorioentradatipo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/ambulatorio/impressaorelatorioinadimplencia.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/ambulatorio/impressaorelatorioinadimplencia.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/ambulatorio/laudo-lista.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/ambulatorio/laudo-lista.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/ambulatorio/laudoantigo-lista.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/ambulatorio/laudoantigo-lista.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/ambulatorio/laudoconsulta-lista.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/ambulatorio/laudoconsulta-lista.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/ambulatorio/laudoconsultaantigo-lista.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/ambulatorio/laudoconsultaantigo-lista.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/ambulatorio/laudodigitador-lista.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/ambulatorio/laudodigitador-lista.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/ambulatorio/multifuncaomedico-lista.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/ambulatorio/multifuncaomedico-lista.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/ambulatorio/multifuncaomedicoconsulta-lista.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/ambulatorio/multifuncaomedicoconsulta-lista.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/ambulatorio/multifuncaomedicofisioterapia-lista.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/ambulatorio/multifuncaomedicofisioterapia-lista.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/ambulatorio/multifuncaomedicoodontologia-lista.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/ambulatorio/multifuncaomedicoodontologia-lista.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/ambulatorio/orcamento-form.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/ambulatorio/orcamento-form.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/ambulatorio/procedimentoarquivo.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/ambulatorio/procedimentoarquivo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/ambulatorio/relatorioalteracaomedico.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/ambulatorio/relatorioalteracaomedico.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/ambulatorio/relatorioentradatipo.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/ambulatorio/relatorioentradatipo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/ambulatorio/relatorioinadimplenciapaciente.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/ambulatorio/relatorioinadimplenciapaciente.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/ambulatorio/revisor-lista.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/ambulatorio/revisor-lista.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/cadastros/contaspagar-lista.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/cadastros/contaspagar-lista.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/cadastros/contasreceber-lista.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/cadastros/contasreceber-lista.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/cadastros/entrada-lista.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/cadastros/entrada-lista.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/cadastros/fornecedor-lista.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/cadastros/fornecedor-lista.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/cadastros/paciente-ficha.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/cadastros/paciente-ficha.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/cadastros/pacientes-lista.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/cadastros/pacientes-lista.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/cadastros/saida-lista.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/cadastros/saida-lista.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/emergencia/solicitacoes-paciente.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/emergencia/solicitacoes-paciente.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/estoque/solicitacao-lista.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/estoque/solicitacao-lista.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/footer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/header.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/views/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/css/all.css" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/css/all.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/css/all.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/css/all.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/css/argon-design-system.css" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/css/argon-design-system.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/css/brands.css" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/css/brands.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/css/brands.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/css/brands.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/css/font-awesome.css" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/css/font-awesome.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/css/fontawesome.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/css/fontawesome.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/css/regular.css" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/css/regular.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/css/regular.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/css/regular.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/css/solid.css" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/css/solid.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/css/solid.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/css/solid.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/css/svg-with-js.css" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/css/svg-with-js.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/css/svg-with-js.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/css/svg-with-js.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/css/v4-shims.css" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/css/v4-shims.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/css/v4-shims.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/css/v4-shims.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/js/all.js" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/js/all.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/js/all.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/js/all.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/js/argon-design-system.js" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/js/argon-design-system.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/js/argon-design-system.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/js/argon-design-system.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/js/brands.js" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/js/brands.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/js/brands.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/js/brands.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/js/conflict-detection.js" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/js/conflict-detection.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/js/conflict-detection.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/js/conflict-detection.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/js/fontawesome.js" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/js/fontawesome.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/js/fontawesome.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/js/fontawesome.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/js/regular.js" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/js/regular.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/js/regular.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/js/regular.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/js/solid.js" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/js/solid.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/js/solid.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/js/solid.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/js/v4-shims.js" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/js/v4-shims.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/js/v4-shims.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/js/v4-shims.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/assets/scss/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/assets/scss/_variables.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/css/bootstrap.css" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/css/bootstrap.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/css/form.css" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/css/form.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/vendor/bootstrap/css/bootstrap.css" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/vendor/bootstrap/css/bootstrap.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/vendor/bootstrap/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/vendor/bootstrap/css/bootstrap.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/form.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/form.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/header1.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/header1.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/paciente-ficha.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/cadastro/paciente-ficha.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/paciente-lista.css" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="composer.json" />
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Yan" />
+      </list>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="SYNC" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/common" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/collections" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/annotations" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/vendor/firebase/php-jwt" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php70" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/vendor/twig/twig" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php56" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/vendor/symfony/symfony" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-icu" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-util" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php72" />
+      <path value="$PROJECT_DIR$/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/vendor/phpseclib/phpseclib" />
+      <path value="$PROJECT_DIR$/vendor/google/auth" />
+      <path value="$PROJECT_DIR$/vendor/google/apiclient" />
+      <path value="$PROJECT_DIR$/vendor/google/apiclient-services" />
+    </include_path>
+  </component>
+  <component name="ProjectId" id="1jFLnoBPfkdaY9MNWDJH2MSH9UL" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.standard" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/css/cadastro" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e7eedec7-0120-4f34-ae50-6afdde6a3e0e" name="Default Changelist" comment="" />
+      <created>1603395065459</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1603395065459</updated>
+      <workItem from="1603395068041" duration="1066000" />
+      <workItem from="1603453978555" duration="1306000" />
+      <workItem from="1603886534724" duration="15849000" />
+      <workItem from="1603914197653" duration="775000" />
+      <workItem from="1603971619546" duration="11502000" />
+      <workItem from="1604058857762" duration="15476000" />
+      <workItem from="1604147024775" duration="11683000" />
+      <workItem from="1604402337049" duration="8238000" />
+      <workItem from="1604506923965" duration="510000" />
+      <workItem from="1605180419098" duration="1240000" />
+      <workItem from="1605891805457" duration="7648000" />
+      <workItem from="1606148101491" duration="5705000" />
+      <workItem from="1606234625149" duration="6786000" />
+      <workItem from="1606323632018" duration="6139000" />
+      <workItem from="1606389403546" duration="13733000" />
+      <workItem from="1606494457319" duration="9501000" />
+      <workItem from="1606764589802" duration="10856000" />
+      <workItem from="1606823212249" duration="15677000" />
+      <workItem from="1606908692336" duration="11030000" />
+      <workItem from="1606998283873" duration="8239000" />
+      <workItem from="1607017399670" duration="3694000" />
+      <workItem from="1607024643761" duration="682000" />
+      <workItem from="1607081363299" duration="12901000" />
+      <workItem from="1607340298167" duration="15928000" />
+      <workItem from="1607425492303" duration="20957000" />
+      <workItem from="1607513842676" duration="13855000" />
+      <workItem from="1607598102245" duration="11216000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/bootstrap/fullcalendar" />
+      <path value="$PROJECT_DIR$/bootstrap/sbadmin" />
+    </ignored-roots>
+    <MESSAGE value="Yan" />
+    <option name="LAST_COMMIT_MESSAGE" value="Yan" />
+  </component>
+</project>

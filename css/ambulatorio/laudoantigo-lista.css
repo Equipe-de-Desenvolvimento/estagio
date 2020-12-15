@@ -1,0 +1,10 @@
+.row{
+    justify-content: space-between;
+}
+
+.btnsend {
+    margin-top: 2.5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

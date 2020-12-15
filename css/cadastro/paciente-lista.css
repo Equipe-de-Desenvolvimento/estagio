@@ -1,0 +1,88 @@
+ .container{
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-areas: "nome cpf date fone pront ."
+                        "iname icpf inasc itel ipront btnenvio";
+}
+
+.nome{
+   grid-area: nome ;
+}
+.cpf{
+    grid-area: cpf;
+}
+.date{
+    grid-area:date ;
+}
+.fone {
+    grid-area: fone;
+}
+.pront{
+    grid-area: pront;
+}
+ .pront{
+     grid-area: pront;
+ }
+
+
+.iname{
+    grid-area:iname ;
+}
+.icpf{
+    grid-area: icpf;
+}
+.inasc{
+    grid-area: inasc ;
+}
+.itel{
+    grid-area: itel;
+}
+ .ipront{
+     grid-area:ipront ;
+ }
+.btnenvio{
+    grid-area: btnenvio;
+    justify-self: center;
+}
+ @media (max-width: 1130px) {
+     .container {
+
+         grid-template-areas:  "nome cpf date "
+                                "iname icpf inasc   "
+                                "fone pront ."
+                                "itel ipront btnenvio";
+     }
+     .btnenvio{
+         justify-self: start;
+     }
+ }
+
+ @media (max-width: 530px) {
+     .container {
+         grid-template-areas:"nome cpf "
+                             "iname icpf"
+                              "date  fone"
+                             "inasc itel"
+                             " pront ."
+                             " ipront btnenvio";
+     }
+
+ }
+
+
+
+ @media (max-width: 449px) {
+     .container {
+         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+         grid-template-areas:"nome iname"
+                             "cpf icpf"
+                             "date inasc"
+                             "fone itel"
+                             "pront ipront"
+                             ". btnenvio";
+     }
+
+ }
+
+
+
+
