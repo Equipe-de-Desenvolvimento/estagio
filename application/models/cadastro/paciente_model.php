@@ -79,11 +79,13 @@ class paciente_model extends BaseModel {
     }
 
     function pacientelog($paciente_id){
-        $this->db->select('c.nome, o.nome as operador_cadastro,
-        c.data_cadastro, 
-        oa.nome as operador_atualizacao,
-        c.data_atualizacao,
-        c.nascimento');
+        $this->db->select('c.nome, 
+                           o.nome as operador_cadastro,
+                           c.data_cadastro, 
+                           oa.nome as operador_atualizacao,
+                           c.data_atualizacao,
+                           c.nascimento');
+        
         $this->db->from('tb_paciente c');
         $this->db->join('tb_operador o', 'o.operador_id = c.operador_cadastro', 'left');
         $this->db->join('tb_operador oa', 'oa.operador_id = c.operador_atualizacao', 'left');
@@ -131,85 +133,83 @@ class paciente_model extends BaseModel {
     }
 
     function listar($args = array()) {
-        $this->db->from('tb_paciente')
-                ->join('tb_municipio', 'tb_municipio.municipio_id = tb_paciente.municipio_id', 'left')
-                ->select('"tb_paciente".*, tb_municipio.nome as ciade, tb_municipio.estado')
-                ->where('ativo', 'true');
+//        echo '<pre>';
+//        print_r($args);
+//        die;
+        $this->db->select('m.municipio_id, m.nome as municipio,
+                           p.nome,
+                           p.nascimento,
+                           p.email,
+                           p.email_alternativo,
+                           p.cpf,
+                           p.cnpj,
+                           p.telefone,
+                           p.celular,
+                           p.paciente_id');
+        $this->db->from('tb_paciente p');
+        $this->db->join('tb_municipio m', 'm.municipio_id = p.municipio_id', 'left');
+        $this->db->where('p.ativo','t');
 
         if ($args) {
             if (isset($args['prontuario']) && strlen($args['prontuario']) > 0) {
                 $this->db->where('paciente_id', $args['prontuario']);
-                $this->db->where('ativo', 'true');
             }
+            
             if (isset($args['prontuario_antigo']) && strlen($args['prontuario_antigo']) > 0) {
                 $this->db->where('prontuario_antigo', $args['prontuario_antigo']);
-                $this->db->where('ativo', 'true');
             }
+            
             if (isset($args['nome']) && strlen($args['nome']) > 0) {
                 $nome = $this->removerCaracterEsp($args['nome']);
                 // var_dump($nome); die;
-                $this->db->where("translate(tb_paciente.nome,  
+                $this->db->where("translate(p.nome,  
                 'áàâãäåaaaÁÂÃÄÅAAAÀéèêëeeeeeEEEÉEEÈÊìíîïìiiiÌÍÎÏÌIIIóôõöoooòÒÓÔÕÖOOOùúûüuuuuÙÚÛÜUUUUçÇñÑýÝ',  
                 'aaaaaaaaaAAAAAAAAAeeeeeeeeeEEEEEEEEiiiiiiiiIIIIIIIIooooooooOOOOOOOOuuuuuuuuUUUUUUUUcCnNyY'   
                  ) ilike", '%' . $nome . '%');
-                $this->db->where('ativo', 'true');
             }
+            
             if (isset($args['nome_mae']) && strlen($args['nome_mae']) > 0) {
                 $nome_mae = $this->removerCaracterEsp($args['nome_mae']);
-                $this->db->where("translate(tb_paciente.nome_mae,  
+                $this->db->where("translate(p.nome_mae,  
                 'áàâãäåaaaÁÂÃÄÅAAAÀéèêëeeeeeEEEÉEEÈÊìíîïìiiiÌÍÎÏÌIIIóôõöoooòÒÓÔÕÖOOOùúûüuuuuÙÚÛÜUUUUçÇñÑýÝ',  
                 'aaaaaaaaaAAAAAAAAAeeeeeeeeeEEEEEEEEiiiiiiiiIIIIIIIIooooooooOOOOOOOOuuuuuuuuUUUUUUUUcCnNyY'   
                  ) ilike", '%' . $nome_mae . '%');
-                $this->db->where('ativo', 'true');
             }
 
             if (isset($args['nome_pai']) && strlen($args['nome_pai']) > 0) {
                 $nome_mae = $this->removerCaracterEsp($args['nome_pai']);
-                $this->db->where("translate(tb_paciente.nome_pai,  
+                $this->db->where("translate(p.nome_pai,  
                 'áàâãäåaaaÁÂÃÄÅAAAÀéèêëeeeeeEEEÉEEÈÊìíîïìiiiÌÍÎÏÌIIIóôõöoooòÒÓÔÕÖOOOùúûüuuuuÙÚÛÜUUUUçÇñÑýÝ',  
                 'aaaaaaaaaAAAAAAAAAeeeeeeeeeEEEEEEEEiiiiiiiiIIIIIIIIooooooooOOOOOOOOuuuuuuuuUUUUUUUUcCnNyY'   
                  ) ilike", '%' . $nome_mae . '%');
-                $this->db->where('ativo', 'true');
             }
 
-            // if (isset($args['nome']) && strlen($args['nome']) > 0) {
-            //     $this->db->where('tb_paciente.nome ilike', '%' . $args['nome'] . '%');
-            //     $this->db->where('ativo', 'true');
-            // }
-            // if (isset($args['nome_mae']) && strlen($args['nome_mae']) > 0) {
-            //     $this->db->where('tb_paciente.nome_mae ilike', '%' . $args['nome_mae'] . '%');
-            //     $this->db->where('ativo', 'true');
-            // }
             if (isset($args['nascimento']) && strlen($args['nascimento']) > 0) {
-                $this->db->where('tb_paciente.nascimento', date("Y-m-d", strtotime(str_replace("/", "-", $args['nascimento']))));
-                $this->db->where('ativo', 'true');
+                $this->db->where('p.nascimento', date("Y-m-d", strtotime(str_replace("/", "-", $args['nascimento']))));
             }
 
             if (isset($args['cpf']) && strlen($args['cpf']) > 0) {
-                $this->db->where('tb_paciente.cpf ilike', '%' . $args ['cpf'] . '%');
-                $this->db->where('ativo', 'true');
+                $this->db->where('p.cpf ilike', '%' . $args ['cpf'] . '%');
             }
 
             if (isset($args ['telefone']) && strlen($args ['telefone']) > 0) {
-                $this->db->where("(tb_paciente.celular ilike '%" . $args['telefone'] . "%' OR tb_paciente.telefone ilike '%" . $args['telefone'] . "%')");
-                $this->db->where('ativo', 'true');
+                $this->db->where("(p.celular ilike '%" . $args['telefone'] . "%' p.telefone ilike '%" . $args['telefone'] . "%')");
             }
-
-            if (isset($args['guia_id']) && @$args['guia_id'] > 0) {
-                $guia_id = $args['guia_id'];
-                $this->db->where("paciente_id IN (SELECT paciente_id 
-                                                FROM ponto.tb_ambulatorio_guia
-                                                WHERE ambulatorio_guia_id = $guia_id) ");
-            }
+           
+           if (isset($args ['email']) && strlen($args ['email']) > 0) {
+     	$this->db->where("(p.email ilike '%" . $args['p.email'] . "%' OR p.email_alternativo ilike '%" . $args['email'] . "%')");
+        
+           }
+           
         }
-
+        $this->db->where('p.ativo','t');
         return $this->db;
     }
 
     function listarpesquisardesativado($args = array()) {
-        $this->db->from('tb_paciente')
+        $this->db->from('tb_paciente p')
                 ->join('tb_municipio', 'tb_municipio.municipio_id = tb_paciente.municipio_id', 'left')
-                ->select('"tb_paciente".*, tb_municipio.nome as ciade, tb_municipio.estado')
+                ->select('"tb_paciente".*, tb_municipio.nome as cidade, tb_municipio.estado')
                 ->where('ativo', 'false');
 
         if ($args) {
@@ -247,15 +247,7 @@ class paciente_model extends BaseModel {
                  ) ilike", '%' . $nome_mae . '%');
                 $this->db->where('ativo', 'false');
             }
-
-            // if (isset($args['nome']) && strlen($args['nome']) > 0) {
-            //     $this->db->where('tb_paciente.nome ilike', '%' . $args['nome'] . '%');
-            //     $this->db->where('ativo', 'true');
-            // }
-            // if (isset($args['nome_mae']) && strlen($args['nome_mae']) > 0) {
-            //     $this->db->where('tb_paciente.nome_mae ilike', '%' . $args['nome_mae'] . '%');
-            //     $this->db->where('ativo', 'true');
-            // }
+            
             if (isset($args['nascimento']) && strlen($args['nascimento']) > 0) {
                 $this->db->where('tb_paciente.nascimento', date("Y-m-d", strtotime(str_replace("/", "-", $args['nascimento']))));
                 $this->db->where('ativo', 'false');
@@ -982,9 +974,11 @@ class paciente_model extends BaseModel {
             else
                 $this->db->set('idade', $_POST['idade']);
             $this->db->set('idade_tipo', $_POST['idadeTipo']);
+            $this->db->set('cpf', $_POST['cpf']);
             $this->db->set('sexo', $_POST['sexo_paciente']);
             $this->db->set('nome_mae', $_POST['mae_paciente']);
             $this->db->set('telefone', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['tel_paciente']))));
+            $this->db->set('celular', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['tel_paciente']))));
             $this->db->set('logradouro', $_POST['end_paciente']);
             $this->db->set('peso', $_POST['peso_paciente']);
             $this->db->set('cns', $_POST['sus_paciente']);
@@ -1004,12 +998,25 @@ class paciente_model extends BaseModel {
                 } else
                     $temp_paciente_id = $this->db->insert_id();
             }
-            else { // update
-                $temp_paciente_id = $_POST['id_paciente'];
-                $this->db->where('temp_paciente_id', $temp_paciente_id);
-                $this->db->update('tb_temp_paciente');
-            }
-            return $temp_paciente_id;
+            
+            if($_POST['paciente_id'] > 0 ){
+            $this->db->set('data_atualizacao', $horario);
+            $this->db->set('operador_atualizacao', $operador_id);
+            $this->db->where('paciente_id', $_POST['paciente_id']);
+            $this->db->update('tb_paciente');      
+        }
+        
+        else{
+            $this->db->set('data_cadastro', $horario);
+            $this->db->set('operador_cadastro', $operador_id);
+            $this->db->insert('tb_paciente');
+        }
+        //    else { // update
+         //       $temp_paciente_id = $_POST['id_paciente'];
+         //       $this->db->where('temp_paciente_id', $temp_paciente_id);
+          //      $this->db->update('tb_temp_paciente');
+          //  }
+         //   return $temp_paciente_id;
         } catch (Exception $exc) {
             return false;
         }
@@ -2100,21 +2107,83 @@ class paciente_model extends BaseModel {
         }
     }
 
-    function listarPacientes($parametro = null) {
-        $this->db->select('nome,
-                           be,
-                           idade,
-                           data_nascimento as nascimento');
+    function listarPacientes($args = array()) {
+        $this->db->select('m.municipio_id, m.nome as municipio,
+                           p.nome,
+                           p.be,
+                           m.municipio,
+                           p.idade,
+                           p.data_nascimento as nascimento,
+                           p.email,
+                           p.email_alternativo
+                           p.cpf,
+                           p.cnpj,
+                           p.telefone,
+                           p.telefone2,
+                           p.paciente_id');
+        
+        $this->db->from('tb_paciente p');
+        $this->db->join('tb_municipio m', 'm.municipio_id = p.municipio_id', 'left');
+        $this->db->where('pacientes_id',$pacientes_id);
+        $this->db->where('i.ativo','t');
+        
         if ($parametro != null) {
             $this->db->where('nome ilike', "%" . $parametro . "%");
             $this->db->orwhere('be ilike', "%" . $parametro . "%");
         }
-        $this->db->from('tb_emergencia_behospub');
-        $return = $this->db->get();
+        
+         if (isset($args['nome']) && strlen($args['nome']) > 0) {
+            $nome = $this->removerCaracterEsp($args['nome']);
+            $this->db->where("translate(p.nome,  
+            'áàâãäåaaaÁÂÃÄÅAAAÀéèêëeeeeeEEEÉEEÈÊìíîïìiiiÌÍÎÏÌIIIóôõöoooòÒÓÔÕÖOOOùúûüuuuuÙÚÛÜUUUUçÇñÑýÝ',  
+            'aaaaaaaaaAAAAAAAAAeeeeeeeeeEEEEEEEEiiiiiiiiIIIIIIIIooooooooOOOOOOOOuuuuuuuuUUUUUUUUcCnNyY'   
+            ) ilike", '%' . $nome . '%');
+        }
+           if (isset($args ['telefone']) && strlen($args ['telefone']) && strlen($args ['telefone']) > 0) {
+     	$this->db->where("(p.whatsapp ilike '%" . $args['telefone'] . "%' OR p.telefone ilike '%" . $args['telefone'] . "%' OR p.celular ilike '%" . $args['telefone'] . "%')");
+           }
+           
+           if (isset($args ['email']) && strlen($args ['email']) > 0) {
+     	$this->db->where("(p.email ilike '%" . $args['email'] . "%' OR p.email_alternativo ilike '%" . $args['email'] . "%')");
+        
+           }
+           
+           if (isset($args ['cpf']) && strlen($args ['cpf']) > 0) {
+     	$this->db->where("(p.cpf ilike '%" . $args['cpf'] . "%' OR p.cnpj ilike '%" . $args['cnpj'] . "%')");
+        
+           }
+           
+       
+        $this->db->where('p.ativo','t');
+        return $this->db;
+//        $this->db->from('tb_emergencia_behospub');
+//        $return = $this->db->get();
 
         return $return->result();
     }
 
+    function listarpacientesid($paciente_id){
+         $this->db->select('m.municipio_id, m.nome as municipio, 
+                           p.nome, 
+                           p.observacao,
+                           p.complemento,
+                           p.cnpj,
+                           p.cpf,
+                           p.email,
+                           p.email_alternativo,
+                           p.endereco,
+                           p.telefone,
+                           p.instituicao_id,
+                           p.telefone2,
+                           p.whatsapp');
+        $this->db->from('tb_paciente p');
+        $this->db->join('tb_municipio m', 'm.municipio_id = p.municipio_id', 'left');
+        $this->db->where('paciente_id',$paciente_id);
+        $this->db->where('p.ativo','t');
+        $return = $this->db->get();
+        return $return->result();
+    }
+    
     function consultacpf() {
         try {
 
@@ -2394,7 +2463,7 @@ class paciente_model extends BaseModel {
             } else {
                 $error = null;
                 $data = array('upload_data' => $this->upload->data());
-                $data['mensagem'] = 'Sucesso ao enviar Arquivo.';
+            $data['mensagem'] = 'Sucesso ao enviar Arquivo.';
             }
             
           
@@ -2461,17 +2530,7 @@ class paciente_model extends BaseModel {
         $this->db->from('tb_pacientes_precadastro');
         $this->db->where('pacientes_precadastro_id', $pacientes_precadastro_id);
         $retorno = $this->db->get()->result();
-        foreach ($retorno as $item) {
-            $this->db->set('pacientes_precadastro_id', $item->pacientes_precadastro_id);
-            $this->db->set('nome', $item->nome);
-            $this->db->set('municipio_id', $item->municipio_id);
-            $this->db->set('email', $item->email);
-            $this->db->set('telefone', $item->telefone);
-            $this->db->set('usuario', "usuario");
-            $this->db->set('data_cadastro', $hora);
-            $this->db->set('operador_cadastro', $operador);
-            $this->db->insert('tb_operador');
-        }
+        foreach ($retorno as $item);
         $this->db->set('ativo', 'f');
         $this->db->where('pacientes_precadastro_id', $pacientes_precadastro_id);
         $this->db->set('data_atualizacao', $hora);
@@ -2571,8 +2630,31 @@ class paciente_model extends BaseModel {
 
     function gravarpacienteparcial() {
 
+        $horario = date("Y-m-d H:i:s"); 
+        $operador_id = $this->session->userdata('operador_id');
+        
         $this->db->set('nome', $_POST['txtNome']);
-        $this->db->set('telefone', $_POST['telefone']);
+        $this->db->set('telefone',str_replace('.', '',str_replace(' ', '',str_replace('-', '',str_replace(')', '',str_replace('(', '', $_POST['telefone']))))));
+        $this->db->set('cpf', $_POST['cpf']);
+        $this->db->set('cnpj', $_POST['cnpj']);
+        $this->db->set('celular', str_replace('.', '',str_replace(' ', '',str_replace('-', '',str_replace(')', '',str_replace('(', '', $_POST['celular']))))));
+        $this->db->set('email', $_POST['emailalternativo']);
+        $this->db->set('nascimento', $_POST['nascimento']);
+        $this->db->set('municipio', $_POST['municipio']);
+        
+        if($_POST['paciente_id'] > 0 ){
+            $this->db->set('data_atualizacao', $horario);
+            $this->db->set('operador_atualizacao', $operador_id);
+            $this->db->where('paciente_id', $_POST['paciente_id']);
+            $this->db->update('tb_paciente');      
+        }
+        
+        else{
+            $this->db->set('data_cadastro', $horario);
+            $this->db->set('operador_cadastro', $operador_id);
+            $this->db->insert('tb_paciente');
+        }
+        
         $this->db->insert('tb_paciente');
         $paciente_id = $this->db->insert_id();
         return $paciente_id;
@@ -2673,10 +2755,123 @@ class paciente_model extends BaseModel {
         return $return->result();
     }
     
+    function gravarinstituicao(){
+        $horario = date("Y-m-d H:i:s"); 
+        $operador_id = $this->session->userdata('operador_id');
+        $this->db->set('nome', $_POST['nome']);
+        $this->db->set('endereco', $_POST['endereco']);
+        $this->db->set('telefone', str_replace('.', '',str_replace(' ', '',str_replace('-', '',str_replace(')', '',str_replace('(', '', $_POST['telefone'])))))); 
+        $this->db->set('telefone2', str_replace('.', '',str_replace(' ', '',str_replace('-', '',str_replace(')', '',str_replace('(', '', $_POST['telefone2']))))));
+        $this->db->set('municipio', $_POST['municipio_id']); //print_r($_POST);
+        $this->db->set('whatsapp', str_replace('.', '',str_replace(' ', '',str_replace('-', '',str_replace(')', '',str_replace('(', '', $_POST['whatsapp']))))));
+        $this->db->set('email', $_POST['emailprincipal']); 
+        $this->db->set('cnpj', $_POST['cnpj']); 
+        $this->db->set('cpf', $_POST['cpf']); 
+        $this->db->set('observacao', $_POST['observacao']); 
+        $this->db->set('complemento', $_POST['complemento']); 
+        $this->db->set('email_alternativo', $_POST['email_alternativo']); 
+                
+        if($_POST['instituicao_id'] > 0 ){
+            $this->db->set('data_atualizacao', $horario);
+            $this->db->set('operador_atualizacao', $operador_id);
+            $this->db->where('instituicao_id', $_POST['instituicao_id']);
+            $this->db->update('tb_instituicao');      
+        }
+        
+        else{
+            $this->db->set('data_cadastro', $horario);
+            $this->db->set('operador_cadastro', $operador_id);
+            $this->db->insert('tb_instituicao');
+        }
+        
+        
+        
+    }
+    
+    function listarinstituicao($args = array()) {
+        $this->db->select('m.municipio_id, m.nome as municipio, 
+                           i.nome, 
+                           i.observacao,
+                           i.complemento,
+                           i.cnpj,
+                           i.cpf,
+                           i.email,
+                           i.email_alternativo,
+                           i.endereco,
+                           i.instituicao_id,
+                           i.telefone,
+                           i.telefone2,
+                           i.whatsapp');
+        $this->db->from('tb_instituicao i');
+        $this->db->join('tb_municipio m', 'm.municipio_id = i.municipio', 'left');
+        if (isset($args['nome']) && strlen($args['nome']) > 0) {
+            $nome = $this->removerCaracterEsp($args['nome']);
+            $this->db->where("translate(i.nome,  
+            'áàâãäåaaaÁÂÃÄÅAAAÀéèêëeeeeeEEEÉEEÈÊìíîïìiiiÌÍÎÏÌIIIóôõöoooòÒÓÔÕÖOOOùúûüuuuuÙÚÛÜUUUUçÇñÑýÝ',  
+            'aaaaaaaaaAAAAAAAAAeeeeeeeeeEEEEEEEEiiiiiiiiIIIIIIIIooooooooOOOOOOOOuuuuuuuuUUUUUUUUcCnNyY'   
+            ) ilike", '%' . $nome . '%');
+        }
+           if (isset($args ['telefone']) && strlen($args ['telefone']) && strlen($args ['telefone']) > 0) {
+     	$this->db->where("(i.whatsapp ilike '%" . $args['telefone'] . "%' OR i.telefone ilike '%" . $args['telefone'] . "%' OR i.telefone2 ilike '%" . $args['telefone'] . "%')");
+           }
+           
+           if (isset($args ['email']) && strlen($args ['email']) > 0) {
+     	$this->db->where("(i.email ilike '%" . $args['email'] . "%' OR i.email_alternativo ilike '%" . $args['email'] . "%')");
+        
+           }
+           
+            if (isset($args ['cpf']) && strlen($args ['cpf']) > 0) {
+     	$this->db->where("(i.cpj ilike '%" . $args['cpf'] . "%' OR i.cnpj ilike '%" . $args['cnpj'] . "%')");
+        
+           }
+            if (isset($args['cpf']) && strlen($args['cpf']) > 0) {
+                $this->db->where('i.cpf ilike', '%' . $args ['cpf'] . '%');
+           }
+       
+        $this->db->where('i.ativo','t');
+        return $this->db;
+    }
     
     
+    function excluircadastro($instituicao_id){
+         $this->db->set('ativo','f');
+         $this->db->where('instituicao_id',$instituicao_id); 
+         $this->db->update('tb_instituicao');
+    } 
+   
     
+    function listarinstituicaoid($instituicao_id){
+         $this->db->select('m.municipio_id, m.nome as municipio, 
+                           i.nome, 
+                           i.observacao,
+                           i.complemento,
+                           i.cnpj,
+                           i.cpf,
+                           i.email,
+                           i.email_alternativo,
+                           i.endereco,
+                           i.telefone,
+                           i.instituicao_id,
+                           i.telefone2,
+                           i.whatsapp');
+        $this->db->from('tb_instituicao i');
+        $this->db->join('tb_municipio m', 'm.municipio_id = i.municipio', 'left');
+        $this->db->where('instituicao_id',$instituicao_id);
+        $this->db->where('i.ativo','t');
+        $return = $this->db->get();
+        return $return->result();
+    }
     
+    function excluircadastroestagiarios($paciente_id) {
+        $this->db->set('ativo','f');
+        $this->db->where('paciente_id',$paciente_id); 
+        $this->db->update('tb_paciente');
+        
+        return 1;
+
+    }
+    
+ 
 }
 
 ?>

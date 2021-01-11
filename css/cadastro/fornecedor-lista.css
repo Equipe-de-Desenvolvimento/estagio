@@ -1,3 +1,13 @@
 .row{
     justify-content: space-between;
 }
+
+.btnenvio {
+    display: flex;
+    align-items: center;
+}
+
+.row {
+    margin-left: 10px;
+    justify-content: space-between;
+}

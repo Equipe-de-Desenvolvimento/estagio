@@ -52,6 +52,7 @@
                 <button type="submit" name="btnEnviar">Enviar</button>
                 <button type="reset" name="btnLimpar">Limpar</button>
                 <button type="button" id="btnVoltar" name="btnVoltar">Voltar</button>
+               
             </form>
         </div>
     </div>
@@ -60,7 +61,7 @@
 <script type="text/javascript" src="<?= base_url() ?>js/jquery.validate.js"></script>
 <script type="text/javascript">
     $('#btnVoltar').click(function() {
-        $(location).attr('href', '<?= base_url(); ?>ponto/cargo');
+        $(location).attr('href', '<?= base_url(); ?>cadastros/tipo');
     });
 
     $(function() {

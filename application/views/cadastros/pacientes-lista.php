@@ -7,52 +7,43 @@ $filtro_exame = @$empresapermissoes[0]->filtro_exame_cadastro;
 $tecnico_recepcao_editar = @$empresapermissoes[0]->tecnico_recepcao_editar;
 $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
 ?>
-<link href="<?= base_url() ?>css/cadastro/paciente-lista.css" rel="stylesheet"/>
-<div id="wrapper"> <!-- Inicio da DIV content -->
+<link href="<?= base_url() ?>css/cadastro/paciente-lista.css?v=1" rel="stylesheet"/>
         <div class="col-sm-12">
-            <div class="panel panel-default">
-
-
-
-                        <!--
-                                    <td width="100px;"><center>
-                                        <div class="bt_link_new">
-                                            <a href="<?php echo base_url() ?>ambulatorio/exametemp/novopaciente">
-                                                Agendar Exame
-                                            </a>
-                                        </div>
-                                        </td>
-                                        <td width="100px;"><center>
-                                            <div class="bt_link_new">
-                                                <a onclick="javascript:window.open('<?= base_url() ?>ambulatorio/exametemp/novopacienteexameencaixe');">
-                                                    Encaixar Exame
-                                                </a>
-                                            </div>
-                                            </td>
-                                            <td width="100px;"><center>
-                                                <div class="bt_link_new">
-                                                    <a href="<?php echo base_url() ?>ambulatorio/exametemp/novopacienteconsulta">
-                                                        Agendar Consulta
-                                                    </a>
-                                                </div>
-                                                </td>
-
-                                                <td width="100px;"><center>
-                                                    <div class="bt_link_new">
-                                                        <a onclick="javascript:window.open('<?= base_url() ?>ambulatorio/exametemp/novopacienteconsultaencaixe');">
-                                                            Encaixar Consulta
-                                                        </a>
-                                                    </div>
-                                                    </td>-->
-
-
-                <div class="form-group" id="pesquisar">
-
-                        <form method="get" action="<?php echo base_url() ?>cadastros/pacientes/pesquisar">
-                            <div class="container">
+            <div class="">
+                <div class="" id="pesquisar">
+                    <form method="get" action="<?php echo base_url() ?>cadastros/pacientes/pesquisar">
+                        <div class="row">
                                     <div class="nome">
                                         <h6>Nome</h6>
+                                        <div>
+                                            <input type="text" name="nome" placeholder="Nome do estagiário" class="texto05" value="<?php echo @$_GET['nome']; ?>" />
+                                        </div>
                                     </div>
+                                    <div>
+                                        <h6>CPF</h6>
+                                        <div>
+                                            <input type="text" name="cpf" placeholder="CPF" class="texto05" value="<?php echo @$_GET['cpf']; ?>" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h6>Nascimento</h6>
+                                        <div class="inasc">
+                                            <input type="text" id="txtNascimento" name="nascimento" placeholder="00/00/0000" class="texto05" alt="data" value="<?php echo @$_GET['nascimento']; ?>" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h6>Telefone</h6>
+                                        <div>
+                                            <input type="text" id="txtTelefone" name="telefone" placeholder="(99)9999-9999" class="texto05" value="<?php echo @$_GET['telefone']; ?>" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h6>Email</h6>
+                                        <div>
+                                            <input type="text" name="Email" placeholder="Email" class="texto05" value="<?php echo @$_GET['email']; ?>" />
+                                        </div>
+                                    </div>
+
                                     <?php
                                     if (@$empresapermissoes[0]->pesquisar_responsavel == "t") { ?>
                                         <div class="nmae">
@@ -67,37 +58,16 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                             <h6>Exame</h6>
                                         </div>
                                     <? } ?>
-                                        <div class="cpf">
-                                            <h6>CPF</h6>
-                                        </div>
-                                        <div class="date">
-                                            <h6>Nascimento</h6>
-                                        </div>
-                                        <div class="fone">
-                                            <h6>Telefone</h6>
-                                        </div>
-                                        <div class="pront">
-                                            <h6>Prontuario</h6>
-                                        </div>
-                                        <div class="action">
-                                            <h6></h6>
-                                        </div>
-
+                                       
                                     <?
                                     $data['retorno_permissao'] = $this->guia->listarpermissaopoltrona();
                                     if ($data['retorno_permissao'][0]->prontuario_antigo == 't') { ?>
 
-                                        <div class="oldpront" >Prontuario Antigo</div>
+                                        <div class="oldpront" ></div>
 
                                         <? } else {
 
                                     }  ?>
-
-
-
-                                        <div class="iname">
-                                            <input type="text" name="nome" class="texto04" value="<?php echo @$_GET['nome']; ?>" />
-                                        </div>
 
                                     <?php
                                     if (@$empresapermissoes[0]->pesquisar_responsavel == "t") {
@@ -118,23 +88,12 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                             <input type="text" name="guia_id" class="texto02" value="<?php echo @$_GET['guia_id']; ?>" />
                                         </div>
                                     <? } ?>
-                                    <div class="icpf" >
-                                        <input type="text" name="cpf" class="texto03" value="<?php echo @$_GET['cpf']; ?>" />
-                                    </div>
-                                    <div class="inasc" colspan="">
-                                        <input type="text" name="nascimento" class="texto02" alt="data" value="<?php echo @$_GET['nascimento']; ?>" />
-                                    </div>
-                                    <div class="itel" colspan="">
-                                        <input type="text" name="telefone" class="texto03" value="<?php echo @$_GET['telefone']; ?>" />
-                                    </div>
-                                    <div class="ipront" colspan="">
-                                        <input type="text" name="prontuario" class="texto03" value="<?php echo @$_GET['prontuario']; ?>" />
-                                    </div>
-
+                                   
+                                    
                                     <?
                                     if ($data['retorno_permissao'][0]->prontuario_antigo == 't') {
                                         ?>
-                                        <th class="tabela_title" colspan="">
+                                        <th class="tabela_title" >
                                             <input type="text" name="prontuario_antigo" class="texto01" value="<?php echo @$_GET['prontuario_antigo']; ?>" />
                                         </th>
                                         <?
@@ -145,33 +104,34 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                     <div class="btnenvio" >
                                         <button type="submit" class="btn btn-outline-default btn-round btn-sm btn-src" name="enviar">Pesquisar</button>
                                     </div>
-                            </div>
-                        </form>
+                        </div>
+                    </form>
 
                     <?
                     if (!(($empresapermissoes[0]->tecnico_acesso_acesso == 't' && $this->session->userdata('perfil_id') == 7) || ($empresapermissoes[0]->tecnico_acesso_acesso == 't' && $this->session->userdata('perfil_id') == 15) || $this->session->userdata('perfil_id') == 24 )) {
                         ?>
                     <br>
-                        <a class="btn btn-outline-danger btn-round btn-sm" href="<?php echo base_url() ?>cadastros/pacientes/novo">
-                            <i class="fa fa-plus fa-w"></i> Novo Cadastro
+                        <a class="btn btn-outline-default btn-round btn-sm" href="<?php echo base_url() ?>cadastros/pacientes/novo">
+                            <i class="fa fa-plus fa-w"></i> Cadastrar
                         </a>
                         <?
                     }
                     ?>
-                        <div class="table-responsive">
-                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    
+                    <div class="table-responsive">
+                       <div class="panel-body">
+                            <table  class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <tr>
-
                                     <th class="tabela_header">Nome</th>
-                                    <? if ($filtro_exame == 't') { ?>
-                                        <th class="tabela_header"></th>
-                                    <? } ?>
                                     <th class="tabela_header">CPF</th>
                                     <th class="tabela_header">Nascimento</th>
-                                    <th class="tabela_header" width="100px;">Telefone</th>
-                                    <th class="tabela_header">Prontuario</th>
-                                    <th class="tabela_header" colspan="4"  width="70px;"><center>A&ccedil;&otilde;es</center></th>
-
+                                    <th class="tabela_header">Telefone</th>
+                                    <th class="tabela_header">Celular</th>
+                                    <th class="tabela_header">Email</th>
+                                    <th class="tabela_header">Email Alternativo</th>
+                                    <th class="tabela_header">Município</th>
+                                    <th class="tabela_header">
+                                <center>A&ccedil;&otilde;es</center></th>
                                 </tr>
 
                                 <?php
@@ -180,7 +140,7 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
 
                                 $url = $this->utilitario->build_query_params(current_url(), $_GET);
                                 $consulta = $this->paciente->listar($_GET);
-                                $total = $consulta->count_all_results();
+                                @$total = $consulta->count_all_results();
                                 $limit = 10;
                                 isset($_GET['per_page']) ? $pagina = $_GET['per_page'] : $pagina = 0;
 
@@ -200,24 +160,26 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                             ?>
                                             <tr>
 
-                                                <td class="<?php echo $estilo_linha; ?>" colspan="2"><?php echo $item->nome; ?></td>
+                                                <td class="<?php echo $estilo_linha; ?>"width="150px;"><?php echo $item->nome; ?></td>
                                                 <? if ($filtro_exame == 't') { ?>
                                                     <td class="<?php echo $estilo_linha; ?>"></td>
                                                 <? } ?>
-                                                <td class="<?php echo $estilo_linha; ?>"><?php echo $item->cpf; ?></td>
-                                                <td class="<?php echo $estilo_linha; ?>" width="100px;"><?php echo substr($item->nascimento, 8, 2) . '/' . substr($item->nascimento, 5, 2) . '/' . substr($item->nascimento, 0, 4); ?></td>
-                                                <td class="<?php echo $estilo_linha; ?>" width="100px;"><?php echo $telefone; ?></td>
-                                                <td class="<?php echo $estilo_linha; ?>"><?php echo $item->paciente_id; ?></td>
-
-
+                                                <td class="<?php echo $estilo_linha; ?>" width="150px;"><?php echo substr($item->cpf, 8, 3) . '.' . substr($item->cpf, 6, 3) . '.' . substr($item->cpf, 0, 3). '-' . substr($item->cpf, 0, 2);?></td>
+                                                <td class="<?php echo $estilo_linha; ?>" width="150px;"><?php echo substr($item->nascimento, 8, 2) . '/' . substr($item->nascimento, 5, 2) . '/' . substr($item->nascimento, 0, 4); ?></td>
+                                                <td class="<?php echo $estilo_linha; ?>" width="150px;"><?php echo  "(" . substr($item->telefone, 0, 2) . ")" . substr($item->telefone, 2, strlen($item->telefone) - 7) .  "" . substr($item->telefone, 6, 1) . "-" . substr($item->telefone, 7 , strlen($item->telefone) - 2); ?></td>
+                                                <td class="<?php echo $estilo_linha; ?>" width="150px;"><?php echo $item->celular; ?></td>
+                                                <td class="<?php echo $estilo_linha; ?>" width="150px;"><?php echo $item->email; ?></td>
+                                                <td class="<?php echo $estilo_linha; ?>" width="150px;"><?php echo $item->email_alternativo; ?></td>
+                                                <td class="<?php echo $estilo_linha; ?>" width="150px;"><?php echo $item->municipio; ?></td>
+                                                
                                                 <?
                                                 if (($empresapermissoes[0]->tecnico_acesso_acesso == 't' && $this->session->userdata('perfil_id') == 7) || ($empresapermissoes[0]->tecnico_acesso_acesso == 't' && $this->session->userdata('perfil_id') == 15)) {
                                                     ?>
-                                                    <td class="<?php echo $estilo_linha; ?>" width="50px;" colspan="2" >
+                                                    <td class="<?php echo $estilo_linha; ?> "width="50px;" colspan="9" >
 
                                                     <? } else {
                                                         ?>
-                                                    <td class="<?php echo $estilo_linha; ?>" width="50px;" colspan="0" >
+                                                    <td class="<?php echo $estilo_linha; ?> "width="50px;" colspan="9" >
                                                         <?
                                                     }
                                                     ?>
@@ -235,35 +197,51 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                                         ?>
 
                                                         <? if (($tecnico_recepcao_editar == 't' || $perfil_id != 15) && $perfil_id != 24) { ?>
-                                                            <div class="bt_link">
-                                                                <a class="btn btn-outline-primary btn-round btn-sm" href="<?= base_url() ?>cadastros/pacientes/carregar/<?= $item->paciente_id ?>">
+                                                            <div>
+                                                                <a class="btn btn-outline-default btn-round btn-sm" href="<?= base_url() ?>cadastros/pacientes/novo/<?= $item->paciente_id ?>">
                                                                     <b>Editar</b>
                                                                 </a>
                                                             </div>
                                                         <? } else { ?>
                                                             <div class="bt_link">
-                                                                <a href="<?= base_url() ?>cadastros/pacientes/visualizarcarregar/<?= $item->paciente_id ?>">
+                                                                <a href="<?= base_url() ?>cadastros/pacientes/novo/<?= $item->paciente_id ?>">
                                                                     <b>Visualizar</b>
                                                                 </a>
                                                             </div>
                                                         <? } ?>
+                                                        
+                                                        
 
                                                     </td>
-                                                    <td class="<?php echo $estilo_linha; ?>" width="50px;"><div class="bt_link">
-                                                            <a class="btn btn-outline-success btn-round btn-sm" href="<?= base_url() ?>emergencia/filaacolhimento/novo/<?= $item->paciente_id ?>">
-                                                                <b>Op&ccedil;&otilde;es</b>
-                                                            </a></div>
-                                                    </td>
+                                                    <!--<td class="<?php echo $estilo_linha; ?>" width="50px;">-->
+                                                        <!--<div class="bt_link">-->
+                                                            <!--<a class="btn btn-outline-default btn-round btn-sm" href="<?= base_url() ?>emergencia/filaacolhimento/novo/<?= $item->paciente_id ?>">-->
+                                                                <!--<b>Op&ccedil;&otilde;es</b>-->
+                                                            <!--</a>-->
+                                                        <!--</div>-->
+                                                    <!--</td>-->
 
 
                                                     <?php
+                                                    
                                                     if($valores_recepcao == 't' || $operador_id == 1 ){
                                                     if($this->session->userdata('perfil_id') != 24){?>
-                                                    <td class="<?php echo $estilo_linha; ?>" width="50px;"><div class="bt_link">
-                                                            <a class="btn btn-outline-default btn-round btn-sm" href="<?= base_url() ?>ambulatorio/guia/orcamento/<?= $item->paciente_id ?>">
-                                                                <b>Or&ccedil;amento</b>
-                                                            </a></div>
+                                                    <!--<td class="<?php echo $estilo_linha; ?>" width="50px;">-->
+                                                        <!--<div class="bt_link">-->
+                                                            <!--<a class="btn btn-outline-default btn-round btn-sm" href="<?= base_url() ?>ambulatorio/guia/orcamento/<?= $item->paciente_id ?>">-->
+                                                                <!--<b>Or&ccedil;amento</b>-->
+                                                            <!--</a>-->
+                                                        <!--</div>-->
+                                                    <!--</td>-->
+                                                    
+                                                    <td class="<?php echo $estilo_linha; ?>">
+                                                        <div class="bt_link">
+                                                            <a class="btn btn-outline-default btn-round btn-sm" href="<?=base_url() ?>cadastros/pacientes/excluircadastroestagiarios/<?= $item->paciente_id ?>">       
+                                                                <b>Excluir</b>
+                                                            </a>
+                                                        </div>
                                                     </td>
+                                                    
                                                                 <?php }
 
                                                     }?>
@@ -272,17 +250,6 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                                 }
                                                 ?>
 
-
-                                                                        <!--                                <td class="<?php echo $estilo_linha; ?>" width="50px;"><div class="bt_link">
-                                                                                <a href="<?= base_url() ?>cadastros/pacientes/procedimentoautorizar/<?= $item->paciente_id ?>">
-                                                                                    <b>Autorizar</b>
-                                                                                </a></div>
-                                                                        </td>-->
-                                                                        <!--                                                                <td class="<?php echo $estilo_linha; ?>" width="50px;" ><div class="bt_link">
-                                                                                <a href="<?= base_url() ?>cadastros/pacientes/carregar/<?= $item->paciente_id ?>">
-                                                                                    <b>Autorizar</b>
-                                                                                </a></div>
-                                                                        </td>-->
                                             </tr>
                                         </tbody>
                                         <?php
@@ -292,7 +259,7 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                 <tfoot>
                                     <tr>
                                         <div class="pagination">
-                                            <th class="tabela_footer" colspan="9">
+                                            <th class="tabela_footer" colspan="">
                                                 <?php $this->utilitario->paginacao($url, $total, $pagina, $limit); ?>
                                                 Total de registros: <?php echo $total; ?>
                                             </th>
@@ -316,6 +283,41 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
 <!-- Final da DIV content -->
 <link rel="stylesheet" href="<?php base_url() ?>css/jquery-ui-1.8.5.custom.css">
 <script type="text/javascript">
+
+ function verificarCPF() {
+        // txtCpf
+        var cpf = $("#txtCpf").val();
+        var paciente_id = $("#txtPacienteId").val();
+        if($('#cpf_responsavel').prop('checked')){
+            var cpf_responsavel = 'on';
+        }else{
+            var cpf_responsavel = '';
+        }
+        
+        // alert(cpf_responsavel);
+        $.getJSON('<?= base_url() ?>autocomplete/verificarcpfpaciente', {cpf: cpf, cpf_responsavel: cpf_responsavel, paciente_id: paciente_id,  ajax: true}, function (j) {
+            if(j != ''){
+                alert(j);
+                $("#txtCpf").val('');
+            }
+        });
+    }
+
+    jQuery("#txtTelefone")
+            .mask("(99) 9999-9999?9")
+            .focusout(function (event) {
+                var target, phone, element;
+                target = (event.currentTarget) ? event.currentTarget : event.srcElement;
+                phone = target.value.replace(/\D/g, '');
+                element = $(target);
+                element.unmask();
+                if (phone.length > 10) {
+                    element.mask("(99) 99999-999?9");
+                } else {
+                    element.mask("(99) 9999-9999?9");
+                }
+            });
+
 
     $(function () {
         $("#accordion").accordion();

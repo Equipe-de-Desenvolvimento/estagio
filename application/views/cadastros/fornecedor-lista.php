@@ -1,7 +1,7 @@
 <link href="<?= base_url() ?>css/cadastro/fornecedor-lista.css" rel="stylesheet"/>
 <div class="content"> <!-- Inicio da DIV content -->
     <div class="bt_link_new">
-        <button class="btn btn-outline-primary btn-round btn-sm" href="<?php echo base_url() ?>cadastros/fornecedor/carregarfornecedor/0">
+        <button class="btn btn-outline-default btn-round btn-sm" href="<?php echo base_url() ?>cadastros/fornecedor/carregarfornecedor/">
             Novo Credor/Devedor
         </button>
     </div>
@@ -9,7 +9,7 @@
         <h3 class="singular"><b>Manter Credor/Devedor</b></h3>
         <div class="table-responsive">
             
-            <form method="get" action="<?= base_url() ?>cadastros/fornecedor/pesquisar">
+            <form method="get" action="<?= base_url() ?>cadastros/fornecedor/carregarfornecedor/">
                 <fieldset><br>
                     <div class="row">
                         <div class="nome">
@@ -24,7 +24,7 @@
                             </select>
                         </div>
                         <div>
-                            <button class="btn btn-outline-success button1" type="submit" id="enviar">Pesquisar</button>
+                            <button class="btn btn-outline-default btn-sm" type="submit" id="enviar">Pesquisar</button>
                         </div>
 
                     </div>
@@ -33,30 +33,31 @@
                 <br/>
                 <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                     <thead>
-<!--                        <tr>-->
-<!--                            <th colspan="2" class="tabela_title">Nome</th>-->
-<!--                            <th colspan="2" class="tabela_title">Status</th>-->
-<!--                            <th colspan="0" class="tabela_title"></th>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <th colspan="2" class="tabela_title">-->
-<!--                                <input type="text" name="nome" class="texto10" value="--><?php //echo @$_GET['nome']; ?><!--" />-->
-<!--                            </th>-->
-<!--                            <th colspan="" class="tabela_title">-->
-<!--                                <select name="ativo" id="">-->
-<!--                                    <option value="t" --><?// if(@$_GET['ativo'] != 'f') echo 'selected'; ?> <!-- >Ativo</option>-->
-<!--                                    <option value="f" --><?// if(@$_GET['ativo'] == 'f') echo 'selected'; ?><!-- >Inativo</option>-->
-<!--                                </select>-->
-<!--                            </th>-->
-<!--                            <th colspan="" class="tabela_title">-->
-<!--                                <button type="submit" id="enviar">Pesquisar</button>-->
-<!--                            </th>-->
-<!--                        </tr>-->
+<!--                        <tr>
+                            <th colspan="2" class="tabela_title">Nome</th>
+                            <th colspan="2" class="tabela_title">Status</th>
+                            <th colspan="0" class="tabela_title"></th>
+                        </tr>
                         <tr>
-                            <th class="tabela_header">Nome</th>
+                            <th colspan="2" class="tabela_title">
+                                <input type="text" name="nome" class="texto10" value="<?php //echo @$_GET['nome']; ?>" />
+                            </th>
+                            <th colspan="" class="tabela_title">
+                                <select name="ativo" id="">
+                                    <option value="t" <?// if(@$_GET['ativo'] != 'f') echo 'selected'; ?>  >Ativo</option>
+                                    <option value="f" <?// if(@$_GET['ativo'] == 'f') echo 'selected'; ?> >Inativo</option>
+                                </select>
+                            </th>
+                            <th colspan="" class="tabela_title">
+                                <button type="submit" id="enviar">Pesquisar</button>
+                            </th>
+                        </tr>-->
+                        <tr>
+                            <th class="tabela_header">Razão Social</th>
                             <th class="tabela_header">CNPJ</th>
                             <th class="tabela_header">CPF</th>
                             <th class="tabela_header">Telefone</th>
+                            <th class="tabela_header">Email</th>
                             <th class="tabela_header" width="70px;" colspan="4"><center>Detalhes</center></th>
                         </tr>
                     </thead>
@@ -80,24 +81,28 @@
                             foreach ($lista as $item) {
                                 ($estilo_linha == "tabela_content01") ? $estilo_linha = "tabela_content02" : $estilo_linha = "tabela_content01";
                          ?>
-                                <tr>
-                                    <td class="<?php echo $estilo_linha; ?>"><?= $item->razao_social; ?></td>
-                                    <td class="<?php echo $estilo_linha; ?>"><?= $item->cnpj; ?></td>
-                                    <td class="<?php echo $estilo_linha; ?>"><?= $item->cpf; ?></td>
-                                    <td class="<?php echo $estilo_linha; ?>"><?= $item->telefone; ?></td>
+                            <tr>
+                                    <td class="<?php echo $estilo_linha; ?>"width="270px;"><?= $item->razao_social; ?></td>
+                                    <td class="<?php echo $estilo_linha; ?>"width="200px;"><?= $item->cnpj; ?></td>
+                                    <td class="<?php echo $estilo_linha; ?>"width="200px;"><?= $item->cpf; ?></td>
+                                    <td class="<?php echo $estilo_linha; ?>"width="200px;"><?= $item->telefone; ?></td>
+                                    <!--<td class="<?php echo $estilo_linha; ?>"width="200px;"><?= $item->email; ?></td>-->
+                                    
                                     <? if($item->ativo == 't') { ?>
                                         <td class="<?php echo $estilo_linha; ?>" width="70px;">                                  
                                             <button class="btn btn-outline-default btn-sm" href="<?= base_url() ?>cadastros/fornecedor/carregarfornecedor/<?= $item->financeiro_credor_devedor_id ?>" target="_blank">Editar</button>
                                         </td>
+                                        
                                         <td class="<?php echo $estilo_linha; ?>" width="70px;">                                  
-                                            <button class="btn btn-outline-primary btn-sm" href="<?= base_url() ?>cadastros/fornecedor/unificarcredordevedor/<?= $item->financeiro_credor_devedor_id ?>" target="_blank">Unificar</button>
+                                            <button class="btn btn-outline-default btn-sm" href="<?= base_url() ?>cadastros/fornecedor/gravarunificarcredor<?= $item->financeiro_credor_devedor_id ?>" target="_blank">Unificar</button>
                                         </td>
+                                        
                                         <td class="<?php echo $estilo_linha; ?>" width="70px;">                                  
-                                            <button class="btn btn-outline-danger btn-sm" href="#" onclick="verificaDependenciasFornecedor(<?= $item->financeiro_credor_devedor_id ?>)">Excluir</button>
+                                            <button class="btn btn-outline-default btn-sm" href="<?= base_url() ?>cadastros/fornecedor/excluir/<?= $item->financeiro_credor_devedor_id ?>)">Excluir</button>
                                         </td>
                                     <? } else { ?>
-                                        <td colspan="2" class="<?php echo $estilo_linha; ?>" width="70px;">                                  
-                                            <a onclick="javascript: return confirm('Deseja realmente reativar esse Fornecedor?');" href="<?= base_url() ?>cadastros/fornecedor/reativar/<?= $item->financeiro_credor_devedor_id ?>">Reativar</a>
+                                        <td colspan="2" class="//<?php echo $estilo_linha; ?>" width="70px;">                                  
+                                            <a onclick="javascript: return confirm('Deseja realmente reativar esse Fornecedor?');" href="//<?= base_url() ?>cadastros/fornecedor/reativar/<?= $item->financeiro_credor_devedor_id ?>">Reativar</a>
                                         </td>                                        
                                     <? } ?>
                             </tr>
@@ -113,7 +118,7 @@
                                        <?php $this->utilitario->paginacao($url, $total, $pagina, $limit); ?>
                                        Total de registros: <?php echo $total; ?>
                                         <div style="display: inline">
-                                            <span style="margin-left: 15px; color: white; font-weight: bolder;"> Limite: </span>
+                                            <span style="margin-left: 20px; color: white; font-weight: bolder;"> Limite: </span>
                                             <select style="width: 50px">
                                                 <option onclick="javascript:window.location.href = ('<?= base_url() ?>cadastros/fornecedor/pesquisar/10');" <? if ($limit == 10) { echo "selected"; } ?>> 10 </option>
                                                 <option onclick="javascript:window.location.href = ('<?= base_url() ?>cadastros/fornecedor/pesquisar/50');" <? if ($limit == 50) { echo "selected"; } ?>> 50 </option>

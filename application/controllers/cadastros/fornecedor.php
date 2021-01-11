@@ -33,9 +33,9 @@ class Fornecedor extends BaseController {
 
 //            $this->carregarView($data);
     }
-
-    function carregarfornecedor($financeiro_credor_devedor_id) {
-        $obj_fornecedor = new fornecedor_model($financeiro_credor_devedor_id);
+    
+     function carregarfornecedor() {
+        $obj_fornecedor = new fornecedor_model();
         $data['obj'] = $obj_fornecedor;
         $data['tipo'] = $this->fornecedor->listartipo();
         //$this->carregarView($data, 'giah/servidor-form');
@@ -72,7 +72,7 @@ class Fornecedor extends BaseController {
         $this->session->set_flashdata('message', $data['mensagem']);
         redirect(base_url() . "cadastros/fornecedor");
     }
-
+    
     function verificadependenciasexclusao($financeiro_credor_devedor_id) {
         $valida = $this->fornecedor->verificadependenciasexclusao($financeiro_credor_devedor_id);
         echo json_encode($valida);

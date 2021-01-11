@@ -1,3 +1,4 @@
+
 <?php
 
 class tipo_model extends Model {

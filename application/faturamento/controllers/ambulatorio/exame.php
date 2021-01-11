@@ -570,9 +570,9 @@ class Exame extends BaseController {
     function anexarimagem($exame_id, $sala_id) {
 
         $this->load->helper('directory');
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+//<<<<<<< HEAD
+//<<<<<<< HEAD
+//<<<<<<< HEAD
         $data['arquivo_pasta'] = directory_map("./upload/$exame_id/");
         if ($data['arquivo_pasta'] != false) {
             sort($data['arquivo_pasta']);

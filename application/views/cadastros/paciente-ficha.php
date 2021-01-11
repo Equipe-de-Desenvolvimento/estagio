@@ -15,43 +15,43 @@
 //            echo'<pre>';
 //            var_dump(@$empresapermissoes); die;
             ?>
-            <div class="alert alert-info">Dados do Paciente</div>
+            <div class="alert alert-info">Dados do Estagiário</div>
             <div class="panel-body infodados">
                 <div class="row">
 
                     <div class="col-lg-3">
                         <div class="form-group">
                             <label>Nome*</label>
-                            <input type="text" id="txtNome" name="nome" class="form-control texto08" value="<?= @$obj->_nome; ?>" required="true"  placeholder="Nome do Paciente">
-                            <input type ="hidden" name ="paciente_id"  value ="<?= @$obj->_paciente_id; ?>" id ="txtPacienteId">
+                            <input type="text" id="txtNome" name="nome" class="form-control texto08" value="<?= @$obj[0]->nome; ?>" required="true"  placeholder="Nome do Estagiário">
+                            <input type ="hidden" name ="paciente_id"  value ="<?= @$obj[0]->paciente_id; ?>" id ="txtPacienteId">
 
                         </div>
                         <div>
                             <label>Nome da M&atilde;e</label>
-                            <input type="text" name="nome_mae" id="txtNomeMae" class="form-control texto06" value="<?= @$obj->_nomemae; ?>"
+                            <input type="text" name="nome_mae" id="txtNomeMae"  placeholder="Nome da mãe" class="form-control texto06" value="<?= @$obj[0]->nomemae; ?>"
                                 <?= (in_array('nome_mae', $campos_obrigatorios)) ? 'required' : '' ?>/>
                             <? if (@$empresapermissoes[0]->ocupacao_mae == 't') { ?>
                                 <label>Ocupação da M&atilde;e</label>
-                                <input type="text"  name="ocupacao_mae" id="ocupacao_mae" class="form-control texto06" value="<?= @$obj->_ocupacao_mae; ?>"/>
+                                <input type="text"  name="ocupacao_mae" id="ocupacao_mae" class="form-control texto06" value="<?= @$obj[0]->ocupacao_mae; ?>"/>
                             <? } ?>
                         </div>
 
                         <div>
                             <label>Nome do Pai</label>
-                            <input type="text"  name="nome_pai" id="txtNomePai" class="form-control texto06" value="<?= @$obj->_nomepai; ?>"
+                            <input type="text"  name="nome_pai" id="txtNomePai"  placeholder="Nome do pai" class="form-control texto06" value="<?= @$obj[0]->nomepai; ?>"
                                 <?= (in_array('nome_pai', $campos_obrigatorios)) ? 'required' : '' ?>/>
                             <? if (@$empresapermissoes[0]->ocupacao_pai == 't') { ?>
                                 <label>Ocupação do Pai</label>
-                                <input type="text"  name="ocupacao_pai" id="ocupacao_pai" class="form-control texto06" value="<?= @$obj->_ocupacao_pai; ?>"/>
+                                <input type="text"  name="ocupacao_pai" id="ocupacao_pai" class="form-control texto06" value="<?= @$obj[0]->ocupacao_pai; ?>"/>
                             <? } ?>
                         </div>
                         <div >
                             <label>Email</label>
-                            <input  placeholder="Email" type="text" id="txtCns" name="cns"  class="form-control texto06" value="<?= @$obj->_cns; ?>" />
+                            <input  placeholder="Email" type="text" id="txtEmail" name="email"  class="form-control texto06" value="<?= @$obj[0]->_cns; ?>" />
                         </div>
                         <div>
                             <label>Email Alternativo</label>
-                            <input type="text" id="txtCns2" name="cns2"  onchange="validaremail2()" class="form-control texto06" value="<?= @$obj->_cns2; ?>"
+                            <input type="text" id="txtemailalternativo" name="email_alternativo" placeholder="Email Alternativo" onchange="validaremail2()" class="form-control texto06" value="<?= @$obj[0]->email; ?>"
                                 <?= (in_array('email2', $campos_obrigatorios)) ? 'required' : '' ?>/>
                         </div>
 
@@ -79,7 +79,7 @@
                         <div>
                             <td>
                                 <label>CPF da M&atilde;e</label>
-                                <input type="text" <?= (in_array('cpf_mae', $campos_obrigatorios)) ? 'required' : '' ?> name="cpf_mae" id ="txtCpfmae" maxlength="11" alt="cpf" class="form-control texto03" value="<?= @$obj->_cpf_mae; ?>"/>
+                                <input type="text" <?= (in_array('cpf_mae', $campos_obrigatorios)) ? 'required' : '' ?> name="cpf_mae" id ="txtCpfmae" maxlength="11" alt="cpf" class="form-control texto03" value="<?= @$obj[0]->cpf_mae; ?>"/>
                             </td>
                         </div>
                         <div>
@@ -97,7 +97,7 @@
                         <div class="form-group">
                             <label>Data de Nascimento*</label>
                             <input type="text" name="nascimento" id="txtNascimento" required="true" alt="date" class="form-control texto04 date"
-                                   placeholder="Data de Nascimento"
+                                   placeholder="00/00/0000"
 
                                    value="<?php
                                    if (@$obj->_nascimento != '') {
@@ -283,7 +283,7 @@
                                         ?>
                                         <option value="<?php echo $item->paciente_indicacao_id; ?>"
                                             <?
-                                            if (@$obj->_indicacao == $item->paciente_indicacao_id):echo 'selected';
+                                            if ($obj[0]->indicacao == $item->paciente_indicacao_id):echo 'selected';
                                             endif;
                                             ?>>
                                             <?php echo $item->nome; ?>
@@ -346,7 +346,7 @@
                     <div class="col-lg-3">
                         <div class="form-group">
                             <label>Endere&ccedil;o</label>
-                            <input type="text" id="rua" class="form-control texto08" name="endereco" value="<?= @$obj->_endereco; ?>" />
+                            <input type="text" id="rua" class="form-control texto08" name="endereco" value="<?= @$obj[0]->endereco; ?>" />
                         </div>
                         <div class="form-group">
                             <label>Complemento</label>
@@ -354,8 +354,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Telefone 2</label>
-                            <input type="text" id="txtCelular" class="form-control texto03" name="celular" value="<?= @$celular; ?>" <?= (in_array('telefone2', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                            <label>celular</label>
+                            <input type="text" id="txtCelular" class="form-control texto03" name="celular" value="<?= @$celular; ?>" <?= (in_array('celular', $campos_obrigatorios)) ? 'required' : '' ?>/>
                             <button class="btn btn-outline-danger btn-sm"  type=button id="btnWhats" onclick="pegarWhats2();"> WP? </button>
                         </div>
 
@@ -373,8 +373,8 @@
 
                         <div class="form-group">
                             <label>Município</label>
-                            <input type="hidden" id="txtCidadeID" class="texto_id" name="municipio_id" value="<?= @$obj->_cidade; ?>" readonly="true" />
-                            <input type="text" id="txtCidade" class="form-control texto04 eac-square" name="txtCidade" value="<?= @$obj->_cidade_nome; ?>" />
+                            <input type="hidden" id="txtCidadeID" class="texto_id" name="municipio_id" value="<?= @$obj[0]->municipio_id; ?>" readonly="true" />
+                            <input type="text" id="txtCidade" class="form-control texto03 eac-square" name="txtCidade" value="<?= @$obj[0]->municipio_id; ?>" />
                         </div>
                         <div class="form-group">
                             <label>WhatsApp</label>
@@ -386,7 +386,7 @@
                         <div class="form-group">
                             <label>CEP</label>
                             <input type="text" id="cep" class="form-control texto03 eac-square" name="cep"  value="<?= @$obj->_cep; ?>" />
-                            <input type="hidden" id="ibge" class="form-control texto02" name="ibge" />
+                            <input type="hidden" id="ibge" class="form-control texto03" name="ibge" />
                         </div>
                     </div>
 
@@ -431,6 +431,12 @@
                         <label>Nacionalidade</label>
                         <input type="text" id="nacionalidade" class="form-control texto04" name="nacionalidade" value="<?= @$obj->_nacionalidade; ?>" <?= (in_array('nacionalidade', $campos_obrigatorios)) ? 'required' : '' ?>/>
                     </div>
+                    <div>
+                        <label>Município</label>
+                        <input type="hidden"  id="txtCidadeID" class="texto_id" name="municipio_id" value="<?= @$obj[0]->municipio_id; ?>" readonly="true" />
+                        <input type="text" id="txtCidade" class="form-control texto04 eac-square" value="<?= @$obj[0]->municipio; ?>" placeholder="Município" name="txtCidade" />
+
+                    </div>
                     <?
                     $empresa_id = $this->session->userdata('empresa_id');
                     $data['retorno_header'] = $this->paciente->listarverificacaopermisao2($empresa_id);
@@ -448,22 +454,7 @@
                 </div>
 
                 <div class="col-lg-2">
-                    <div class="form-group">
-                        <label>Leito</label>
-                        <select name="leito" id="leito" class="form-control texto04" <?= (in_array('leito', $campos_obrigatorios)) ? 'required' : '' ?>>
-                            <option value='' >Selecione</option>
-                            <option value='ENFERMARIA' <?
-                            if (@$obj->_leito == 'ENFERMARIA') {
-                                echo 'selected';
-                            }
-                            ?>>ENFERMARIA</option>
-                            <option value='APARTAMENTO'<?
-                            if (@$obj->_leito == 'APARTAMENTO') {
-                                echo 'selected';
-                            }
-                            ?>>APARTAMENTO</option>
-                        </select>
-                    </div>
+                   
                     <div>
                         <label>Ra&ccedil;a / Cor</label>
                         <select name="raca_cor" id="txtRacaCor" class="form-control texto04" <?= (in_array('raca_cor', $campos_obrigatorios)) ? 'required' : '' ?>>

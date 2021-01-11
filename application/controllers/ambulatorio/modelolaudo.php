@@ -19,6 +19,7 @@ class Modelolaudo extends BaseController {
         $this->load->model('seguranca/operador_model', 'operador_m');
         $this->load->model('ambulatorio/procedimento_model', 'procedimento');
         $this->load->model('ambulatorio/guia_model', 'guia');
+        $this->load->model('cadastro/paciente_model','paciente');
         $this->load->library('mensagem');
         $this->load->library('utilitario');
         $this->load->library('pagination');

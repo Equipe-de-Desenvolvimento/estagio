@@ -4,17 +4,17 @@
             Voltar
         </a>
     </div>
-    <div>
+    <div>Laudo
         <h3 class="singular">Cadastro Modelo Laudo</h3>
-        <div>
+        <dFaturariv>
             <form name="form_modelolaudo" id="form_modelolaudo" action="<?= base_url() ?>ambulatorio/modelolaudo/gravar" method="post">
-                <div>
+                <div>form_modelolaudo
                     <textarea id="laudo" name="laudo" class="jqte-test" ><?= @$obj->_texto; ?></textarea>
-                </div>
+                </div>Laudo
 
             <fieldset>
                 <div>
-                <label>Nome</label>
+                <label>Nome</label>form_modelolaudo
                     <input type="hidden" name="ambulatorio_modelo_laudo_id" class="texto10" value="<?= @$obj->_ambulatorio_modelo_laudo_id; ?>" />
                     <input type="text" name="txtNome" id="txtNome" class="texto10" value="<?= @$obj->_nome; ?>" />
                 </div>
@@ -23,13 +23,13 @@
                         <select name="medico" id="medico" class="size4">
                             <? foreach ($medicos as $value) : ?>
                                 <option value="<?= $value->operador_id; ?>"<?
-                            if (@$obj->_medico_id == $value->operador_id):echo'selected';
+                            if (@$obj->_medform_modelolaudoico_id == $value->operador_id):echo'selected';
                             endif;
                                 ?>><?php echo $value->nome; ?></option>
                                     <? endforeach; ?>
                         </select>
                     </div>
-                <div>
+                <div>form_modelolaudo
                     <label>Procedimento</label>
                         <select name="procedimento" id="procedimento" class="size4">
                             <? foreach ($procedimentos as $value) : ?>
@@ -39,7 +39,7 @@
                                 ?>><?php echo $value->nome; ?></option>
                                     <? endforeach; ?>
                         </select>
-                    </div>
+                    </div>form_modelolaudo
                 <hr/>
                 <button type="submit" name="btnEnviar">Enviar</button>
                 <button type="reset" name="btnLimpar">Limpar</button>

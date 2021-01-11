@@ -401,10 +401,3 @@
 //                                                window.location.reload();
 //                                            }
 //                                        }
-
-    });
-
-    setInterval(function () {
-        window.location.reload();
-    }, 180000);
-</script>

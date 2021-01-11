@@ -11,9 +11,7 @@
                         "btngrp btngrp btngrp";
 
 }
-.card-header{
-    padding: 0; !important;
-}
+
 .alert {
     grid-area: alert;
 }

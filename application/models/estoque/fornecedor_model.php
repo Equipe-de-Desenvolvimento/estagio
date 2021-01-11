@@ -30,7 +30,8 @@ class fornecedor_model extends Model {
                             razao_social,
                             cnpj,
                             cpf,
-                            telefone');
+                            telefone,
+                            email');
         $this->db->from('tb_estoque_fornecedor');
         if (isset($args['nome']) && strlen($args['nome']) > 0) {
             $this->db->where('razao_social ilike', "%" . $args['nome'] . "%");
@@ -44,7 +45,8 @@ class fornecedor_model extends Model {
         $this->db->select('estoque_fornecedor_id,
                             fantasia,
                             razao_social,
-                            cnpj');
+                            cnpj,
+                            email');
         $this->db->from('tb_estoque_fornecedor');
         $this->db->where('ativo', 'true');
         if ($parametro != null) {
@@ -59,7 +61,8 @@ class fornecedor_model extends Model {
         $this->db->select('farmacia_fornecedor_id,
                             fantasia,
                             razao_social,
-                            cnpj');
+                            cnpj,
+                            email');
         $this->db->from('tb_farmacia_fornecedor');
         $this->db->where('ativo', 'true');
         if ($parametro != null) {
@@ -78,97 +81,108 @@ class fornecedor_model extends Model {
         return $return->result();
     }
 
-    function excluir($estoque_fornecedor_id) {
+function excluir($financeiro_credor_devedor_id) {
+
         $horario = date("Y-m-d H:i:s");
         $operador_id = $this->session->userdata('operador_id');
-        
-        // Excluindo credor associado a esse fornecedor
-        $result = $this->db->select('credor_devedor_id')->from('tb_estoque_fornecedor')->where('estoque_fornecedor_id', $estoque_fornecedor_id)->get()->result();
-        @$credor_id = (int)$result[0]->credor_devedor_id;
-        
-        $this->db->select('convenio_id')->from('tb_convenio')->where('ativo', 't')->where('credor_devedor_id', @$credor_id);
-        $convenio = $this->db->get()->result();
-        
-//        $this->db->select('cep')->from('tb_estoque_fornecedor')->where('ativo', 't')->where('credor_devedor_id', @$credor_id);
-//        $fornecedor = $this->db->get()->result();
-        
-        $this->db->select('operador_id')->from('tb_operador')->where('ativo', 't')->where('credor_devedor_id', @$credor_id);
-        $operador = $this->db->get()->result();
-        
-        if(count($convenio) == 0 && count($operador) == 0){
-            $this->db->set('ativo', 'f');
-            $this->db->set('data_atualizacao', $horario);
-            $this->db->set('operador_atualizacao', $operador_exclusao_id);
-            $this->db->where('financeiro_credor_devedor_id', $credor_id);
-            $this->db->update('tb_financeiro_credor_devedor');
-        }
-        
         $this->db->set('ativo', 'f');
         $this->db->set('data_atualizacao', $horario);
         $this->db->set('operador_atualizacao', $operador_id);
-        $this->db->where('estoque_fornecedor_id', $estoque_fornecedor_id);
-        $this->db->update('tb_estoque_fornecedor');
+        $this->db->where('financeiro_credor_devedor_id', $financeiro_credor_devedor_id);
+        $this->db->update('tb_financeiro_credor_devedor');
         $erro = $this->db->_error_message();
         if (trim($erro) != "") // erro de banco
             return -1;
         else
             return 0;
     }
-
-    function gravar() {
+    
+    
+    function gravarunificarcredor() {
         try {
+            $horario = date("Y-m-d H:i:s");
+            $operador_id = $this->session->userdata('operador_id');
+            // Antigo
+            $financeiro_credor_devedor_id = $_POST['credor_devedor_id_antigo'];
+            // Novo
+            $credor_devedor_novo = $_POST['credor_devedor_id'];
+
+            $this->db->set('credor_devedor_id', $credor_devedor_novo);
+            $this->db->where('credor_devedor_id', $financeiro_credor_devedor_id);
+            $this->db->update('tb_convenio');
+
+            $this->db->set('nome', $credor_devedor_novo);
+            $this->db->where('nome', $financeiro_credor_devedor_id);
+            $this->db->update('tb_entradas');
+
+            $this->db->set('credor_devedor_id', $credor_devedor_novo);
+            $this->db->where('credor_devedor_id', $financeiro_credor_devedor_id);
+            $this->db->update('tb_estoque_fornecedor');
+
+            $this->db->set('credor_devedor_id', $credor_devedor_novo);
+            $this->db->where('credor_devedor_id', $financeiro_credor_devedor_id);
+            $this->db->update('tb_farmacia_fornecedor');
+
+            $this->db->set('credor', $credor_devedor_novo);
+            $this->db->where('credor', $financeiro_credor_devedor_id);
+            $this->db->update('tb_financeiro_contaspagar');
+
+            $this->db->set('devedor', $credor_devedor_novo);
+            $this->db->where('devedor', $financeiro_credor_devedor_id);
+            $this->db->update('tb_financeiro_contasreceber');
+
+            $this->db->set('devedor', $credor_devedor_novo);
+            $this->db->where('devedor', $financeiro_credor_devedor_id);
+            $this->db->update('tb_financeiro_contasreceber');
+
+            $this->db->set('credor_devedor_id', $credor_devedor_novo);
+            $this->db->where('credor_devedor_id', $financeiro_credor_devedor_id);
+            $this->db->update('tb_operador');
+
+            $this->db->set('ativo', 'f');
+            $this->db->set('data_atualizacao', $horario);
+            $this->db->set('operador_atualizacao', $operador_id);
+            $this->db->where('financeiro_credor_devedor_id', $financeiro_credor_devedor_id);
+            $this->db->update('tb_financeiro_credor_devedor');
+
+            $this->db->set('credor_antigo', $credor_devedor_novo);
+            $this->db->set('credor_novo', $credor_devedor_novo);
+            $this->db->set('data', $horario);
+            $this->db->set('operador_id', $operador_id);
+            $this->db->insert('tb_unificar_credor');
+           
+            return true;
+        } catch (Exception $exc) {
+            return -1;
+        }
+    }
+
+function gravar() {
+        try {
+            $cpf = str_replace("-", "", str_replace(".", "", $_POST['txtCPF']));
             $cnpj = str_replace("-", "", str_replace("/", "", str_replace(".", "", $_POST['txtCNPJ'])));
-            $cpf  = str_replace("-", "", str_replace(".", "", $_POST['txtCPF']));
-            
-            $result = array();
-            $this->db->select('financeiro_credor_devedor_id')->from('tb_financeiro_credor_devedor');
-            $this->db->where("(cnpj = '$cnpj' AND cnpj != '')OR (cpf = '$cpf' AND cpf != '')");            
-            $this->db->where('razao_social', $_POST['txtrazaosocial']);
-            $this->db->where('ativo', 't');
-            $result = $this->db->get()->result();
-            
-//            var_dump($result); die;
-            
-            if ( count($result) == 0 ) {
-                $this->db->set('razao_social', $_POST['txtrazaosocial']);
-                $this->db->set('cnpj', $cnpj);
-                $this->db->set('cpf', $cpf);
-                $this->db->set('telefone', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['telefone']))));
-                $this->db->set('celular', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['celular']))));
-                if ($_POST['txttipo_id'] != '') {
-                    $this->db->set('tipo_logradouro_id', $_POST['txttipo_id']);
-                }
-                if ($_POST['municipio_id'] != '') {
-                    $this->db->set('municipio_id', $_POST['municipio_id']);
-                }
-                $this->db->set('logradouro', $_POST['endereco']);
-                $this->db->set('numero', $_POST['numero']);
-                $this->db->set('bairro', $_POST['bairro']);
-                $this->db->set('complemento', $_POST['complemento']);
-                $horario = date("Y-m-d H:i:s");
-                $operador_id = $this->session->userdata('operador_id');
-                $this->db->set('data_cadastro', $horario);
-                $this->db->set('operador_cadastro', $operador_id);
-                $this->db->insert('tb_financeiro_credor_devedor');
-                $financeiro_credor_devedor_id = $this->db->insert_id();
+
+//            var_dump($cnpj, $cpf);
+
+            $this->db->select('financeiro_credor_devedor_id');
+            $this->db->from('tb_financeiro_credor_devedor fcd');
+            if ($cpf != '') {
+                $this->db->where("fcd.cpf", $cpf);
             }
-            else{
-                $financeiro_credor_devedor_id = $result[0]->financeiro_credor_devedor_id;
+            if ($cnpj != '') {
+                $this->db->where("fcd.cnpj", $cnpj);
             }
-            
+            $this->db->where("fcd.ativo", 't');
+            $return = $this->db->get()->result();
+
+
             /* inicia o mapeamento no banco */
-            $estoque_fornecedor_id = $_POST['txtestoquefornecedorid'];
+            $financeiro_credor_devedor_id = $_POST['txtcadastrosfornecedorid'];
             $this->db->set('razao_social', $_POST['txtrazaosocial']);
-            $this->db->set('fantasia', $_POST['txtfantasia']);
             $this->db->set('cep', $_POST['txttipo_id']);
+            $this->db->set('cpf', $cpf);
             if ($cnpj != '') {
                 $this->db->set('cnpj', $cnpj);
-            }
-            if ($cpf != '') {
-                $this->db->set('cpf', $cpf);
-            }
-            if ($financeiro_credor_devedor_id != "") {
-                $this->db->set('credor_devedor_id', $financeiro_credor_devedor_id);
             }
             $this->db->set('telefone', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['telefone']))));
             $this->db->set('celular', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['celular']))));
@@ -178,6 +192,9 @@ class fornecedor_model extends Model {
             if ($_POST['municipio_id'] != '') {
                 $this->db->set('municipio_id', $_POST['municipio_id']);
             }
+            $this->db->set('tipo_pessoa', $_POST['tipo_pessoa']);
+            $this->db->set('email', $_POST['email']);
+            $this->db->set('observacao', $_POST['observacao']);
             $this->db->set('logradouro', $_POST['endereco']);
             $this->db->set('numero', $_POST['numero']);
             $this->db->set('bairro', $_POST['bairro']);
@@ -185,27 +202,35 @@ class fornecedor_model extends Model {
             $horario = date("Y-m-d H:i:s");
             $operador_id = $this->session->userdata('operador_id');
 
-            if ($_POST['txtestoquefornecedorid'] == "") {// insert
+
+            if ($_POST['txtcadastrosfornecedorid'] == "") {// insert
+//                echo "<pre>";
+//                var_dump($return); die;
+                if (count($return) > 0) {
+                    return -1;
+                }
+
                 $this->db->set('data_cadastro', $horario);
                 $this->db->set('operador_cadastro', $operador_id);
-                $this->db->insert('tb_estoque_fornecedor');
+                $this->db->insert('tb_financeiro_credor_devedor');
                 $erro = $this->db->_error_message();
                 if (trim($erro) != "") // erro de banco
                     return -1;
                 else
-                    $estoque_fornecedor_id = $this->db->insert_id();
+                    $financeiro_credor_devedor_id = $this->db->insert_id();
             }
             else { // update
                 $this->db->set('data_atualizacao', $horario);
                 $this->db->set('operador_atualizacao', $operador_id);
-                $this->db->where('estoque_fornecedor_id', $estoque_fornecedor_id);
-                $this->db->update('tb_estoque_fornecedor');
+                $this->db->where('financeiro_credor_devedor_id', $financeiro_credor_devedor_id);
+                $this->db->update('tb_financeiro_credor_devedor');
             }
-            return $estoque_fornecedor_id;
+            return $financeiro_credor_devedor_id;
         } catch (Exception $exc) {
             return -1;
         }
     }
+
 
     private function instanciar($estoque_fornecedor_id) {
 
@@ -217,6 +242,7 @@ class fornecedor_model extends Model {
                                f.cpf,
                                f.celular,
                                f.telefone,
+                               f.email,
                                f.tipo_logradouro_id,
                                f.logradouro,
                                f.numero,

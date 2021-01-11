@@ -252,10 +252,7 @@ function debug($object) {
                             <li>
                                 <a href="<?= base_url() ?>cadastros/pacientes">Cadastro</a>
                             </li>
-
-                            <li>
-                                <a href="<?= base_url() ?>ambulatorio/exame/listarmultifuncaoconsultacalendario">Agendamento</a>
-                            </li>
+            
                             <!-- <a class="dropdown-item" href="<?= base_url() ?>ambulatorio/exame/listarmultifuncaoconsulta">Agendamento</a> -->
                         </ul>
                     </li>
@@ -273,8 +270,8 @@ function debug($object) {
 
 
             <li class="nav-item dropdown">
-                <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-user-md fa-fw"></i>Atendimento </a>
+            
+                    
 
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li class="dropdown">
@@ -292,9 +289,7 @@ function debug($object) {
                 </ul>
             </li>
             <li class="nav-item dropdown">
-                <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-edit fa-fw"></i>Geral </a>
-
+                
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li class="dropdown">
                         <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -490,8 +485,7 @@ function debug($object) {
             </li>
 
             <li class="nav-item dropdown">
-                <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-cubes"></i>Estoque </a>
+
 
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li>
@@ -587,13 +581,14 @@ function debug($object) {
 
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-cogs fa-fw"></i>Configurações </a>
+                    <i class="fa fa-cogs fa-fw"></i>Configurações</a>
 
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li class="dropdown">
                         <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-address-book-o fa-fw"></i> Recepção <span class="fa arrow"></span></a>
-                        <ul class="dropdown-menu">
+                   
+                            <ul class="dropdown-menu">
                             <li>
                                 <a class="dropdown-item drop-head" href="<?= base_url() ?>seguranca/operador">Listar Profissionais</a>
                             </li>
@@ -618,68 +613,78 @@ function debug($object) {
                             <li>
                                 <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/guia/configurarimpressao">Configurar Impressão</a>
                             </li>
-                            <li>
+                               
+                                <li>
                                 <!--<a href="<?= base_url() ?>ambulatorio/modelodeclaracao">Modelo Declara&ccedil;&atilde;o</a>-->
                             </li>
-                        </ul>
+                                
+                            </ul>
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-clone fa-fw"></i> Modelos</a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/modelolaudo/pesquisar">Manter Modelo Laudo</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/modelolinha/pesquisar">Manter Modelo Linha</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/modeloreceita/pesquisar">Manter Modelo Receita</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/modeloatestado/pesquisar">Manter Modelo Atestado</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/modeloreceitaespecial/pesquisar">Manter Modelo R. Especial</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/modelodeclaracao/pesquisar">Modelo Declara&ccedil;&atilde;o</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/modelosolicitarexames/pesquisar">Manter Modelo S.Exames</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/modelomedicamento/pesquisar">Manter Medicamento</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/modelomedicamento/pesquisarunidade">Manter Medicamento Unidade</a>
-                            </li>
-                            <li>
+                             <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-clone fa-fw"></i> Instituição </a>
+                            <ul class="dropdown-menu">
+                               <li>
+                                <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/modelolaudo/pesquisar">Manter Instituição</a>
+                               </li>
+                            </ul>
+                            
+                             <!--<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                            <!--<i class="fa fa-clone fa-fw"></i> Modelos</a>-->
+                        <!--<ul class="dropdown-menu">-->
+                            <!--<li>-->
+                                <!--<a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/modelolaudo/pesquisar">Manter Modelo Laudo</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/modelolinha/pesquisar">Manter Modelo Linha</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/modeloreceita/pesquisar">Manter Modelo Receita</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/modeloatestado/pesquisar">Manter Modelo Atestado</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/modeloreceitaespecial/pesquisar">Manter Modelo R. Especial</a>-->
+                        <!--    </li>-->
+                            <!--<li>-->
+                                <!--<a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/modelodeclaracao/pesquisar">Modelo Declara&ccedil;&atilde;o</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/modelosolicitarexames/pesquisar">Manter Modelo S.Exames</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/modelomedicamento/pesquisar">Manter Medicamento</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/modelomedicamento/pesquisarunidade">Manter Medicamento Unidade</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
                                 <!--<a href="<?= base_url() ?>ambulatorio/modelolinha">Manter Modelo Linha</a>-->
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-medkit fa-fw"></i> Procedimentos <span class="fa arrow"></span></a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/procedimento/pesquisartuss">Manter Procedimentos TUSS</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/procedimento">Manter Procedimentos</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/procedimentoplano">Manter Procedimentos Convenio</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/convenio">Manter Convenio</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/procedimentoplano/procedimentopercentualpromotor">Manter Percentual Recomendação</a>
-                            </li>
-                        </ul>
-                    </li>
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
+                    <!--<li class="dropdown">-->
+                        <!--<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                            <!--<i class="fa fa-medkit fa-fw"></i> Procedimentos <span class="fa arrow"></span></a>-->
+                        <!--<ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+                            <!--<li>-->
+                                <!--<a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/procedimento/pesquisartuss">Manter Procedimentos TUSS</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/procedimento">Manter Procedimentos</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/procedimentoplano">Manter Procedimentos Convenio</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/convenio">Manter Convenio</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/procedimentoplano/procedimentopercentualpromotor">Manter Percentual Recomendação</a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
                     <li class="dropdown">
                         <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-money fa-fw"></i> Financeiro <span class="fa arrow"></span></a>
@@ -699,18 +704,18 @@ function debug($object) {
 
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-gear fa-fw"></i> Aplicativo <span class="fa arrow"></span></a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/empresa/listarpostsblog">Posts Blog</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/empresa/listarpesquisaSatisfacao">Pesquisa Satisfação</a>
-                            </li>
-                        </ul>
-                    </li>
+                    <!--<li class="dropdown">-->
+                        <!--<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                            <!--<i class="fa fa-gear fa-fw"></i> Aplicativo <span class="fa arrow"></span></a>-->
+                        <!--<ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+                            <!--<li>-->
+                                <!--<a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/empresa/listarpostsblog">Posts Blog</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/empresa/listarpesquisaSatisfacao">Pesquisa Satisfação</a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
                     <li class="dropdown">
                         <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-gear fa-fw"></i> Configuração <span class="fa arrow"></span></a>
@@ -721,7 +726,7 @@ function debug($object) {
                         </ul>
                     </li>
                 </ul>
-            </li>
+            <!--</li>-->
             <li class="nav-item nav-item-user dropdown">
                 <a class="dropdown-toggle" href="#" id="navbar-primary_dropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Seja bem-vindo, <?= $this->session->userdata('login'); ?>

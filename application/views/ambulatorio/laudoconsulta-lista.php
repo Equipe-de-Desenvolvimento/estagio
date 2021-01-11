@@ -62,8 +62,7 @@
                                     <option value=""> </option>
                                     <? foreach ($medicos as $value) : ?>
                                         <option value="<?= $value->operador_id; ?>" <?
-                                        if (@$_GET['medico'] == $value->operador_id):echo 'selected';
-                                        endif;
+                                    
                                         ?>><?php echo $value->nome; ?></option>
                                     <? endforeach; ?>
                                 </select>
