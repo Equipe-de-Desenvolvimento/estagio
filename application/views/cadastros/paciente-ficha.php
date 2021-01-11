@@ -32,7 +32,7 @@
                                 <?= (in_array('nome_mae', $campos_obrigatorios)) ? 'required' : '' ?>/>
                             <? if (@$empresapermissoes[0]->ocupacao_mae == 't') { ?>
                                 <label>Ocupação da M&atilde;e</label>
-                                <input type="text"  name="ocupacao_mae" id="ocupacao_mae" class="form-control texto06" value="<?= @$obj[0]->ocupacao_mae; ?>"/>
+                                <input type="text" name="ocupacao_mae" id="ocupacao_mae" class="form-control texto06" value="<?= @$obj[0]->ocupacao_mae; ?>"/>
                             <? } ?>
                         </div>
 
@@ -79,7 +79,7 @@
                         <div>
                             <td>
                                 <label>CPF da M&atilde;e</label>
-                                <input type="text" <?= (in_array('cpf_mae', $campos_obrigatorios)) ? 'required' : '' ?> name="cpf_mae" id ="txtCpfmae" maxlength="11" alt="cpf" class="form-control texto03" value="<?= @$obj[0]->cpf_mae; ?>"/>
+                                <input type="text" id="txtCpfmae" <?= (in_array('cpf_mae', $campos_obrigatorios)) ? 'required' : '' ?> name="cpf_mae" id ="txtCpfmae" maxlength="11" alt="cpf" class="form-control texto03" value="<?= @$obj[0]->cpf_mae; ?>"/>
                             </td>
                         </div>
                         <div>
@@ -87,7 +87,7 @@
 
                             <td>
                                 <label>CPF do Pai</label>
-                                <input type="text" <?= (in_array('cpf_pai', $campos_obrigatorios)) ? 'required' : '' ?> name="cpf_pai" id ="txtCpfpai"   maxlength="11" alt="cpf" class="form-control texto03" value="<?= @$obj->_cpf_pai; ?>"/>
+                                <input type="text" id="txtCpfpai" <?= (in_array('cpf_pai', $campos_obrigatorios)) ? 'required' : '' ?> name="cpf_pai" id ="txtCpfpai"   maxlength="11" alt="cpf" class="form-control texto03" value="<?= @$obj->_cpf_pai; ?>"/>
                             </td>
 
                         </div>
@@ -210,7 +210,7 @@
                             <div>
                                 <label>CPF</label>
                                 <input type="text" <?= (in_array('cpf', $campos_obrigatorios)) ? 'required' : '' ?> name="cpf" id ="txtCpf" onblur="verificarCPF();" maxlength="11" alt="cpf" class="form-control texto03" value="<?= @$obj->_cpf; ?>"/>
-                                <input type="checkbox" name="cpf_responsavel" id ="cpf_responsavel" <? if (@$obj->_cpf_responsavel_flag == 't') echo "checked"; ?>> CPF do resposável
+                                <input type="checkbox" name="cpf_responsavel" id ="txtCpf" <? if (@$obj->_cpf_responsavel_flag == 't') echo "checked"; ?>> CPF do resposável
                             </div>
                         </div>
                         <div class="col-lg-2">

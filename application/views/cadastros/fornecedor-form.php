@@ -1,122 +1,96 @@
 <div class="content"> <!-- Inicio da DIV content -->
     <div id="accordion">
-        <h3 class="singular"><a href="#">Cadastro de Credor/Devedor</a></h3>
+        <h3 class="alert alert-info"><a href="#">Cadastro de Credor/Devedor</a></h3>
 
         <div>
           <form name="form_fornecedor" id="form_fornecedor" action="<?= base_url() ?>cadastros/fornecedor/gravar" method="post">
-                
-            <dl class="dl_desconto_lista">
+            <!--<dl class="dl_desconto_lista">-->
+            
+            <div class="row-reverse">
                 <div class="col-lg-2">
-               
-                    <dt>
-                        <label>Raz&atilde;o social*</label>
-                    </dt>
-                    <div class="col-lg-4">
-                    <dd>
-                        <input type="hidden" name="txtcadastrosfornecedorid" class="texto07" value="<?= @$obj->_financeiro_credor_devedor_id; ?>" />
-                        <input type="text" name="txtrazaosocial" class="texto07" value="<?= @$obj->_razao_social; ?>" />
-                    </dd>
-                    <dt>
-                        <label>CNPJ*</label>
-                    </dt>
-                    <dd>
-                        <input type="text" id="txtCnpj" name="txtCNPJ" maxlength="11" alt="cnpj" class="texto07" value="<?= @$obj->_cnpj; ?>" />
-                    </dd>
-                    <dt>
-                        <label>CPF*</label>
-                    </dt>
-                    
-                    <dd>
-                        <input type="text" id="txtCpf" name="txtCPF" maxlength="11" alt="cpf" class="texto07" value="<?= @$obj->_cpf; ?>" />
-                    </dd>
+                    <div>  
+                        <label>Raz&atilde;o social</label>
+                            <input type="hidden" name="txtcadastrosfornecedorid" value="<?= @$obj->_financeiro_credor_devedor_id; ?>" />
+                            <input type="text" placeholder="Nome do Credor/Devedor" class="form-control" name="txtrazaosocial" value="<?= @$obj->_razao_social; ?>" />
+                    </div>
+                    <div>
+                            <label>CNPJ</label>
+                            <input type="text" id="txtCnpj" class="form-control" placeholder="CNPJ" name="txtCNPJ" maxlength="11" alt="cnpj" value="<?= @$obj->_cnpj; ?>" />
+                    </div>
+                    <div>
+                            <label>CPF</label>
+                            <input type="text" id="txtCpf" class="form-control" placeholder="ex:000.000.000-00" name="txtCPF" maxlength="11" alt="cpf" value="<?= @$obj->_cpf; ?>" />
+                    </div>
+                    <div>
+                        <label>Endere&ccedil;o</label>
+                        <input type="text" class="form-control" placeholder="Endereço do Credor/Devedor" id="txtendereco" name="endereco" value="<?= @$obj->_logradouro; ?>" />
                     </div>
                 </div>    
-                    
-                <div class="">    
-                    <div class="col-lg-3">
-                    <dt>
+            </div>  
+            <div class="row-reverse">    
+                <div class="col-lg-2">
+                    <div>
                         <label>Tipo Pessoa</label>
-                    </dt>
-                    <dd>
-                        <select name="tipo_pessoa" id="tipo_pessoa" class="size4" required="">
-
-                            <option value="">Selecione</option>
-                            <option <?=(@$obj->_tipo_pessoa == 'pessoa_f')? 'selected':'' ; ?> value="pessoa_f">Pessoa Física</option>
-                            <option <?=(@$obj->_tipo_pessoa == 'pessoa_j')? 'selected':'' ; ?> value="pessoa_j">Pessoa Jurídica</option>
-
-                        </select>
-                    </dd>
-                    <dt>
-                        <label>Endere&ccedil;o*</label>
-                    </dt>
-                    <dd>
-                        <input type="text" id="txtendereco" class="texto07" name="endereco" value="<?= @$obj->_logradouro; ?>" />
-                    </dd>
-                    <dt>
+                            <select name="tipo_pessoa" class="form-control" id="tipo_pessoa" class="size6" required="">
+                                <option value="">Selecione</option>
+                                <option <?=(@$obj->_tipo_pessoa == 'pessoa_f')? 'selected':'' ; ?> value="pessoa_f">Pessoa Física</option>
+                                <option <?=(@$obj->_tipo_pessoa == 'pessoa_j')? 'selected':'' ; ?> value="pessoa_j">Pessoa Jurídica</option>
+                            </select>
+                    </div>
+                    <div>
                         <label>N&uacute;mero</label>
-                    </dt>
-                    <dd>
-                        <input type="text" id="txtNumero" class="texto07" name="numero" value="<?= @$obj->_numero; ?>" />
-                    </dd>
+                        <input type="text" class="form-control" id="txtNumero" placeholder="(00)00000-0000" name="numero" value="<?= @$obj->_numero; ?>" />
                     </div>
-                </div>
-                <div class="col-lg-3">
-                    <dt>
+                    <div>
                         <label>Bairro</label>
-                    </dt>
-                    <dd>
-                        <input type="text" id="txtBairro" class="texto07" name="bairro" value="<?= @$obj->_bairro; ?>" />
-                    </dd>
-                    <dt>
-                        <label>Complemento</label>
-                    </dt>
-                    <dd>
-                        <input type="text" id="txtComplemento" class="texto10" name="complemento" value="<?= @$obj->_complemento; ?>" />
-                    </dd>
-                    <dt>
+                        <input type="text" class="form-control" id="txtBairro" placeholder="Bairro do Credor/Devedor" name="bairro" value="<?= @$obj->_bairro; ?>" />
+                    </div>
+                    <div>
                         <label>Telefone</label>
-                    </dt>
-                    <dd>
-                        <input type="text" id="txtTelefone" class="texto07" name="telefone" alt="phone" value="<?= @$obj->_telefone; ?>" />
-                    </dd>
-                </div>    
-                    
+                        <input type="text" class="form-control" id="txtTelefone" placeholder="(00)00000-0000" name="telefone" alt="phone" value="<?= @$obj->_telefone; ?>" />
+                    </div>
+                </div>   
+            </div>
+            <div class="row-reverse">
                 <div class="col-lg-2">
-                    <div class="form-group">
-                    <dt>
+                    <div>
                         <label>Celular</label>
-                    </dt>
-                    <dd>
-                        <input type="text" id="txtCelular" class="texto07" name="celular" alt="phone" value="<?= @$obj->_celular; ?>" />
-                    </dd>
-                    <dt>
+                        <input type="text" id="txtCelular" class="form-control" placeholder="(00)00000-0000" name="celular" alt="phone" value="<?= @$obj->_celular; ?>" />
+                    </div>
+                    <div>
                         <label>Email</label>
-                    </dt>
-                    <dd>
-                        <input type="text" id="txtEmail" alt="email" class="texto07" name="email" value="<?= @$obj->_email; ?>" />
-                    </dd>
-                    <dt>
+                        <input type="text" id="txtEmail" class="form-control" placeholder="Email Principal" alt="email" name="email" value="<?= @$obj->_email; ?>" />
+                    </div>
+                    <div>
                         <label>Município</label>
-                    </dt>
-                    <dd>
-                        <input type="hidden" id="txtCidadeID" class="texto_id" name="municipio_id" value="<?= @$obj->_municipio_id; ?>" readonly="true" />
-                        <input type="text" id="txtCidade" class="texto04" name="txtCidade" value="<?= @$obj->_nome; ?>" />
-                    </dd>
+                        <input type="hidden" id="txtCidadeID" class="form-control" placeholder="Municipio" name="municipio_id" value="<?= @$obj->_municipio_id; ?>" readonly="true" />
+                        <input type="text" id="txtCidade" class="form-control" name="txtCidade" value="<?= @$obj->_nome; ?>" />
                     </div>
                 </div>
-                    
-                <div>
-                   
-                    <dd class="dd_texto">
-                        <label>Observa&ccedil;&atilde;o</label>
-                        <textarea cols="70" rows="3" name="observacao" id="observacao"><?= @$obj->_observacao; ?></textarea><br/>
-                    </dd>
+            </div>  
+            <div class="row-reverse">
+                <div class="col-lg-4">
+                    <div>
+                        <label>Complemento</label>
+                        <input type="text" id="txtComplemento" class="form-control" placeholder="complemento" alt="email" name="complemento" value="<?= @$obj->_complemento; ?>" />
+                    </div>
                 </div>
-                </dl>   
-                <hr/>
-                <button type="submit" name="btnEnviar">Enviar</button>
-                <button type="reset" name="btnLimpar">Limpar</button>
-                <button type="button" id="btnVoltar" name="btnVoltar">Voltar</button>
+            </div>
+            <div class="row">
+                <div class="col-lg-6" >
+                    <div>
+                        <label>Observa&ccedil;&atilde;o</label>
+                        <textarea cols="70" rows="3" class="form-control" name="observacao" placeholder="Observações sobre o Credor/Devedor" id="observacao"><?= @$obj->_observacao; ?></textarea><br/>
+                    </div>
+                </div>
+            </div>
+            <div class="row-reverse">
+                <!--<div class="col-lg-2" >-->
+                    <button type="submit" class="btn btn-success btn-sm" name="btnEnviar">Enviar</button>
+                    <button type="reset"  class="btn btn-warning btn-sm" name="btnLimpar">Limpar</button>
+                    <button type="button" id="btnVoltar" class="btn btn-secondary btn-sm" name="btnVoltar">Voltar</button>
+                </div>  
+            </div>
             </form>
         </div>
     </div>

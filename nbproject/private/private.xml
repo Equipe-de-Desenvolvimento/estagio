@@ -6,11 +6,14 @@
             <file>file:/home/sisprod/projetos/estagio/application/views/cadastros/instituicao-ficha.php</file>
             <file>file:/home/sisprod/projetos/estagio/application/controllers/cadastros/pacientes.php</file>
             <file>file:/home/sisprod/projetos/estagio/application/controllers/cadastros/fornecedor.php</file>
+            <file>file:/home/sisprod/projetos/estagio/application/views/cadastros/paciente-ficha.php</file>
+            <file>file:/home/sisprod/projetos/estagio/application/controllers/ambulatorio/modelolaudo.php</file>
             <file>file:/home/sisprod/projetos/estagio/application/models/estoque/fornecedor_model.php</file>
             <file>file:/home/sisprod/projetos/estagio/application/views/cadastros/fornecedor-lista.php</file>
             <file>file:/home/sisprod/projetos/estagio/application/views/cadastros/fornecedor-form.php</file>
             <file>file:/home/sisprod/projetos/estagio/application/models/cadastro/paciente_model.php</file>
             <file>file:/home/sisprod/projetos/estagio/application/views/ambulatorio/modelolaudo-lista.php</file>
+            <file>file:/home/sisprod/projetos/estagio/application/views/cadastros/pacientes-lista.php</file>
         </group>
     </open-files>
 </project-private>

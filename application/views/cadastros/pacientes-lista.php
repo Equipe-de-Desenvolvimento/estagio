@@ -22,7 +22,7 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                     <div>
                                         <h6>CPF</h6>
                                         <div>
-                                            <input type="text" name="cpf" placeholder="CPF" class="texto05" value="<?php echo @$_GET['cpf']; ?>" />
+                                            <input type="text" id="txtCpf" name="cpf" placeholder="CPF" class="texto05" value="<?php echo @$_GET['cpf']; ?>" />
                                         </div>
                                     </div>
                                     <div>
@@ -167,7 +167,7 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                                 <td class="<?php echo $estilo_linha; ?>" width="150px;"><?php echo substr($item->cpf, 8, 3) . '.' . substr($item->cpf, 6, 3) . '.' . substr($item->cpf, 0, 3). '-' . substr($item->cpf, 0, 2);?></td>
                                                 <td class="<?php echo $estilo_linha; ?>" width="150px;"><?php echo substr($item->nascimento, 8, 2) . '/' . substr($item->nascimento, 5, 2) . '/' . substr($item->nascimento, 0, 4); ?></td>
                                                 <td class="<?php echo $estilo_linha; ?>" width="150px;"><?php echo  "(" . substr($item->telefone, 0, 2) . ")" . substr($item->telefone, 2, strlen($item->telefone) - 7) .  "" . substr($item->telefone, 6, 1) . "-" . substr($item->telefone, 7 , strlen($item->telefone) - 2); ?></td>
-                                                <td class="<?php echo $estilo_linha; ?>" width="150px;"><?php echo $item->celular; ?></td>
+                                                <td class="<?php echo $estilo_linha; ?>" width="150px;"><?php echo  "(" . substr($item->celular, 0, 2) . ")" . substr($item->celular, 2, strlen($item->celular) - 7) .  "" . substr($item->celular, 6, 1) . "-" . substr($item->celular, 7 , strlen($item->celular) - 2); ?></td>
                                                 <td class="<?php echo $estilo_linha; ?>" width="150px;"><?php echo $item->email; ?></td>
                                                 <td class="<?php echo $estilo_linha; ?>" width="150px;"><?php echo $item->email_alternativo; ?></td>
                                                 <td class="<?php echo $estilo_linha; ?>" width="150px;"><?php echo $item->municipio; ?></td>

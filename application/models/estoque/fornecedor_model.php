@@ -83,18 +83,18 @@ class fornecedor_model extends Model {
 
 function excluir($financeiro_credor_devedor_id) {
 
-        $horario = date("Y-m-d H:i:s");
+//        $horario = date("Y-m-d H:i:s");
         $operador_id = $this->session->userdata('operador_id');
         $this->db->set('ativo', 'f');
         $this->db->set('data_atualizacao', $horario);
         $this->db->set('operador_atualizacao', $operador_id);
         $this->db->where('financeiro_credor_devedor_id', $financeiro_credor_devedor_id);
         $this->db->update('tb_financeiro_credor_devedor');
-        $erro = $this->db->_error_message();
-        if (trim($erro) != "") // erro de banco
-            return -1;
-        else
-            return 0;
+//        $erro = $this->db->_error_message();
+//        if (trim($erro) != "") // erro de banco
+//            return -1;
+//        else
+//            return 0;
     }
     
     

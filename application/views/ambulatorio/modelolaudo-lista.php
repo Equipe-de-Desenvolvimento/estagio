@@ -139,7 +139,7 @@ $excluircadastro_id = $this->session->userdata('excluircadastro_id');
                                         
                                                 <td class="<?php echo $estilo_linha; ?>"width="200px"><?php echo $item->nome; ?></td>
                                                 <td class="<?php echo $estilo_linha; ?>"width="150px;" ><?php echo $item->cnpj; ?></td>
-                                                <td class="<?php echo $estilo_linha; ?>"width="150px;" ><?php echo substr($item->cpf, 8, 3) . '.' . substr($item->cpf, 6, 3) . '.' . substr($item->cpf, 0, 3). '-' . substr($item->cpf, 0, 2); ?></td>
+                                                <td class="<?php echo $estilo_linha; ?>"width="150px;" ><?php echo $item->cpf; ?></td>
                                                 <td class="<?php echo $estilo_linha; ?>"width="150px;" ><?php echo $item->email; ?></td>
                                                 <td class="<?php echo $estilo_linha; ?>"width="150px;" ><?php echo $item->email_alternativo; ?></td>
                                                 <td class="<?php echo $estilo_linha; ?>"width="150px;" ><?php echo $telefone; ?></td>
@@ -239,24 +239,24 @@ $excluircadastro_id = $this->session->userdata('excluircadastro_id');
 <link rel="stylesheet" href="<?php base_url() ?>css/jquery-ui-1.8.5.custom.css">
 <script type="text/javascript">
     
-     function verificarCPF() {
-        // txtCpf
-        var cpf = $("#txtCpf").val();
-        var paciente_id = $("#txtPacienteId").val();
-        if($('#cpf_responsavel').prop('checked')){
-            var cpf_responsavel = 'on';
-        }else{
-            var cpf_responsavel = '';
-        }
-        
-        // alert(cpf_responsavel);
-        $.getJSON('<?= base_url() ?>autocomplete/verificarcpfpaciente', {cpf: cpf, cpf_responsavel: cpf_responsavel, paciente_id: paciente_id,  ajax: true}, function (j) {
-            if(j != ''){
-                alert(j);
-                $("#txtCpf").val('');
-            }
-        });
-    }
+//     function verificarCPF() {
+//        // txtCpf
+//        var cpf = $("#txtCpf").val();
+//        var paciente_id = $("#txtPacienteId").val();
+//        if($('#cpf_responsavel').prop('checked')){
+//            var cpf_responsavel = 'on';
+//        }else{
+//            var cpf_responsavel = '';
+//        }
+//        
+//        // alert(cpf_responsavel);
+//        $.getJSON('<?= base_url() ?>autocomplete/verificarcpfpaciente', {cpf: cpf, cpf_responsavel: cpf_responsavel, paciente_id: paciente_id,  ajax: true}, function (j) {
+//            if(j != ''){
+//                alert(j);
+//                $("#txtCpf").val('');
+//            }
+//        });
+//    }
     
  jQuery("#txtTelefone")
             .mask("(99) 9999-9999?9")

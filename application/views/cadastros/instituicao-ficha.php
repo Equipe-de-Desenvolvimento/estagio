@@ -18,67 +18,68 @@
 //            echo'<pre>';
 //            var_dump(@$empresapermissoes); die;
             ?>
-            <div class="alert alert-info">Nova Instituição</div>
-            <div class=" ">
-                <div class="row">
-
-                    <div class="col-lg-3">
-                        
-                        
-                        <div class="form-group">
+            <div class="alert alert-info"><a href="#">Nova Instituição</a></div>
+                <div class="row-reverse">
+                    <div class="col-lg-2">
+                        <div>
                             <label>Razão Social</label>
-                            <input type="text" id="txtNome" name="nome" class="form-control texto05" value="<?= @$obj[0]->nome; ?>" required="true"  placeholder="Nome da Instituição">
+                            <input type="text" id="txtNome" name="nome" class="form-control" value="<?= @$obj[0]->nome; ?>" required="true"  placeholder="Nome da Instituição">
                             <input type="hidden" id="txtinstituicao" name="instituicao_id" value="<?= $instituicao_id; ?>" >
                         </div>
                         <div>
                             <label>Endereço</label>
-                                <input type="text" id="endereco" class="form-control texto05" name="endereco"  value="<?= @$obj[0]->endereco; ?>" required="true" placeholder="Endereço da Instituição" />
+                                <input type="text" id="endereco" class="form-control" name="endereco"  value="<?= @$obj[0]->endereco; ?>" required="true" placeholder="Endereço da Instituição" />
                         </div>
                         <div>
                             <label>Município</label>
                             <input type="hidden"  id="txtCidadeID" class="texto_id"  name="municipio_id" value="<?= @$obj[0]->municipio_id; ?>" readonly="true" />
-                            <input type="text" id="txtCidade" class="form-control texto05 eac-square" value="<?= @$obj[0]->municipio; ?>" placeholder="Município" name="txtCidade" />
-
-                        </div>
-                        <div >
+                            <input type="text" id="txtCidade" class="form-control" value="<?= @$obj[0]->municipio; ?>" placeholder="Município" name="txtCidade" />
+                        </div>    
+                        <div>
                             <label>Email</label>
-                            <input  placeholder="Email" type="text"  placeholder="Email da Instituição" id="txtEmail" onchange="validaremail()" name="emailprincipal"  class="form-control texto05" value="<?= @$obj[0]->email; ?>" />
+                            <input  placeholder="Email" type="text"  placeholder="Email da Instituição" id="txtEmail" onchange="validaremail()" name="emailprincipal"  class="form-control" value="<?= @$obj[0]->email; ?>" />
                              <?= (in_array('email', $campos_obrigatorios)) ? 'required' : '' ?>
-                        </div >
+                        </div>
+                    </div>
+                </div>
+                <div class="row-reverse">
+                    <div class="col-lg-2">
                         <div>
                             <label>Email Alternativo</label>
-                            <input type="text" id="txtemail_alternativo"  placeholder="Email alternativo da Instituição" onchange="validaremail_alternativo()" name="email_alternativo" class="form-control texto05" value="<?= @$obj[0]->email_alternativo; ?>"
-                                <?= (in_array('email_alternativo', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                            <input type="text" id="txtemail_alternativo"  placeholder="Email alternativo da Instituição" onchange="validaremail_alternativo()" name="email_alternativo" class="form-control" value="<?= @$obj[0]->email_alternativo; ?>"
+                            <?= (in_array('email_alternativo', $campos_obrigatorios)) ? 'required' : '' ?>/>
                         </div>
                         <div>
                             <label>CNPJ</label>
-                            <input type="text" placeholder="CNPJ" name="cnpj" id ="txtCnpj" onblur="verificarCNPJ();" maxlength="11" alt="cnpj" class="form-control texto05" value="<?= @$obj[0]->cnpj; ?>"/>
+                            <input type="text" placeholder="CNPJ" name="cnpj" id ="txtCnpj" onblur="verificarCNPJ();" alt="cnpj" class="form-control" value="<?= @$obj[0]->cnpj; ?>"/>
                             <?= (in_array('cnpj', $campos_obrigatorios)) ? 'required' : '' ?> 
                         </div>
                         <div>
                             <h6>CPF</h6>
-                            <div>
-                                <input type="text" name="cpf" id ="txtCpf" placeholder="CPF" onblur="verificarCPF();" maxlength="11" alt="cnpj" class="form-control texto05" value="<?= @$obj[0]->cpf; ?>" />
-                                <?= (in_array('cnpj', $campos_obrigatorios)) ? 'required' : '' ?> 
-                            </div>
-                        </div>
-                         <div class="col-lg-2">
-                   
-                      
-                    </div>
-                        
-
-                    </div>
-
-                    <div class="col-lg-2">
-                        <div class="form-group">
-                            <label>Whatsapp</label>
-                             <input type="text"  placeholder="(99)9999-9999" id="txtwhatsapp" name="whatsapp" class="form-control texto05" value="<?= @$obj[0]->whatsapp; ?>"
-
+                            <input type="text" name="cpf" id ="txtCpf" placeholder="CPF" onblur="verificarCPF();" alt="cpf" class="form-control" value="<?= @$obj[0]->cpf; ?>" />
+                            <?= (in_array('cnpj', $campos_obrigatorios)) ? 'required' : '' ?> 
                         </div>
                         <div>
-                            <td>
-                                <div class="form-group">
+                            <label>Whatsapp</label>
+                            <input type="text"  placeholder="(99)9999-9999" id="txtwhatsapp" name="whatsapp" class="form-control" value="<?= @$obj[0]->whatsapp; ?>"
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-reverse">
+                    <div class="col-lg-2">
+                        <div>
+                        <label>Tipo Pessoa</label>
+                            <select name="tipo_pessoa" class="form-control" id="tipo_pessoa" class="size6" required="">
+                                <option value="">Selecione</option>
+                                <option <?=(@$obj->_tipo_pessoa == 'pessoa_f')? 'selected':'' ; ?> value="pessoa_f">Pessoa Física</option>
+                                <option <?=(@$obj->_tipo_pessoa == 'pessoa_j')? 'selected':'' ; ?> value="pessoa_j">Pessoa Jurídica</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-reverse">
+                    <div class="col-lg-2">
                             <label>Telefone 1*</label>
                             <?
                             if (@$obj->_telefone != '' && strlen(@$obj->_telefone) > 3) {
@@ -93,10 +94,12 @@
                             }
                                 ?>
                             
-                            <input type="text"  placeholder="(99)9999-99999" id="txtTelefone" name="telefone" class="form-control texto05"  value="<?= @$obj[0]->telefone; ?>" <?= (in_array('telefone', $campos_obrigatorios)) ? 'required' : '' ?>/>
-                            <button class="btn btn-outline-danger btn-sm" type=button id="btnWhats" onclick="pegarWhats();"> WP </button>
-                        </div>
-                            <div class="form-group">
+                            <input type="text"  placeholder="(99)9999-99999" id="txtTelefone" name="telefone" class="form-control"  value="<?= @$obj[0]->telefone; ?>" <?= (in_array('telefone', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                            <!--<button class="btn btn-outline-danger btn-sm" type=button id="btnWhats" onclick="pegarWhats();"> WP </button>-->
+                    </div>
+                </div>
+                <div class="row-reverse">
+                    <div class="col-lg-2">
                             <label>Telefone 2*</label>
                             <?
                             if (@$obj[0]->_telefone != '' && strlen(@$obj[0]->telefone) > 3) {
@@ -128,90 +131,57 @@
                                 $whatsapp = '';
                             }
                             ?>
-
-
-                            <input type="text"  placeholder="(99)9999-9999" id="txtTelefone2" class="form-control texto05" name="telefone2"  value="<?= @$obj[0]->telefone; ?>" <?= (in_array('telefone2', $campos_obrigatorios)) ? 'required' : '' ?>/>
-                            <button class="btn btn-outline-danger btn-sm" type=button id="btnWhats" onclick="pegarWhats();"> WP? </button>
-                        </div>
+                        <input type="text"  placeholder="(99)9999-9999" id="txtTelefone2" class="form-control" name="telefone2"  value="<?= @$obj[0]->telefone; ?>" <?= (in_array('telefone2', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                        <!--<button class="btn btn-outline-danger btn-sm" type=button id="btnWhats" onclick="pegarWhats();"> WP? </button>-->
                     </div>
-                         <div>
-                        <div class="form-group">
+                </div>
+               
+                <div class="row-reverse">
+                    <div class="col-lg-6">
+                        <div>
                             <label>Observação</label>
-                            <input type="text" name="observacao" placeholder="Observações"  id="observações" class="form-control texto05" value="<?= @$obj[0]->observacao; ?>" />
+                            <input type="text" name="observacao" placeholder="Observações"  id="observações" class="form-control" value="<?= @$obj[0]->observacao; ?>" />
                         </div>
-                        <div class="form-group">
+                        <div>
                             <label>Complemento</label>
-                            <input type="text" name="complemento" placeholder="Complementos"  id="complemento" class="form-control texto05" value="<?= @$obj[0]->complemento; ?>" />
+                            <input type="text" name="complemento" placeholder="Complementos"  id="complemento" class="form-control" value="<?= @$obj[0]->complemento; ?>" />
                         </div>
                     </div>
-                    <div class="col-lg-3">
-
-                        <div class="form-group">
-                         <dd>
-                        <select name="tipo_pessoa" id="tipo_pessoa" class="size" required="">
-
-                            <option value="">Selecione</option>
-                            <option <?=(@$obj->_tipo_pessoa == 'pessoa_f')? 'selected':'' ; ?> value="pessoa_f">Pessoa Física</option>
-                            <option <?=(@$obj->_tipo_pessoa == 'pessoa_j')? 'selected':'' ; ?> value="pessoa_j">Pessoa Jurídica</option>
-
-                        </select>
-                    </dd>
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <!--<div class="modal-header">-->
-                                        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
-                                        <!--<h4 class="modal-title" id="myModalLabel">Fotografia</h4>-->
-                                    <!--</div>-->
+                </div>
+<!--                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabel">Fotografia</h4>
+                                        </div>
                                     <div class="modal-body">
                                         <fieldset>
                                   
                                         </fieldset>
                                     </div>
                                     <div class="modal-footer">
-                                        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                         <a  onClick="imagem_paciente()" class="btn btn-primary" data-dismiss="modal">Fechar</a>
                                     </div>
                                 </div>
-                                <!-- /.modal-content -->
+                                 /.modal-content 
                             </div>
-                            <!-- /.modal-dialog -->
+                             /.modal-dialog 
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
         </fieldset>
-
-        <fieldset>
-
-                        </div>
-                      
-                        <div class="col-lg-2">
-
-                        </div>
-
-        </fieldset>
-                    
-        <div class="panel-body socialdata">
-            <div class="row">
-                <div class="col-lg-2">
-                </div>
-
-                <div class="col-lg-2">
-                </div>
-            </div>
-        </div>
-    </div>
 
         <div class="panel panel-default btngrp">
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-3">
                         <?if($tecnico_recepcao_editar == 't' || $perfil_id != 15){?>
-                            <button type="submit" class="btn btn-success btn-sm">Enviar</button>
-                            <button type="reset" class="btn btn-warning btn-sm">Limpar</button>
+                        <button type="submit" class="btn btn-success btn-sm">Enviar</button>
+                        <button type="reset" class="btn btn-warning btn-sm">Limpar</button>
                         <?}?>
-
                         <a href="<?= base_url() ?>ambulatorio/modelolaudo/pesquisar">
                             <button type="button" id="btnVoltar" class="btn btn-secondary btn-sm">Voltar</button>
                         </a>

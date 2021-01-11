@@ -69,7 +69,7 @@ class Fornecedor extends BaseController {
         } else {
             $data['mensagem'] = 'Erro ao excluir o fornecedor. Opera&ccedil;&atilde;o cancelada.';
         }
-        $this->session->set_flashdata('message', $data['mensagem']);
+//         $this->session->set_flashdata('message', $data['mensagem']);
         redirect(base_url() . "cadastros/fornecedor");
     }
     
@@ -121,6 +121,8 @@ class Fornecedor extends BaseController {
             $data['mensagem'] = $this->mensagem->getMensagem('login005');
             $this->load->view('header', $data);
             $this->load->view('home');
+            $this->load->view('cpf');
+            $this->load->view('telefone');
         }
         $this->load->view('footer');
     }

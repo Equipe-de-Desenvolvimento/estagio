@@ -1,28 +1,41 @@
 <link href="<?= base_url() ?>css/cadastro/fornecedor-lista.css" rel="stylesheet"/>
 <div class="content"> <!-- Inicio da DIV content -->
     <div class="bt_link_new">
-        <button class="btn btn-outline-default btn-round btn-sm" href="<?php echo base_url() ?>cadastros/fornecedor/carregarfornecedor/">
-            Novo Credor/Devedor
-        </button>
+        <a class="btn btn-outline-default btn-round btn-sm" href="<?php echo base_url() ?>cadastros/fornecedor/carregarfornecedor/">
+            <i class="">
+            </i>Novo credor/devedor
+        </a>
+        </div>    
     </div>
     <div id="accordion">
-        <h3 class="singular"><b>Manter Credor/Devedor</b></h3>
-        <div class="table-responsive">
+        <h3 class="singular">
+        <b>Manter Credor/Devedor</b></h3>
+        <div class="table-responsive"class=" table table-striped table-bordered table-hover">
             
-            <form method="get" action="<?= base_url() ?>cadastros/fornecedor/carregarfornecedor/">
+            <form method="get" action="<?= base_url() ?>cadastros/fornecedor/fornecedor/">
                 <fieldset><br>
                     <div class="row">
                         <div class="nome">
-                            <label>Nome</label>
-                            <input type="text" name="nome" class="form-control texto10" value="<?php echo @$_GET['nome']; ?>" />
+                            <label>Razão Social</label>
+                            <input type="text" name="nome"  class="control" placeholder="Nome da Instituição" value="<?php echo @$_GET['nome']; ?>" />
                         </div>
+                        <div>
+                            <label>CPF/CNPJ</label>
+                            <input type="text" name="cpf"  placeholder="000.000.000-00" id="txtCpf" value="<?php echo @$_GET['cpf']; ?>" />
+                        </div>
+                        <div>
+                            <label>Telefone</label>
+                            <input type="text" name="telefone"  placeholder="(00)00000-0000" id="txtTelefone" value="<?php echo @$_GET['telefone']; ?>" />
+                        </div>
+                        
                         <div class="status">
                             <label colspan="2" class="tabela_title">Status</label>
-                            <select name="ativo" id="" class="form-control texto04">
+                            <select name="ativo" id="" class="texto04">
                                 <option value="t" <? if(@$_GET['ativo'] != 'f') echo 'selected'; ?>>Ativo</option>
                                 <option value="f" <? if(@$_GET['ativo'] == 'f') echo 'selected'; ?>>Inativo</option>
                             </select>
                         </div>
+                        
                         <div>
                             <button class="btn btn-outline-default btn-sm" type="submit" id="enviar">Pesquisar</button>
                         </div>
