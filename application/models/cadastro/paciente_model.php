@@ -392,16 +392,25 @@ class paciente_model extends BaseModel {
         return $return->result();
     }
 
-//    function cep_buscarcidade($cidadenome) {
-//
-//        $this->db->select('municipio_id,
-//                               nome');
-//        $this->db->from('tb_municipio');
-//        $this->db->where('nome', $cidadenome);
-//
-//        $return = $this->db->get();
-//        return $return->result();
-//    }
+
+    function buscarMunicipio(){
+        $this->db->select('municipio_id,
+                                nome');
+        $this->db->from('tb_municipio');
+        $this->db->orderby('nome');
+        $return = $this->db->get();
+        return $return->result();
+    }
+
+    function cepBuscarCidade($cidadeNome){
+        $this->db->select('municipio_id,
+                                nome');
+        $this->db->from('tb_municipio');
+        $this->db->where('nome', $cidadeNome);
+
+        $return = $this->db->get();
+        return $return->result();
+    }
 
     private function instanciar($paciente_id) {
         if ($paciente_id != 0) {
@@ -422,6 +431,7 @@ class paciente_model extends BaseModel {
             $this->_cpf_responsavel = @$return[0]->cpf_responsavel;
             $this->_nome = $return[0]->nome;
             $this->_cns = $return[0]->cns;
+            $this->_paciente_operador_id = $return[0]->paciente_operador_id;
             $this->_cns2 = $return[0]->cns2;
             if (isset($return[0]->nascimento)) {
                 $this->_nascimento = $return[0]->nascimento;
@@ -546,6 +556,14 @@ class paciente_model extends BaseModel {
 
     function gravar() {
         $empresa_id  = $this->session->userdata('empresa_id');
+        $horario = date("Y-m-d H:i:s");
+        $data = date("Y-m-d");
+        $operador_id = $this->session->userdata('operador_id');
+
+        $dia = substr($horario, 8, 2);
+        $mes = substr($horario, 5, 2);
+        $ano = substr($horario, 0, 4);
+        $dataatual = $dia . '/' . $mes . '/' . $ano;
 
         try {
             if ($_POST['txtcbo'] != $_POST['txtcbohidden']) {
@@ -567,28 +585,46 @@ class paciente_model extends BaseModel {
                 $this->db->set('profissao', $_POST['txtcboID']);
             }
 
+            if(!$_POST['paciente_operador_id'] > 0){
+
+                $this->db->set('nome', $_POST['nome']);
+                $this->db->set('sexo', $_POST['sexo']);
+                $this->db->set('logradouro', $_POST['endereco']);
+                $this->db->set('numero', $_POST['numero']);
+                $this->db->set('bairro', $_POST['bairro']);
+                if ($_POST['municipio_id'] != null)
+                    $this->db->set('municipio_id', $_POST['municipio_id']);
+                else
+                    $this->db->set('municipio_id', null);
+                $this->db->set('cep', $_POST['cep']);
+                $this->db->set('celular', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['celular']))));
+                $this->db->set('telefone', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['telefone']))));
+                $this->db->set('email', $_POST['email']);
+                $this->db->set('usuario', $_POST['email']);
+                $this->db->set('senha', md5($_POST['password']));
+
+                $this->db->set('perfil_id', 2);
+                $this->db->set('data_cadastro', $horario);
+                $this->db->set('operador_cadastro', $operador_id);
+                $this->db->insert('tb_operador');
+                $paciente_operador_id = $this->db->insert_id();
+                $this->db->set('paciente_operador_id', $paciente_operador_id);
+
+            }
 
             $this->db->set('nome', $_POST['nome']);
+           
             if ($_POST['cpf'] != '') {
                 $this->db->set('cpf', str_replace("-", "", str_replace(".", "", $_POST['cpf'])));
             }
-            if ($_POST['cpf_mae'] != '') {
-                $this->db->set('cpf_mae', str_replace("-", "", str_replace(".", "", $_POST['cpf_mae'])));
-            }
-            if ($_POST['cpf_pai'] != '') {
-                $this->db->set('cpf_pai', str_replace("-", "", str_replace(".", "", $_POST['cpf_pai'])));
-            }
+            
+           
             if (isset($_POST['cpf_responsavel'])) {
                 $this->db->set('cpf_responsavel_flag', 't');
             } else {
                 $this->db->set('cpf_responsavel_flag', 'f');
             }
-            if($_POST['idade2'] != ""){
-              $this->db->set('idade', $_POST['idade2']);
-            }else{
-               $this->db->set('idade', null);
-            }
-            
+          
             if (isset($_POST['nascimento']) && $_POST['nascimento'] != '') {
                 $this->db->set('nascimento', date("Y-m-d", strtotime(str_replace("/", "-", $_POST['nascimento']))));
             } else {
@@ -610,16 +646,16 @@ class paciente_model extends BaseModel {
             }
             
             
-            if($_POST['cns'] != ""){
-             $this->db->set('cns', $_POST['cns']);
+            if($_POST['email'] != ""){
+             $this->db->set('cns', $_POST['email']);
             }else{
               $this->db->set('cns', null);
             }
-            if($_POST['cns2'] != ""){
-                $this->db->set('cns2', $_POST['cns2']);
-               }else{
-                 $this->db->set('cns2', null);
-               }
+            if($_POST['email_alternativo'] != ""){
+                $this->db->set('cns2', $_POST['email_alternativo']);
+            }else{
+                $this->db->set('cns2', null);
+            }
             if (@$_POST['indicacao'] != '') {
                 $this->db->set('indicacao', $_POST['indicacao']);
             }else{
@@ -710,11 +746,7 @@ class paciente_model extends BaseModel {
             }else{
                   $this->db->set('estado_civil_id',null); 
             }
-            if ($_POST['leito'] != '') {
-                $this->db->set('leito', $_POST['leito']);
-            }else{
-                $this->db->set('leito',null); 
-            }
+           
             if (isset($_POST['prontuario_antigo']) && $_POST['prontuario_antigo'] != '') {
                 $this->db->set('prontuario_antigo', $_POST['prontuario_antigo']);
             }else{
@@ -776,11 +808,7 @@ class paciente_model extends BaseModel {
             }else{
                 $this->db->set('bairro',null);   
             }
-               if($_POST['complemento'] != ""){ 
-            $this->db->set('complemento', $_POST['complemento']);
-               }else{
-               $this->db->set('complemento', null);  
-            }
+           
             
             if ($_POST['municipio_id'] != '') {
                 $this->db->set('municipio_id', $_POST['municipio_id']);
@@ -808,14 +836,7 @@ class paciente_model extends BaseModel {
              
             
 
-            $horario = date("Y-m-d H:i:s");
-            $data = date("Y-m-d");
-            $operador_id = $this->session->userdata('operador_id');
-
-            $dia = substr($horario, 8, 2);
-            $mes = substr($horario, 5, 2);
-            $ano = substr($horario, 0, 4);
-            $dataatual = $dia . '/' . $mes . '/' . $ano;
+            
 
             // $this->db->set('paciente_id',$_POST['txtPacienteId'] );
 
@@ -2125,7 +2146,7 @@ class paciente_model extends BaseModel {
         $this->db->from('tb_paciente p');
         $this->db->join('tb_municipio m', 'm.municipio_id = p.municipio_id', 'left');
         $this->db->where('pacientes_id',$pacientes_id);
-        $this->db->where('i.ativo','t');
+        $this->db->where('p.ativo','t');
         
         if ($parametro != null) {
             $this->db->where('nome ilike', "%" . $parametro . "%");
@@ -2173,7 +2194,7 @@ class paciente_model extends BaseModel {
                            p.email_alternativo,
                            p.endereco,
                            p.telefone,
-                           p.instituicao_id,
+
                            p.telefone2,
                            p.whatsapp');
         $this->db->from('tb_paciente p');
@@ -2756,8 +2777,39 @@ class paciente_model extends BaseModel {
     }
     
     function gravarinstituicao(){
+        // echo '<pre>';
+        // var_dump($_POST); 
+        // die;
         $horario = date("Y-m-d H:i:s"); 
         $operador_id = $this->session->userdata('operador_id');
+        $credorInstituicao = $_POST['credor_devedor_id'];
+
+        if ($credorInstituicao == 0) {
+            $this->db->set('razao_social', $_POST['nome']);
+            $this->db->set('cep', $_POST['cep']);
+            if ($_POST['cnpj'] != '') {
+                $this->db->set('cnpj', str_replace("-", "", str_replace(".", "", str_replace("/", "", $_POST['cnpj']))));
+            } else {
+                $this->db->set('cnpj', null);
+            }
+            $this->db->set('telefone', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['telefone']))));
+            if ($_POST['municipio_id'] != '') {
+                $this->db->set('municipio_id', $_POST['municipio_id']);
+            }
+            $this->db->set('logradouro', $_POST['endereco']);
+            $this->db->set('complemento', $_POST['complemento']);
+            $horario = date("Y-m-d H:i:s");
+            $operador_id = $this->session->userdata('operador_id');
+            $this->db->set('data_cadastro', $horario);
+            $this->db->set('operador_cadastro', $operador_id);
+            $this->db->insert('tb_financeiro_credor_devedor');
+            $financeiro_credor_devedor_id = $this->db->insert_id();
+        }else{
+            $financeiro_credor_devedor_id = null;
+        }
+        // var_dump($financeiro_credor_devedor_id);
+        // die;
+       
         $this->db->set('nome', $_POST['nome']);
         $this->db->set('endereco', $_POST['endereco']);
         $this->db->set('telefone', str_replace('.', '',str_replace(' ', '',str_replace('-', '',str_replace(')', '',str_replace('(', '', $_POST['telefone'])))))); 
@@ -2769,7 +2821,22 @@ class paciente_model extends BaseModel {
         $this->db->set('cpf', $_POST['cpf']); 
         $this->db->set('observacao', $_POST['observacao']); 
         $this->db->set('complemento', $_POST['complemento']); 
-        $this->db->set('email_alternativo', $_POST['email_alternativo']); 
+        $this->db->set('email_alternativo', $_POST['email_alternativo']);
+        $this->db->set('nome_fantasia', $_POST['nome_fantasia']); 
+        $this->db->set('cep', $_POST['cep']); 
+        $this->db->set('telefone_convenio',str_replace('.', '',str_replace(' ', '',str_replace('-', '',str_replace(')', '',str_replace('(', '', $_POST['telefone_convenio']))))));
+        $this->db->set('convenio', $_POST['convenio']); 
+        $this->db->set('email_convenio', $_POST['email_convenio']);
+        $this->db->set('juridico', $_POST['juridico']);  
+        $this->db->set('telefone_juridico',str_replace('.', '',str_replace(' ', '',str_replace('-', '',str_replace(')', '',str_replace('(', '', $_POST['telefone_juridico']))))));
+        $this->db->set('email_juridico', $_POST['email_juridico']); 
+        $this->db->set('observacao_juridico', $_POST['observacao_juridico']);
+        $this->db->set('financeiro', $_POST['financeiro']);  
+        $this->db->set('telefone_financeiro',str_replace('.', '',str_replace(' ', '',str_replace('-', '',str_replace(')', '',str_replace('(', '', $_POST['telefone_financeiro']))))));
+        $this->db->set('email_financeiro', $_POST['email_financeiro']); 
+        $this->db->set('observacao_convenio', $_POST['observacao_convenio']);
+        $this->db->set('observacao_financeiro', $_POST['observacao_financeiro']);
+        $this->db->set('credor_devedor_id', $financeiro_credor_devedor_id);
                 
         if($_POST['instituicao_id'] > 0 ){
             $this->db->set('data_atualizacao', $horario);
@@ -2782,14 +2849,13 @@ class paciente_model extends BaseModel {
             $this->db->set('data_cadastro', $horario);
             $this->db->set('operador_cadastro', $operador_id);
             $this->db->insert('tb_instituicao');
+            $instituicao_id = $this->db->insert_id();
         }
-        
-        
-        
+       
     }
     
     function listarinstituicao($args = array()) {
-        $this->db->select('m.municipio_id, m.nome as municipio, 
+        $this->db->select('m.municipio_id, m.nome as municipio,
                            i.nome, 
                            i.observacao,
                            i.complemento,
@@ -2801,7 +2867,17 @@ class paciente_model extends BaseModel {
                            i.instituicao_id,
                            i.telefone,
                            i.telefone2,
-                           i.whatsapp');
+                           i.whatsapp,
+                           i.nome_fantasia,
+                           i.cep,
+                           i.telefone_convenio,
+                           i.convenio,
+                           i.email_convenio,
+                           i.email_financeiro,
+                           i.financeiro,
+                           i.telefone_financeiro,
+                           i.observacao_financeiro,
+                           i.observacao_convenio');
         $this->db->from('tb_instituicao i');
         $this->db->join('tb_municipio m', 'm.municipio_id = i.municipio', 'left');
         if (isset($args['nome']) && strlen($args['nome']) > 0) {
@@ -2853,7 +2929,22 @@ class paciente_model extends BaseModel {
                            i.telefone,
                            i.instituicao_id,
                            i.telefone2,
-                           i.whatsapp');
+                           i.whatsapp,
+                           i.cep,
+                           i.nome_fantasia,
+                           i.telefone_convenio,
+                           i.telefone_financeiro,
+                           i.telefone_juridico,
+                           i.financeiro,
+                           i.convenio,
+                           i.juridico,
+                           i.observacao_convenio,
+                           i.observacao_financeiro,
+                           i.observacao_juridico,
+                           i.credor_devedor_id,
+                           i.email_juridico,
+                           i.email_convenio,
+                           i.email_financeiro');
         $this->db->from('tb_instituicao i');
         $this->db->join('tb_municipio m', 'm.municipio_id = i.municipio', 'left');
         $this->db->where('instituicao_id',$instituicao_id);
@@ -2870,7 +2961,38 @@ class paciente_model extends BaseModel {
         return 1;
 
     }
-    
+    function gravarestagiarios(){
+        $horario = date("Y-m-d H:i:s"); 
+        $operador_id = $this->session->userdata('operador_id');
+        $this->db->set('nome', $_POST['nome']);
+        $this->db->set('endereco', $_POST['endereco']);
+        $this->db->set('telefone', str_replace('.', '',str_replace(' ', '',str_replace('-', '',str_replace(')', '',str_replace('(', '', $_POST['telefone'])))))); 
+       
+        $this->db->set('municipio', $_POST['municipio_id']); //print_r($_POST);
+        $this->db->set('whatsapp', str_replace('.', '',str_replace(' ', '',str_replace('-', '',str_replace(')', '',str_replace('(', '', $_POST['whatsapp']))))));
+        $this->db->set('email', $_POST['emailprincipal']); 
+        $this->db->set('cnpj', $_POST['cnpj']); 
+        $this->db->set('cpf', $_POST['cpf']); 
+        $this->db->set('observacao', $_POST['observacao']); 
+        $this->db->set('complemento', $_POST['complemento']); 
+        $this->db->set('email_alternativo', $_POST['email_alternativo']); 
+                
+        if($_POST['paciente_id'] > 0 ){
+            $this->db->set('data_atualizacao', $horario);
+            $this->db->set('operador_atualizacao', $operador_id);
+            $this->db->where('paciente_id', $_POST['paciente_id']);
+            $this->db->update('tb_paciente');      
+        }
+        
+        else{
+            $this->db->set('data_cadastro', $horario);
+            $this->db->set('operador_cadastro', $operador_id);
+            $this->db->insert('tb_paciente');
+        }
+        
+        
+        
+    }
  
 }
 

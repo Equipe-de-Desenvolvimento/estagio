@@ -19,6 +19,7 @@
                             <label>Razão Social</label>
                             <input type="text" name="nome"  class="control" placeholder="Nome da Instituição" value="<?php echo @$_GET['nome']; ?>" />
                         </div>
+                    <div class="row"></div>    
                         <div>
                             <label>CPF/CNPJ</label>
                             <input type="text" name="cpf"  placeholder="000.000.000-00" id="txtCpf" value="<?php echo @$_GET['cpf']; ?>" />
@@ -26,6 +27,10 @@
                         <div>
                             <label>Telefone</label>
                             <input type="text" name="telefone"  placeholder="(00)00000-0000" id="txtTelefone" value="<?php echo @$_GET['telefone']; ?>" />
+                        </div>
+                        <div>
+                            <label>Email</label>
+                            <input type="text" name="email"  placeholder="" id="txtEmail" value="<?php echo @$_GET['email']; ?>" />
                         </div>
                         
                         <div class="status">
@@ -67,10 +72,10 @@
                         </tr>-->
                         <tr>
                             <th class="tabela_header">Razão Social</th>
+                            <th class="tabela_header">Email</th>
                             <th class="tabela_header">CNPJ</th>
                             <th class="tabela_header">CPF</th>
                             <th class="tabela_header">Telefone</th>
-                            <th class="tabela_header">Email</th>
                             <th class="tabela_header" width="70px;" colspan="4"><center>Detalhes</center></th>
                         </tr>
                     </thead>
@@ -94,24 +99,26 @@
                             foreach ($lista as $item) {
                                 ($estilo_linha == "tabela_content01") ? $estilo_linha = "tabela_content02" : $estilo_linha = "tabela_content01";
                          ?>
+                         
                             <tr>
                                     <td class="<?php echo $estilo_linha; ?>"width="270px;"><?= $item->razao_social; ?></td>
+                                    <td class="<?php echo $estilo_linha; ?>"width="200px;"><?= $item->email; ?></td>
                                     <td class="<?php echo $estilo_linha; ?>"width="200px;"><?= $item->cnpj; ?></td>
                                     <td class="<?php echo $estilo_linha; ?>"width="200px;"><?= $item->cpf; ?></td>
                                     <td class="<?php echo $estilo_linha; ?>"width="200px;"><?= $item->telefone; ?></td>
-                                    <!--<td class="<?php echo $estilo_linha; ?>"width="200px;"><?= $item->email; ?></td>-->
+                                
                                     
                                     <? if($item->ativo == 't') { ?>
                                         <td class="<?php echo $estilo_linha; ?>" width="70px;">                                  
-                                            <button class="btn btn-outline-default btn-sm" href="<?= base_url() ?>cadastros/fornecedor/carregarfornecedor/<?= $item->financeiro_credor_devedor_id ?>" target="_blank">Editar</button>
+                                            <a class="btn btn-outline-default btn-sm" href="<?= base_url() ?>cadastros/fornecedor/carregarfornecedor/<?= $item->financeiro_credor_devedor_id ?>" target="_blank">Editar</a>
                                         </td>
                                         
                                         <td class="<?php echo $estilo_linha; ?>" width="70px;">                                  
-                                            <button class="btn btn-outline-default btn-sm" href="<?= base_url() ?>cadastros/fornecedor/gravarunificarcredor<?= $item->financeiro_credor_devedor_id ?>" target="_blank">Unificar</button>
+                                            <a class="btn btn-outline-default btn-sm" href="<?= base_url() ?>cadastros/fornecedor/gravarunificarcredor<?= $item->financeiro_credor_devedor_id ?>" target="_blank">Unificar</a>
                                         </td>
                                         
                                         <td class="<?php echo $estilo_linha; ?>" width="70px;">                                  
-                                            <button class="btn btn-outline-default btn-sm" href="<?= base_url() ?>cadastros/fornecedor/excluir/<?= $item->financeiro_credor_devedor_id ?>)">Excluir</button>
+                                            <a class="btn btn-outline-default btn-sm" href="<?= base_url() ?>cadastros/fornecedor/excluir/<?= $item->financeiro_credor_devedor_id ?>">Excluir</a>
                                         </td>
                                     <? } else { ?>
                                         <td colspan="2" class="//<?php echo $estilo_linha; ?>" width="70px;">                                  

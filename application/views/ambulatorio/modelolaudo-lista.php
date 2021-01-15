@@ -197,7 +197,7 @@ $excluircadastro_id = $this->session->userdata('excluircadastro_id');
                                                     if($this->session->userdata('perfil_id') != 24){?>
                                                     <td class="<?php echo $estilo_linha; ?>">
                                                         <div class="bt_link">
-                                                            <a class="btn btn-outline-default btn-round btn-sm" href="<?=base_url() ?>cadastros/pacientes/excluircadastro/<?= $item->instituicao_id ?>">       
+                                                            <a class="btn btn-outline-default btn-round btn-sm" onclick="javascript:return confirm('Deseja realmente excluir a instituição?');" href="<?=base_url() ?>cadastros/pacientes/excluircadastro/<?= $item->instituicao_id ?>">       
                                                                 <b>Excluir</b>
                                                             </a></div>
                                                     </td>

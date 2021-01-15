@@ -16,232 +16,204 @@
 //            var_dump(@$empresapermissoes); die;
             ?>
             <div class="alert alert-info">Dados do Estagiário</div>
-            <div class="panel-body infodados">
-                <div class="row">
-
-                    <div class="col-lg-3">
-                        <div class="form-group">
-                            <label>Nome*</label>
-                            <input type="text" id="txtNome" name="nome" class="form-control texto08" value="<?= @$obj[0]->nome; ?>" required="true"  placeholder="Nome do Estagiário">
-                            <input type ="hidden" name ="paciente_id"  value ="<?= @$obj[0]->paciente_id; ?>" id ="txtPacienteId">
-
-                        </div>
-                        <div>
-                            <label>Nome da M&atilde;e</label>
-                            <input type="text" name="nome_mae" id="txtNomeMae"  placeholder="Nome da mãe" class="form-control texto06" value="<?= @$obj[0]->nomemae; ?>"
-                                <?= (in_array('nome_mae', $campos_obrigatorios)) ? 'required' : '' ?>/>
-                            <? if (@$empresapermissoes[0]->ocupacao_mae == 't') { ?>
-                                <label>Ocupação da M&atilde;e</label>
-                                <input type="text" name="ocupacao_mae" id="ocupacao_mae" class="form-control texto06" value="<?= @$obj[0]->ocupacao_mae; ?>"/>
-                            <? } ?>
-                        </div>
-
-                        <div>
-                            <label>Nome do Pai</label>
-                            <input type="text"  name="nome_pai" id="txtNomePai"  placeholder="Nome do pai" class="form-control texto06" value="<?= @$obj[0]->nomepai; ?>"
-                                <?= (in_array('nome_pai', $campos_obrigatorios)) ? 'required' : '' ?>/>
-                            <? if (@$empresapermissoes[0]->ocupacao_pai == 't') { ?>
-                                <label>Ocupação do Pai</label>
-                                <input type="text"  name="ocupacao_pai" id="ocupacao_pai" class="form-control texto06" value="<?= @$obj[0]->ocupacao_pai; ?>"/>
-                            <? } ?>
-                        </div>
-                        <div >
-                            <label>Email</label>
-                            <input  placeholder="Email" type="text" id="txtEmail" name="email"  class="form-control texto06" value="<?= @$obj[0]->_cns; ?>" />
-                        </div>
-                        <div>
-                            <label>Email Alternativo</label>
-                            <input type="text" id="txtemailalternativo" name="email_alternativo" placeholder="Email Alternativo" onchange="validaremail2()" class="form-control texto06" value="<?= @$obj[0]->email; ?>"
-                                <?= (in_array('email2', $campos_obrigatorios)) ? 'required' : '' ?>/>
-                        </div>
-
-
-                    </div>
-
-                    <div class="col-lg-2">
-                        <div class="form-group">
-                            <label>Sexo*</label>
-                            <select name="sexo" id="txtSexo" class="form-control texto04" required="">
-                                <option value="" <?
-                                if (@$obj->_sexo == ""):echo 'selected';
-                                endif;
-                                ?>>Selecione</option>
-                                <option value="M" <?
-                                if (@$obj->_sexo == "M"):echo 'selected';
-                                endif;
-                                ?>>Masculino</option>
-                                <option value="F" <?
-                                if (@$obj->_sexo == "F"):echo 'selected';
-                                endif;
-                                ?>>Feminino</option>
-                            </select>
-                        </div>
-                        <div>
-                            <td>
-                                <label>CPF da M&atilde;e</label>
-                                <input type="text" id="txtCpfmae" <?= (in_array('cpf_mae', $campos_obrigatorios)) ? 'required' : '' ?> name="cpf_mae" id ="txtCpfmae" maxlength="11" alt="cpf" class="form-control texto03" value="<?= @$obj[0]->cpf_mae; ?>"/>
-                            </td>
-                        </div>
-                        <div>
-
-
-                            <td>
-                                <label>CPF do Pai</label>
-                                <input type="text" id="txtCpfpai" <?= (in_array('cpf_pai', $campos_obrigatorios)) ? 'required' : '' ?> name="cpf_pai" id ="txtCpfpai"   maxlength="11" alt="cpf" class="form-control texto03" value="<?= @$obj->_cpf_pai; ?>"/>
-                            </td>
-
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-
-                        <div class="form-group">
-                            <label>Data de Nascimento*</label>
-                            <input type="text" name="nascimento" id="txtNascimento" required="true" alt="date" class="form-control texto04 date"
-                                   placeholder="00/00/0000"
-
-                                   value="<?php
-                                   if (@$obj->_nascimento != '') {
-                                       echo substr(@$obj->_nascimento, 8, 2) . '/' . substr(@$obj->_nascimento, 5, 2) . '/' . substr(@$obj->_nascimento, 0, 4);
-                                   }
-                                   ?>"
-
-                            >
-                        </div>
-
-
-                        <div class="form-group">
-                            <label>Senha</label>
-                            <input type="password" id="senha_app" name="senha_app"  class="form-control texto04" value="<?= @$obj->_senha_app; ?>" />
-                        </div>
-
-
-                    </div>
-                    <div class="col-lg-3">
-                        <div>
-                            <label>Idade</label>
-                            <input type="text" name="idade2" id="idade2" class="form-control texto02" readonly/>
-                        </div>
-
-                        <div>
-                            <label>Fotografia</label>
-                        </div>
-
-                        <div>
-                            <!--<label>Fotografia</label>-->
-                            <a class="btn btn-primary" data-toggle="modal" onClick="ativar_camera()" data-target="#myModal">
-                                <i class="fa fa-camera fa-1x" aria-hidden="true"></i>
-
-                            </a>
-                            <span id="imagem_paciente">
-                                    <? if (file_exists("./upload/webcam/pacientes/" . @$obj->_paciente_id . ".jpg")) { ?>
-                                        <img class="img-thumbnail img-rounded img-responsive" src="<?= base_url() ?>upload/webcam/pacientes/<?= @$obj->_paciente_id ?>.jpg" alt="" style="width: 100pt; height: 100pt;" />
-                                    <? } else { ?>
-                                        <img class="img-thumbnail img-rounded img-responsive" src="" alt="" style="width: 100pt; height: 100pt;" />
-                                    <? }
-                                    ?>
-
-
-                                    <!-- Modal -->
-                            </span>
-
-                        </div>
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="myModalLabel">Fotografia</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <fieldset>
-                                            <!--<legend>Fotografia</legend>-->
-                                            <table>
-                                                <tr>
-                                                    <th>
-                                                        Câmera
-                                                    </th>
-                                                    <th>
-                                                    </th>
-                                                    <th>
-                                                        Resultado
-                                                    </th>
-                                                </tr>
-                                                <tr>
-                                                    <td >
-                                                        <div id="my_camera" ></div>
-                                                    </td>
-
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                        <div id="results">
-
-                                                        </div>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <a class="btn btn-danger" onClick="take_snapshot()"><i class="fa fa-camera fa-1x" aria-hidden="true"></i></a>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </fieldset>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-                                        <a  onClick="imagem_paciente()" class="btn btn-primary" data-dismiss="modal">Fechar</a>
-                                    </div>
-                                </div>
-                                <!-- /.modal-content -->
+                <div class="panel-body infodados">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div>
+                                <label>Nome*</label>
+                                <input type="text" id="txtNome" name="nome" class="form-control" value="<?= @$obj[0]->_nome; ?>" required="true"  placeholder="Nome do Estagiário">
+                                <input type ="hidden" name ="paciente_id"  value ="<?= @$obj[0]->_paciente_id; ?>" id ="txtPacienteId">
+                                <input type ="hidden" name ="paciente_operador_id"  value ="<?= @$obj[0]->_paciente_operador_id; ?>" id ="txtPacienteId">
                             </div>
-                            <!-- /.modal-dialog -->
+                            <div>
+                                <label>Nome do responsável legal</label>
+                                <input type="text" name="nome_mae" id="txtNomeMae"  placeholder="Nome do responsável" class="form-control" value="<?= @$obj[0]->_nomemae; ?>"
+                                    <?= (in_array('nome_mae', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                                <? if (@$empresapermissoes[0]->ocupacao_mae == 't') { ?>
+                                    <label>Ocupação da M&atilde;e</label>
+                                    <input type="text" name="ocupacao_mae" id="ocupacao_mae" class="form-control" value="<?= @$obj[0]->_ocupacao_mae; ?>"/>
+                                <? } ?>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
+                       
+                        <div class="col-lg-3">
+                            <div>
+                                <label>Email</label>
+                                <input  placeholder="Email" required type="text" id="txtEmail" name="email"  class="form-control" value="<?= @$obj[0]->_cns; ?>" />
+                            </div>
+                            <div>
+                                <label>Email Alternativo</label>
+                                <input type="text" id="txtemailalternativo" name="email_alternativo" placeholder="Email Alternativo" onchange="validaremail2()" class="form-control" value="<?= @$obj[0]->_email; ?>"
+                                
+                                    <?= (in_array('email2', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                            </div>
+                        </div>
+                        <div class="col-lg-123">
+                                <div>
+                                    <label>Idade</label>
+                                    <input type="text" name="idade2" id="idade2" class="form-control" />
+                                </div>
+                                <div>
+                                    <label>Senha</label>
+                                    <input type="password" id="senha_app" name="senha_app"  class="form-control" value="<?= @$obj[0]->_senha_app; ?>" />
+                                </div>
+                            </div>    
+                        <div class="col-lg-2">
+                            <div>
+                                <label>Sexo*</label>
+                                <select name="sexo" id="txtSexo" class="form-control" required="">
+                                    <option value="" <?
+                                    if (@$obj[0]->_sexo == ""):echo 'selected';
+                                    endif;
+                                    ?>>Selecione</option>
+                                    <option value="M" <?
+                                    if (@$obj[0]->_sexo == "M"):echo 'selected';
+                                    endif;
+                                    ?>>Masculino</option>
+                                    <option value="F" <?
+                                    if (@$obj[0]->_sexo == "F"):echo 'selected';
+                                    endif;
+                                    ?>>Feminino</option>
+                                </select>
+                                    <label>Data de Nascimento*</label>
+                                    <input type="text" name="nascimento" id="txtNascimento" required="true" alt="date" class="form-control"
+                                        placeholder="00/00/0000"
 
-        <fieldset>
+                                        value="<?php
+                                        if (@$obj[0]->_nascimento != '') {
+                                            echo substr(@$obj[0]->_nascimento, 8, 2) . '/' . substr(@$obj[0]->_nascimento, 5, 2) . '/' . substr(@$obj[0]->_nascimento, 0, 4);
+                                        }
+                                        ?>"
+                                    >
+                                </div>
+                            
+                        </div>
+                    </div>            
+
+                            <!-- <div>
+                                <label>Fotografia</label>
+                            </div> -->
+
+                            <!-- <div> -->
+                                <!--<label>Fotografia</label>-->
+                                <!-- <a class="btn btn-primary" data-toggle="modal" onClick="ativar_camera()" data-target="#myModal">
+                                    <i class="fa fa-camera fa-1x" aria-hidden="true"></i>
+
+                                </a>
+                                <span id="imagem_paciente">
+                                        <? if (file_exists("./upload/webcam/pacientes/" . @$obj[0]->_paciente_id . ".jpg")) { ?>
+                                            <img class="img-thumbnail img-rounded img-responsive" src="<?= base_url() ?>upload/webcam/pacientes/<?= @$obj[0]->_paciente_id ?>.jpg" alt="" style="width: 100pt; height: 100pt;" />
+                                        <? } else { ?>
+                                            <img class="img-thumbnail img-rounded img-responsive" src="" alt="" style="width: 100pt; height: 100pt;" />
+                                        <? }
+                                        ?>
+
+
+                                        <!- Modal -->
+                                <!-- </span> -->
+
+                            <!-- </div> -->
+                            <!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog"> -->
+                                    <!-- <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <!- <h4 class="modal-title" id="myModalLabel">Fotografia</h4> -->
+                                        <!-- </div>
+                                        <div class="modal-body"> -->
+                                            <!-- <fieldset> -->
+                                                <!--<legend>Fotografia</legend>-->
+                                                <!-- <table>
+                                                    <tr>
+                                                        <th>
+                                                            Câmera
+                                                        </th>
+                                                        <th>
+                                                        </th>
+                                                        <th>
+                                                            Resultado
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td >
+                                                            <div id="my_camera" ></div>
+                                                        </td>
+
+                                                        <td>
+                                                        </td>
+                                                        <td>
+                                                            <div id="results">
+
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <a class="btn btn-danger" onClick="take_snapshot()"><i class="fa fa-camera fa-1x" aria-hidden="true"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                </table> -->
+                                            <!-- </fieldset> -->
+                                        <!-- </div> -->
+                                        <!-- <div class="modal-footer"> -->
+                                            <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                                            <!-- <a  onClick="imagem_paciente()" class="btn btn-primary" data-dismiss="modal">Fechar</a> -->
+                                        <!-- </div> -->
+                                    <!-- </div> -->
+                                    <!-- /.modal-content -->
+                                <!-- </div> -->
+                                <!-- /.modal-dialog -->
+                            <!-- </div> -->
+                        <!-- </div> -->
+                    <!-- </div> -->
+                </div>
+          
             <div class="alert alert-info">Documentos</div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-2">
                             <div>
                                 <label>CPF</label>
-                                <input type="text" <?= (in_array('cpf', $campos_obrigatorios)) ? 'required' : '' ?> name="cpf" id ="txtCpf" onblur="verificarCPF();" maxlength="11" alt="cpf" class="form-control texto03" value="<?= @$obj->_cpf; ?>"/>
-                                <input type="checkbox" name="cpf_responsavel" id ="txtCpf" <? if (@$obj->_cpf_responsavel_flag == 't') echo "checked"; ?>> CPF do resposável
+                                <input type="text" <?= (in_array('cpf', $campos_obrigatorios)) ? 'required' : '' ?> name="cpf" id ="txtCpf" onblur="verificarCPF();" alt="cpf" class="form-control cpf" value="<?= @$obj[0]->_cpf; ?>"/>
+                                <input type="checkbox" name="cpf_responsavel" id ="txtCpf" <? if (@$obj[0]->_cpf_responsavel_flag == 't') echo "checked"; ?>> CPF do resposável
                             </div>
                         </div>
                         <div class="col-lg-2">
                             <div>
                                 <label>RG</label>
-                                <input type="text" name="rg" <?= (in_array('rg', $campos_obrigatorios)) ? 'required' : '' ?>  id="txtDocumento" class="form-control texto03" maxlength="20" value="<?= @$obj->_documento; ?>" />
+                                <input type="text" name="rg" <?= (in_array('rg', $campos_obrigatorios)) ? 'required' : '' ?>  id="txtDocumento" class="form-control" value="<?= @$obj[0]->_documento; ?>" />
                             </div>
                         </div>
                         <div class="col-lg-2">
                             <div>
                                 <label>CNH</label>
-                                <input type="text" name="cnh" <?= (in_array('cnh', $campos_obrigatorios)) ? 'required' : '' ?>  id="txtDocumento" class="form-control texto03" maxlength="20" value="<?= @$obj->_cnh; ?>" />
+                                <input type="text" name="cnh" <?= (in_array('cnh', $campos_obrigatorios)) ? 'required' : '' ?>  id="txtDocumento" class="form-control"value="<?= @$obj[0]->_cnh; ?>" />
                             </div>
                         </div>
                         <div class="col-lg-2">
                             <div>
                                 <label>Vencimento CNH</label>
-                                <input type="text" id="vencimento_cnh" class="form-control texto02" name="vencimento_cnh" value="<?
-                                if (@$obj->_vencimento_cnh != '') {
-                                    echo date("d/m/Y", strtotime(@$obj->_vencimento_cnh));
+                                <input type="text" id="vencimento_cnh" class="form-control" name="vencimento_cnh" value="<?
+                                if (@$obj[0]->_vencimento_cnh != '') {
+                                    echo date("d/m/Y", strtotime(@$obj[0]->_vencimento_cnh));
                                 }
                                 ?>" <?= (in_array('vencimento_cnh', $campos_obrigatorios)) ? 'required' : '' ?>/>
                             </div>
                         </div>
-                    <div class="col-lg-3">
-                        <div class="form-group">
-                            <label>Observação</label>
-                            <input type="text" name="obs"  id="obs" class="form-control texto09" value="<?= @$obj->_observacao; ?>" />
+                        <div class="col-lg-2">
+                            <div>
+                                <label>Vencimento Carteira</label>
+                                <input type="text" id="vencimento_carteira" class="form-control" name="vencimento_carteira" value="<?
+                                if (@$obj[0]->_vencimento_carteira != '') {
+                                 echo date("d/m/Y", strtotime(@$obj[0]->_vencimento_carteira));
+                                 }
+                                 ?>" <?= (in_array('vencimento_carteira', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                            </div>
                         </div>
-                    </div>
+                     </div>
                 </div>
+            </div>
 
 
         </fieldset>
@@ -251,145 +223,88 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-
-                    <div class="col-lg-3">
-                        <div class="form-group">
-                            <!-- <label>T. logradouro</label>
-
-
-                 <select name="tipo_logradouro" id="txtTipoLogradouro" class="size2" <?= (in_array('logradouro', $campos_obrigatorios)) ? 'required' : '' ?>>
-                     <option value='' >selecione</option>
-                <?php
-                            $listaLogradouro = $this->paciente->listaTipoLogradouro($_GET);
-                            foreach ($listaLogradouro as $item) {
-                                ?>
-
-                                     <option   value =<?php echo $item->tipo_logradouro_id; ?> <?
-                                if (@$obj->_tipoLogradouro == $item->tipo_logradouro_id):echo 'selected';
-                                endif;
-                                ?>><?php echo $item->descricao; ?></option>
-                    <?php
-                            }
-                            ?>
-                 </select>-->
-
-                            <? if ($this->session->userdata('recomendacao_configuravel') != "t") { ?>
-                                <label>Indicacao</label>
-                                <select name="indicacao" id="indicacao" class="form-control texto04" <?= (in_array('indicacao', $campos_obrigatorios)) ? 'required' : '' ?>>
-                                    <option value=''>Selecione</option>
-                                    <?php
-                                    $indicacao = $this->paciente->listaindicacao($_GET);
-                                    foreach ($indicacao as $item) {
-                                        ?>
-                                        <option value="<?php echo $item->paciente_indicacao_id; ?>"
-                                            <?
-                                            if ($obj[0]->indicacao == $item->paciente_indicacao_id):echo 'selected';
-                                            endif;
-                                            ?>>
-                                            <?php echo $item->nome; ?>
-                                        </option>
-                                        <?php
-                                    }
-                                    ?>
-                                </select>
-                            <? } ?>
+                    <div class="col-lg-2">
+                        <div>
+                            <label>Município</label>
+                            <input type="hidden" id="txtCidadeID" class="texto_id" name="municipio_id" value="<?= @$obj[0]->_municipio_id; ?>" readonly="true" />
+                            <input type="text" id="txtCidade" class="form-control" name="txtCidade" value="<?= @$obj[0]->_municipio_id; ?>" />
                         </div>
-
-                        <div class="form-group">
-                            <label>Bairro</label>
-                            <input type="text" id="bairro" class="form-control texto05" name="bairro" value="<?= @$obj->_bairro; ?>" />
-                        </div>
-
-                        <div class="form-group">
-                            <label>Telefone 1*</label>
-                            <?
-                            if (@$obj->_telefone != '' && strlen(@$obj->_telefone) > 3) {
-
-                                if (preg_match('/\(/', @$obj->_telefone)) {
-                                    $telefone = @$obj->_telefone;
-                                } else {
-                                    $telefone = "(" . substr(@$obj->_telefone, 0, 2) . ")" . substr(@$obj->_telefone, 2, strlen(@$obj->_telefone) - 2);
-                                }
-                            } else {
-                                $telefone = '';
-                            }
-                            if (@$obj->_celular != '' && strlen(@$obj->_celular) > 3) {
-                                if (preg_match('/\(/', @$obj->_celular)) {
-                                    $celular = @$obj->_celular;
-                                } else {
-                                    $celular = "(" . substr(@$obj->_celular, 0, 2) . ")" . substr(@$obj->_celular, 2, strlen(@$obj->_celular) - 2);
-                                }
-                            } else {
-                                $celular = '';
-                            }
-                            if (@$obj->_whatsapp != '' && strlen(@$obj->_whatsapp) > 3) {
-                                if (preg_match('/\(/', @$obj->_whatsapp)) {
-                                    $whatsapp = @$obj->_whatsapp;
-                                } else {
-                                    $whatsapp = "(" . substr(@$obj->_whatsapp, 0, 2) . ")" . substr(@$obj->_whatsapp, 2, strlen(@$obj->_whatsapp) - 2);
-                                }
-                            } else {
-                                $whatsapp = '';
-                            }
-                            ?>
-
-
-                            <input type="text" id="txtTelefone" class="form-control texto03" name="telefone"  value="<?= @$telefone; ?>" <?= (in_array('telefone1', $campos_obrigatorios)) ? 'required' : '' ?>/>
-                            <button class="btn btn-outline-danger btn-sm" type=button id="btnWhats" onclick="pegarWhats();"> WP? </button>
-                        </div>
-
-
-
-
-                    </div>
-
-                    <div class="col-lg-3">
-                        <div class="form-group">
-                            <label>Endere&ccedil;o</label>
-                            <input type="text" id="rua" class="form-control texto08" name="endereco" value="<?= @$obj[0]->endereco; ?>" />
-                        </div>
-                        <div class="form-group">
-                            <label>Complemento</label>
-                            <input type="text" id="txtComplemento" class="form-control texto08" name="complemento" value="<?= @$obj->_complemento; ?>" />
-                        </div>
-
-                        <div class="form-group">
-                            <label>celular</label>
-                            <input type="text" id="txtCelular" class="form-control texto03" name="celular" value="<?= @$celular; ?>" <?= (in_array('celular', $campos_obrigatorios)) ? 'required' : '' ?>/>
-                            <button class="btn btn-outline-danger btn-sm"  type=button id="btnWhats" onclick="pegarWhats2();"> WP? </button>
-                        </div>
-
-
-
+                        <div>
+                                <label>CEP</label>
+                                <input type="text" id="cep" class="form-control" name="cep"  value="<?= @$obj[0]->_cep; ?>" />
+                                <input type="hidden" id="ibge" name="ibge" />
+                            </div>
                     </div>
                     <div class="col-lg-2">
-
-                        <div class="form-group">
-                            <label>N&uacute;mero</label>
-
-
-                            <input type="text" id="txtNumero" class="form-control texto03" name="numero" value="<?= @$obj->_numero; ?>" />
+                            <div>
+                                <label>Endere&ccedil;o</label>
+                                <input type="text" id="rua" class="form-control" name="endereco" value="<?= @$obj[0]->_endereco; ?>" />
+                            </div>
+                            <div>
+                                <label>Bairro</label>
+                                <input type="text" id="bairro" class="form-control" name="bairro" value="<?= @$obj[0]->_bairro; ?>" />
+                            </div>   
                         </div>
+                        <?
+                        if (@$obj[0]->_telefone != '' && strlen(@$obj[0]->_telefone) > 3) {
 
-                        <div class="form-group">
-                            <label>Município</label>
-                            <input type="hidden" id="txtCidadeID" class="texto_id" name="municipio_id" value="<?= @$obj[0]->municipio_id; ?>" readonly="true" />
-                            <input type="text" id="txtCidade" class="form-control texto03 eac-square" name="txtCidade" value="<?= @$obj[0]->municipio_id; ?>" />
-                        </div>
-                        <div class="form-group">
+                            if (preg_match('/\(/', @$obj[0]->_telefone)) {
+                                $telefone = @$obj[0]->_telefone;
+                            } else {
+                                $telefone = "(" . substr(@$obj[0]->_telefone, 0, 2) . ")" . substr(@$obj[0]->_telefone, 2, strlen(@$obj[0]->_telefone) - 2);
+                            }
+                        } else {
+                            $telefone = '';
+                        }
+                        if (@$obj[0]->_celular != '' && strlen(@$obj[0]->_celular) > 3) {
+                            if (preg_match('/\(/', @$obj[0]->_celular)) {
+                                $celular = @$obj[0]->_celular;
+                            } else {
+                                $celular = "(" . substr(@$obj[0]->_celular, 0, 2) . ")" . substr(@$obj[0]->_celular, 2, strlen(@$obj[0]->_celular) - 2);
+                            }
+                        } else {
+                            $celular = '';
+                        }
+                        if (@$obj[0]->_whatsapp != '' && strlen(@$obj[0]->_whatsapp) > 3) {
+                            if (preg_match('/\(/', @$obj[0]->_whatsapp)) {
+                                $whatsapp = @$obj[0]->_whatsapp;
+                            } else {
+                                $whatsapp = "(" . substr(@$obj[0]->_whatsapp, 0, 2) . ")" . substr(@$obj[0]->_whatsapp, 2, strlen(@$obj[0]->_whatsapp) - 2);
+                            }
+                        } else {
+                            $whatsapp = '';
+                        }
+                        ?>
+                        <div class="col-lg-2">
+                            <div>
+                                <label>Celular</label>
+                                <input type="text" id="txtCelular" class="form-control" name="celular" value="<?= @$celular; ?>" <?= (in_array('celular', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                                <!-- <button class="btn btn-outline-danger btn-sm"  type=button id="btnWhats" onclick="pegarWhats2();"> WP? </button> -->
+                            </div>
+                            <div>
                             <label>WhatsApp</label>
-                            <input type="text" id="txtwhatsapp" class="form-control texto03" name="txtwhatsapp" value="<?= @$whatsapp; ?>" <?= (in_array('whatsapp', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                            <input type="text" id="txtwhatsapp" class="form-control" name="txtwhatsapp" value="<?= @$whatsapp; ?>" <?= (in_array('whatsapp', $campos_obrigatorios)) ? 'required' : '' ?>/>
                         </div>
-
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="form-group">
-                            <label>CEP</label>
-                            <input type="text" id="cep" class="form-control texto03 eac-square" name="cep"  value="<?= @$obj->_cep; ?>" />
-                            <input type="hidden" id="ibge" class="form-control texto03" name="ibge" />
                         </div>
+                   
+                        <div class="col-lg-2">
+                            <div>
+                                <label>Telefone 1*</label>
+                                
+                                <input type="text" id="txtTelefone" class="form-control" name="telefone"  value="<?= @$telefone; ?>" <?= (in_array('telefone1', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                                <!-- <button class="btn btn-outline-danger btn-sm" type=button id="btnWhats" onclick="pegarWhats();"> WP? </button> -->
+                            </div>
+                            <div>
+                                <label>N&uacute;mero</label>
+                                <input type="text" id="txtNumero" class="form-control" name="numero" value="<?= @$obj[0]->_numero; ?>" />
+                            </div>
+                        </div>
+                    
+                        <div class="col-lg-2">
+                            <label>Observa&ccedil;&atilde;o</label>
+                            <textarea cols="70" rows="3" class="form-control" name="observacao" placeholder="Observações" id="observacao"><?= @$obj[0]->_observacao; ?></textarea><br/>
+                        </div>   
                     </div>
-
                 </div>
             </div>
         </div>
@@ -400,7 +315,7 @@
         <div class="panel-body socialdata">
             <div class="row">
                 <div class="col-lg-2">
-                    <div class="form-group">
+                    <div>
                         <label>Plano de Saude</label>
                         <select <?= (@$empresapermissoes[0]->carteira_administrador == 't' && $perfil_id != 1) ? 'disabled' : '' ?> name="convenio" id="txtconvenio" class="form-control texto04" <?= (in_array('plano_saude', $campos_obrigatorios)) ? 'required' : '' ?>>
                             <option value='' >selecione</option>
@@ -408,13 +323,13 @@
                             $listaconvenio = $this->paciente->listaconvenio($_GET);
                             foreach ($listaconvenio as $item) {
                                 $operador_id = $this->session->userdata('operador_id');
-                                if(@$obj->_convenio != $item->convenio_id && @$obj->_convenio > 0 && $empresapermissoes[0]->travar_convenio_paciente == 't' && $operador_id != 1){
+                                if(@$obj[0]->_convenio != $item->convenio_id && @$obj[0]->_convenio > 0 && $empresapermissoes[0]->travar_convenio_paciente == 't' && $operador_id != 1){
                                     continue;
                                 }
                                 ?>
 
                                 <option value =<?php echo $item->convenio_id; ?> <?
-                                if (@$obj->_convenio == $item->convenio_id):echo 'selected';
+                                if (@$obj[0]->_convenio == $item->convenio_id):echo 'selected';
                                 endif;
                                 ?>><?php echo $item->nome; ?></option>
                                           <?php
@@ -423,170 +338,140 @@
                                       <option data-section="plano" value="OUTROS">OUTROS</option>
                         </select>
                     </div>
-                    <div class="form-group hide" data-name="plano" >
+                    <div>
                         <label>Outro Plano de Saude</label>
-                        <input type="text" name="outroplano" id="outroplano" value="<?=@$obj->_outro_convenio?>">
+                        <input type="text" name="outroplano" class="form-control" id="outroplano" value="<?=@$obj[0]->_outro_convenio?>">
                     </div>
-                    <div class="form-group">
-                        <label>Nacionalidade</label>
-                        <input type="text" id="nacionalidade" class="form-control texto04" name="nacionalidade" value="<?= @$obj->_nacionalidade; ?>" <?= (in_array('nacionalidade', $campos_obrigatorios)) ? 'required' : '' ?>/>
-                    </div>
-                    <div>
-                        <label>Município</label>
-                        <input type="hidden"  id="txtCidadeID" class="texto_id" name="municipio_id" value="<?= @$obj[0]->municipio_id; ?>" readonly="true" />
-                        <input type="text" id="txtCidade" class="form-control texto04 eac-square" value="<?= @$obj[0]->municipio; ?>" placeholder="Município" name="txtCidade" />
+                </div>
+            
+                    <div class="col-lg-2">
+                        <div>
+                            <label>Ra&ccedil;a / Cor</label>
+                            <select name="raca_cor" id="txtRacaCor" class="form-control" <?= (in_array('raca_cor', $campos_obrigatorios)) ? 'required' : '' ?>>
 
-                    </div>
-                    <?
-                    $empresa_id = $this->session->userdata('empresa_id');
-                    $data['retorno_header'] = $this->paciente->listarverificacaopermisao2($empresa_id);
-                    if ($data['retorno_header'][0]->prontuario_antigo == 't') {
-                        ?>
-                        <div class="form-group">
-                            <label>Prontuário antigo</label>
-                            <input type="number" id="prontuario_antigo" class="texto03" name="prontuario_antigo" value="<?= @$obj->_prontuario_antigo; ?>" <?= (in_array('prontuario_antigo', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                                <option value=''  <?
+                                if (@$obj[0]->_raca_cor == ''):echo 'selected';
+                                endif;
+                                ?>>Selecione</option>
+                                <option value=1 <?
+                                if (@$obj[0]->_raca_cor == 1):echo 'selected';
+                                endif;
+                                ?>>Branca</option>
+                                <option value=2 <?
+                                if (@$obj[0]->_raca_cor == 2):echo 'selected';
+                                endif;
+                                ?>>Amarela</option>
+                                <option value=3 <?
+                                if (@$obj[0]->_raca_cor == 3):echo 'selected';
+                                endif;
+                                ?>>Preta</option>
+                                <option value=4 <?
+                                if (@$obj[0]->_raca_cor == 4):echo 'selected';
+                                endif;
+                                ?>>Parda</option>
+                                <option value=5 <?
+                                if (@$obj[0]->_raca_cor == 5):echo 'selected';
+                                endif;
+                                ?>>Ind&iacute;gena</option>
+                            </select>
                         </div>
-                        <?
-                    } else {
-
-                    }
-                    ?>
-                </div>
-
-                <div class="col-lg-2">
-                   
-                    <div>
-                        <label>Ra&ccedil;a / Cor</label>
-                        <select name="raca_cor" id="txtRacaCor" class="form-control texto04" <?= (in_array('raca_cor', $campos_obrigatorios)) ? 'required' : '' ?>>
-
-                            <option value=''  <?
-                            if (@$obj->_raca_cor == ''):echo 'selected';
-                            endif;
-                            ?>>Selecione</option>
-                            <option value=1 <?
-                            if (@$obj->_raca_cor == 1):echo 'selected';
-                            endif;
-                            ?>>Branca</option>
-                            <option value=2 <?
-                            if (@$obj->_raca_cor == 2):echo 'selected';
-                            endif;
-                            ?>>Amarela</option>
-                            <option value=3 <?
-                            if (@$obj->_raca_cor == 3):echo 'selected';
-                            endif;
-                            ?>>Preta</option>
-                            <option value=4 <?
-                            if (@$obj->_raca_cor == 4):echo 'selected';
-                            endif;
-                            ?>>Parda</option>
-                            <option value=5 <?
-                            if (@$obj->_raca_cor == 5):echo 'selected';
-                            endif;
-                            ?>>Ind&iacute;gena</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="form-group">
-                        <label>N&uacute;mero</label>
-                        <div name="numero_caracter" id="numero_caracter" class="size2">
-                            <input type="text"  id="txtconvenionumero" class="form-control texto04" name="convenionumero" value="<?= @$obj->_convenionumero; ?>" <?= (in_array('numero_carteira', $campos_obrigatorios)) ? 'required' : '' ?>>
+                        <div>
+                            <label>Nacionalidade</label>
+                            <input type="text" id="nacionalidade" class="form-control" name="nacionalidade" value="<?= @$obj[0]->_nacionalidade; ?>" <?= (in_array('nacionalidade', $campos_obrigatorios)) ? 'required' : '' ?>/>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Estado civil</label>
-                        <select name="estado_civil_id" id="txtEstadoCivil" class="form-control" selected="<?= @$obj->_estado_civil; ?>" <?= (in_array('estado_civil', $campos_obrigatorios)) ? 'required' : '' ?>>
-                            <option value='' <?
-                            if (@$obj->_estado_civil == ''):echo 'selected';
-                            endif;
-                            ?>>Selecione</option>
-                            <option value=1 <?
-                            if (@$obj->_estado_civil == 1):echo 'selected';
-                            endif;
-                            ?>>Solteiro</option>
-                            <option value=2 <?
-                            if (@$obj->_estado_civil == 2):echo 'selected';
-                            endif;
-                            ?>>Casado</option>
-                            <option value=3 <?
-                            if (@$obj->_estado_civil == 3):echo 'selected';
-                            endif;
-                            ?>>Divorciado</option>
-                            <option value=4 <?
-                            if (@$obj->_estado_civil == 4):echo 'selected';
-                            endif;
-                            ?>>Viuvo</option>
-                            <option value=5 <?
-                            if (@$obj->_estado_civil == 5):echo 'selected';
-                            endif;
-                            ?>>Outros</option>
-                        </select>
+                    <div class="col-lg-2">
+                    <div>
+                            <label>Estado civil</label>
+                            <select name="estado_civil_id" id="txtEstadoCivil" class="form-control" selected="<?= @$obj[0]->_estado_civil; ?>" <?= (in_array('estado_civil', $campos_obrigatorios)) ? 'required' : '' ?>>
+                                <option value='' <?
+                                if (@$obj[0]->_estado_civil == ''):echo 'selected';
+                                endif;
+                                ?>>Selecione</option>
+                                <option value=1 <?
+                                if (@$obj[0]->_estado_civil == 1):echo 'selected';
+                                endif;
+                                ?>>Solteiro</option>
+                                <option value=2 <?
+                                if (@$obj[0]->_estado_civil == 2):echo 'selected';
+                                endif;
+                                ?>>Casado</option>
+                                <option value=3 <?
+                                if (@$obj[0]->_estado_civil == 3):echo 'selected';
+                                endif;
+                                ?>>Divorciado</option>
+                                <option value=4 <?
+                                if (@$obj[0]->_estado_civil == 4):echo 'selected';
+                                endif;
+                                ?>>Viuvo</option>
+                                <option value=5 <?
+                                if (@$obj[0]->_estado_civil == 5):echo 'selected';
+                                endif;
+                                ?>>Outros</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>N&uacute;mero</label>
+                            <div name="numero_caracter" id="numero_caracter" class="size2">
+                                <input type="text"  id="txtconvenionumero" class="form-control" name="convenionumero" value="<?= @$obj[0]->_convenionumero; ?>" <?= (in_array('numero_carteira', $campos_obrigatorios)) ? 'required' : '' ?>>
+                            </div>
+                        </div>
                     </div>
+                    <div class="col-lg-2">
+                        <div>
+                            <label>Escolaridade</label>
+
+                            <select name="escolaridade" id="escolaridade" class="form-control" selected="<?= @$obj[0]->_escolaridade_id; ?>" <?= (in_array('escolaridade', $campos_obrigatorios)) ? 'required' : '' ?>>
+                                <option value='' <?
+                                if (@$obj[0]->_escolaridade_id == ''):echo 'selected';
+                                endif;
+                                ?>>Selecione</option>
+                                <option value=1 <?
+                                if (@$obj[0]->_escolaridade_id == 1):echo 'selected';
+                                endif;
+                                ?>>Fundamental-Incompleto </option>
+                                <option value=2 <?
+                                if (@$obj[0]->_escolaridade_id == 2):echo 'selected';
+                                endif;
+                                ?>>Fundamental-Completo</option>
+
+                                <option value=3 <?
+                                if (@$obj[0]->_escolaridade_id == 3):echo 'selected';
+                                endif;
+                                ?>>Médio
+                                    -
+                                    Incompleto</option>
+                                <option value=4 <?
+                                if (@$obj[0]->_escolaridade_id == 4):echo 'selected';
+                                endif;
+                                ?>>Médio
+                                    -
+                                    Completo
+                                </option>
+                                <option value=5 <?
+                                if (@$obj[0]->_escolaridade_id == 5):echo 'selected';
+                                endif;
+                                ?>>Superior
+                                    -
+                                    Incompleto</option>
+                                <option value=6 <?
+                                if (@$obj[0]->_escolaridade_id == 6):echo 'selected';
+                                endif;
+                                ?>>Superior-Completo </option>
+
+                            </select>
+                        </div>
+                        <div>
+                            <label>Ocupa&ccedil;&atilde;o</label>
+                            <input type="hidden" id="txtcboID" class="form-control" class="texto_id" name="txtcboID" value="<?= @$obj[0]->_cbo_ocupacao_id; ?>" readonly="true" />
+                            <input type="text" id="txtcbo" class="form-control" name="txtcbo" value="<?= @$obj[0]->_cbo_nome; ?>" <?= (in_array('ocupacao', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                            <input type="hidden" id="txtcbohidden" class="form-control" name="txtcbohidden" value="<?= @$obj[0]->_cbo_nome; ?>" />
+                        </div>
                 </div>
                 <div class="col-lg-2">
-                    <div class="form-group">
-                        <label>Vencimento Carteira</label>
-                        <input type="text" id="vencimento_carteira" class="form-control texto02" name="vencimento_carteira" value="<?
-                        if (@$obj->_vencimento_carteira != '') {
-                            echo date("d/m/Y", strtotime(@$obj->_vencimento_carteira));
-                        }
-                        ?>" <?= (in_array('vencimento_carteira', $campos_obrigatorios)) ? 'required' : '' ?>/>
-                    </div>
-                    <div class="form-group">
-                        <label>Escolaridade</label>
-
-                        <select name="escolaridade" id="escolaridade" class="form-control" selected="<?= @$obj->_escolaridade_id; ?>" <?= (in_array('escolaridade', $campos_obrigatorios)) ? 'required' : '' ?>>
-                            <option value='' <?
-                            if (@$obj->_escolaridade_id == ''):echo 'selected';
-                            endif;
-                            ?>>Selecione</option>
-                            <option value=1 <?
-                            if (@$obj->_escolaridade_id == 1):echo 'selected';
-                            endif;
-                            ?>>Fundamental-Incompleto </option>
-                            <option value=2 <?
-                            if (@$obj->_escolaridade_id == 2):echo 'selected';
-                            endif;
-                            ?>>Fundamental-Completo</option>
-
-                            <option value=3 <?
-                            if (@$obj->_escolaridade_id == 3):echo 'selected';
-                            endif;
-                            ?>>Médio
-                                -
-                                Incompleto</option>
-                            <option value=4 <?
-                            if (@$obj->_escolaridade_id == 4):echo 'selected';
-                            endif;
-                            ?>>Médio
-                                -
-                                Completo
-                            </option>
-                            <option value=5 <?
-                            if (@$obj->_escolaridade_id == 5):echo 'selected';
-                            endif;
-                            ?>>Superior
-                                -
-                                Incompleto</option>
-                            <option value=6 <?
-                            if (@$obj->_escolaridade_id == 6):echo 'selected';
-                            endif;
-                            ?>>Superior-Completo </option>
-
-
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="form-group">
-                        <label>Ocupa&ccedil;&atilde;o</label>
-                        <input type="hidden" id="txtcboID" class="texto_id" name="txtcboID" value="<?= @$obj->_cbo_ocupacao_id; ?>" readonly="true" />
-                        <input type="text" id="txtcbo" class="form-control texto04" name="txtcbo" value="<?= @$obj->_cbo_nome; ?>" <?= (in_array('ocupacao', $campos_obrigatorios)) ? 'required' : '' ?>/>
-                        <input type="hidden" id="txtcbohidden" class="texto04" name="txtcbohidden" value="<?= @$obj->_cbo_nome; ?>" />
-                    </div>
-                    <div class="form-group">
+                    <div>
                         <label>Instagram (ex: @exemplo)</label>
-                        <input type="text" id="instagram" class="form-control texto04" name="instagram" value="<?= @$obj->_instagram; ?>" <?= (in_array('instagram', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                        <input type="text" id="instagram" class="form-control" name="instagram" value="<?= @$obj[0]->_instagram; ?>" <?= (in_array('instagram', $campos_obrigatorios)) ? 'required' : '' ?>/>
                     </div>
                 </div>
 
@@ -608,7 +493,7 @@
                     <div>
                         <label>Nome usu&aacute;rio App</label>
 
-                        <input type="text" id="txtUsuarioapp" name="txtUsuarioapp"  class="texto04" value="<?= @$obj->_usuario_app; ?>"/>
+                        <input type="text" id="txtUsuarioapp" name="txtUsuarioapp"  class="texto04" value="<?= @$obj[0]->_usuario_app; ?>"/>
                     </div>
                     <div>
                         <label>Senha App:</label>
@@ -691,12 +576,6 @@
 </div>
 
 
-
-<link rel="stylesheet" href="<?= base_url() ?>css/jquery-ui-1.8.5.custom.css">
-<script type="text/javascript" src="<?= base_url() ?>js/jquery.validate.js"></script>
-<script type="text/javascript" src="<?= base_url() ?>js/jquery-1.9.1.js" ></script>
-<script type="text/javascript" src="<?= base_url() ?>js/jquery-ui-1.10.4.js" ></script>
-<script type="text/javascript" src="<?= base_url() ?>js/jquery.maskedinput.js"></script>
 <script>
 
 
@@ -745,10 +624,10 @@ $("#mostrarDadosExtras").click(function () {
 
 
                             if (j[0].tamanho_carteira != undefined) {
-                                options = '<input type="text" class="texto03" name="convenionumero"   maxlength="' + j[c].tamanho_carteira + '" value="<?= @$obj->_convenionumero; ?>" <?= (in_array('numero_carteira', $campos_obrigatorios)) ? 'required' : '' ?>>';
+                                options = '<input type="text" name="convenionumero"   maxlength="' + j[c].tamanho_carteira + '" value="<?= @$obj[0]->_convenionumero; ?>" <?= (in_array('numero_carteira', $campos_obrigatorios)) ? 'required' : '' ?>>';
 
                             } else {
-                                options = '<input  type="text" class="texto03" name="convenionumero"   value="<?= @$obj->_convenionumero; ?>" <?= (in_array('numero_carteira', $campos_obrigatorios)) ? 'required' : '' ?>></option>';
+                                options = '<input  type="text" name="convenionumero"   value="<?= @$obj[0]->_convenionumero; ?>" <?= (in_array('numero_carteira', $campos_obrigatorios)) ? 'required' : '' ?>></option>';
                             }
 
 
@@ -986,21 +865,21 @@ $("#mostrarDadosExtras").click(function () {
 
     function verificarCPF() {
         // txtCpf
-        var cpf = $("#txtCpf").val();
-        var paciente_id = $("#txtPacienteId").val();
-        if($('#cpf_responsavel').prop('checked')){
-            var cpf_responsavel = 'on';
-        }else{
-            var cpf_responsavel = '';
-        }
+        // var cpf = $("#txtCpf").val();
+        // var paciente_id = $("#txtPacienteId").val();
+        // if($('#cpf_responsavel').prop('checked')){
+        //     var cpf_responsavel = 'on';
+        // }else{
+        //     var cpf_responsavel = '';
+        // }
         
-        // alert(cpf_responsavel);
-        $.getJSON('<?= base_url() ?>autocomplete/verificarcpfpaciente', {cpf: cpf, cpf_responsavel: cpf_responsavel, paciente_id: paciente_id,  ajax: true}, function (j) {
-            if(j != ''){
-                alert(j);
-                $("#txtCpf").val('');
-            }
-        });
+        // // alert(cpf_responsavel);
+        // $.getJSON('<?= base_url() ?>autocomplete/verificarcpfpaciente', {cpf: cpf, cpf_responsavel: cpf_responsavel, paciente_id: paciente_id,  ajax: true}, function (j) {
+        //     if(j != ''){
+        //         alert(j);
+        //         $("#txtCpf").val('');
+        //     }
+        // });
     }
 
     function verificarCPFmae() {

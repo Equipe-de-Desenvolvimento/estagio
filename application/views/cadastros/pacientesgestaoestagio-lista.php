@@ -11,7 +11,7 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
         <div class="col-sm-12">
             <div class="">
                 <div class="" id="pesquisar">
-                    <form method="get" action="<?php echo base_url() ?>cadastros/pacientes/pesquisar">
+                    <form method="get" action="<?php echo base_url() ?>cadastros/pacientes/pesquisarGestaoEstagio">
                         <div class="row">
                                     <div class="nome">
                                         <h6>Nome</h6>
@@ -200,10 +200,17 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                                         ?>
 
                                                         <? if (($tecnico_recepcao_editar == 't' || $perfil_id != 15) && $perfil_id != 24) { ?>
-                                                            <div>
-                                                                <a class="btn btn-outline-default btn-round btn-sm" href="<?= base_url() ?>cadastros/pacientes/carregar/<?= $item->paciente_id ?>">
-                                                                    <b>Editar</b>
+                                                            <div style="width:700px;">
+                                                                <a class="btn btn-outline-default btn-round btn-sm" href="">
+                                                                    <b>Iniciar Estágio</b>
                                                                 </a>
+                                                                <a class="btn btn-outline-default btn-round btn-sm" href="">
+                                                                    <b>Transferir Estágio</b>
+                                                                </a>
+                                                                <a class="btn btn-outline-default btn-round btn-sm" href="">
+                                                                    <b>Encerrar Estágio</b>
+                                                                </a>
+                                                                
                                                             </div>
                                                         <? } else { ?>
                                                             <div class="bt_link">
@@ -237,13 +244,7 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                                         <!--</div>-->
                                                     <!--</td>-->
                                                     
-                                                    <td class="<?php echo $estilo_linha; ?>">
-                                                        <div class="bt_link">
-                                                            <a class="btn btn-outline-default btn-round btn-sm" href="<?=base_url() ?>cadastros/pacientes/excluircadastroestagiarios/<?= $item->paciente_id ?>">       
-                                                                <b>Excluir</b>
-                                                            </a>
-                                                        </div>
-                                                    </td>
+                                                    
                                                     
                                                                 <?php }
 

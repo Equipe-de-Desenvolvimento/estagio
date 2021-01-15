@@ -30,6 +30,13 @@ class pacientes extends BaseController {
         $this->loadView('cadastros/pacientes-lista');
     }
 
+    public function pesquisarGestaoEstagio($args = array()) {
+        $this->loadView('cadastros/pacientesgestaoestagio-lista');
+    }
+    public function pesquisarMapaGestao($args = array()) {
+        $this->loadView('cadastros/pacientesmapadevagas-lista');
+    }
+
     public function pesquisardesativado($args = array()) {
         $this->loadView('cadastros/pacientesdesativados-lista');
     }
@@ -42,13 +49,16 @@ class pacientes extends BaseController {
     function listarprecadastrosPaciente($args = array()){       
         $this->loadView('cadastros/precadastropaciente-lista',  $args);       
     }
-    function novo() {
+
+    function novo($paciente_id = null) {
 
         $data['idade'] = 0;
         $data['empresapermissoes'] = $this->guia->listarempresapermissoes();
         $data['listaLogradouro'] = $this->paciente->listaTipoLogradouro();
         $data['listaconvenio'] = $this->paciente->listaconvenio();
-//        $data['empresaPermissao'] = $this->guia->listarempresapermissoes();
+        $obj_paciente = new paciente_model($paciente_id);
+        $data['obj'] = $obj_paciente;
+        
         $this->loadView('cadastros/paciente-ficha', $data);
     }
 
@@ -426,7 +436,7 @@ class pacientes extends BaseController {
         $obj_paciente = new paciente_model($paciente_id);
         $data['empresapermissoes'] = $this->guia->listarempresapermissoes();
         $data['ocupacao_mae'] = $data['empresapermissoes'][0]->ocupacao_mae;
-        $data['obj'] = $obj_paciente;
+        $data['obj'] = array($obj_paciente);
         $data['idade'] = 1;
         $data['agendado'] = $agendado;
         $this->loadView('cadastros/paciente-ficha', $data);
@@ -542,7 +552,7 @@ class pacientes extends BaseController {
     }
 
 
-    function gravarcirurgico() {
+    function gravar() {
          
         $perfil_id = $this->session->userdata('perfil_id');
         $empresa_id = $this->session->userdata('empresa_id');
@@ -576,7 +586,7 @@ class pacientes extends BaseController {
         if ($_POST['cpf'] != "" && $_POST['cpf'] != "000.000.000-00") {
             if ($this->utilitario->validaCPF($_POST['cpf'])) {
                 $contadorcpf = $this->paciente->contadorcpf2();
-                if ($_POST['cpf_responsavel'] == 'on') {
+                if (isset($_POST['cpf_responsavel'])) {
                     $contadorcpf = 0;
                 }// Caso esteja marcado como CPF responsável, ele deixa cadastrar.
 
@@ -609,8 +619,7 @@ class pacientes extends BaseController {
                     $result = file_put_contents("upload/webcam/pacientes/$paciente_id.jpg", $binary_data);
                 }
                 $this->session->set_flashdata('message', $data['mensagem']);
-
-                redirect(base_url() . "seguranca/operador/pesquisarrecepcao");
+                redirect(base_url() . "cadastros/pacientes", $data);
                 
             } elseif ($contador > 0 && $_POST['paciente_id'] != "") {
                 //Atualiza cadastro
@@ -659,8 +668,7 @@ class pacientes extends BaseController {
         }
 
         $this->session->set_flashdata('message', $data['mensagem']);
-        redirect(base_url() . "seguranca/operador/pesquisarrecepcao");
-       
+        redirect(base_url() . "cadastros/pacientes", $data);
         
     }
 
@@ -1598,26 +1606,32 @@ function carregarpacientecenso($prontuario = null, $nome = null, $procedimento =
         
         $this->loadView('cadastros/paciente-ficha', $data);
     }
-       function novainstituicao($instituicao_id = 0) {
+
+    function novainstituicao($instituicao_id = 0) {
 
         $data['idade'] = 0;
         $data['empresapermissoes'] = $this->guia->listarempresapermissoes();
         $data['listaLogradouro'] = $this->paciente->listaTipoLogradouro();
+        $data['listaMunicipios'] = $this->paciente->buscarMunicipio();
+        // echo '<pre>';
+        // var_dump($data['listaMunicipios']); 
+        // die;
         $data['listaconvenio'] = $this->paciente->listaconvenio();
         $data['obj'] = $this->paciente->listarinstituicaoid($instituicao_id);
         $data['instituicao_id'] = $instituicao_id;
     //  $data['empresaPermissao'] = $this->guia->listarempresapermissoes();
         $this->loadView('cadastros/instituicao-ficha', $data);
     }
-        function gravarinstituicao(){
-            
-            $data['listaLogradouro'] = $this->paciente->gravarinstituicao();
 
-          //  print_r($_POST);
-            redirect(base_url() . "ambulatorio/modelolaudo/pesquisar");
-        }
+    function gravarinstituicao(){
         
-             function excluircadastro($instituicao_id) {
+        $data['listaLogradouro'] = $this->paciente->gravarinstituicao();
+
+        //  print_r($_POST);
+        redirect(base_url() . "ambulatorio/modelolaudo/pesquisar");
+    }
+    
+    function excluircadastro($instituicao_id) {
         $teste = $this->paciente->excluircadastro($instituicao_id);
         if ($teste) {
             $data['mensagem'] = 'Erro ao confirmar Cadastro';
@@ -1636,8 +1650,13 @@ function carregarpacientecenso($prontuario = null, $nome = null, $procedimento =
         }
         redirect(base_url() . "cadastros/pacientes");
     }
-    
+    function gravarestagiarios(){
+            
+        $data['listaLogradouro'] = $this->paciente->gravar();
+
+      //  print_r($_POST);
+        redirect(base_url() . "ambulatorio/fornecedor/fornecedor");
+    }
 
 }
-
 ?>

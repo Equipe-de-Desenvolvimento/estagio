@@ -242,29 +242,18 @@ function debug($object) {
             <!-- MENUS START -->
             <li class="dropdown">
                 <a class="dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" >
-                    <i class="fa fa-address-book-o fa-fw"></i>Recepção</a>
-
+                    <i class="fa fa-address-book-o fa-fw"></i>Cadastro
+                </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-edit fa-fw"></i> Rotinas <span class="fa arrow"></span></a>
-                        <ul  class="dropdown-menu">
-                            <li>
-                                <a href="<?= base_url() ?>cadastros/pacientes">Cadastro</a>
-                            </li>
-            
-                            <!-- <a class="dropdown-item" href="<?= base_url() ?>ambulatorio/exame/listarmultifuncaoconsulta">Agendamento</a> -->
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Relatorios <span class="fa arrow"></span></a>
-                        <ul  class="dropdown-menu">
-                            <li>
-                                <a href="<?= base_url() ?>ambulatorio/guia/relatorioaniversariante">Relatorio Aniversariantes</a>
-                            </li>
-                        </ul>
-                    </li>
+                    <!-- <li class="dropdown"> -->
+                        <li>
+                            <a class="dropdown-item"  href="<?= base_url() ?>cadastros/pacientes">Aluno</a>
+                        </li>
+                        
+                        <li>
+                            <a class="dropdown-item" href="<?= base_url() ?>ambulatorio/modelolaudo/pesquisar">Instituição de Ensino</a>
+                        </li>
+                    <!-- </li> -->
                 </ul>
             </li>
 
@@ -441,7 +430,7 @@ function debug($object) {
 
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-university fa-fw"></i> Financeiro </a>
+                    <i class="fa fa-university fa-fw"></i> Gestão Financeira </a>
 
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li class="dropdown">
@@ -553,35 +542,27 @@ function debug($object) {
 
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-line-chart"></i> Faturamento </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-edit fa-fw"></i> Rotinas <span class="fa arrow"></span></a>
+                    <i class="fa fa-handshake-o"></i> Gestão de Vagas </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/pacientes/pesquisarMapaGestao">Mapa de Vagas</a>
+                        </li>
+                    </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-line-chart"></i> Gestão de Estágio </a>
+                    <!-- <i class="fa fa-edit fa-fw"></i> Rotinas <span class="fa arrow"></span></a> -->
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/exame/faturamentoexame">Faturar</a>
+                                <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/pacientes/pesquisarGestaoEstagio">Lista De Estágios</a>
                             </li>
                         </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Relatorios <span class="fa arrow"></span></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/guia/relatorioexame">Relatorio Conferencia</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/guia/relatorioalteracaomedico">Relatorio Alteracao Medico</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
             </li>
 
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-cogs fa-fw"></i>Configurações</a>
+                    <i class="fa fa-cogs fa-fw"></i>Gestão de Acessos</a>
 
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li class="dropdown">
@@ -621,13 +602,6 @@ function debug($object) {
                             </ul>
                     </li>
                     <li class="dropdown">
-                             <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-clone fa-fw"></i> Instituição </a>
-                            <ul class="dropdown-menu">
-                               <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/modelolaudo/pesquisar">Manter Instituição</a>
-                               </li>
-                            </ul>
                             
                              <!--<a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
                             <!--<i class="fa fa-clone fa-fw"></i> Modelos</a>-->
@@ -777,6 +751,7 @@ function debug($object) {
         $('.data').mask('99/99/9999');
         $('.cnpj').mask('99.999.999/9999-99');
         $('.cpf').mask('999.999.999-99');
+        $('.cep').mask('99999-999');
         $('.celular').mask('(99) 99999-9999');
         $('.telefone').mask('(99) 9999-9999');
         $('.hora').mask('99:99');

@@ -11,133 +11,112 @@
             $guia = "";
             ?>
 
-            <form method="post" action="<?= base_url() ?>ambulatorio/exame/faturamentoexamelista">
-                <dl>
-                    <dt>
-                        <label>Convenio</label>
-                    </dt>
-                    <dd>
-                        <select name="convenio" id="convenio" class="size2">
-                            <option value="" >TODOS</option>
-                            <? foreach ($convenios as $value) : ?>
-                                <option value="<?= $value->convenio_id; ?>" ><?php echo $value->nome; ?></option>
-                            <? endforeach; ?>
-                        </select>
-                    </dd>
-                    <dt>
-                        <label>Medico</label>
-                    </dt>
-                    <dd>
-                        <select name="medico" id="medico" class="size2">
-                            <option value="0">TODOS</option>
-                            <? foreach ($medicos as $value) : ?>
-                                <option value="<?= $value->operador_id; ?>" ><?php echo $value->nome; ?></option>
-                            <? endforeach; ?>
+        <form method="post" action="<?= base_url() ?>ambulatorio/exame/faturamentoexamelista">
+                <div class="row">
+                    <div class="col-gl-2">
+                        <div>
+                            <label>Convenio</label>
+                            <select name="convenio" class="control-form" id="convenio">
+                                <option value="" >TODOS</option>
+                                <? foreach ($convenios as $value) : ?>
+                                    <option value="<?= $value->convenio_id; ?>" ><?php echo $value->nome; ?></option>
+                                <? endforeach; ?>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Medico</label>
+                            <select name="medico" class="control-form" id="medico">
+                                <option value="0">TODOS</option>
+                                <? foreach ($medicos as $value) : ?>
+                                    <option value="<?= $value->operador_id; ?>" ><?php echo $value->nome; ?></option>
+                                <? endforeach; ?>
 
-                        </select>
-                    </dd>
-                    <dt>
-                        <label>Data inicio</label>
-                    </dt>
-                    <dd>
-                        <input type="text" name="txtdata_inicio" id="txtdata_inicio" alt="date"/>
-                    </dd>
-                    <dt>
-                        <label>Data fim</label>
-                    </dt>
-                    <dd>
-                        <input type="text" name="txtdata_fim" id="txtdata_fim" alt="date"/>
-                    </dd>
-                    
-                      <dt>
-                        <label>Data De Pesquisa</label>
-                    </dt>
-                    <dd>
-                        <select name="data_atendimento" id="data_atendimento" class="size2" >
-                            <option value='1' >DATA DE ATENDIMENTO</option>
-                            <option value='0' >DATA DE FATURAMENTO</option>
-                        </select>
-                    </dd>
-             
-                    <dt>
-                        <label>Especialidade</label>
-                    </dt>
-                   
-                    <dd>
-                        <?
-                        $grupo = $this->guia->listargrupo();
-                        ?>
-                        <select name="grupo" id="grupo" class="size2" >
-                            <option value='0' >TODOS</option>
-                          
-                            <? foreach ($grupo as $value) : ?>
-                                <option value="<?= $value->nome; ?>" ><?php echo $value->nome; ?></option>
-                            <? endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-gl-2">    
+                        <div>
+                            <label>Data inicio</label>
+                            <input type="text" name="data_inicio" class="control-form" name="txtdata_inicio" id="txtdata_inicio" alt="date"/>
+                        </div>
+                        <div>
+                            <label>Data fim</label>
+                            <input type="text" class="control-form" name="txtdata_fim" id="txtdata_fim" alt="date"/>
+                        </div>
+                    </div>  
+                    <div class="col-gl-2">  
+                        <div>
+                            <label>Data De Pesquisa</label>
+                            <select name="data_atendimento" class="control-form" id="data_atendimento" class="size2" >
+                                <option value='1' >DATA DE ATENDIMENTO</option>
+                                <option value='0' >DATA DE FATURAMENTO</option>
+                            </select>
+                        </div>
+                
+                        <div>
+                            <label>Especialidade</label>
 
-                        </select>
-                    </dd>
-                    <dt>
-                        <label>Faturamento</label>
-                    </dt>
-                    <dd>
-                        <select name="faturamento" id="faturamento" class="size1" >
-                            <option value='0' >TODOS</option>
-                            <option value='t' >Faturado</option>
-                            <option value='f' >Nao Faturado</option>
-                        </select>
-                    </dd>
-                    <dt>
-                        <label>Situação</label>
-                    </dt>
-                    <dd>
-                        <select name="situacao" id="situacao" class="size1" >
-                            <option value=''>TODOS</option>
-                            <option value='GLOSADO' >Glosado</option>
-                            <option value='PAGO' >Pago</option>
-                            <option value='NAO PAGO' >Não Pago</option>
-                        </select>
-                    </dd>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    <dt>
-                        <label>Nome</label>
-                    </dt>
-                    <dd>
-                        <input type="text" name="nome" class="texto06"/>
-                    </dd>
-                    <dt>
-                        <label>Tipo</label>
-                    </dt>
-                    <dd>
-                        <select name="tipo" id="tipo" class="size2" required="">
-                            <option value="">SELECIONE</option>
-                            <option value="AMBULATORIAL">AMBULATORIAL</option>
-                            <option value="CIRURGICO">INTERNAÇÃO</option>
-                            <option value="CENTRO_CIRURGICO">CENTRO CIRURGICO</option>
+                            <?
+                            $grupo = $this->guia->listargrupo();
+                            ?>
+                            <select class="control-form" name="grupo" id="grupo" class="size2" >
+                                <option value='0' >TODOS</option>
+                            
+                                <? foreach ($grupo as $value) : ?>
+                                    <option value="<?= $value->nome; ?>" ><?php echo $value->nome; ?></option>
+                                <? endforeach; ?>
 
-                        </select>
-                    </dd>
-                    <dt>
-                        <label>Empresa</label>
-                    </dt>
-                    <dd>
-                        <select name="empresa" id="empresa" class="size2">
-                            <? foreach ($empresa as $value) : ?>
-                                <option value="<?= $value->empresa_id; ?>" ><?php echo $value->nome; ?></option>
-                            <? endforeach; ?>
-                            <option value="0">TODOS</option>
-                        </select>
-                    </dd>
-                    <dt>
-                </dl>
-                <button type="submit" >Pesquisar</button>
-            </form>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-gl-2">    
+                        <div>
+                            <label>Faturamento</label>
+                            <select name="faturamento" class="control-form"  class="size6" id="faturamento"  >
+                                <option value='0' >TODOS</option>
+                                <option value='t' >Faturado</option>
+                                <option value='f' >Nao Faturado</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Situação</label>
+                            <select name="situacao" id="situacao"  class="size6" class="control-form" >
+                                <option value=''>TODOS</option>
+                                <option value='GLOSADO' >Glosado</option>
+                                <option value='PAGO' >Pago</option>
+                                <option value='NAO PAGO' >Não Pago</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-gl-2">
+                        <div>
+                            <label>Nome</label>
+                            <input type="text" class="control-form" name="nome"/>
+                        </div>
+                        <div>
+                            <label>Tipo</label>
+                            <select name="tipo" class="control-form" id="tipo" required="">
+                                <option value="">SELECIONE</option>
+                                <option value="AMBULATORIAL">AMBULATORIAL</option>
+                                <option value="CIRURGICO">INTERNAÇÃO</option>
+                                <option value="CENTRO_CIRURGICO">CENTRO CIRURGICO</option>
+
+                            </select>
+                        </div>
+                        <div>
+                            <label>Empresa</label>
+                            <select name="empresa"  class="control-form" id="empresa">
+                                <? foreach ($empresa as $value) : ?>
+                                    <option value="<?= $value->empresa_id; ?>" ><?php echo $value->nome; ?></option>
+                                <? endforeach; ?>
+                                <option value="0">TODOS</option>
+                            </select>
+                        </div>
+
+                    </div> 
+                </div> 
+            <button type="submit" >Pesquisar</button>     
+        </form>
            
             
 

@@ -16,6 +16,7 @@ class fornecedor_model extends Model {
     var $_municipio_id = null;
     var $_cep = null;
     var $_cpf = null;
+    var $_email = null;
 
     function Fornecedor_model($financeiro_credor_devedor_id = null) {
         parent::Model();
@@ -25,21 +26,27 @@ class fornecedor_model extends Model {
     }
 
     function listar($args = array()) {
-        $this->db->select(' financeiro_credor_devedor_id,
-                            razao_social,
-                            ativo,
-                            cnpj,
-                            cpf,
-                            telefone');
-        $this->db->from('tb_financeiro_credor_devedor');
-        if (@$args['ativo'] == 'f') {
+        $this->db->select(' f.financeiro_credor_devedor_id,
+                            f.razao_social,
+                            f.ativo,
+                            f.cnpj,
+                            f.cpf,
+                            f.telefone,
+                            f.email');
+        $this->db->from('tb_financeiro_credor_devedor f');
+        if (@$args['ativo'] == 't') {
             $this->db->where('ativo', 'false');
         } else {
             $this->db->where('ativo', 'true');
         }
         if (isset($args['nome']) && strlen($args['nome']) > 0) {
-            $this->db->where("(razao_social ilike '%{$args['nome']}%' OR cnpj ilike '%{$args['nome']}%' OR cpf ilike '%{$args['nome']}%')");
+            $this->db->where("(f.razao_social ilike '%{$args['nome']}%' OR f.cnpj ilike '%{$args['nome']}%' OR f.cpf ilike '%{$args['nome']}%')");
         }
+
+        if (isset($args['cpf']) && strlen($args['cpf']) > 0) {
+            $this->db->where('f.cpf ilike', '%' . $args ['cpf'] . '%');
+        }
+
         return $this->db;
     }
 
@@ -51,37 +58,37 @@ class fornecedor_model extends Model {
         return $return->result();
     }
 
-    function reativar($financeiro_credor_devedor_id) {
-        $this->db->select('financeiro_credor_devedor_id');
-        $this->db->from('tb_financeiro_credor_devedor');
-        $this->db->where('ativo', 't');
-        $this->db->where("(cpf = (
-                                 SELECT cpf FROM ponto.tb_financeiro_credor_devedor 
-                                 WHERE financeiro_credor_devedor_id = $financeiro_credor_devedor_id LIMIT 1 ) 
-                        OR cnpj = (
-                                 SELECT cnpj FROM ponto.tb_financeiro_credor_devedor 
-                                 WHERE financeiro_credor_devedor_id = $financeiro_credor_devedor_id LIMIT 1 )
-                        )");
-        $return = $this->db->get()->result();
+    // function reativar($financeiro_credor_devedor_id) {
+    //     $this->db->select('financeiro_credor_devedor_id');
+    //     $this->db->from('tb_financeiro_credor_devedor');
+    //     $this->db->where('ativo', 't');
+    //     $this->db->where("(cpf = (
+    //                              SELECT cpf FROM ponto.tb_financeiro_credor_devedor 
+    //                              WHERE financeiro_credor_devedor_id = $financeiro_credor_devedor_id LIMIT 1 ) 
+    //                     OR cnpj = (
+    //                              SELECT cnpj FROM ponto.tb_financeiro_credor_devedor 
+    //                              WHERE financeiro_credor_devedor_id = $financeiro_credor_devedor_id LIMIT 1 )
+    //                     )");
+    //     $return = $this->db->get()->result();
 
-        if (count($return) == 0) {
-            $horario = date("Y-m-d H:i:s");
-            $operador_id = $this->session->userdata('operador_id');
-            $this->db->set('ativo', 't');
-            $this->db->set('data_atualizacao', $horario);
-            $this->db->set('operador_atualizacao', $operador_id);
-            $this->db->where('financeiro_credor_devedor_id', $financeiro_credor_devedor_id);
-            $this->db->update('tb_financeiro_credor_devedor');
-            $erro = $this->db->_error_message();
-            if (trim($erro) != "") // erro de banco
-                return -1;
-            else
-                return 0;
-        }
-        else {
-            return -1;
-        }
-    }
+    //     if (count($return) == 0) {
+    //         $horario = date("Y-m-d H:i:s");
+    //         $operador_id = $this->session->userdata('operador_id');
+    //         $this->db->set('ativo', 't');
+    //         $this->db->set('data_atualizacao', $horario);
+    //         $this->db->set('operador_atualizacao', $operador_id);
+    //         $this->db->where('financeiro_credor_devedor_id', $financeiro_credor_devedor_id);
+    //         $this->db->update('tb_financeiro_credor_devedor');
+    //         $erro = $this->db->_error_message();
+    //         if (trim($erro) != "") // erro de banco
+    //             return -1;
+    //         else
+    //             return 0;
+    //     }
+    //     else {
+    //         return -1;
+    //     }
+    // }
 
     function verificadependenciasexclusao($financeiro_credor_devedor_id) {
 
@@ -138,31 +145,49 @@ class fornecedor_model extends Model {
     }
 
     function listarcredordevedor($financeiro_credor_devedor_id) {
-        $this->db->select('financeiro_credor_devedor_id,
-                            razao_social');
-        $this->db->from('tb_financeiro_credor_devedor');
+        $this->db->select('f.financeiro_credor_devedor_id,
+                            f.razao_social,
+                            f.email,
+                            f.cpf,
+                            f.cnpj,
+                            f.telefone');
+        $this->db->from('tb_financeiro_credor_devedor f');
         $this->db->where('ativo', 'true');
-        $this->db->where('financeiro_credor_devedor_id !=', $financeiro_credor_devedor_id);
-        $this->db->orderby('razao_social');
+        $this->db->where('financeiro_credor_devedor_id f !=', $financeiro_credor_devedor_id);
+        
+        if (isset($args['nome']) && strlen($args['nome']) > 0) {
+            $nome = $this->removerCaracterEsp($args['nome']);
+            // var_dump($nome); die;
+            $this->db->where("translate(f.nome,  
+            'áàâãäåaaaÁÂÃÄÅAAAÀéèêëeeeeeEEEÉEEÈÊìíîïìiiiÌÍÎÏÌIIIóôõöoooòÒÓÔÕÖOOOùúûüuuuuÙÚÛÜUUUUçÇñÑýÝ',  
+            'aaaaaaaaaAAAAAAAAAeeeeeeeeeEEEEEEEEiiiiiiiiIIIIIIIIooooooooOOOOOOOOuuuuuuuuUUUUUUUUcCnNyY'   
+             ) ilike", '%' . $nome . '%');
+        }
+        if (isset($args['cpf']) && strlen($args['cpf']) > 0) {
+            $this->db->where('f.cpf ilike', '%' . $args ['cpf'] . '%');
+        }
+
+        if (isset($args ['telefone']) && strlen($args ['telefone']) > 0) {
+            $this->db->where("(f.celular ilike '%" . $args['telefone'] . "%' f.telefone ilike '%" . $args['telefone'] . "%')");
+        }
+       
+       if (isset($args ['email']) && strlen($args ['email']) > 0) {
+     $this->db->where("(f.email ilike '%" . $args['f.email'] . "%' OR f.email_alternativo ilike '%" . $args['email'] . "%')");
+    
+       }
+
+       $this->db->where('f.ativo','t');
         $return = $this->db->get();
         return $return->result();
     }
 
-    function excluir($financeiro_credor_devedor_id) {
-
-        $horario = date("Y-m-d H:i:s");
-        $operador_id = $this->session->userdata('operador_id');
-        $this->db->set('ativo', 'f');
-        $this->db->set('data_atualizacao', $horario);
-        $this->db->set('operador_atualizacao', $operador_id);
-        $this->db->where('financeiro_credor_devedor_id', $financeiro_credor_devedor_id);
+    function excluir($financeiro_credor_devedor_id){
+        $this->db->set('ativo','f');
+        $this->db->where('financeiro_credor_devedor_id',$financeiro_credor_devedor_id); 
         $this->db->update('tb_financeiro_credor_devedor');
-        $erro = $this->db->_error_message();
-        if (trim($erro) != "") // erro de banco
-            return -1;
-        else
-            return 0;
-    }
+
+        return 1;
+  } 
 
     function gravarunificarcredor() {
         try {

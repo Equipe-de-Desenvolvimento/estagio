@@ -1,9 +1,9 @@
 <link href="<?= base_url() ?>css/cadastro/paciente-ficha.css" rel="stylesheet"/>
 <div class="content ficha_ceatox"> <!-- Inicio da DIV content -->
     <form name="form_paciente" id="form_paciente" action="<?= base_url() ?>cadastros/pacientes/gravarinstituicao/" method="post">
+     
         <!--        Chamando o Script para a Webcam   -->
         <script src="<?= base_url() ?>js/webcam.js"></script>
-        <fieldset> 
             
            
             <?
@@ -18,67 +18,93 @@
 //            echo'<pre>';
 //            var_dump(@$empresapermissoes); die;
             ?>
-            <div class="alert alert-info"><a href="#">Nova Instituição</a></div>
-                <div class="row-reverse">
-                    <div class="col-lg-2">
-                        <div>
-                            <label>Razão Social</label>
-                            <input type="text" id="txtNome" name="nome" class="form-control" value="<?= @$obj[0]->nome; ?>" required="true"  placeholder="Nome da Instituição">
-                            <input type="hidden" id="txtinstituicao" name="instituicao_id" value="<?= $instituicao_id; ?>" >
+        <fieldset> 
+            <div class="alert alert-info">Nova Instituição</div>
+                <div class="panel-body infodados">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div>
+                                <label>Razão Social</label>
+                                <input type="text" id="txtNome" name="nome" class="form-control" value="<?= @$obj[0]->nome; ?>" required="true"  placeholder="Nome da Instituição">
+                                <input type="hidden" id="txtinstituicao" name="instituicao_id" value="<?= $instituicao_id; ?>" >
+                            </div>
+                            <div>
+                                <label>Nome Fantasia</label>
+                                <input type="text" id="txtNome_fantasia" name="nome_fantasia" class="form-control" value="<?= @$obj[0]->nome_fantasia; ?>" required="true"  placeholder="">
+                                <input type="hidden" id="credor_devedor_id" name="credor_devedor_id" class="form-control" value="<?= @$obj[0]->credor_devedor_id; ?>"  placeholder="">
+                            </div>  
+                            <div>
+                                <label>Complemento</label>
+                                <input type="text" name="complemento" placeholder="Complementos"  id="complemento" class="form-control" value="<?= @$obj[0]->complemento; ?>" />
+                            </div>
+                            <div>
+                                <label>Observa&ccedil;&atilde;o</label>
+                                <textarea cols="70" rows="2" class="form-control" name="observacao" placeholder="Observações sobre o Credor/Devedor" id="observacao"><?= @$obj->_observacao; ?></textarea><br/>
+                            </div>
                         </div>
+         
+                    <div class="col-lg-2">    
                         <div>
                             <label>Endereço</label>
                                 <input type="text" id="endereco" class="form-control" name="endereco"  value="<?= @$obj[0]->endereco; ?>" required="true" placeholder="Endereço da Instituição" />
                         </div>
+                        <?
+                        // var_dump($obj[0]->municipio_id); 
+                        // die;
+                        ?>
                         <div>
                             <label>Município</label>
-                            <input type="hidden"  id="txtCidadeID" class="texto_id"  name="municipio_id" value="<?= @$obj[0]->municipio_id; ?>" readonly="true" />
-                            <input type="text" id="txtCidade" class="form-control" value="<?= @$obj[0]->municipio; ?>" placeholder="Município" name="txtCidade" />
+                            <select name="municipio_id" class="form-control" id="municipio_id">
+                                <option value="">Selecione</option>
+                                <?foreach ($listaMunicipios as $key => $value) {?>
+                                    <option <?if($value->municipio_id == @$obj[0]->municipio_id){echo 'selected';}?> value="<?=$value->municipio_id?>"><?=$value->nome?></option>
+                                <?}?>
+                               
+                            </select>
                         </div>    
                         <div>
                             <label>Email</label>
                             <input  placeholder="Email" type="text"  placeholder="Email da Instituição" id="txtEmail" onchange="validaremail()" name="emailprincipal"  class="form-control" value="<?= @$obj[0]->email; ?>" />
                              <?= (in_array('email', $campos_obrigatorios)) ? 'required' : '' ?>
                         </div>
-                    </div>
-                </div>
-                <div class="row-reverse">
-                    <div class="col-lg-2">
                         <div>
                             <label>Email Alternativo</label>
                             <input type="text" id="txtemail_alternativo"  placeholder="Email alternativo da Instituição" onchange="validaremail_alternativo()" name="email_alternativo" class="form-control" value="<?= @$obj[0]->email_alternativo; ?>"
                             <?= (in_array('email_alternativo', $campos_obrigatorios)) ? 'required' : '' ?>/>
                         </div>
-                        <div>
-                            <label>CNPJ</label>
-                            <input type="text" placeholder="CNPJ" name="cnpj" id ="txtCnpj" onblur="verificarCNPJ();" alt="cnpj" class="form-control" value="<?= @$obj[0]->cnpj; ?>"/>
-                            <?= (in_array('cnpj', $campos_obrigatorios)) ? 'required' : '' ?> 
-                        </div>
-                        <div>
-                            <h6>CPF</h6>
-                            <input type="text" name="cpf" id ="txtCpf" placeholder="CPF" onblur="verificarCPF();" alt="cpf" class="form-control" value="<?= @$obj[0]->cpf; ?>" />
-                            <?= (in_array('cnpj', $campos_obrigatorios)) ? 'required' : '' ?> 
-                        </div>
-                        <div>
-                            <label>Whatsapp</label>
-                            <input type="text"  placeholder="(99)9999-9999" id="txtwhatsapp" name="whatsapp" class="form-control" value="<?= @$obj[0]->whatsapp; ?>"
-                        </div>
-                        </div>
                     </div>
-                </div>
-                <div class="row-reverse">
+                
                     <div class="col-lg-2">
-                        <div>
-                        <label>Tipo Pessoa</label>
+                        <!-- <div>
+                            <label>Tipo Pessoa</label>
                             <select name="tipo_pessoa" class="form-control" id="tipo_pessoa" class="size6" required="">
                                 <option value="">Selecione</option>
                                 <option <?=(@$obj->_tipo_pessoa == 'pessoa_f')? 'selected':'' ; ?> value="pessoa_f">Pessoa Física</option>
                                 <option <?=(@$obj->_tipo_pessoa == 'pessoa_j')? 'selected':'' ; ?> value="pessoa_j">Pessoa Jurídica</option>
                             </select>
+                        </div> -->
+                        <div>
+                            <label>CNPJ</label>
+                            <input type="text" placeholder="CNPJ" name="cnpj" id ="txtCnpj" onblur="verificarCNPJ();" alt="cnpj" class="cnpj form-control" value="<?= @$obj[0]->cnpj; ?>"/>
+                            <?= (in_array('cnpj', $campos_obrigatorios)) ? 'required' : '' ?> 
+                        </div>
+                        <div>
+                            <label>CPF</label>
+                            <input type="text" name="cpf" id ="txtCpf" placeholder="000.000.000-00" onblur="verificarCPF();" class="form-control cpf" value="<?= @$obj[0]->cpf; ?>" />
+                            <?= (in_array('cnpj', $campos_obrigatorios)) ? 'required' : '' ?> 
+                        </div>
+                        <div>
+                            <label>Cep</label>
+                            <input type="text" name="cep" id ="txtCep" placeholder="Cep" onblur="verificarCPF();" alt="cep" class="cep form-control" value="<?= @$obj[0]->cep; ?>" />
+                            <?= (in_array('cep', $campos_obrigatorios)) ? 'required' : '' ?> 
+                        </div>
+                        <div>
+                            <label>Whatsapp</label>
+                            <input type="text"  placeholder="(99)9999-9999" id="txtwhatsapp" name="whatsapp" class="form-control" value="<?= @$obj[0]->whatsapp; ?>" />
+
                         </div>
                     </div>
-                </div>
-                <div class="row-reverse">
+        
                     <div class="col-lg-2">
                             <label>Telefone 1*</label>
                             <?
@@ -96,10 +122,7 @@
                             
                             <input type="text"  placeholder="(99)9999-99999" id="txtTelefone" name="telefone" class="form-control"  value="<?= @$obj[0]->telefone; ?>" <?= (in_array('telefone', $campos_obrigatorios)) ? 'required' : '' ?>/>
                             <!--<button class="btn btn-outline-danger btn-sm" type=button id="btnWhats" onclick="pegarWhats();"> WP </button>-->
-                    </div>
-                </div>
-                <div class="row-reverse">
-                    <div class="col-lg-2">
+                    
                             <label>Telefone 2*</label>
                             <?
                             if (@$obj[0]->_telefone != '' && strlen(@$obj[0]->telefone) > 3) {
@@ -135,43 +158,120 @@
                         <!--<button class="btn btn-outline-danger btn-sm" type=button id="btnWhats" onclick="pegarWhats();"> WP? </button>-->
                     </div>
                 </div>
-               
-                <div class="row-reverse">
-                    <div class="col-lg-6">
-                        <div>
-                            <label>Observação</label>
-                            <input type="text" name="observacao" placeholder="Observações"  id="observações" class="form-control" value="<?= @$obj[0]->observacao; ?>" />
+            </div>   
+            
+            <div class="alert alert-info">Convênio</div>
+                <div class="panel-body infodados">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>Nome do Responsável Pelo Convênio *</label>
+                            <input type="text" id="txtConvenio" name="convenio" class="form-control" value="<?= @$obj[0]->convenio; ?>" required="true"  placeholder="Convênio">
+                        </div>   
+                        <div class="col-lg-2">
+                            <label>Email *</label>
+                            <input type="text"  placeholder="Email" id="txtEmail_convenio" onchange="validaremail()" name="email_convenio"  class="form-control" value="<?= @$obj[0]->email_convenio; ?>" />
+                             <?= (in_array('email', $campos_obrigatorios)) ? 'required' : '' ?>
                         </div>
-                        <div>
-                            <label>Complemento</label>
-                            <input type="text" name="complemento" placeholder="Complementos"  id="complemento" class="form-control" value="<?= @$obj[0]->complemento; ?>" />
+                        <div class="col-lg-2">
+                        <label>Telefone *</label>
+                            <?
+                            if (@$obj->_telefone_convenio != '' && strlen(@$obj->_telefone_convenio) > 3) {
+
+                                if (preg_match('/\(/', @$obj->_telefone_convenio)) {
+                                    $telefone_convenio = @$obj->_telefone_convenio;
+                                } else {
+                                    $telefone_convenio = "(" . substr(@$obj->_telefone_convenio, 0, 2) . ")" . substr(@$obj->_telefone_convenio, 2, strlen(@$obj->_telefone_convenio) - 2);
+                                }
+                            } else {
+                                $telefone_convenio = '';
+                            }
+                                ?>
+                            
+                            <input type="text"  placeholder="(99)9999-99999" id="txtTelefone_convenio" name="telefone_convenio" class="form-control celular"  value="<?= @$obj[0]->telefone_convenio; ?>" <?= (in_array('telefone_convenio', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                            <!--<button class="btn btn-outline-danger btn-sm" type=button id="btnWhats" onclick="pegarWhats();"> WP </button>-->
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Observação</label>
+                            <input type="text" name="observacao_convenio" placeholder="Observações"  id="observacao_convenio" class="form-control" value="<?= @$obj[0]->observacao_convenio; ?>" />
                         </div>
                     </div>
-                </div>
-<!--                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                            <h4 class="modal-title" id="myModalLabel">Fotografia</h4>
-                                        </div>
-                                    <div class="modal-body">
-                                        <fieldset>
-                                  
-                                        </fieldset>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <a  onClick="imagem_paciente()" class="btn btn-primary" data-dismiss="modal">Fechar</a>
-                                    </div>
-                                </div>
-                                 /.modal-content 
-                            </div>
-                             /.modal-dialog 
+                </div> 
+            </div>  
+
+            <div class="alert alert-info">Financeiro</div>
+                <div class="panel-body infodados">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>Nome do Responsável Pelo Financeiro *</label>
+                            <input type="text" id="txtFinanceiro" name="financeiro" class="form-control" value="<?= @$obj[0]->financeiro; ?>" required="true"  placeholder="Financeiro">
+                        </div>   
+                        <div class="col-lg-2">
+                            <label>Email *</label>
+                            <input type="text"  placeholder="Email" id="txtEmail_financeiro" onchange="validaremail()" name="email_financeiro"  class="form-control" value="<?= @$obj[0]->email_financeiro; ?>" />
+                             <?= (in_array('email', $campos_obrigatorios)) ? 'required' : '' ?>
                         </div>
-                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
+                        <div class="col-lg-2">
+                        <label>Telefone *</label>
+                            <?
+                            if (@$obj->_telefone_financeiro != '' && strlen(@$obj->_telefone_financeiro) > 3) {
+
+                                if (preg_match('/\(/', @$obj->_telefone_financeiro)) {
+                                    $telefone_financeiro = @$obj->_telefone_financeiro;
+                                } else {
+                                    $telefone_financeiro = "(" . substr(@$obj->_telefone_financeiro, 0, 2) . ")" . substr(@$obj->_telefone_financeiro, 2, strlen(@$obj->_telefone_financeiro) - 2);
+                                }
+                            } else {
+                                $telefone_financeiro = '';
+                            }
+                                ?>
+                            
+                            <input type="text"  placeholder="(99)9999-99999" id="txtTelefone_financeiro" name="telefone_financeiro" class="form-control celular"  value="<?= @$obj[0]->telefone_financeiro; ?>" <?= (in_array('telefone_financeiro', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                            <!--<button class="btn btn-outline-danger btn-sm" type=button id="btnWhats" onclick="pegarWhats();"> WP </button>-->
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Observação</label>
+                            <input type="text" name="observacao_financeiro" placeholder="Observações"  id="observacao_financeiro" class="form-control" value="<?= @$obj[0]->observacao_financeiro; ?>" />
+                        </div>
+                    </div>
+                </div> 
+            </div>    
+            <div class="alert alert-info">Jurídico</div>
+                <div class="panel-body infodados">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>Nome do Responsável Pelo Jurídico *</label>
+                            <input type="text" id="txtJuridico" name="juridico" class="form-control" value="<?= @$obj[0]->juridico; ?>" required="true"  placeholder="Jurídico">
+                        </div>   
+                        <div class="col-lg-2">
+                            <label>Email *</label>
+                            <input type="text"  placeholder="Email" id="txtEmail_juridico" onchange="validaremail()" name="email_juridico"  class="form-control" value="<?= @$obj[0]->email_juridico; ?>" />
+                             <?= (in_array('email', $campos_obrigatorios)) ? 'required' : '' ?>
+                        </div>
+                        <div class="col-lg-2">
+                        <label>Telefone *</label>
+                            <?
+                            if (@$obj->_telefone_juridico != '' && strlen(@$obj->_telefone_juridico) > 3) {
+
+                                if (preg_match('/\(/', @$obj->_telefone_juridico)) {
+                                    $telefone_juridico = @$obj->_telefone_juridico;
+                                } else {
+                                    $telefone_juridico = "(" . substr(@$obj->_telefone_juridico, 0, 2) . ")" . substr(@$obj->_telefone_juridico, 2, strlen(@$obj->_telefone_juridico) - 2);
+                                }
+                            } else {
+                                $telefone_juridico = '';
+                            }
+                                ?>
+                            
+                            <input type="text"  placeholder="(99)9999-99999" id="txtTelefone_juridico" name="telefone_juridico" class="form-control celular"  value="<?= @$obj[0]->telefone_juridico; ?>" <?= (in_array('telefone_juridico', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                            <!--<button class="btn btn-outline-danger btn-sm" type=button id="btnWhats" onclick="pegarWhats();"> WP </button>-->
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Observação</label>
+                            <input type="text" name="observacao_juridico" placeholder="Observações"  id="observacao_juridico" class="form-control" value="<?= @$obj[0]->observacao_juridico; ?>" />
+                        </div>
+                    </div>
+                </div> 
+            </div>    
         </fieldset>
 
         <div class="panel panel-default btngrp">
@@ -189,6 +289,7 @@
                 </div>
             </div>
         </div>
+      
     </form>
 
 
@@ -225,12 +326,6 @@
 </div>
 
 
-
-<link rel="stylesheet" href="<?= base_url() ?>css/jquery-ui-1.8.5.custom.css">
-<script type="text/javascript" src="<?= base_url() ?>js/jquery.validate.js"></script>
-<script type="text/javascript" src="<?= base_url() ?>js/jquery-1.9.1.js" ></script>
-<script type="text/javascript" src="<?= base_url() ?>js/jquery-ui-1.10.4.js" ></script>
-<script type="text/javascript" src="<?= base_url() ?>js/jquery.maskedinput.js"></script>
 <script>
 
 
@@ -410,6 +505,36 @@ $("#mostrarDadosExtras").click(function () {
                     element.mask("(99) 9999-9999?9");
                 }
             });
+            jQuery("#txtTelefone_financeiro")
+            .mask("(99) 9999-9999?9")
+            .focusout(function (event) {
+                var target, phone, element;
+                target = (event.currentTarget) ? event.currentTarget : event.srcElement;
+                phone = target.value.replace(/\D/g, '');
+                element = $(target);
+                element.unmask();
+                if (phone.length > 10) {
+                    element.mask("(99) 99999-999?9");
+                } else {
+                    element.mask("(99) 9999-9999?9");
+                }
+            });
+
+            jQuery("#txtTelefone_convenio")
+            .mask("(99) 9999-9999?9")
+            .focusout(function (event) {
+                var target, phone, element;
+                target = (event.currentTarget) ? event.currentTarget : event.srcElement;
+                phone = target.value.replace(/\D/g, '');
+                element = $(target);
+                element.unmask();
+                if (phone.length > 10) {
+                    element.mask("(99) 99999-999?9");
+                } else {
+                    element.mask("(99) 9999-9999?9");
+                }
+            });
+            
 //(99) 9999-9999
 
 

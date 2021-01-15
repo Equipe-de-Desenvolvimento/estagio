@@ -24797,7 +24797,7 @@ ORDER BY ae.paciente_tcd_id)";
         $empresa_id = $this->session->userdata('empresa_id');
         $this->db->select('ep.*');
         $this->db->from('tb_empresa_permissoes ep');
-
+        // var_dump($empresa_id);die;
         $this->db->where('ep.empresa_id', $empresa_id);
         return $this->db->get()->result();
     }

@@ -62,15 +62,27 @@ class Fornecedor extends BaseController {
         redirect(base_url() . "cadastros/fornecedor");
     }
 
+//     function 
+
+//         $valida = $this->fornecedor->excluir($financeiro_credor_devedor_id);
+//         if ($valida) {
+//             $data['mensagem'] = 'Sucesso ao excluir o Fornecedor';
+//         } else {
+//             $data['mensagem'] = 'Erro ao fornecedor. Opera&ccedil;&atilde;o cancelada.';
+//         }
+// //         $this->session->set_flashdata('message', $data['mensagem']);
+//         redirect(base_url() . "cadastros/fornecedor/fornecedor");
+//     }
+
     function excluir($financeiro_credor_devedor_id) {
-        $valida = $this->fornecedor->excluir($financeiro_credor_devedor_id);
-        if ($valida == 0) {
-            $data['mensagem'] = 'Sucesso ao excluir o Fornecedor';
+        // die('fim');
+        $teste = $this->fornecedor->excluir($financeiro_credor_devedor_id);
+        if ($teste) {
+            $data['mensagem'] = 'Erro ao confirmar Cadastro';
         } else {
-            $data['mensagem'] = 'Erro ao excluir o fornecedor. Opera&ccedil;&atilde;o cancelada.';
+            $data['mensagem'] = 'Cadastro confirmado com sucesso';
         }
-//         $this->session->set_flashdata('message', $data['mensagem']);
-        redirect(base_url() . "cadastros/fornecedor");
+        redirect(base_url() . "cadastros/fornecedor/fornecedor");
     }
     
     function verificadependenciasexclusao($financeiro_credor_devedor_id) {
@@ -125,6 +137,14 @@ class Fornecedor extends BaseController {
             $this->load->view('telefone');
         }
         $this->load->view('footer');
+    }
+
+    function gravarfornecedor(){
+            
+        $data['listaLogradouro'] = $this->fornecedor->gravarfornecedor();
+
+    //    print_r($_POST);
+        redirect(base_url() . "cadastros/fornecedor/carregarfornecedor/");
     }
 
 }
