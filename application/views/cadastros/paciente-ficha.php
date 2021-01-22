@@ -15,7 +15,7 @@
 //            echo'<pre>';
 //            var_dump(@$empresapermissoes); die;
             ?>
-            <div class="alert alert-info">Dados do Estagiário</div>
+            <div class="alert alert-primary">Dados do Estagiário</div>
                 <div class="panel-body infodados">
                     <div class="row">
                         <div class="col-lg-3">
@@ -169,7 +169,7 @@
                     <!-- </div> -->
                 </div>
           
-            <div class="alert alert-info">Documentos</div>
+            <div class="alert alert-primary">Documentos</div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-2">
@@ -309,7 +309,7 @@
             </div>
         </div>
     <div class="panel panel-default socialalert">
-        <div class="alert alert-info">
+        <div class="alert alert-primary">
             Dados Sociais
         </div>
         <div class="panel-body socialdata">

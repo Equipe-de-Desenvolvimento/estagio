@@ -1,7 +1,5 @@
-<div class="content"> <!-- Inicio da DIV content -->
-    <div id="accordion">
-        <h3 class="singular"><a href="#">Cadastro de Classe</a></h3>
-        <div>
+<div class="panel-body"> <!-- Inicio da DIV content -->
+      <div class="alert alert-primary"><b>Cadastro de Classe</b></div>
             <form name="form_sala" id="form_sala" action="<?= base_url() ?>cadastros/classe/gravar" method="post">
                 
                 <?
@@ -14,60 +12,33 @@
                     
                 ?>
 
-                <dl class="dl_desconto_lista">
-                    <dt>
-                    <label>Nome</label>
-                    </dt>
-                    <dd>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label>Nome</label>
                         <input type="hidden" name="txtfinanceiroclasseid" class="texto10" value="<?= @$obj->_financeiro_classe_id; ?>" />
-                        <input type="text" name="txtNome" class="texto10" value="<?= @$obj->_descricao; ?>" required/>
-                    </dd>
-                    <dt>
-                    <label>Tipo</label>
-                    </dt>
-                    <dd>
-                        <select name="txttipo_id" id="txttipo_id" class="size4" required>
+                        <input type="text" name="txtNome" class="form-control" value="<?= @$obj->_descricao; ?>" required/>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <label>Tipo</label>
+                        <select name="txttipo_id" id="txttipo_id" class="form-control" required>
                             <? foreach ($tipo as $value) : ?>
                                 <option value="<?= $value->tipo_id; ?>"<? if (@$obj->_tipo_id == $value->tipo_id):echo 'selected';
-                    endif;
+                        endif;
                         ?>><?= $value->descricao; ?></option>
                             <? endforeach; ?>
                         </select>
-                    </dd>
-                     <? //if($retorno[0]->financ_4n == 't'){?>
-<!--                    <dt>
-                    <label>Nível 1</label>
-                    </dt>
-                    <dd>                        
-                        <select name="txtnivel1_id" id="txtnivel1_id" class="size4" required>
-                            <? foreach ($nivel1 as $value) : ?>
-                                <option value="<?= $value->nivel1_id; ?>"<? if (@$obj->_nivel1_id == $value->nivel1_id):echo 'selected';
-                    endif;
-                        ?>><?= $value->descricao; ?></option>
-                            <? endforeach; ?>
-                        </select>
-                    </dd>
-                    <dt>
-                    <label>Nível 2</label>
-                    </dt>
-                    <dd>                        
-                        <select name="txtnivel2_id" id="txtnivel2_id" class="size4" required>
-                            <? foreach ($nivel2 as $value) : ?>
-                                <option value="<?= $value->nivel2_id; ?>"<? if (@$obj->_nivel2_id == $value->nivel2_id):echo 'selected';
-                    endif;
-                        ?>><?= $value->descricao; ?></option>
-                            <? endforeach; ?>
-                        </select>
-                    </dd>-->
-                    <? // } ?>
-                </dl>    
+                    </div>
+                </div>
+                    
+
+                    
+  
                 <hr/>
-                <button type="submit" name="btnEnviar">Enviar</button>
-                <button type="reset" name="btnLimpar">Limpar</button>
-                <button type="button" id="btnVoltar" name="btnVoltar">Voltar</button>
+                <button class="btn btn-outline-default btn-round btn-sm"  type="submit" name="btnEnviar">Enviar</button>
+                <button class="btn btn-outline-default btn-round btn-sm"  type="reset" name="btnLimpar">Limpar</button>
+                <button class="btn btn-outline-default btn-round btn-sm"  type="button" id="btnVoltar" name="btnVoltar">Voltar</button>
             </form>
-        </div>
-    </div>
 </div> <!-- Final da DIV content -->
 
 <script type="text/javascript" src="<?= base_url() ?>js/jquery.validate.js"></script>

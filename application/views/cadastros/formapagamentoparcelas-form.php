@@ -1,58 +1,59 @@
-<div class="content ficha_ceatox"> <!-- Inicio da DIV content -->
+<div class="panel-body"> <!-- Inicio da DIV content -->
+
+    <div class="alert alert-primary"><b>Cadastro Forma de Pagamento</b></div>
     <form name="form_formapagamento_parcela" id="form_formapagamento_parcela" action="<?= base_url() ?>cadastros/formapagamento/gravarparcelas" method="post">
+        
         <fieldset>
-            <legend>Cadastro Forma de Pagamento</legend>
-            <input type="hidden" name="formapagamento_id" value="<?= $formapagamento_id ?>">
-            <table class="taxas">
-                <tbody>
-                    <tr>
-                        <td class="esquerda"><label>Taxa: </label></td> 
-                        <td><input type="text" alt="decimal" name="taxa" class="size1" id="taxa"></td>
-                    </tr>
 
-                    <tr>
-                        <td class="esquerda"><label>Inicio:</label></td> 
-                        <td>
-                            <select name="parcela_inicio" class="size2" id="parcela_inicio" required>
-                                <? 
-                                $parcelaInicialDisponivel = $ultima_parcela+1;
-                                if ($ultima_parcela < $maximo) { 
-                                    
-                                    ?>
-                                    <option value="<?= $parcelaInicialDisponivel ?>"> <?= $parcelaInicialDisponivel ?> </option>
-                                    <?
-                                    
-                                    ?>
-                                <? } else { ?>
-                                        <option value=""></option>
-                                <? } ?>
-                            </select>
-                        </td>
-                    </tr>
+            <div class="row">
+                <div class="col-lg-3">
+                    <label>Taxa: </label>
+                    <input type="text" alt="decimal" name="taxa" class="form-control" id="taxa">
+                </div>
 
-                    <tr>
-                        <td class="esquerda"><label>Fim:</label></td> 
-                        <td>
-                            <select name="parcela_fim" class="size2" id="parcela_fim" required>
+                <div class="col-lg-1">
+                    <label>Inicio:</label>
+                    <select name="parcela_inicio" class="form-control" id="parcela_inicio" required>
+                        <? 
+                        $parcelaInicialDisponivel = $ultima_parcela+1;
+                        if ($ultima_parcela < $maximo) { 
+                            
+                            ?>
+                            <option value="<?= $parcelaInicialDisponivel ?>"> <?= $parcelaInicialDisponivel ?> </option>
+                            <?
+                            
+                            ?>
+                        <? } else { ?>
+                                <option value=""></option>
+                        <? } ?>
+                    </select>
+                </div>
+
+
+                <div class="col-lg-1">
+                    <label>Fim:</label>
+                    <select name="parcela_fim" class="form-control" id="parcela_fim" required>
                                 <?
                                 if ($ultima_parcela < $maximo) {
                                     for ($i = $parcelaInicialDisponivel; $i <= $formapagamento[0]->parcelas; $i++) { ?>
                                         <option value="<?= $i ?>"> <?= $i ?></option>
                                     <? } 
                                 }?>
-                            </select>
-                        </td>    
-                    </tr>          
-                </tbody>
-            </table>
-            <button type="submit">Enviar</button>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <input type="hidden" name="formapagamento_id" value="<?= $formapagamento_id ?>">
+
+            <button class="btn btn-outline-default btn-round btn-sm" type="submit">Enviar</button>
 
         </fieldset>
     </form>
 
     <div style="display: block; width: 100%;">
+    <br>
         <? if (count($faixas_parcelas) > 0) { ?>
-            <table class="taxas-feitas">
+            <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
                         <th class="tabela_header">Taxa</th>
@@ -72,7 +73,7 @@
                             <td class="<?php echo $estilo_linha; ?>">Taxa: <?= $item->taxa_juros ?></td>
                             <td class="<?php echo $estilo_linha; ?>">Parcela inicio: <?= $item->parcelas_inicio ?></td>
                             <td class="<?php echo $estilo_linha; ?>">Parcela fim: <?= $item->parcelas_fim ?></td>
-                            <td class="<?php echo $estilo_linha; ?>"><center><a class="delete" href="<?= base_url() ?>cadastros/formapagamento/excluirparcela/<?= $item->formapagamento_pacela_juros_id ?>/<?= $item->forma_pagamento_id ?>">delete</a></center></td>
+                            <td class="<?php echo $estilo_linha; ?>"><center><a class="btn btn-outline-default btn-round btn-sm" href="<?= base_url() ?>cadastros/formapagamento/excluirparcela/<?= $item->formapagamento_pacela_juros_id ?>/<?= $item->forma_pagamento_id ?>">Excluir</a></center></td>
                     </tr>
                 <? } ?>
                 </tbody>
@@ -92,14 +93,3 @@
         width: 80%;
     }
 </style>
-<script type="text/javascript" src="<?= base_url() ?>js/jquery.validate.js"></script>
-<script type="text/javascript" src="<?= base_url() ?>js/jquery-ui-1.10.4.js" ></script>
-<script type="text/javascript">
-
-    $(function () {
-        $("#accordion").accordion();
-    });
-
- 
-
-</script>

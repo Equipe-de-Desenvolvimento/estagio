@@ -10,7 +10,7 @@
     <div >
         <form name="form_operador" id="form_operador" action="<?= base_url() ?>seguranca/operador/gravar" method="post" style="margin-bottom: 50px;">
             <div class="panel panel-default" style="display: none;">
-                <div class="alert alert-info">
+                <div class="alert alert-primary">
                     Dados do Profissional
                 </div>
 
@@ -93,7 +93,7 @@
                 </div>
             </div>
             <div class="panel panel-default " style="display: none;">
-                <div class="alert alert-info">
+                <div class="alert alert-primary">
                     Domicilio
                 </div>
                 <div class="panel-body">
@@ -198,7 +198,7 @@
                 </div>
             </div>
             <div class="panel panel-default">
-                <div class="alert alert-info">
+                <div class="alert alert-primary">
                     Acesso
                 </div>
                 <div class="panel-body">
@@ -256,7 +256,7 @@
                 </div>
             </div>
             <div class="panel panel-default" style="display: none;">
-                <div class="alert alert-info">
+                <div class="alert alert-primary">
                     Financeiro
                 </div>
                 <div class="panel-body">
@@ -401,7 +401,7 @@
                 </div>
             </div>
             <div class="panel panel-default" style="display: none;">
-                <div class="alert alert-info">
+                <div class="alert alert-primary">
                     Carimbo
                 </div>
                 <div class="panel-body">
@@ -426,7 +426,7 @@
 
             </div>
             <div class="panel panel-default">
-                <div class="alert alert-info">
+                <div class="alert alert-primary">
                     Ações
                 </div>
                 <div class="panel-body">

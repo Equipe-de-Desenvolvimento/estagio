@@ -1,6 +1,6 @@
-<div class="content"> <!-- Inicio da DIV content -->
+<div class="panel-body"> <!-- Inicio da DIV content -->
     <div id="">
-    <div class="alert alert-info">Cadastro de Credor/Devedor</div>
+    <div class="alert alert-primary">Cadastro de Credor/Devedor</div>
             <div class="panel-body infodados">
 
         <div>

@@ -28,6 +28,23 @@ class forma_model extends Model {
         
         return $this->db;
     }
+
+    function listarconta($args = array()) {
+        $this->db->select('c.forma_entradas_saida_id,
+                            c.conta,
+                            c.agencia,
+                            e.nome as empresa,
+                            c.descricao');
+        $this->db->from('tb_forma_entradas_saida c');
+        $this->db->join('tb_empresa e', 'e.empresa_id = c.empresa_id', 'left');
+        $this->db->where('c.ativo', 'true');
+        $empresa_id = $this->session->userdata('empresa_id');
+        // $this->db->where('c.empresa_id', $empresa_id);
+        if (isset($args['nome']) && strlen($args['nome']) > 0) {
+            $this->db->where('c.descricao ilike', "%" . $args['nome'] . "%");
+        }
+        return $this->db;
+    }
     
     function listarcontas() {
         $this->db->select('c.forma_entradas_saida_id,
@@ -91,6 +108,35 @@ class forma_model extends Model {
         $return = $this->db->get();
         return $return->result();
     }
+
+    function listarformaconta() {
+        $this->db->select('c.forma_entradas_saida_id,
+                            c.descricao,
+                            e.nome as empresa');
+        $this->db->from('tb_forma_entradas_saida c');
+        $this->db->join('tb_empresa e', 'e.empresa_id = c.empresa_id', 'left');
+        $this->db->where('c.ativo', 'true');
+        $this->db->orderby('c.descricao');
+        $return = $this->db->get();
+        return $return->result();
+    }
+    
+    function listarformaempresaconta($empresa_id = null) {
+        if($empresa_id == null /*|| $empresa_id == '0'*/){
+            $empresa_id = $this->session->userdata('empresa_id');
+        }
+        $this->db->select('forma_entradas_saida_id,
+                            agencia,
+                            conta,
+                            descricao');
+        $this->db->from('tb_forma_entradas_saida');
+        $this->db->where('empresa_id', (int)$empresa_id);
+        $this->db->where('ativo', 'true');
+        $this->db->orderby('descricao');
+        $return = $this->db->get();
+        return $return->result();
+    }
+    
     
     function listarautocompletecontaempresa($empresa_post_id = null) {
         $this->db->select('forma_entradas_saida_id,
@@ -138,74 +184,74 @@ class forma_model extends Model {
             return 0;
     }
 
-//     function gravar() {
-//         var_dump($_POST);die;
-//         try {
-//             /* inicia o mapeamento no banco */
-//             $array_empresa = json_encode($_POST['empresa']);
-//             $array_perfil = json_encode($_POST['perfil']);
+    function gravar() {
+        // var_dump($_POST);die;
+        try {
+            /* inicia o mapeamento no banco */
+            $array_empresa = json_encode($_POST['empresa']);
+            $array_perfil = json_encode($_POST['perfil']);
             
-//             $forma_entradas_saida_id = $_POST['txtcadastrosformaid'];            
-//             $horario = date("Y-m-d H:i:s");
-//             $operador_id = $this->session->userdata('operador_id');
-//             $empresa_id = $this->session->userdata('empresa_id');
+            $forma_entradas_saida_id = $_POST['txtcadastrosformaid'];            
+            $horario = date("Y-m-d H:i:s");
+            $operador_id = $this->session->userdata('operador_id');
+            $empresa_id = $this->session->userdata('empresa_id');
 
-//             if ($_POST['txtcadastrosformaid'] == "") {// insert
-//                 $this->db->set('descricao', $_POST['txtNome']);
-//                 $this->db->set('agencia', $_POST['txtagencia']);
-//                 $this->db->set('conta', $_POST['txtconta']);  
-//                 if($_POST['empresa'] > 0){
-//                     $this->db->set('empresa_id', $_POST['empresa']);
-//                 }          
+            if ($_POST['txtcadastrosformaid'] == "") {// insert
+                $this->db->set('descricao', $_POST['txtNome']);
+                $this->db->set('agencia', $_POST['txtagencia']);
+                $this->db->set('conta', $_POST['txtconta']);  
+                if($_POST['empresa'] > 0){
+                    $this->db->set('empresa_id', $_POST['empresa']);
+                }          
                 
-//                 // $this->db->set('perfil_id', $array_perfil);
-//                 $this->db->set('data_cadastro', $horario);
-//                 $this->db->set('operador_cadastro', $operador_id);
-//                 $this->db->insert('tb_forma_entradas_saida');
-//                 $erro = $this->db->_error_message();
-//                 if (trim($erro) != "") // erro de banco
-//                     return -1;
-//                 else
-//                     $forma_entradas_saida_id = $this->db->insert_id();
-//             }
-//             else { // update
-//                 $this->db->set('descricao', $_POST['txtNome']);
-//                 $this->db->set('agencia', $_POST['txtagencia']);
-//                 $this->db->set('conta', $_POST['txtconta']);            
-//                 if($_POST['empresa'] > 0){
-//                     $this->db->set('empresa_id', $_POST['empresa']);
-//                 } 
-//                 // $this->db->set('perfil_id', $array_perfil);
-//                 $this->db->set('data_atualizacao', $horario);
-//                 $this->db->set('operador_atualizacao', $operador_id);
-//                 $exame_forma_id = $_POST['txtcadastrosformaid'];
-//                 $this->db->where('forma_entradas_saida_id', $forma_entradas_saida_id);
-//                 $this->db->update('tb_forma_entradas_saida');
-//             }
-//             return $forma_entradas_saida_id;
-//         } catch (Exception $exc) {
-//             return -1;
-//         }
-//     }
+                // $this->db->set('perfil_id', $array_perfil);
+                $this->db->set('data_cadastro', $horario);
+                $this->db->set('operador_cadastro', $operador_id);
+                $this->db->insert('tb_forma_entradas_saida');
+                $erro = $this->db->_error_message();
+                if (trim($erro) != "") // erro de banco
+                    return -1;
+                else
+                    $forma_entradas_saida_id = $this->db->insert_id();
+            }
+            else { // update
+                $this->db->set('descricao', $_POST['txtNome']);
+                $this->db->set('agencia', $_POST['txtagencia']);
+                $this->db->set('conta', $_POST['txtconta']);            
+                if($_POST['empresa'] > 0){
+                    $this->db->set('empresa_id', $_POST['empresa']);
+                } 
+                // $this->db->set('perfil_id', $array_perfil);
+                $this->db->set('data_atualizacao', $horario);
+                $this->db->set('operador_atualizacao', $operador_id);
+                $exame_forma_id = $_POST['txtcadastrosformaid'];
+                $this->db->where('forma_entradas_saida_id', $forma_entradas_saida_id);
+                $this->db->update('tb_forma_entradas_saida');
+            }
+            return $forma_entradas_saida_id;
+        } catch (Exception $exc) {
+            return -1;
+        }
+    }
 
-//     private function instanciar($forma_entradas_saida_id) {
+    private function instanciar($forma_entradas_saida_id) {
 
-//         if ($forma_entradas_saida_id != 0) {
-//             $this->db->select('forma_entradas_saida_id, descricao, conta, agencia, empresa_id');
-//             $this->db->from('tb_forma_entradas_saida');
-//             $this->db->where("forma_entradas_saida_id", $forma_entradas_saida_id);
-//             $query = $this->db->get();
-//             $return = $query->result();
-//             $this->_forma_entradas_saida_id = $forma_entradas_saida_id;
-//             // $this->_descricao = $return[0]->descricao;
-//             // $this->_agencia = $return[0]->agencia;
-//             // $this->_conta = $return[0]->conta;
-//             // $this->_empresa_id = $return[0]->empresa_id;
-//             // $this->_perfil_id = $return[0]->perfil_id;
-//         } else {
-//             $this->_forma_entradas_saida_id = null;
-//         }
-//     }
+        if ($forma_entradas_saida_id != 0) {
+            $this->db->select('forma_entradas_saida_id, descricao, conta, agencia, empresa_id');
+            $this->db->from('tb_forma_entradas_saida');
+            $this->db->where("forma_entradas_saida_id", $forma_entradas_saida_id);
+            $query = $this->db->get();
+            $return = $query->result();
+            $this->_forma_entradas_saida_id = $forma_entradas_saida_id;
+            $this->_descricao = $return[0]->descricao;
+            $this->_agencia = $return[0]->agencia;
+            $this->_conta = $return[0]->conta;
+            $this->_empresa_id = $return[0]->empresa_id;
+            // $this->_perfil_id = $return[0]->perfil_id;
+        } else {
+            $this->_forma_entradas_saida_id = null;
+        }
+    }
 
 }
 

@@ -1,48 +1,34 @@
-<div class="content"> <!-- Inicio da DIV content -->
-    <div class="bt_link_voltar">
-        <a href="<?= base_url() ?>ponto/horariostipo">
-            Voltar
-        </a>
-
-    </div>
+<div class="panel-body"> <!-- Inicio da DIV content -->
+    
     <?
     $permissoes = $this->caixa->listarpermissoesempresa();
     ?>
-    <div id="accordion">
-        <h3 class="singular"><a href="#">Saida</a></h3>
+   
+        <div class="alert alert-primary"><b>Saida</b></div>
         <div>
             <form name="form_saida" id="form_saida" action="<?= base_url() ?>cadastros/caixa/gravarsaida" enctype="multipart/form-data" method="post">
-
-                <dl class="dl_desconto_lista">
-                    <dt>
+                <div class="row">
+                    <div class="col-lg-2">
                         <label>Valor *</label>
-                    </dt>
-                    <dd>
-                        <input type="text" name="valor"  id="valor" alt="decimal" class="texto04" value="<?= @$obj->_valor; ?>"/>
+                        <input type="text" name="valor"  id="valor" alt="decimal" class="form-control" value="<?= @$obj->_valor; ?>"/>
                         <input type="hidden" id="saida_id" class="texto_id" name="saida_id" value="<?= @$obj->_saida_id; ?>" />
                         <input type="hidden" id="parametros" name="parametros" value="<?= @$parametros; ?>" />
-                    </dd>
-                    <dt>
+                    </div>
+                    <div class="col-lg-2">
                         <label>Data*</label>
-                    </dt>
-                    <dd>
-                        <input type="text" name="inicio" id="inicio" class="texto04" alt="date" value="<?= substr(@$obj->_data, 8, 2) . '/' . substr(@$obj->_data, 5, 2) . '/' . substr(@$obj->_data, 0, 4);  ?>" required=""/>
-                    </dd>
-                    <dt>
+                        <input type="text" name="inicio" id="inicio" class="form-control" alt="date" value="<?= substr(@$obj->_data, 8, 2) . '/' . substr(@$obj->_data, 5, 2) . '/' . substr(@$obj->_data, 0, 4);  ?>" required=""/>
+                    </div>
+                    <div class="col-lg-3">
                         <label>Pagar a:</label>
-                    </dt>
-                    <dd>
                         <input type="hidden" id="devedor" class="texto_id" name="devedor" value="<?= @$obj->_devedor; ?>" />
-                        <input type="text" id="devedorlabel" class="texto09" name="devedorlabel" value="<?= @$obj->_razao_social; ?>" required=""/>
-                        <a target="_blank" href="<?= base_url() ?>cadastros/fornecedor">
+                        <input type="text" id="devedorlabel" class="form-control" name="devedorlabel" value="<?= @$obj->_razao_social; ?>" required=""/>
+                        <a class="btn btn-outline-default btn-sm" target="_blank" href="<?= base_url() ?>cadastros/fornecedor">
                             Manter Credor/Devedor
                         </a>
-                    </dd>
-                    <dt>
+                    </div>
+                    <div class="col-lg-3">
                         <label>Empresa*</label>
-                    </dt>
-                    <dd>
-                        <select name="empresa_id" id="empresa_id" class="size4">
+                        <select name="empresa_id" id="empresa_id" class="form-control">
                             <option value="">Selecione</option>
                             <? foreach ($empresas as $value) : ?>
                                 <option value="<?= $value->empresa_id; ?>" <?if($empresa_id == $value->empresa_id) echo 'selected'?>>
@@ -50,72 +36,64 @@
                                 </option>
                             <? endforeach; ?>
                         </select>
-                    </dd>
-                    <dt>
+                    </div>
+                    <div class="col-lg-2">
                         <label>Tipo</label>
-                    </dt>
-                    <dd>
-                        <select name="tipo" id="tipo" class="size4">
+                        <select name="tipo" id="tipo" class="form-control">
                             <option value="">Selecione</option>
-                            <? foreach ($tipo as $value) : ?>
+                            <? foreach ($tipo as $value) { ?>
                                 <option value="<?= $value->tipo_entradas_saida_id; ?>"
                                 <? if ($value->descricao == @$obj->_tipo):echo'selected';
                                 endif;
                                 ?>><?php echo $value->descricao; ?></option>
-<? endforeach; ?>
+                            <? } ?>
                         </select>
-                    </dd>
-                    <dt>
+                    </div>
+                    <div class="col-lg-2">
                         <label>Classe *</label>
-                    </dt>
-                    <dd>
-                        <select name="classe" id="classe" class="size4"  <?=($permissoes[0]->financ_4n == 'f')? 'required' : ''?>>
+                        <select name="classe" id="classe" class="form-control"  <?=($permissoes[0]->financ_4n == 'f')? 'required' : ''?>>
                             <option value="">Selecione</option>
-                            <? foreach ($classe as $value) : ?>
+                            <? foreach ($classe as $value) { ?>
                                 <option value="<?= $value->descricao; ?>"
                                         <? if ($value->descricao == @$obj->_classe):echo'selected';
                                         endif;
                                         ?>><?php echo $value->descricao; ?></option>
-<? endforeach; ?>
+                            <? } ?>
                         </select>
-                    </dd>
-                    <dt>
+                    </div>
+                    <div class="col-lg-3">
                         <label>Forma *</label>
-                    </dt>
-                    <dd>
-                        <select name="conta" id="conta" class="size4" required="">
+                        <select name="conta" id="conta" class="form-control" required="">
                             <option value="">Selecione</option>
-                            <? foreach ($conta as $value) : ?>
+                            <? foreach ($conta as $value) { ?>
                                 <option value="<?= $value->forma_entradas_saida_id; ?>"<?
                                         if (@$obj->_forma == $value->forma_entradas_saida_id):echo'selected';
                                         endif;
                                         ?>><?php echo $value->descricao; ?></option>
-<? endforeach; ?>
+                            <? } ?>
                         </select>
-                    </dd>
-                    <dt>
+                    </div>
+                    <div class="col-lg-4">
                         <label>Observa&ccedil;&atilde;o</label>
-                    </dt>
-                    <dd class="dd_texto">
-                        <textarea cols="70" rows="3" name="Observacao" id="Observacao"><?= @$obj->_observacao; ?></textarea><br/>
-                    </dd>
-                </dl>    
-
-                <hr/>
-                <button type="submit" name="btnEnviar">Enviar</button>
-                <button type="reset" name="btnLimpar">Limpar</button>
+                        <textarea  class="form-control" name="Observacao" id="Observacao"><?= @$obj->_observacao; ?></textarea><br/>
+                    </div>
+                </div>
                 <?if(!@$obj->_saida_id > 0){?>
-                    <label for='selecao-arquivo'>Arquivos:</label>
-                    <input type="file" multiple="" name="arquivos[]"/>
-                <?}?>
+                        <label for='selecao-arquivo'>Arquivos: <input type="file" multiple="" name="arquivos[]"/></label>
+                        
+                    <?}?>
+                    <br>
+                <div class="btn-group">
+                    <button class="btn btn-outline-default btn-sm"  type="submit" name="btnEnviar">Enviar</button>
+                    <button class="btn btn-outline-default btn-sm" type="reset" name="btnLimpar">Limpar</button>
+                </div>
+                
+                    
+               
             </form>
         </div>
-    </div>
+    
 </div> <!-- Final da DIV content -->
-<link rel="stylesheet" href="<?= base_url() ?>css/jquery-ui-1.8.5.custom.css">
-<script type="text/javascript" src="<?= base_url() ?>js/jquery.validate.js"></script>
-<script type="text/javascript" src="<?= base_url() ?>js/jquery-1.9.1.js" ></script>
-<script type="text/javascript" src="<?= base_url() ?>js/jquery-ui-1.10.4.js" ></script>
 <script type="text/javascript">
 
 

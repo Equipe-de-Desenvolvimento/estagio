@@ -1,23 +1,28 @@
 
-<div class="content"> <!-- Inicio da DIV content -->
-    <div class="bt_link_new">
-        <a href="<?php echo base_url() ?>cadastros/classe/carregarclasse/0">
+<div class="panel-body"> <!-- Inicio da DIV content -->
+
+        <a class="btn btn-outline-default btn-round btn-sm"  href="<?php echo base_url() ?>cadastros/classe/carregarclasse/0">
             Nova Classe
         </a>
-    </div>
-    <div id="accordion">
-        <h3 class="singular"><a href="#">Manter Classe</a></h3>
-        <div>
-            <table>
+        <br><br>
+
+        <div class="alert alert-primary"><b>Manter Classe</b></div>
+
+        <form method="get" action="<?= base_url() ?>cadastros/classe/pesquisar">
+            <div class="row">
+                <div class="col-lg-4">
+                    <label for="">Nome</label>
+                    <input type="text" name="nome" class="form-control" value="<?php echo @$_GET['nome']; ?>" />
+                </div>
+                <div class="col-lg-4"><br>
+                    <button class="btn btn-outline-default btn-round btn-sm"  type="submit" id="enviar">Pesquisar</button>
+                </div>
+            </div>   
+        </form>
+
+
+            <table class="table table-striped table-bordered table-hover">
                 <thead>
-                    <tr>
-                        <th colspan="5" class="tabela_title">
-                            <form method="get" action="<?= base_url() ?>cadastros/classe/pesquisar">
-                                <input type="text" name="nome" class="texto10" value="<?php echo @$_GET['nome']; ?>" />
-                                <button type="submit" id="enviar">Pesquisar</button>
-                            </form>
-                        </th>
-                    </tr>
                     <tr>
                         <th class="tabela_header">Nome</th>
                         <th class="tabela_header">Tipo</th>
@@ -47,18 +52,18 @@
                                 $perfil_id = $this->session->userdata('perfil_id');
                                 ?>
                                 <? if ($perfil_id != 10) { ?>
-                                <td class="<?php echo $estilo_linha; ?>" width="70px;">                                  
-                                    <a href="<?= base_url() ?>cadastros/classe/carregarclasse/<?= $item->financeiro_classe_id ?>">Editar</a>
+                                <td width="70px;">                                  
+                                    <a class="btn btn-outline-default btn-round btn-sm" href="<?= base_url() ?>cadastros/classe/carregarclasse/<?= $item->financeiro_classe_id ?>">Editar</a>
                             </td>
-                                <td class="<?php echo $estilo_linha; ?>" width="70px;">                                  
-                                    <a onclick="javascript: return confirm('Deseja realmente exlcuir esse Classe?');" href="<?= base_url() ?>cadastros/classe/excluir/<?= $item->financeiro_classe_id ?>">Excluir</a>
+                                <td  width="70px;">                                  
+                                    <a class="btn btn-outline-default btn-round btn-sm" onclick="javascript: return confirm('Deseja realmente exlcuir esse Classe?');" href="<?= base_url() ?>cadastros/classe/excluir/<?= $item->financeiro_classe_id ?>">Excluir</a>
                             </td>
                             <?}else{?>
-                                <td class="<?php echo $estilo_linha; ?>" width="70px;">                                  
-                                   Editar
+                                <td>                                  
+                                   <a class="btn btn-outline-default btn-round btn-sm" href="#">Editar</a>
                             </td>
-                                <td class="<?php echo $estilo_linha; ?>" width="70px;">                                  
-                                    Excluir
+                                <td>                                  
+                                    <a class="btn btn-outline-default btn-round btn-sm" href="#">Excluir</a>
                             </td>
                                 
                            <? }?>
@@ -78,15 +83,6 @@
                     </tr>
                 </tfoot>
             </table>
-        </div>
-    </div>
 
 </div> <!-- Final da DIV content -->
-<script type="text/javascript">
-
-    $(function() {
-        $( "#accordion" ).accordion();
-    });
-
-</script>
 

@@ -12,22 +12,22 @@ if (count($_GET) > 0) {
             ."&empresa=".@$_GET['empresa']."&obs=".@$_GET['obs'];
 }
 ?>
-<div class="content"> <!-- Inicio da DIV content -->
+<div class="panel-body"> <!-- Inicio da DIV content -->
     <table>
         <tr>
             <td>
                 <div class="bt_link_new">
-                    <button class="btn btn-outline-primary btn-round btn-sm" href="<?php echo base_url() ?>cadastros/caixa/novasaida/<?=@$empresa_form_id?>/<?=@$url?>">
+                    <a class="btn btn-outline-default btn-round btn-sm" href="<?php echo base_url() ?>cadastros/caixa/novasaida/<?=@$empresa_form_id?>/<?=@$url?>">
                         Nova saida
-                    </button>
+                    </a>
                 </div>
 
             </td>
             <td>
                 <div class="bt_link_new">
-                    <button class="btn btn-outline-default btn-round btn-sm" href="<?php echo base_url() ?>cadastros/caixa/transferencia">
+                    <a class="btn btn-outline-default btn-round btn-sm" href="<?php echo base_url() ?>cadastros/caixa/transferencia">
                         Transferencia
-                    </button>
+                    </a>
                 </div>
 
             </td>
@@ -57,9 +57,8 @@ if (count($_GET) > 0) {
     }
     ?>
 
-    <div id="accordion">
-        <div class="alert alert-info"><b>Manter Saida</b></div>
-        <div>
+        <br>
+        <div class="alert alert-primary"><b>Manter Saida</b></div>
             <table>
                 <thead>
                 <form method="get" action="<?= base_url() ?>cadastros/caixa/pesquisar2">
@@ -143,7 +142,7 @@ if (count($_GET) > 0) {
                                 </div>
                                 <div>
                                     <label class="tabela_title">Observacao</label>
-                                    <input type="text"  id="obs" name="obs" class="size2"  value="<?php echo @$_GET['obs']; ?>" />
+                                    <input type="text"  id="obs" name="obs" class="form-control"  value="<?php echo @$_GET['obs']; ?>" />
                                 </div>
                             </div>
                             <div class="col-lg-2">
@@ -299,7 +298,7 @@ if (count($_GET) > 0) {
         </div>
             <br>
             <br>
-            <table>
+            <table class="table table-striped table-bordered table-hover">
                 <thead>
                 <th class="tabela_header">Contas</th>
                 <th class="tabela_header">Saldo</th>
@@ -325,12 +324,9 @@ if (count($_GET) > 0) {
                     </tr>
                 </tfoot>
             </table>
-        </div>
-    </div>
 
 </div> <!-- Final da DIV content -->
-<script type="text/javascript" src="<?= base_url() ?>js/jquery-1.9.1.js" ></script>
-<script type="text/javascript" src="<?= base_url() ?>js/jquery-ui-1.10.4.js" ></script>
+
 <script type="text/javascript">
     function saidaexclusao(saidas_id){
          window.open('<?= base_url(); ?>cadastros/caixa/saidaexclusao/'+saidas_id+'', '_blank');  

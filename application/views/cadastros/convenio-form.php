@@ -3,7 +3,11 @@ $empresapermissoes = $this->guia->listarempresapermissoes();
 $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho; 
 
 ?>
+<<<<<<< HEAD
 <div class=""> <!-- Inicio da DIV content -->
+=======
+<div class="content ficha_ceatox"> <!-- Inicio da DIV content -->
+>>>>>>> 243d21dc1ca96023a9474ce668f5b49a6576432c
     <div class="alert alert-primary">Dados do Convenio</div>
         <form name="form_convenio" id="form_convenio" action="<?= base_url() ?>cadastros/convenio/gravar" method="post">
             <fieldset>

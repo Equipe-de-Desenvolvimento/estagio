@@ -1,60 +1,49 @@
-<div class="content"> <!-- Inicio da DIV content -->
-    <div id="">
-        <h3 class="singular"><a href="#">Cadastro de Conta</a></h3>
-        <div>
+<div class="panel-body"> <!-- Inicio da DIV content -->
+        <div class="alert alert-primary"><b>Cadastro de Conta</b></div>
             <form name="form_forma" id="form_sala" action="<?= base_url() ?>cadastros/forma/gravar" method="post">
 
-                <dl class="dl_desconto_lista">
-                    <dt>
-                        <label>Nome</label>
-                    </dt>
-                    <dd>
-                        <input type="hidden" name="txtcadastrosformaid" class="texto10" value="<?= @$obj->_forma_entradas_saida_id; ?>" />
-                        <input type="text" name="txtNome" class="texto10" value="<?= @$obj->_descricao; ?>" />
-                    </dd>
-                    <dt>
-                        <label>Agencia</label>
-                    </dt>
-                    <dd>
-                        <input type="text" name="txtagencia" class="texto04" value="<?= @$obj->_agencia; ?>" />
-                    </dd>
-                    <dt>
-                        <label>Conta</label>
-                    </dt>
-                    <dd>
-                        <input type="text" name="txtconta" class="texto04" value="<?= @$obj->_conta; ?>" />
-                    </dd>
-                    <dt>
-                        <label>Empresa</label>
-                    </dt>
-                    <dd>
-                        <select name="empresa" id="empresa" class="size2" required>
-                        <option value="">Selecione</option>
-                        <? foreach ($empresa as $item) { ?>
-                            <option value="<?= $item->empresa_id ?>" <?
-                            if (@$obj->_empresa_id == $item->empresa_id) {
-                                echo 'selected';
-                            }
-                            ?>><?= $item->nome ?></option>
-                                <? } ?>
-                        </select>
-                    </dd>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>Nome</label>
+                            <input type="hidden" name="txtcadastrosformaid" class="texto10" value="<?= @$obj->_forma_entradas_saida_id; ?>" />
+                            <input type="text" name="txtNome" class="form-control" value="<?= @$obj->_descricao; ?>" />
+                        </div>
 
-                </dl>    
+                        <div class="col-lg-2">
+                            <label>Agencia</label>
+                            <input type="text" name="txtagencia" class="form-control" value="<?= @$obj->_agencia; ?>" />
+                        </div>
+
+                        <div class="col-lg-2">
+                            <label>Conta</label>
+                            <input type="text" name="txtconta" class="form-control" value="<?= @$obj->_conta; ?>" />
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Empresa</label>
+                            <select name="empresa" id="empresa" class="form-control" required>
+                            <option value="">Selecione</option>
+                            <? foreach ($empresa as $item) { ?>
+                                <option value="<?= $item->empresa_id ?>" <?
+                                if (@$obj->_empresa_id == $item->empresa_id) {
+                                    echo 'selected';
+                                }
+                                ?>><?= $item->nome ?></option>
+                                    <? } ?>
+                            </select>
+                        </div>
+                    </div>
+                    
                 <hr/>
-                <button type="submit" name="btnEnviar">Enviar</button>
-                <button type="reset" name="btnLimpar">Limpar</button>
-                <button type="button" id="btnVoltar" name="btnVoltar">Voltar</button>
+                <button class="btn btn-outline-default btn-round btn-sm" type="submit" name="btnEnviar">Enviar</button>
+                <button class="btn btn-outline-default btn-round btn-sm" type="reset" name="btnLimpar">Limpar</button>
+                <button class="btn btn-outline-default btn-round btn-sm" type="button" id="btnVoltar" name="btnVoltar">Voltar</button>
                 <a href="<?= base_url() ?>cadastros/contasreceber/">
             </form>
         </div>
     </div>
 </div> <!-- Final da DIV content -->
-<link rel="stylesheet" href="<?= base_url() ?>js/chosen/chosen.css">
-<link rel="stylesheet" href="<?= base_url() ?>js/chosen/docsupport/prism.css">
-<script type="text/javascript" src="<?= base_url() ?>js/chosen/chosen.jquery.js"></script>
-<script type="text/javascript" src="<?= base_url() ?>js/chosen/docsupport/init.js"></script>
-<script type="text/javascript" src="<?= base_url() ?>js/jquery.validate.js"></script>
+
 <script type="text/javascript">
     $('#btnVoltar').click(function () {
         $(location).attr('href', '<?= base_url(); ?>ponto/cargo');

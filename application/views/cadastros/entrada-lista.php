@@ -16,9 +16,9 @@ if (count($_GET) > 0) {
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 <div class="content"> <!-- Inicio da DIV content -->
     <div class="bt_link_new">
-        <button class="btn btn-outline-primary btn-round btn-sm" href="<?php echo base_url() ?>cadastros/caixa/novaentrada/<?= @$empresa_form_id ?>/<?=@$url?>">
+        <a class="btn btn-outline-default btn-round btn-sm" href="<?php echo base_url() ?>cadastros/caixa/novaentrada/<?= @$empresa_form_id ?>/<?=@$url?>">
             Nova entrada
-        </button>
+        </a>
     </div>
     <?
     $classe = $this->classe->listarclasse();
@@ -44,7 +44,7 @@ if (count($_GET) > 0) {
     <div id="accordion">
 <!--        <h3 class="singular"><a href="#">Manter Entrada</a></h3>-->
         <div>
-            <div class="alert alert-info"><b>Manter Entrada</b></div>
+            <div class="alert alert-primary"><b>Manter Entrada</b></div>
             <form method="get" action="<?= base_url() ?>cadastros/caixa/pesquisar">
                 <fieldset>
 
@@ -290,7 +290,7 @@ if (count($_GET) > 0) {
         </div>
             <br>
             <br>
-            <table>
+            <table class="table table-striped table-bordered table-hover">
                 <thead>
                 <th class="tabela_header">Contas</th>
                 <th class="tabela_header">Saldo</th>

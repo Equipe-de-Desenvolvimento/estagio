@@ -1,16 +1,22 @@
 <link href="<?= base_url() ?>css/cadastro/fornecedor-lista.css" rel="stylesheet"/>
-<div class="content"> <!-- Inicio da DIV content -->
+<div class="panel-body"> <!-- Inicio da DIV content -->
     <div class="bt_link_new">
         <a class="btn btn-outline-default btn-round btn-sm" href="<?php echo base_url() ?>cadastros/fornecedor/carregarfornecedor/">
-            <i class="">
-            </i>Novo credor/devedor
+           Novo credor/devedor
         </a>
+<<<<<<< HEAD
         </div>    
     </div>
     <div id="">
         <div class="alert alert-info">
         <b>Manter Credor/Devedor</b></div>
         <div class="table-responsive"class=" table table-striped table-bordered table-hover">
+=======
+    </div>    
+
+<br>
+        <div class="alert alert-primary"><b>Manter Credor/Devedor</b></div>
+>>>>>>> 243d21dc1ca96023a9474ce668f5b49a6576432c
             
             <form method="get" action="<?= base_url() ?>cadastros/fornecedor/fornecedor/">
                 <fieldset><br>
@@ -152,8 +158,7 @@
                 </table>
 
             </form>
-        </div>
-    </div>
+
 
 </div> <!-- Final da DIV content -->
 <script type="text/javascript">

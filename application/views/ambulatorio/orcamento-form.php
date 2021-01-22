@@ -26,7 +26,7 @@
         <div>
             <form name="form_guia" id="form_guia" action="<?= base_url() ?>ambulatorio/guia/gravarorcamento" method="post">
                 <fieldset>
-                    <div class="alert alert-info">Dados do paciente</div>
+                    <div class="alert alert-primary">Dados do paciente</div>
                         <div class="row">
                             <div class="col-lg-3">
                                 <div>
@@ -77,7 +77,7 @@
                         </div>
                 </fieldset>
                 <br/>
-                <div class="alert alert-info">Ficha</div>
+                <div class="alert alert-primary">Ficha</div>
                 <fieldset>
                     <table id="table_justa">
                         <thead>

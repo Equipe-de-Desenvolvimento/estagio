@@ -37,7 +37,7 @@
             <div class="panel panel-default">
 
 
-                <div class="alert alert-info">
+                <div class="alert alert-primary">
                     Cabeçalho e Rodapé
                 </div> 
                 <div class="panel-body">
