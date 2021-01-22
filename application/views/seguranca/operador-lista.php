@@ -2,29 +2,27 @@
 $empresa_id = $this->session->userdata('empresa_id');
 $empresapermissao = $this->guia->listarempresasaladepermissao();
 ?>
-<div class="content"> <!-- Inicio da DIV content -->
+<div class="panel-body"> <!-- Inicio da DIV content -->
     <? $perfil_id = $this->session->userdata('perfil_id'); ?>
     <div class="bt_link_new">
-        <a href="<?php echo base_url() ?>seguranca/operador/novo">
+        <a class="btn btn-outline-default btn-round btn-sm" href="<?php echo base_url() ?>seguranca/operador/novo">
             Novo Profissional
         </a>
     </div>
-    <div id="accordion">
-        <h3 class="singular"><a href="#">Manter Profissionais</a></h3>
-        <div>
+        <div class="alert alert-primary"><b >Manter Profissionais</b></div>
             <table>
                 <thead>
                 <form method="get" action="<?= base_url() ?>seguranca/operador/pesquisar">
                 </thead>
                     <tr>
-                        <th class="tabela_title">
+                        <!-- <th class="tabela_title">
                             <select name="ativo" id="empresa" class="size1">
                                 <option value="t" <?= ((@$_GET['ativo'] == 'f') ? '' : 'selected="selected"') ?>>Ativo</option>
                                 <option value="f" <?= ((@$_GET['ativo'] == 'f') ? 'selected="selected"' : '') ?>>Não-ativo</option>
 
                             </select>
 
-                        </th>
+                        </th> -->
                         <th class="tabela_title" style="text-align: left; width: 56%">
                             <select name="ativo" id="empresa" class="size1">
                                 <option value="t" <?= ((@$_GET['ativo'] == 'f') ? '' : 'selected="selected"') ?>>Ativo</option>
