@@ -1,267 +1,241 @@
 <div class="content ficha_ceatox"> <!-- Inicio da DIV content -->
-    <div class="bt_link_voltar">
-        <a href="<?= base_url() ?>seguranca/operador">
-            Voltar
-        </a>
-    </div>
+    <div class="alert alert-primary"><a>Dados do Profissional</a></div>
+        <div>
+            <form name="form_operador" id="form_operador" action="<?= base_url() ?>seguranca/operador/gravar" method="post" style="margin-bottom: 50px;">
+                <fieldset>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div>
+                                <label>Nome *</label>                      
+                                <input type ="hidden" name ="operador_id" class="control-form" value ="<?= @$obj->_operador_id; ?>" id ="txtoperadorId" >
+                                <input type="text" id="txtNome" name="nome"  class="control-form" value="<?= @$obj->_nome; ?>" required="true"/>
+                            </div>
+                            <div>
+                                <label>CPF *</label>
+                                <input type="text" name="cpf" id ="txtCpf" alt="cpf" class="control-form" value="<?= @$obj->_cpf; ?>" required />
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div>
+                                <label>Nascimento</label>
+                                <input type="text" name="nascimento" id="txtNascimento" class="control-form" alt="date" value="<?php echo substr(@$obj->_nascimento, 8, 2) . '/' . substr(@$obj->_nascimento, 5, 2) . '/' . substr(@$obj->_nascimento, 0, 4); ?>" onblur="retornaIdade()"/>
+                            </div>
+                            <div>
+                                <label>Conselho</label>
+                                <input type="text" id="txtconselho" name="conselho"  class="control-form" value="<?= @$obj->_conselho; ?>" />
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div>
+                                <label title="Link Reunião Zoom">Link Reunião Zoom</label> 
+                                    <input type="text" name="link_reuniao" id="link_reuniao" value="<?= @$obj->_link_reuniao?>" class="control-form"  >
+                                    </div>    
+                                    <div>
+                                        <label title="Link Reunião Zoom">Faixa Etaria Agenda</label> 
+                                        <input type="number" name="faixa_etaria" id="faixa_etaria" value="<?= @$obj->_faixa_etaria; ?>" class="control-form"  >
+                                        <input type="hidden" name="faixa_etaria_final" id="faixa_etaria_final" value="<?= @$obj->_faixa_etaria_final; ?>" class="control-form" > Anos
+                                    </div>
+                            </div>
+                            <div>
+                                <label>Sexo</label> 
+                                <select name="sexo" id="txtSexo" class="control-form">
+                                    <option value="">Selecione</option>
+                                    <option value="M" <?
+                                    if (@$obj->_sexo == "M"):echo 'selected';
+                                    endif;
+                                    ?>>Masculino</option>
+                                    <option value="F" <?
+                                    if (@$obj->_sexo == "F"):echo 'selected';
+                                    endif;
+                                    ?>>Feminino</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Cor do Mapa</label>
+                                <input type="color" id="txtcolor" name="txtcolor"  class="control-form" value="<?= @$obj->_cor_mapa; ?>" />
+                            </div>
+                        </div>    
+                        <div class="col-lg-2">
+                           
+                        </div>
+                            <?if($empresapermissao[0]->certificado_digital == 't'){?>
+                            <!-- <div>
+                                <label>Certificado Digital Bird ID</label>
+                                <input type="text" id="txtcertificado" name="txtcertificado"  class="control-form" value="<?= @$obj->_certificado_digital; ?>" />
+                            </div> -->
+                            <?}?>
+                            <?if($empresapermissao[0]->certificado_digital_manual == 't'){?>
+                         <!-- <div>
+                                <label>Senha do C. Digital</label>
+                                <input type="password" id="senha_cert" name="senha_cert" class="control-form" value="<?= @$obj->_senha_cert; ?>" />
+                            </div> -->
+                            <?}?> 
+                        </div>
+                        <div class="col-lg-2">
+                            <div>
+                                <label>Ocupa&ccedil;&atilde;o</label>
+                                <input type="hidden" id="txtcboID"class="control-form" name="txtcboID" value="<?= @$obj->_cbo_ocupacao_id; ?>" readonly="true" />
+                                <input type="text" id="txtcbo"class="control-form" name="txtcbo" value="<?= @$obj->_cbo_nome; ?>" />
+                            </div>
 
-    <h3 class="singular"><a href="#">Cadastro de Operador</a></h3>
-    <div>
-        <form name="form_operador" id="form_operador" action="<?= base_url() ?>seguranca/operador/gravar" method="post" style="margin-bottom: 50px;">
-            <fieldset>
-                <legend>Dados do Profissional</legend>
-                <div>
-                    <label>Nome *</label>                      
-                    <input type ="hidden" name ="operador_id" value ="<?= @$obj->_operador_id; ?>" id ="txtoperadorId" >
-                    <input type="text" id="txtNome" name="nome"  class="texto09" value="<?= @$obj->_nome; ?>" required="true"/>
-                </div>
-                <div>
-                    <label>Sexo *</label> 
-                    <select name="sexo" id="txtSexo" class="size2">
-                        <option value="">Selecione</option>
-                        <option value="M" <?
-                        if (@$obj->_sexo == "M"):echo 'selected';
-                        endif;
-                        ?>>Masculino</option>
-                        <option value="F" <?
-                        if (@$obj->_sexo == "F"):echo 'selected';
-                        endif;
-                        ?>>Feminino</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label>Nascimento</label>
-
-
-                    <input type="text" name="nascimento" id="txtNascimento" class="texto02" alt="date" value="<?php echo substr(@$obj->_nascimento, 8, 2) . '/' . substr(@$obj->_nascimento, 5, 2) . '/' . substr(@$obj->_nascimento, 0, 4); ?>" onblur="retornaIdade()"/>
-                </div>
-                <div>
-                    <label>Conselho</label>
-                    <input type="text" id="txtconselho" name="conselho"  class="texto04" value="<?= @$obj->_conselho; ?>" />
-                </div>
-
-                <?if($empresapermissao[0]->certificado_digital == 't'){?>
-                <!-- <div>
-                    <label>Certificado Digital Bird ID</label>
-                    <input type="text" id="txtcertificado" name="txtcertificado"  class="texto03" value="<?= @$obj->_certificado_digital; ?>" />
-                </div> -->
-                <?}?>
-                <?if($empresapermissao[0]->certificado_digital_manual == 't'){?>
-                <div>
-                    <label>Senha do C. Digital</label>
-                    <input type="password" id="senha_cert" name="senha_cert"  class="texto03" value="<?= @$obj->_senha_cert; ?>" />
-                </div>
-                <?}?>
-                
-                <div>
-                    <label>Cor do Mapa</label>
-                    <input type="color" id="txtcolor" name="txtcolor"  class="texto04" value="<?= @$obj->_cor_mapa; ?>" />
-                </div>
-                    <br>
-
-                <div>
-                    <label>CPF *</label>
-
-
-                    <input type="text" name="cpf" id ="txtCpf" maxlength="11" alt="cpf" class="texto02" value="<?= @$obj->_cpf; ?>" required />
-                </div>
-                <div>
-                    <label>Ocupa&ccedil;&atilde;o</label>
-                    <input type="hidden" id="txtcboID" class="texto_id" name="txtcboID" value="<?= @$obj->_cbo_ocupacao_id; ?>" readonly="true" />
-                    <input type="text" id="txtcbo" class="texto04" name="txtcbo" value="<?= @$obj->_cbo_nome; ?>" />
-
-
-                    <?php
-                    if (@$obj->_consulta == "t") {
-                        ?>
-                        <input type="checkbox" name="txtconsulta" checked ="true"/>Realiza Consulta / Exame
-                        <?php
-                    } else {
-                        ?>
-                        <input type="checkbox" name="txtconsulta"  />Realiza Consulta / Exame
-                        <?php
-                    }
-
-                    if (@$empresapermissao[0]->retirar_flag_solicitante == 'f') {
-                        ?>
-                        <input type="checkbox" name="txtsolicitante" <? if (@$obj->_solicitante == "t") echo 'checked' ?> />Médico Solicitante
-                        <input type="checkbox" name="ocupacao_painel" <? if (@$obj->_ocupacao_painel == "t") echo 'checked' ?> />Ocupação no Painel
-                        <input type="checkbox" name="atendimento_medico" <? if (@$obj->_atendimento_medico == "t") echo 'checked' ?> title="Algumas colunas são retiradas na listagem de atendimentos médicos e no atendimento médico, a caixa de texto não aparece inicialmente"/>Atendimento Médico Dif.
-                    <? } ?>
-
-                    <? if (@$empresapermissao[0]->profissional_agendar == 't') { ?>
-                        <input type="checkbox" name="profissional_agendar_o" <? if (@$obj->_profissional_agendar_o == "t") echo 'checked' ?> />Médico Agendamento
-                    <? } ?>
-
-                    <input type="checkbox" name="medico_cirurgiao" <? if (@$obj->_medico_cirurgiao == "t") echo 'checked' ?> />Médico Cirurgião
-                   <input type="checkbox" name="medico_agenda" <? if (@$obj->_medico_agenda == "t") echo 'checked' ?>  title="Ao marcar essa flag, o médico poder realizar agendamentos"/><b style="font-weight: normal;" title="Ao marcar essa flag o médico poderá realizar agendamentos.">Médico Agendar</b>
-
-                   <input type="checkbox" name="profissional_aluguel" <? if (@$obj->_profissional_aluguel == "t") echo 'checked' ?>  title="Ao marcar essa flag, o médico poder realizar agendamentos"/><b style="font-weight: normal;" title="Ao marcar essa flag o médico poderá realizar agendamentos.">Profissional Alugar Sala</b>
-                </div>
-                
-                <div>
-                    <label>Grupos</label>
-                    <select data-placeholder="Selecione um ou mais grupo" name="grupo_agenda[]" id="grupo_agenda" class="size2 chosen-select" multiple>
-                        <?
-                      
-                        
-                        if (@$obj->_grupo_agenda != '') {
-                            $gruposExi = json_decode(@$obj->_grupo_agenda);
-                        } else {
-                            $gruposExi = array();
-                        }
-                        
-                        ?>
-                        <?foreach ($grupos as $key => $value) {?>
-                            <option <?= (@in_array($value->nome, $gruposExi)) ? 'selected' : ''; ?> value="<?=$value->nome?>"><?=$value->nome?></option>
-                        <?}?>
-                    </select>
-                </div>
-
-                <?
-                if (@$empresapermissao[0]->cirugico_manual == 't') {
-                    ?>
-                    <div>
-                        <label>Sigla do Conselho</label>  
-                        <select name="siglaconselho" id="siglaconselho" > 
-                            <option value="" >Escolha</option>
-                            <?
-                            foreach ($listarsigla as $item) {
+                            <?php
+                            if (@$obj->_consulta == "t") {
                                 ?>
-                                <option value="<?= $item->sigla_id; ?>" 
-                                <?
-                                if (@$obj->_sigla_id == $item->sigla_id) {
-                                    echo "Selected";
-                                } else {
+                                <input type="checkbox" name="txtconsulta" checked ="true"/>Realiza Consulta / Exame
+                                <?php
+                            } else {
+                                ?>
+                                <input type="checkbox" name="txtconsulta"  />Realiza Consulta / Exame
+                                <?php
+                            }
+
+                            if (@$empresapermissao[0]->retirar_flag_solicitante == 'f') {
+                                ?>
+                                <input type="checkbox" name="txtsolicitante" <? if (@$obj->_solicitante == "t") echo 'checked' ?> />Médico Solicitante
+                                <input type="checkbox" name="ocupacao_painel" <? if (@$obj->_ocupacao_painel == "t") echo 'checked' ?> />Ocupação no Painel
+                                <input type="checkbox" name="atendimento_medico" <? if (@$obj->_atendimento_medico == "t") echo 'checked' ?> title="Algumas colunas são retiradas na listagem de atendimentos médicos e no atendimento médico, a caixa de texto não aparece inicialmente"/>Atendimento Médico Dif.
+                            <? } ?>
+
+                            <? if (@$empresapermissao[0]->profissional_agendar == 't') { ?>
+                                <input type="checkbox" name="profissional_agendar_o" <? if (@$obj->_profissional_agendar_o == "t") echo 'checked' ?> />Médico Agendamento
+                            <? } ?>
+
+                            <input type="checkbox" name="medico_cirurgiao" <? if (@$obj->_medico_cirurgiao == "t") echo 'checked' ?> />Médico Cirurgião
+                            <input type="checkbox" name="medico_agenda" <? if (@$obj->_medico_agenda == "t") echo 'checked' ?>  title="Ao marcar essa flag, o médico poder realizar agendamentos"/><b style="font-weight: normal;" title="Ao marcar essa flag o médico poderá realizar agendamentos.">Médico Agendar</b>
+
+                            <input type="checkbox" name="profissional_aluguel" <? if (@$obj->_profissional_aluguel == "t") echo 'checked' ?>  title="Ao marcar essa flag, o médico poder realizar agendamentos"/><b style="font-weight: normal;" title="Ao marcar essa flag o médico poderá realizar agendamentos.">Profissional Alugar Sala</b>
+                            </div>
+                        </div>    
+                        <div class="col-lg-2">
+                            <!-- <div>
+                                <label>Grupos</label>
+                                <select data-placeholder="Selecione um ou mais grupo" name="grupo_agenda[]" id="grupo_agenda" class="size2 chosen-select" multiple>
+                                    <?
+                                
                                     
-                                }
-                                ?>
-                                        title="<?= $item->nome ?>"><?= $item->nome ?></option>
-                                        <?
+                                    if (@$obj->_grupo_agenda != '') {
+                                        $gruposExi = json_decode(@$obj->_grupo_agenda);
+                                    } else {
+                                        $gruposExi = array();
                                     }
-                                    ?> 
-                        </select>
-                    </div> 
-                    <div>
-                        <label title="UF">UF</label> 
-                        <input type="text" name="uf_profissional" id="uf_profissional" value="<?= @$obj->_uf_profissional ?>" class="size1"  max>
-                    </div>
-                <? } ?>
+                                    
+                                    ?>
+                                    <?foreach ($grupos as $key => $value) {?>
+                                        <option <?= (@in_array($value->nome, $gruposExi)) ? 'selected' : ''; ?> value="<?=$value->nome?>"><?=$value->nome?></option>
+                                    <?}?>
+                                </select>
+                            </div> -->
 
-
-                <?
-                if (@$empresapermissao[0]->tabela_bpa == 't') {
-                    ?> 
-                    <div>
-                        <label title="Codigo CNES prof.">Codigo CNES prof.</label> 
-                        <input type="text"  maxlength="15" minlength="15"  name="cod_cnes_prof" id="cod_cnes_prof" value="<?= @$obj->_cod_cnes_prof ?>" class="size1"   >
-                    </div> 
-                <? } ?>
-                <div>
-                    <label title="Link Reunião Zoom">Link Reunião Zoom</label> 
-                    <input type="text" name="link_reuniao" id="link_reuniao" value="<?= @$obj->_link_reuniao?>" class="texto08"  >
-                </div>    
-                
-                <div>
-                    <label title="Link Reunião Zoom">Faixa Etaria Atendimento Agenda</label> 
-                    <input type="number" name="faixa_etaria" id="faixa_etaria" value="<?= @$obj->_faixa_etaria; ?>" class="texto01"  >
-                    à
-                    <input type="number" name="faixa_etaria_final" id="faixa_etaria_final" value="<?= @$obj->_faixa_etaria_final; ?>" class="texto01"  > Anos
-                </div> 
-
-
-                <div>
-                <label>Cor da Agenda <button  type="button" id="mostrarDadosExtra" onclick="mostrarDadosExtras()">+</button></label>
-                    <div id="coresagendaid" hidden>
-                    <table>
-                        <tr>
-                            <td><input type="radio" name="coragenda" <?=(@$obj->_coragenda == "1" ? "checked" : "" );?> value="1"><span style="width:20px;height:20px;border-radius:4px;background-color:#7986cb;display:inline-block;margin-right:15px"></span></td>
-                            <td><input type="radio" name="coragenda" <?=(@$obj->_coragenda == "2" ? "checked" : "" );?> value="2"><span style="width:20px;height:20px;border-radius:4px;background-color:#33b679;display:inline-block;margin-right:15px"></span></td>
-                            <td><input type="radio" name="coragenda" <?=(@$obj->_coragenda == "3" ? "checked" : "" );?> value="3"><span style="width:20px;height:20px;border-radius:4px;background-color:#8e24aa;display:inline-block;margin-right:15px"></span></td>
-                            <td><input type="radio" name="coragenda" <?=(@$obj->_coragenda == "4" ? "checked" : "" );?> value="4"><span style="width:20px;height:20px;border-radius:4px;background-color:#e67c73;display:inline-block;margin-right:15px"></span></td>
-                            <td><input type="radio" name="coragenda" <?=(@$obj->_coragenda == "5" ? "checked" : "" );?> value="5"><span style="width:20px;height:20px;border-radius:4px;background-color:#f6c026;display:inline-block;margin-right:15px"></span></td>
-                            <td><input type="radio" name="coragenda" <?=(@$obj->_coragenda == "6" ? "checked" : "" );?> value="6"><span style="width:20px;height:20px;border-radius:4px;background-color:#f5511d;display:inline-block;margin-right:15px"></span></td>
-                            <td><input type="radio" name="coragenda" <?=(@$obj->_coragenda == "7" ? "checked" : "" );?> value="7"><span style="width:20px;height:20px;border-radius:4px;background-color:#039be5;display:inline-block;margin-right:15px"></span></td>
-                            <td><input type="radio" name="coragenda" <?=(@$obj->_coragenda == "8" ? "checked" : "" );?> value="8"><span style="width:20px;height:20px;border-radius:4px;background-color:#616161;display:inline-block;margin-right:15px"></span></td>
-                            <td><input type="radio" name="coragenda" <?=(@$obj->_coragenda == "9" ? "checked" : "" );?> value="9"><span style="width:20px;height:20px;border-radius:4px;background-color:#3f51b5;display:inline-block;margin-right:15px"></span></td>
-                            <td><input type="radio" name="coragenda" <?=(@$obj->_coragenda == "10" ? "checked" : "" );?> value="10"><span style="width:20px;height:20px;border-radius:4px;background-color:#0b8043;display:inline-block;margin-right:15px"></span></td>
-                            <td><input type="radio" name="coragenda" <?=(@$obj->_coragenda == "11" ? "checked" : "" );?> value="11"><span style="width:20px;height:20px;border-radius:4px;background-color:#d60000;display:inline-block;margin-right:15px"></span></td>
-                            
-                        </tr>
-                    </table>
-                    </div>
-                </div>
-                
-            </fieldset>
-          <?php if(isset($obj->_operador_id) && $obj->_operador_id != ""){?> 
-            <fieldset id="limite">      
-                <legend>Config. Nº limite de atendimentos p/dia</legend> 
-                <div>
-                     <label>Empresa</label>
-                       <select name="empresa" id="empresa" class="size2">  
                             <?
-                            $empresas = $this->exame->listarempresas();  
-                            $empresa_logada = $this->session->userdata("empresa_id");
-                            $selected = false;
-                            foreach ($empresas as $value) :  ?>
-                                <option value="<?= $value->empresa_id; ?>" <?
-                                    if ($empresa_logada == $value->empresa_id ) {
-                                         echo 'selected'; 
-                                    } 
-                                ?>><?php echo $value->nome; ?></option>
-                               <? endforeach; ?>
-                     </select>
-                </div> 
+                            if (@$empresapermissao[0]->cirugico_manual == 't') {
+                                ?>
+                                <!-- <div>
+                                    <label>Sigla do Conselho</label>  
+                                    <select name="siglaconselho" id="siglaconselho" > 
+                                        <option value="" >Escolha</option>
+                                        <?
+                                        foreach ($listarsigla as $item) {
+                                            ?>
+                                            <option value="<?= $item->sigla_id; ?>" 
+                                            <?
+                                            if (@$obj->_sigla_id == $item->sigla_id) {
+                                                echo "Selected";
+                                            } else {
+                                                
+                                            }
+                                            ?>
+                                                    title="<?= $item->nome ?>"><?= $item->nome ?></option>
+                                                    <?
+                                                }
+                                                ?> 
+                                    </select>
+                                </div>  -->
+                            </div>    
+                                <div class="col-lg-2">
+                                    <!-- <div>
+                                        <label title="UF">UF</label> 
+                                        <input type="text" class="control-form" name="uf_profissional" id="uf_profissional" value="<?= @$obj->_uf_profissional ?>"  max>
+                                    </div> -->
+                                    <? } ?>
 
-                <div>
-                    <label >Grupo</label>
-                   <select  name="grupo1" id="grupo1" class="size1" >
-                      <option value="">Selecione</option>
-                      <?
-                      foreach ($grupos as $item) :
-                          ?>
-                          <option value="<?= $item->nome; ?>"  >
-                              <?= $item->nome; ?>
-                          </option>
-                      <? endforeach; ?>
-                  </select>
-                </div>
 
-                <div> 
-                      <label >Procedimento</label>
-                    <select  name="procedimento1" id="procedimento1" class="size1"  >
-                        <option value="">Selecione</option>
-                    </select> 
-                </div>
-                
-                <div>
-                    <label title="Quantidade de retorno que o medico pode realizar em um dia. 0 para infinito">Quantidade de Retornos p/dia</label> 
-                    <input type="number" name="qtd_retorno_dia" id="qtd_retorno_dia"   class="texto01"  >
-                </div> 
-                <div>
-                    <label >&nbsp;</label>
-                    <button type="button" onclick="adicionarLimiteProcedimento()" >Adicionar</button>
-                </div> 
-                
-                    <table border='2'>
-                        <thead>
-                            <tr>
-                                <th  class="tabela_header">Procedimento</th> 
-                                <th  class="tabela_header">Empresa</th>  
-                                <th  class="tabela_header">Quantidade</th> 
-                                <th  class="tabela_header" width="90px;" style="text-align: center;">Ações</th> 
-                            </tr>  
-                        </thead> 
-                       
-                        <?  
-                        $estilo_linha = "tabela_content01";
-                        foreach ($limite_procedimento as $item) {
-                            ($estilo_linha == "tabela_content01") ? $estilo_linha = "tabela_content02" : $estilo_linha = "tabela_content01";
-                            ?>
-                            <tr>
-                                <td class="<?php echo $estilo_linha; ?>"><?= $item->procedimento ?></td>
-                                <td class="<?php echo $estilo_linha; ?>"><?= $item->empresa ?></td> 
+                                    <?
+                                    if (@$empresapermissao[0]->tabela_bpa == 't') {
+                                        ?> 
+                                        <!-- <div>
+                                            <label title="Codigo CNES prof.">Codigo CNES prof.</label> 
+                                            <input type="text" class="control-form" minlength="15"  name="cod_cnes_prof" id="cod_cnes_prof" value="<?= @$obj->_cod_cnes_prof ?>"   >
+                                        </div>  -->
+                                    <? } ?>
+                                    <!-- <div>
+                                    <label>Cor da Agenda <button  type="button" id="mostrarDadosExtra" onclick="mostrarDadosExtras()">+</button></label>
+                                        <div id="coresagendaid" hidden>
+                                        <table>
+                                            <tr>
+                                                <td><input type="radio" name="coragenda" <?=(@$obj->_coragenda == "1" ? "checked" : "" );?> value="1"><span style="width:20px;height:20px;border-radius:4px;background-color:#7986cb;display:inline-block;margin-right:15px"></span></td>
+                                                <td><input type="radio" name="coragenda" <?=(@$obj->_coragenda == "2" ? "checked" : "" );?> value="2"><span style="width:20px;height:20px;border-radius:4px;background-color:#33b679;display:inline-block;margin-right:15px"></span></td>
+                                                <td><input type="radio" name="coragenda" <?=(@$obj->_coragenda == "3" ? "checked" : "" );?> value="3"><span style="width:20px;height:20px;border-radius:4px;background-color:#8e24aa;display:inline-block;margin-right:15px"></span></td>
+                                                <td><input type="radio" name="coragenda" <?=(@$obj->_coragenda == "4" ? "checked" : "" );?> value="4"><span style="width:20px;height:20px;border-radius:4px;background-color:#e67c73;display:inline-block;margin-right:15px"></span></td>
+                                                <td><input type="radio" name="coragenda" <?=(@$obj->_coragenda == "5" ? "checked" : "" );?> value="5"><span style="width:20px;height:20px;border-radius:4px;background-color:#f6c026;display:inline-block;margin-right:15px"></span></td>
+                                                <td><input type="radio" name="coragenda" <?=(@$obj->_coragenda == "6" ? "checked" : "" );?> value="6"><span style="width:20px;height:20px;border-radius:4px;background-color:#f5511d;display:inline-block;margin-right:15px"></span></td>
+                                                <td><input type="radio" name="coragenda" <?=(@$obj->_coragenda == "7" ? "checked" : "" );?> value="7"><span style="width:20px;height:20px;border-radius:4px;background-color:#039be5;display:inline-block;margin-right:15px"></span></td>
+                                                <td><input type="radio" name="coragenda" <?=(@$obj->_coragenda == "8" ? "checked" : "" );?> value="8"><span style="width:20px;height:20px;border-radius:4px;background-color:#616161;display:inline-block;margin-right:15px"></span></td>
+                                                <td><input type="radio" name="coragenda" <?=(@$obj->_coragenda == "9" ? "checked" : "" );?> value="9"><span style="width:20px;height:20px;border-radius:4px;background-color:#3f51b5;display:inline-block;margin-right:15px"></span></td>
+                                                <td><input type="radio" name="coragenda" <?=(@$obj->_coragenda == "10" ? "checked" : "" );?> value="10"><span style="width:20px;height:20px;border-radius:4px;background-color:#0b8043;display:inline-block;margin-right:15px"></span></td>
+                                                <td><input type="radio" name="coragenda" <?=(@$obj->_coragenda == "11" ? "checked" : "" );?> value="11"><span style="width:20px;height:20px;border-radius:4px;background-color:#d60000;display:inline-block;margin-right:15px"></span></td>
+                                                
+                                            </tr>
+                                        </table>
+                                        </div>
+                                    </div> -->
+                                    
+                </fieldset>
+                <?php if(isset($obj->_operador_id) && $obj->_operador_id != ""){?> 
+                    <fieldset id="limite">      
+                        <!-- <legend>Config. Nº limite de atendimentos p/dia</legend> 
+                        <div>
+                            <label>Empresa</label>
+                            <select name="empresa" id="empresa" class="control-form">  
+                                    <?
+                                    $empresas = $this->exame->listarempresas();  
+                                    $empresa_logada = $this->session->userdata("empresa_id");
+                                    $selected = false;
+                                    foreach ($empresas as $value) :  ?>
+                                        <option value="<?= $value->empresa_id; ?>" <?
+                                            if ($empresa_logada == $value->empresa_id ) {
+                                                echo 'selected'; 
+                                            } 
+                                        ?>><?php echo $value->nome; ?></option>
+                                    <? endforeach; ?>
+                            </select>
+                        </div>  -->
+                                    <div>
+                                        <label title="Quantidade de retorno que o medico pode realizar em um dia. 0 para infinito">Quantidade de Retornos p/dia</label> 
+                                        <input type="number" name="qtd_retorno_dia" id="qtd_retorno_dia"  class="control-form"  >
+                                    </div> 
+                                    <div>
+                                        <label >&nbsp;</label>
+                                        <button type="button" onclick="adicionarLimiteProcedimento()" >Adicionar</button>
+                                    </div> 
+                                    
+                                        <table border='2'>
+                                            <thead>
+                                                <tr>
+                                                    <th  class="tabela_header">Procedimento</th> 
+                                                    <th  class="tabela_header">Empresa</th>  
+                                                    <th  class="tabela_header">Quantidade</th> 
+                                                    <th  class="tabela_header" width="90px;" style="text-align: center;">Ações</th> 
+                                                </tr>  
+                                            </thead> 
+                                        
+                                            <?  
+                                            $estilo_linha = "tabela_content01";
+                                            foreach ($limite_procedimento as $item) {
+                                                ($estilo_linha == "tabela_content01") ? $estilo_linha = "tabela_content02" : $estilo_linha = "tabela_content01";
+                                                ?>
+                                                <tr>
+                                                    <td class="<?php echo $estilo_linha; ?>"><?= $item->procedimento ?></td>
+                                                    <td class="<?php echo $estilo_linha; ?>"><?= $item->empresa ?></td> 
                                 <td class="<?php echo $estilo_linha; ?>"><?= $item->quantidade ?></td>
                                 <td  class="<?php echo $estilo_linha; ?>" >
                                     <div class="bt_link" >
@@ -278,12 +252,12 @@
             
          
             <fieldset>
-                <legend>Domicilio</legend>
+            <div class="alert alert-primary">
+                <a>Domicilio</a>
+            </div>
 
                 <div>
                     <label>T. logradouro</label>
-
-
                     <select name="tipo_logradouro" id="txtTipoLogradouro" class="size2" >
                         <option value='' >selecione</option>
                         <?php
@@ -374,12 +348,16 @@
                 </div>
             </fieldset>
             <fieldset>
-                <legend>Acesso</legend>
+            <div class="alert alert-primary">
+                <a>Acesso</a>
+            </div>
+            <div class="col-lg-2">
                 <div>
-                    <label>Nome usu&aacute;rio *</label>
-
+                    <label>Nome usu&aacute;rio</label>
                     <input type="text" id="txtUsuario" name="txtUsuario"  class="texto04" value="<?= @$obj->_usuario; ?>" required="true"/>
                 </div>
+            </div>
+            <div class="col-lg-2">
                 <div>
                     <label>Senha: *</label>
                     <input type="password" name="txtSenha" id="txtSenha" class="texto04" value="" <? if (@$obj->_senha == null) {
@@ -390,9 +368,10 @@
                     <!--                    <label>Confirme a Senha: *</label>
                                         <input type="password" name="verificador" id="txtSenha" class="texto04" value="" onblur="confirmaSenha(this)"/>-->
                 </div>
+            </div>
+            <div class="col-lg-2">
                 <div>
-                    <label>Tipo perfil *</label>
-
+                    <label>Tipo perfil</label>
                     <select name="txtPerfil" id="txtPerfil" class="size4" required="true">
                         <option value="">Selecione</option>
                         <?
@@ -419,7 +398,7 @@
                                 <? endforeach; ?>
                     </select>
                 </div>
-
+            </div>
             </fieldset>
             <? if (@$empresapermissao[0]->profissional_externo == 't') { ?>
                 <fieldset>
@@ -436,54 +415,39 @@
             <? }
             ?>
             <fieldset>
-                <legend>Financeiro</legend>
-                <!--                <div>
-                                    <label>Criar Credor</label>
-                                    <input type="checkbox" name="criarcredor"/></div>-->
-
+            <div class="alert alert-primary">
+                <a>Financeiro</a>
+            </div>
+                <!-- <div>
+                    <label>Criar Credor</label>
+                    <input type="checkbox" name="criarcredor"/>
+                </div> -->
+            <div class="col-lg-2">
                 <div>
-
-
-
                     <label>Credor / Devedor</label>
                     <input type="text" id="credor_devedor" class="texto08" name="credor_devedor" value="<?= @$obj->_credor; ?>" readonly=""/>
-<!--                    <select name="credor_devedor" id="credor_devedor" class="size4" disabled="">
+                    <!--<select name="credor_devedor" id="credor_devedor" class="size4" disabled="">
                         <option value='' >Selecione</option>
                     <?php
-//                        $credor_devedor = $this->convenio->listarcredordevedor();
-//                        foreach ($credor_devedor as $item) {
+                    //$credor_devedor = $this->convenio->listarcredordevedor();
+                    //foreach ($credor_devedor as $item) {
                     ?>
 
-                            <option   value =<?php echo $item->financeiro_credor_devedor_id; ?> <?
-//                            if (@$obj->_credor_devedor_id == $item->financeiro_credor_devedor_id):echo 'selected';
-//                            endif;
+                    <option   value =<?php echo $item->financeiro_credor_devedor_id; ?> <?
+                    //if (@$obj->_credor_devedor_id == $item->financeiro_credor_devedor_id):echo 'selected';
+                    // endif;
                     ?>><?php // echo $item->razao_social;  ?></option>
                     <?php
-//                                  }
+                    // }
                     ?> 
                     </select>-->
                 </div>
-                <div>
-                    <label>Conta</label>
-                    <select name="conta" id="conta" class="size2" >
-                        <option value='' >Selecione</option>
-                        <?php
-                        $conta = $this->forma->listarforma();
-
-                        foreach ($conta as $item) {
-                            ?> 
-                            <option   value =<?php echo $item->forma_entradas_saida_id; ?> <?
-                            if (@$obj->_conta_id == $item->forma_entradas_saida_id):echo 'selected';
-                            endif;
-                            ?>><?php echo $item->descricao . " - " . $item->empresa; ?></option>
-                                      <?php
-                                  }
-                                  ?> 
-                    </select>
-                    <?
-//                    var_dump($conta); die;
-                    ?>
-                </div>
+                    <div>
+                        <label>Agência</label>
+                        <input type="text"  name="txtAgencia"  class="control-form" id="txtAgencia" value="<?= @$obj->_agencia; ?>" > 
+                    </div> 
+            </div>
+            <div class="col-lg-2">
                 <div>
                     <label>Tipo</label>
 
@@ -505,17 +469,33 @@
                                   ?> 
                     </select>
                 </div>
-                
-               
+                <div>
+                    <label>Conta</label>
+                    <select name="conta" id="conta" class="control-form" >
+                        <option value='' >Selecione</option>
+                        <?php
+                        $conta = $this->forma->listarforma();
+
+                        foreach ($conta as $item) {
+                            ?> 
+                            <option   value =<?php echo $item->forma_entradas_saida_id; ?> <?
+                            if (@$obj->_conta_id == $item->forma_entradas_saida_id):echo 'selected';
+                            endif;
+                            ?>><?php echo $item->descricao . " - " . $item->empresa; ?></option>
+                                      <?php
+                                  }
+                                  ?> 
+                    </select>
+                    <?
+                    //var_dump($conta); die;
+                    ?>
+                </div>
                 <div>
                     <label>Conta</label>
                     <input type="text"  name="txtConta"  class="size1" id="txtConta"  value="<?= @$obj->_conta; ?>"> 
-                </div> 
-                
-                <div>
-                    <label>Agência</label>
-                    <input type="text"  name="txtAgencia"  class="size1" id="txtAgencia" value="<?= @$obj->_agencia; ?>" > 
-                </div>  
+                </div>
+            </div>
+            <div class="col-lg-2"> 
                 <div>
                     <label>Classe</label> 
 
@@ -531,7 +511,8 @@
                                 <? endforeach; ?>
                     </select>
                 </div>
-                  
+            </div>
+            <div class="col-lg-2">  
                 <fieldset>
                     <legend>&nbsp;</legend>
                    <div>
@@ -546,7 +527,9 @@
                 </fieldset>
 
                 <fieldset>
-                    <legend>Impostos e Taxas</legend>
+                <div class="alert alert-primary">
+                    <a>Impostos e Taxas</a>
+                </div>
                     <? if (@$empresapermissao[0]->desativar_taxa_administracao == 'f') { ?>
                         <div>
                             <label>Taxa Administração Percentual</label>

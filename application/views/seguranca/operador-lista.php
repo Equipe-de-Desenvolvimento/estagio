@@ -5,12 +5,14 @@ $empresapermissao = $this->guia->listarempresasaladepermissao();
 <div class="content"> <!-- Inicio da DIV content -->
     <? $perfil_id = $this->session->userdata('perfil_id'); ?>
     <div class="bt_link_new">
-        <a href="<?php echo base_url() ?>seguranca/operador/novo">
+        <a class="btn btn-outline-default btn-round btn-sm" href="<?php echo base_url() ?>seguranca/operador/novo">
             Novo Profissional
         </a>
     </div>
-    <div id="accordion">
-        <h3 class="singular"><a href="#">Manter Profissionais</a></h3>
+    <div id="">
+        <div class="alert alert-primary">
+            <a>Manter Profissionais</a>
+        </div>
         <div>
             <table>
                 <thead>
@@ -25,14 +27,13 @@ $empresapermissao = $this->guia->listarempresasaladepermissao();
                             </select>
 
                         </th>
-                        <th class="tabela_title" style="text-align: left; width: 56%">
-                            <select name="ativo" id="empresa" class="size1">
+                        <th class="tabela_title">
+                            <!-- <select name="ativo" id="empresa" class="size1">
                                 <option value="t" <?= ((@$_GET['ativo'] == 'f') ? '' : 'selected="selected"') ?>>Ativo</option>
-                                <option value="f" <?= ((@$_GET['ativo'] == 'f') ? 'selected="selected"' : '') ?>>Não-ativo</option>
-
-                            </select>            
+                                <option value="f" <?= ((@$_GET['ativo'] == 'f') ? 'selected="selected"' : '') ?>>Não-ativo</option> -->
+                            <!-- </select>             -->
                             <input type="text" name="nome" size="40" value="<?php echo @$_GET['nome']; ?>" />
-                            <button type="submit" id="enviar">Pesquisar</button>  
+                            <button class="btn btn-outline-default btn-round btn-sm" type="submit" id="enviar">Pesquisar</button>  
                         </th> 
 
                     </tr>

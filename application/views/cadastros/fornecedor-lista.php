@@ -7,9 +7,9 @@
         </a>
         </div>    
     </div>
-    <div id="accordion">
-        <h3 class="singular">
-        <b>Manter Credor/Devedor</b></h3>
+    <div id="">
+        <div class="alert alert-info">
+        <b>Manter Credor/Devedor</b></div>
         <div class="table-responsive"class=" table table-striped table-bordered table-hover">
             
             <form method="get" action="<?= base_url() ?>cadastros/fornecedor/fornecedor/">

@@ -17,7 +17,7 @@
 
             ?>
 
-        <div class="alert alert-info">Cadastro de vagas</div>
+        <div class="alert alert-primary">Cadastro de vagas</div>
             <div  class="panel-body infodados">
                 <table>
                     <thead>

@@ -1,12 +1,14 @@
 <div class="content"> <!-- Inicio da DIV content -->
-    <div class="bt_link_voltar">
+    <!-- <div class="bt_link_voltar">
         <a href="<?= base_url() ?>ambulatorio/procedimentoplano">
             Voltar
         </a>
 
-    </div>
-    <div id="accordion">
-        <h3 class="singular"><a href="#">Cadastro de Agrupador</a></h3>
+    </div> -->
+    <div id="">
+        <div class="alert alert-primary">
+            <a >Cadastro de Agrupador</a>
+        </div>
         <!--<div class="ajusteAccordion">--> 
             <form name="form_procedimentoplano" id="form_procedimentoplano" action="<?= base_url() ?>ambulatorio/procedimentoplano/gravaragrupador" method="post">
 
@@ -97,8 +99,12 @@
                 </table>    
 
                 <hr/>
-                <button type="submit" name="btnEnviar">Enviar</button>
-                <button type="reset" name="btnLimpar">Limpar</button>
+                <button type="submit"class="btn btn-success btn-sm" name="btnEnviar">Enviar</button>
+                <button type="reset" class="btn btn-warning btn-sm" name="btnLimpar">Limpar</button>
+                <a href="<?= base_url() ?>ambulatorio/procedimentoplano">
+                            <button type="button" id="btnVoltar" class="btn btn-secondary btn-sm">Voltar</button>
+                        </a>
+    </div>
             </form>
         <!--</div>-->
     </div>

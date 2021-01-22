@@ -12,7 +12,7 @@
         <div class="">
             <div class="" id="pesquisar">
                 <form method="get" action="<?php echo base_url() ?>cadastros/pacientes/pesquisarMapaGestao">
-                    <!-- <div class="row"> -->
+                    <div class="row">
                                     <div class="nome">
                                         <h6>Situação</h6>
                                         <div>

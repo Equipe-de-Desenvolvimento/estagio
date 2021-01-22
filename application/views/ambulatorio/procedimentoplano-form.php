@@ -1,18 +1,13 @@
 <div class="content"> <!-- Inicio da DIV content -->
-    <div class="bt_link_voltar">
-        <a href="<?= base_url() ?>ambulatorio/procedimentoplano">
-            Voltar
-        </a>
-
-    </div>
-    <div id="accordion">
-        <h3 class="singular"><a href="#">Cadastro de valor Procedimento</a></h3>
+   
+    <div id="">
+        <div class="alert alert-primary"><a>Cadastro de valor </a></div>
         <!--<div class="ajusteAccordion">--> 
             <form name="form_procedimentoplano" id="form_procedimentoplano" action="<?= base_url() ?>ambulatorio/procedimentoplano/gravar" method="post">
 
                 <table class="dl_desconto_lista">
                     <input type="hidden" name="txtprocedimentoplanoid" value="<?= @$obj->_procedimento_convenio_id; ?>" />
-                    <tr id="brasindice_div">
+                    <!-- <tr id="brasindice_div">
                         <td>
                             <label>Brasíndice?</label>
                         </td>
@@ -20,7 +15,7 @@
                             <input type="checkbox" name="brasindice" id="brasindice" class="texto01" /> 
                         </td>
 
-                    </tr>
+                    </tr> -->
                     <tr>
                         <td>
                             <label>Convenio *</label>
@@ -40,7 +35,7 @@
                             </select>
                         </td>
                     </tr>
-                    <tr id="procedimentodiv">
+                    <!-- <tr id="procedimentodiv">
                         <td>
                             <label>Procedimento *</label>
                         </td>
@@ -55,7 +50,7 @@
                                 <? endforeach; ?>
                             </select>
                         </td>
-                    </tr>
+                    </tr> -->
                     <? // echo '<pre>'; var_dump($procedimentoescolhido);die;?>
                     <?if(@$procedimentoescolhido[0]->grupo == "ASO"){?>
                     <tr>
@@ -95,23 +90,23 @@
                             </select>
                         </td>
                     </tr>
-                    <tr id="valoresdiv">
+                    <!-- <tr id="valoresdiv">
                         <td>
                             <label>Qtde CH</label>
                         </td>
                         <td>
                             <input type="text" name="qtdech" id="qtdech" class="texto01" value="<?= @$obj->_qtdech; ?>"/>
                         </td>
-                    </tr>
-                    <tr id="valoresdiv">
+                    </tr> -->
+                    <!-- <tr id="valoresdiv">
                         <td>
                             <label>Valor CH</label>
                         </td>
                         <td>
                             <input type="text" name="valorch" id="valorch" class="texto01" value="<?= @$obj->_valorch; ?>"/>
                         </td>
-                    </tr>
-                    <tr id="valoresdiv">
+                    </tr> -->
+                    <!-- <tr id="valoresdiv">
                         <td>
                             <label>Qtde Filme</label>
                         </td>
@@ -119,7 +114,7 @@
                             <input type="text" name="qtdefilme" id="qtdefilme" class="texto01" value="<?= @$obj->_qtdefilme; ?>" />
                         </td>
 
-                    </tr>
+                    </tr> -->
                     <tr id="valoresdiv">
                         <td>
                             <label>Valor Filme</label>
@@ -178,9 +173,11 @@
                 </table>    
 
                 <hr/>
-                <button type="submit" name="btnEnviar">Enviar</button>
-                <button type="reset" name="btnLimpar">Limpar</button>
-                <button type="button" id="btnVoltar" name="btnVoltar">Voltar</button>
+                <button type="submit" class="btn btn-success btn-sm" name="btnEnviar">Enviar</button>
+                <button type="reset" class="btn btn-warning btn-sm" name="btnLimpar">Limpar</button>
+                <a href="<?= base_url() ?>ambulatorio/procedimentoplano">
+                            <button type="button" id="btnVoltar" class="btn btn-secondary btn-sm">Voltar</button>
+                        </a>
             </form>
         <!--</div>-->
     </div>

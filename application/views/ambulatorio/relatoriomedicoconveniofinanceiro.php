@@ -1,94 +1,22 @@
 <div class="content"> <!-- Inicio da DIV content -->
-    <div id="accordion">
-        <h3><a href="#">Gerar Relatório Produção Médica</a></h3>
-        <div>
+    <div id="">
+        <div class="alert alert-primary"><a>Relatório</a></div>
+        <div class="panel-body infodados">
             <form name="form_paciente" id="form_paciente"  method="post" action="<?= base_url() ?>ambulatorio/guia/gerarelatoriomedicoconveniofinanceiro">
-                <dl>
-                    <dt>
+              
+                <!-- <div>
                         <label>Medico</label>
-                    </dt>
-                    <dd>
                         <select name="medicos" id="medicos" class="size2">
                             <option value="0">TODOS</option>
                             <? foreach ($medicos as $value) : ?>
                                 <option value="<?= $value->operador_id; ?>" ><?php echo $value->nome; ?></option>
                             <? endforeach; ?>
                         </select>
-                    </dd>
-                    <dt>
-                        <label>Revisor</label>
-                    </dt>
-                    <dd>
-                        <select name="revisor" id="revisor" class="size2">
-                            <option value="0">TODOS</option>
-                            <? foreach ($medicos as $value) : ?>
-                                <option value="<?= $value->operador_id; ?>" ><?php echo $value->nome; ?></option>
-                            <? endforeach; ?>
-                        </select>
-                    </dd>
-                    <dt>
-                        <label>Convenio</label>
-                    </dt>
-                    <dd>
-                        <select name="convenio" id="convenio" class="size2">
-                            <option value='0' >TODOS</option>
-                            <option value="" >SEM PARTICULAR</option>
-                            <option value="1" >PARTICULARES</option>
-                            <? foreach ($convenio as $value) : ?>
-                                <option value="<?= $value->convenio_id; ?>" ><?php echo $value->nome; ?></option>
-                            <? endforeach; ?>
-                        </select>
-                    </dd>
-                    <dt>
-                        <label>Grupo Convenio</label>
-                    </dt>
-                    <dd>
-                        <select name="grupoconvenio" id="convenio" class="size2">
-                            <option value='0' >TODOS</option>
-                            <? foreach ($grupoconvenio as $value) : ?>
-                                <option value="<?= $value->convenio_grupo_id; ?>" ><?php echo $value->nome; ?></option>
-                            <? endforeach; ?>
-                        </select>
-                    </dd>
-                    <dt>
-                        <label>Sala</label>
-                    </dt>
-                    <dd>
-                        <select name="sala_id" id="sala_id" class="size2">
-                            <option value='0' >TODOS</option>
-                            <? foreach ($salas as $value) : ?>
-                                <option value="<?= $value->exame_sala_id; ?>" ><?php echo $value->nome; ?></option>
-                            <? endforeach; ?>
-                        </select>
-                    </dd>
-                    <dt>
-                        <label>Data inicio</label>
-                    </dt>
-                    <dd>
-                        <input type="text" name="txtdata_inicio" id="txtdata_inicio" alt="date"/>
-                    </dd>
-                    <dt>
-                        <label>Data fim</label>
-                    </dt>
-                    <dd>
-                        <input type="text" name="txtdata_fim" id="txtdata_fim" alt="date"/>
-                    </dd>
-
-                    <dt>
-                        <label>Data De Pesquisa</label>
-                    </dt>
-                    <dd>
-                        <select name="data_atendimento" id="data_atendimento" class="size2" >
-                            <option value='1' >DATA DE ATENDIMENTO</option>
-                            <option value='0' >DATA DE FATURAMENTO</option>
-
-                        </select>
-                    </dd>
+                    </div> -->
+                <div class="row">
                     <!-- <br> -->
-                    <dt>
+                    <!-- <div>
                         <label>Especialidade</label>
-                    </dt>
-                    <dd>
                         <select name="grupo[]" id="grupo" class="chosen-select" data-placeholder="Selecione as especialidades (Todos ou vázio trará todos)..." multiple>
                             <option value='0' >TODOS</option>
                             <option value='1' >SEM RM</option>
@@ -99,177 +27,185 @@
                                 ?>><?= $grupo->nome ?></option>
                                     <? } ?>
                         </select>
-                    </dd>
-                    <br>
-                    <br>
-                    <dt>
-                        <label>Faturamento</label>
-                    </dt>
-                    <dd>
-                        <select name="faturamento" id="faturamento" class="size1" >
-                            <option value='' >TODOS</option>
-                            <option value='t' >Faturado</option>
-                            <option value='f' >Não Faturado</option>
-                        </select>
-                    </dd>
-                    <dt>
-                        <label>Clinica</label>
-                    </dt>
-                    <dd>
-                        <select name="clinica" id="clinica" class="size1" >
-                            <option value='SIM' >SIM</option>
-                            <option value='NAO' >NÃO</option>
-                        </select>
-                    </dd>
-                    <dt>
-                        <label>Valor Líquido</label>
-                    </dt>
-                    <dd>
-                        <select name="valor_liquido" id="valor_liquido" class="size1" >
-                            <option value='NAO' >NÃO</option>
-                            <option value='SIM' >SIM</option>
-                        </select>
-                    </dd>
-                    <dt>
-                        <label>Produção Ambulatorial</label>
-                    </dt>
-                    <dd>
-                        <select name="producao_ambulatorial" id="producao_ambulatorial" class="size1">
-                            <option value='NAO' >NÃO</option>
-                            <option value='SIM' >SIM</option>
-                        </select>
-                    </dd>
-                    <dt>
-                        <label>Desconto Especial</label>
-                    </dt>
-                    <dd>
-                        <select name="tipo_desconto" id="tipo_desconto" class="size1">
-                            <option value='NAO' >NÃO</option>
-                            <option value='SIM' >SIM</option>
-                        </select>
-                    </dd>
-                    <dt>
-                        <label>Promotor</label>
-                    </dt>
-                    <dd>
-                        <select name="promotor" id="promotor" class="size1" >
-                            <option value='NAO' >NÃO</option>
-                            <option value='SIM' >SIM</option>
-                        </select>
-                    </dd>
-                    <dt>
-                        <label>Laboratório</label>
-                    </dt>
-                    <dd>
-                        <select name="laboratorio" id="laboratorio" class="size1" >
-                            <option value='NAO' >NÃO</option>
-                            <option value='SIM' >SIM</option>
-                        </select>
-                    </dd>
-                    <dt>
-                        <label>Somar Crédito</label>
-                    </dt>
-                    <dd>
-                        <select name="somarcredito" id="somarcredito" class="size1" >
-                            <option value='NAO' >NÃO</option>
-                            <option value='SIM' >SIM</option>
-                        </select>
-                    </dd>
-                    <dt>
-                        <label>Forma de Pagamento</label>
-                    </dt>
-                    <dd>
-                        <select name="forma_pagamento" id="forma_pagamento" class="size1" >
-                            <option value='NAO' >NÃO</option>
-                            <option value='SIM' >SIM</option>
-                        </select>
-                    </dd>
+                    </div> -->
+                    <div class="col-lg-2">
+                        <div>
+                            <label>Faturamento</label>
+                            <select name="faturamento" id="faturamento" class="form-control" >
+                                <option value='' >TODOS</option>
+                                <option value='t' >Faturado</option>
+                                <option value='f' >Não Faturado</option>
+                            </select>
+                        </div>
+                        <!-- <div>
+                            <label>Clinica</label>
+                            <select name="clinica" id="clinica" class="form-control" >
+                                <option value='SIM' >SIM</option>
+                                <option value='NAO' >NÃO</option>
+                            </select>
+                        </div> -->
+                        <div>
+                            <label>Ordem do Relatório</label>
+                            <select name="ordem" id="recibo" class="form-control" >
 
-                    <dt>
-                        <label>Situação</label>
-                    </dt>
-                    <dd>
-                        <select name="situacao" id="situacao" class="size1" >
-                            <option value='' >TODOS</option>
-                            <option value='1'>FINALIZADO</option>
-                            <option value='0' >ABERTO</option>
-                        </select>
-                    </dd>
-                    <dt>
-                        <label>Solicitante</label>
-                    </dt>
-                    <dd>
-                        <select name="solicitante" id="solicitante" class="size1" >
-                            <option value='NAO' selected="">NÃO</option>
-                            <option value='SIM' >SIM</option>
-                        </select>
-                    </dd>
+                                <option value='0' >NORMAL</option>
+                                <option value='1' >ATENDIMENTO</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Gerar PDF</label>
+                            <select name="gerarpdf" id="gerarpdf" class="form-control">
+                                <option value="NAO">NÃO</option>
+                                <option value="SIM">SIM</option>
+                            </select>
+                        </div>
+                         <div>
+                                <label>Sala</label>
+                                <select name="sala_id" id="sala_id" class="form-control">
+                                    <option value='0' >TODOS</option>
+                                    <? foreach ($salas as $value) : ?>
+                                        <option value="<?= $value->exame_sala_id; ?>" ><?php echo $value->nome; ?></option>
+                                    <? endforeach; ?>
+                                </select>
+                           </div>
+                    </div>
+                        <? $empresa_id = $this->session->userdata('empresa_id'); ?>
+                        
+                    <!-- </div>
+                    <div class="col-lg-2"> -->
+                       
+                        <!-- <div>
+                            <label>Produção Ambulatorial</label>
+                            <select name="producao_ambulatorial" id="producao_ambulatorial" class="form-control">
+                                <option value='NAO' >NÃO</option>
+                                <option value='SIM' >SIM</option>
+                            </select>
+                        </div> -->
+                        <!-- <div>
+                            <label>Laboratório</label>
+                        </div>
+                        <div>
+                            <select name="laboratorio" id="laboratorio" class="form-control" >
+                                <option value='NAO' >NÃO</option>
+                                <option value='SIM' >SIM</option>
+                            </select>
+                        </div> -->
+                        <!-- </div> -->
+                            <!-- <label>Empresa</label>
+                            <select name="empresa" id="empresa" class="form-control">
+                                <? foreach ($empresa as $value) : ?>
+                                     <option value="<?= $value->empresa_id; ?>" <? if ($empresa_id == $value->empresa_id) { ?>selected<? } ?>><?php echo $value->nome; ?></option> -->
+                                <? endforeach; ?>
+                                <!-- <option value="0">TODOS</option> -->
+                            <!-- </select> 
+                    </div> -->
+                    <div class="col-lg-2">
+                       
+                        <div>
+                            <label>Promotor</label>
+                            <select name="promotor" id="promotor" class="form-control" >
+                                <option value='NAO' >NÃO</option>
+                                <option value='SIM' >SIM</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Somar Crédito</label>
+                            <select name="somarcredito" id="somarcredito" class="form-control" >
+                                <option value='NAO' >NÃO</option>
+                                <option value='SIM' >SIM</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Desconto Especial</label>
+                            <select name="tipo_desconto" id="tipo_desconto" class="form-control">
+                                <option value='NAO' >NÃO</option>
+                                <option value='SIM' >SIM</option>
+                            </select>
+                            <div>
+                                <label>Solicitante</label>
+                                <select name="solicitante" id="solicitante" class="form-control" >
+                                    <option value='NAO' selected="">NÃO</option>
+                                    <option value='SIM' >SIM</option>
+                                </select>
+                           </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div>
+                            <label>Forma de Pagamento</label>
+                            <select name="forma_pagamento" id="forma_pagamento" class="form-control" >
+                                <option value='NAO' >NÃO</option>
+                                <option value='SIM' >SIM</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Situação</label>
+                            <select name="situacao" id="situacao" class="form-control" >
+                                <option value='' >TODOS</option>
+                                <option value='1'>FINALIZADO</option>
+                                <option value='0' >ABERTO</option>
+                            </select>
+                            
+                                <div>
+                                    <label>Revisor</label>
+                                    <select name="revisor" id="revisor" class="form-control">
+                                        <option value="0">TODOS</option>
+                                        <? foreach ($medicos as $value) : ?>
+                                            <option value="<?= $value->operador_id; ?>" ><?php echo $value->nome; ?></option>
+                                        <? endforeach; ?>
+                                    </select>
+                              </div>
+                        </div>
+                        <div>
+                            <label>Convenio</label>
+                            <select name="convenio" id="convenio" class="form-control">
+                                <option value='0' >TODOS</option>
+                                <option value="" >SEM PARTICULAR</option>
+                                <option value="1" >PARTICULARES</option>
+                                <? foreach ($convenio as $value) : ?>
+                                    <option value="<?= $value->convenio_id; ?>" ><?php echo $value->nome; ?></option>
+                                <? endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                   
+                    
+                     <div class="col-lg-2">
+                            <div>
+                                    <label>Grupo Convenio</label>
+                                    <select name="grupoconvenio" id="convenio" class="form-control">
+                                        <option value='0' >TODOS</option>
+                                        <? foreach ($grupoconvenio as $value) : ?>
+                                            <option value="<?= $value->convenio_grupo_id; ?>" ><?php echo $value->nome; ?></option>
+                                        <? endforeach; ?>
+                                    </select>
+                            </div>
+                            <div>
+                                <label>Valor Líquido</label>
+                                <select name="valor_liquido" id="valor_liquido" class="form-control" >
+                                    <option value='NAO' >NÃO</option>
+                                    <option value='SIM' >SIM</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label>Recibo</label>
+                                <select name="recibo" id="recibo" class="form-control" >
 
-                    <dt>
-                        <label>Taxa de administração</label>
-                    </dt>
-                    <dd>
-                        <select name="mostrar_taxa" id="mostrar_taxa" class="size1" >
-                            <option value='NAO' >NÃO</option>
-                            <option value='SIM' >SIM</option>
-                        </select>
-                    </dd>
-
-                    <dt>
-                        <label>Recibo</label>
-                    </dt>
-                    <dd>
-                        <select name="recibo" id="recibo" class="size1" >
-
-                            <option value='NAO' >NÃO</option>
-                            <option value='SIM' >SIM</option>
-                        </select>
-                    </dd>
-
-                    <dt>
-                        <label>Previsão de recebimento</label>
-                    </dt>
-                    <dd>
-                        <select name="tabela_recebimento" id="recibo" class="size1" >
-
-                            <option value='NAO' >NÃO</option>
-                            <option value='SIM' >SIM</option>
-                        </select>
-                    </dd>
-                    <dt>
-                        <label>Ordem do Relatório</label>
-                    </dt>
-                    <dd>
-                        <select name="ordem" id="recibo" class="size1" >
-
-                            <option value='0' >NORMAL</option>
-                            <option value='1' >ATENDIMENTO</option>
-                        </select>
-                    </dd>
-                    <? $empresa_id = $this->session->userdata('empresa_id'); ?>
-                    <dt>
-                        <label>Empresa</label>
-                    </dt>
-                    <dd>
-                        <select name="empresa" id="empresa" class="size2">
-                            <? foreach ($empresa as $value) : ?>
-                                <option value="<?= $value->empresa_id; ?>" <? if ($empresa_id == $value->empresa_id) { ?>selected<? } ?>><?php echo $value->nome; ?></option>
-                            <? endforeach; ?>
-                            <option value="0">TODOS</option>
-                        </select>
-                    </dd>
-                    <dt>
-                        <label>Gerar PDF</label>
-                    </dt>
-                    <dd>
-                        <select name="gerarpdf" id="gerarpdf" class="size2">
-                            <option value="NAO">NÃO</option>
-                            <option value="SIM">SIM</option>
-                        </select>
-                    </dd>
-                    <dt>
-                </dl>
-                <button type="submit" >Pesquisar</button>
+                                    <option value='NAO' >NÃO</option>
+                                    <option value='SIM' >SIM</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Taxa de administração</label>
+                                <select name="mostrar_taxa" id="mostrar_taxa" class="form-control" >
+                                    <option value='NAO' >NÃO</option>
+                                    <option value='SIM' >SIM</option>
+                        
+                                </select>
+                            </div>
+                     </div>
+              
             </form>
 
         </div>

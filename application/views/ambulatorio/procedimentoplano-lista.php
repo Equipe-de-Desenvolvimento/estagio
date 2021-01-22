@@ -11,10 +11,11 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
         <tr>
             <? if ($data['empresa_permissao'][0]->apenas_procedimentos_multiplos != 't') { ?>
                 <td>
-                    <div class="bt_link_new">
-                        <a href="<?php echo base_url() ?>ambulatorio/procedimentoplano/carregarprocedimentoplano/0" target="_blank">
-                            Novo Procedimento
-                        </a>
+                <div>
+                    <a class="btn btn-outline-default btn-round btn-sm" href="<?php echo base_url() ?>ambulatorio/procedimentoplano/carregarprocedimentoplano/0">
+                        <i>
+                        </i>  Novo Convênio
+                    </a>
                     </div>
                 </td>
                 <? $geral = $empresapermissoes[0]->geral;
@@ -22,22 +23,23 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
                     ?>
                     <td>
                         <div class="bt_link_new">
-                            <a target="_blank" href="<?php echo base_url() ?>ambulatorio/procedimentoplano/carregarprocedimentoplanoagrupador/0">
-                                Novo Agrupador
+                            <a class="btn btn-outline-default btn-round btn-sm" href="<?php echo base_url() ?>ambulatorio/procedimentoplano/carregarprocedimentoplanoagrupador/0">
+                                <i>
+                                </i> Novo Agrupador
                             </a>
                         </div>
                     </td>
     <? } ?>
-                <td>
+                <!-- <td>
                     <div class="bt_link_new">
                         <a href="<?php echo base_url() ?>ambulatorio/procedimentoplano/carregarmultiplosprocedimentoplano" target="_blank">
                             Multiplos Procedimentos 
                         </a>
                     </div>
-                </td>
+                </td> -->
             <? } else {
                 ?>
-                <td>
+                <!-- <td>
                     <div class="bt_link_new">
                         <a href="<?php echo base_url() ?>ambulatorio/procedimentoplano/carregarmultiplosprocedimentoplano" target="_blank">
                             Novo Procedimento 
@@ -46,7 +48,7 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
                 </td>
                 <? $geral = $empresapermissoes[0]->geral;
                 if ($geral == 't') {
-                    ?>
+                    ?> -->
                     <td>
                         <div class="bt_link_new">
                             <a href="<?php echo base_url() ?>ambulatorio/procedimentoplano/carregarprocedimentoplanoagrupador/0" target="_blank">
@@ -62,23 +64,25 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
     <?
     $perfil_id = $this->session->userdata('perfil_id');
     ?>
-    <div id="accordion">
-        <h3 class="singular"><a href="#">Manter Procedimentos Convênio</a></h3>
+    <div id="">
+        <div class="alert alert-primary">
+            <a>Manter Convênio</a>
+        </div>
         <div>
-<? $grupo = $this->procedimento->listargruposprocedimentoplano();
-$convenio = $this->convenio->listardados();
-?>
-            <table>
+            <? $grupo = $this->procedimento->listargruposprocedimentoplano();
+            $convenio = $this->convenio->listardados();
+            ?>
+            <table id="dataTables-example">
                 <thead>
                     <tr>
                         <th colspan="5" class="tabela_title">
                     </tr>
                 <form method="get" action="<?= base_url() ?>ambulatorio/procedimentoplano/pesquisar">
                     <tr>
-                        <th class="tabela_title">Plano</th>
+                        <th class="tabela_title">Empresa</th>
                         <th class="tabela_title">Grupo Convênio</th>
                         <th class="tabela_title">Grupo</th>
-                        <th class="tabela_title">Procedimento</th>
+                        <!-- <th class="tabela_title">Procedimento</th> -->
                         <th colspan="2" class="tabela_title">Codigo</th>
                     </tr>
                     <tr>
@@ -89,9 +93,9 @@ $convenio = $this->convenio->listardados();
                                             <? foreach ($convenio as $value) : ?>
                                     <option value="<?= $value->convenio_id; ?>"
                                     <? if ($value->convenio_id == @$_GET['convenio']) echo 'selected'; ?>>
-    <?= $value->nome; ?>
+                                    <?= $value->nome; ?>
                                     </option>
-<? endforeach; ?>
+                                    <? endforeach; ?>
 
                             </select>
                         </th>
@@ -102,32 +106,32 @@ $convenio = $this->convenio->listardados();
                                             <? foreach ($grupoconvenio as $value) : ?>
                                     <option value="<?= $value->convenio_grupo_id; ?>"
                                     <? if ($value->convenio_grupo_id == @$_GET['grupo_convenio']) echo 'selected'; ?>>
-    <?= $value->nome; ?>
-                                    </option>
-<? endforeach; ?>
+                                        <?= $value->nome; ?>
+                                                                        </option>
+                                    <? endforeach; ?>
 
                             </select>
-                        </th>
+                        <!-- </th>
                         <th class="tabela_title">
                             <select name="grupo" id="grupo" class="size2">
                                 <option value="">Selecione</option>
                                             <? foreach ($grupo as $value) : ?>
                                     <option value="<?= $value->nome; ?>"
                                     <? if (@$_GET['grupo'] == $value->nome) echo 'selected' ?>>
-    <?= $value->nome; ?>
-                                    </option>
-<? endforeach; ?>
+                                    <?= $value->nome; ?>
+                                                                    </option>
+                                <? endforeach; ?>
 
                             </select>
-                            <!--<input type="text" name="" class="texto04" value="<?php echo @$_GET['grupo']; ?>" />-->
+                            <input type="text" name="" class="texto04" value="<?php echo @$_GET['grupo']; ?>" />
 
                         </th>
-<!--                        <th class="tabela_title">
+                       <th class="tabela_title">
                             <input type="text" name="nome" class="texto04" value="<?php echo @$_GET['nome']; ?>" />
                         </th>
                         <th class="tabela_title">
                             <input type="text" name="grupo" class="texto04" value="<?php echo @$_GET['grupo']; ?>" />
-                        </th>-->
+                        </th>
                         <th class="tabela_title">
                             <select name="procedimento" id="procedimento" class="size4 chosen-select" tabindex="1">
                                 <option value="">Selecione</option>
@@ -136,9 +140,9 @@ $convenio = $this->convenio->listardados();
                                             if (@$_GET['procedimento'] == $value->nome):echo'selected';
                                             endif;
                                             ?>><?php echo $value->nome; ?></option>
-<? endforeach; ?>
+                                <? endforeach; ?>
                             </select>
-                        </th>
+                        </th> -->
                         <th class="tabela_title">
                             <input type="text" name="codigo" class="texto04" value="<?php echo @$_GET['codigo']; ?>" />
                         </th>
@@ -151,7 +155,7 @@ $convenio = $this->convenio->listardados();
                 </tr>
                 </thead>
             </table>
-            <table>
+            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                 <thead>
                     <tr>
                         <?
@@ -161,11 +165,11 @@ $convenio = $this->convenio->listardados();
                             <th class="tabela_header">Empresa</th>
                         <? } ?>
                         <th class="tabela_header">Plano</th>
-                        <th class="tabela_header">Procedimento</th>
+                        <!-- <th class="tabela_header">Procedimento</th> -->
                         <th class="tabela_header">Grupo</th>
-<? if ($medicinadotrabalho == "t") { ?>
+                        <? if ($medicinadotrabalho == "t") { ?>
                             <th class="tabela_header">Validade</th>
-<? } ?>
+                        <? } ?>
                         <th class="tabela_header">Codigo</th>
                         <th class="tabela_header">Valor</th>
                         <th class="tabela_header" colspan="4"><center>Detalhes</center></th>
@@ -204,7 +208,7 @@ $convenio = $this->convenio->listardados();
                                 <? if ($medicinadotrabalho == "t") { ?>
                                     <? if ($item->grupo == "ASO") { ?>
                                         <td class="<?php echo $estilo_linha; ?>"><?= $item->validade ?> dias</td>
-            <? } else { ?>
+                                    <? } else { ?>
                                         <td class="<?php echo $estilo_linha; ?>"></td>
                                     <? } ?>
                                 <? } ?>
@@ -212,10 +216,10 @@ $convenio = $this->convenio->listardados();
                                 <td class="<?php echo $estilo_linha; ?>"><?= $item->valortotal; ?></td>
 
 
-        <? if ($perfil_id != 10) { ?>
-            <? if ($item->agrupador != 't') { ?>
+                                <? if ($perfil_id != 10) { ?>
+                                    <? if ($item->agrupador != 't') { ?>
                                         <td class="<?php echo $estilo_linha; ?>" width="60px;">
-                                            <a onclick="javascript: return confirm('Deseja realmente excluir o procedimento? ');" target="_blank"
+                                            <a class="btn btn-outline-default btn-round btn-sm" onclick="javascript: return confirm('Deseja realmente excluir o procedimento? ');" target="_blank"
                                                href="<?= base_url() ?>ambulatorio/procedimentoplano/excluir/<?= $item->procedimento_convenio_id ?>">
                                                 Excluir
                                             </a>
@@ -223,28 +227,28 @@ $convenio = $this->convenio->listardados();
                                         </td>
                                         <? if ($item->valor_pacote_diferenciado != 't') { ?>
                                             <td class="<?php echo $estilo_linha; ?>" width="60px;"> 
-                                                <a target="_blank" href="<?= base_url() ?>ambulatorio/procedimentoplano/carregarprocedimentoplano/<?= $item->procedimento_convenio_id ?>">
+                                                <a class="btn btn-outline-default btn-round btn-sm" target="_blank" href="<?= base_url() ?>ambulatorio/procedimentoplano/carregarprocedimentoplano/<?= $item->procedimento_convenio_id ?>">
                                                     Editar
                                                 </a>
                                             </td>
                                         <?}?>
                                         <td class="<?php echo $estilo_linha; ?>" width="80px;"> 
-                                            <a target="_blank" href="<?= base_url() ?>ambulatorio/procedimentoplano/carregarprocedimentoformapagamento/<?= $item->procedimento_convenio_id ?>">
+                                            <a class="btn btn-outline-default btn-round btn-sm" target="_blank" href="<?= base_url() ?>ambulatorio/procedimentoplano/carregarprocedimentoformapagamento/<?= $item->procedimento_convenio_id ?>">
                                                 Pagamento
                                             </a>
                                         </td>
-                                        <td class="<?php echo $estilo_linha; ?>" width="80px;"> 
+                                        <!-- <td class="<?php echo $estilo_linha; ?>" width="80px;"> 
                                             <a target="_blank" href="<?= base_url() ?>ambulatorio/procedimentoplano/carregarprocedimentoplanosessao/<?= $item->procedimento_convenio_id ?>">
                                                 Sessão
                                             </a>
-                                        </td>
+                                        </td> -->
 
-            <? } else {
-                ?>
+                                        <? } else {
+                                            ?>
                                         <td class="<?php echo $estilo_linha; ?>" width="80px;"> </td>
                                         <td class="<?php echo $estilo_linha; ?>" width="80px;"> </td>
                                         <td class="<?php echo $estilo_linha; ?>" width="60px;">
-                                            <a target="_blank" onclick="javascript: return confirm('Deseja realmente excluir o procedimento? ');" href="<?= base_url() ?>ambulatorio/procedimentoplano/excluir/<?= $item->procedimento_convenio_id ?>">
+                                            <a  target="_blank" onclick="javascript: return confirm('Deseja realmente excluir o procedimento? ');" href="<?= base_url() ?>ambulatorio/procedimentoplano/excluir/<?= $item->procedimento_convenio_id ?>">
                                                 Excluir
                                             </a>
                                         </td>
@@ -257,33 +261,33 @@ $convenio = $this->convenio->listardados();
                                             <?}?>
                                             </td>
                                         
-            <? } ?>
+                                        <? } ?>
 
-        <? } else { ?>
-                                    <td class="<?php echo $estilo_linha; ?>" width="60px;">
+                                    <? } else { ?>
+                                    <!-- <td class="<?php echo $estilo_linha; ?>" width="60px;">
                                         Excluir
-            <!--                                    href="<?= base_url() ?>ambulatorio/procedimentoplano/excluir/<?= $item->procedimento_convenio_id; ?>"-->
-                                    </td>
+                                               href="<?= base_url() ?>ambulatorio/procedimentoplano/excluir/<?= $item->procedimento_convenio_id; ?>"
+                                    </td> -->
                                     <td class="<?php echo $estilo_linha; ?>" width="60px;"> 
                                         Editar
                                     </td>
                                     <td class="<?php echo $estilo_linha; ?>" width="80px;"> 
                                         Pagamento
                                     </td>
-                                    <td class="<?php echo $estilo_linha; ?>" width="80px;"> 
+                                    <!-- <td class="<?php echo $estilo_linha; ?>" width="80px;"> 
                                         Sessão
-                                    </td>
+                                    </td> -->
                         <? } ?>
-                                <td class="<?php echo $estilo_linha; ?>" width="60px;">
+                                <!-- <td class="<?php echo $estilo_linha; ?>" width="60px;">
                                 <a target="_blank" onclick="javascript:window.open('<?= base_url() ?>ambulatorio/procedimentoplano/log/<?= @$item->procedimento_convenio_id ?>', '', 'height=230, width=600, left='+(window.innerWidth-600)/2+', top='+(window.innerHeight-230)/2);" >LOG</a>
-                                </td>
+                                </td> -->
                             </tr>
 
                         </tbody>
-        <?php
-    }
-}
-?>
+                            <?php
+                        }
+                    }
+                    ?>
                 <tfoot>
                     <tr>
                         <th class="tabela_footer" colspan="10">
