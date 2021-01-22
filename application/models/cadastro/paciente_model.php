@@ -145,7 +145,8 @@ class paciente_model extends BaseModel {
                            p.cnpj,
                            p.telefone,
                            p.celular,
-                           p.paciente_id');
+                           p.paciente_id,
+                           p.status_estagio');
         $this->db->from('tb_paciente p');
         $this->db->join('tb_municipio m', 'm.municipio_id = p.municipio_id', 'left');
         $this->db->where('p.ativo','t');
@@ -204,6 +205,94 @@ class paciente_model extends BaseModel {
         }
         $this->db->where('p.ativo','t');
         return $this->db;
+    }
+
+    function listarestagios($args = array()) {
+        //        echo '<pre>';
+        //        print_r($args);
+        //        die;
+                $this->db->select('m.municipio_id, m.nome as municipio,
+                                   p.nome,
+                                   p.nascimento,
+                                   p.email,
+                                   p.email_alternativo,
+                                   p.cpf,
+                                   p.cnpj,
+                                   p.telefone,
+                                   p.celular,
+                                   p.paciente_id,
+                                   p.status_estagio');
+                $this->db->from('tb_paciente p');
+                $this->db->join('tb_municipio m', 'm.municipio_id = p.municipio_id', 'left');
+                $this->db->where('p.ativo','t');
+                $this->db->where("p.status_estagio = 'ADEQUADO' OR p.status_estagio = 'EFETIVADO'");
+        
+                if ($args) {
+                    if (isset($args['prontuario']) && strlen($args['prontuario']) > 0) {
+                        $this->db->where('paciente_id', $args['prontuario']);
+                    }
+                    
+                    if (isset($args['prontuario_antigo']) && strlen($args['prontuario_antigo']) > 0) {
+                        $this->db->where('prontuario_antigo', $args['prontuario_antigo']);
+                    }
+                    
+                    if (isset($args['nome']) && strlen($args['nome']) > 0) {
+                        $nome = $this->removerCaracterEsp($args['nome']);
+                        // var_dump($nome); die;
+                        $this->db->where("translate(p.nome,  
+                        'áàâãäåaaaÁÂÃÄÅAAAÀéèêëeeeeeEEEÉEEÈÊìíîïìiiiÌÍÎÏÌIIIóôõöoooòÒÓÔÕÖOOOùúûüuuuuÙÚÛÜUUUUçÇñÑýÝ',  
+                        'aaaaaaaaaAAAAAAAAAeeeeeeeeeEEEEEEEEiiiiiiiiIIIIIIIIooooooooOOOOOOOOuuuuuuuuUUUUUUUUcCnNyY'   
+                         ) ilike", '%' . $nome . '%');
+                    }
+                    
+                    if (isset($args['nome_mae']) && strlen($args['nome_mae']) > 0) {
+                        $nome_mae = $this->removerCaracterEsp($args['nome_mae']);
+                        $this->db->where("translate(p.nome_mae,  
+                        'áàâãäåaaaÁÂÃÄÅAAAÀéèêëeeeeeEEEÉEEÈÊìíîïìiiiÌÍÎÏÌIIIóôõöoooòÒÓÔÕÖOOOùúûüuuuuÙÚÛÜUUUUçÇñÑýÝ',  
+                        'aaaaaaaaaAAAAAAAAAeeeeeeeeeEEEEEEEEiiiiiiiiIIIIIIIIooooooooOOOOOOOOuuuuuuuuUUUUUUUUcCnNyY'   
+                         ) ilike", '%' . $nome_mae . '%');
+                    }
+        
+                    if (isset($args['nome_pai']) && strlen($args['nome_pai']) > 0) {
+                        $nome_mae = $this->removerCaracterEsp($args['nome_pai']);
+                        $this->db->where("translate(p.nome_pai,  
+                        'áàâãäåaaaÁÂÃÄÅAAAÀéèêëeeeeeEEEÉEEÈÊìíîïìiiiÌÍÎÏÌIIIóôõöoooòÒÓÔÕÖOOOùúûüuuuuÙÚÛÜUUUUçÇñÑýÝ',  
+                        'aaaaaaaaaAAAAAAAAAeeeeeeeeeEEEEEEEEiiiiiiiiIIIIIIIIooooooooOOOOOOOOuuuuuuuuUUUUUUUUcCnNyY'   
+                         ) ilike", '%' . $nome_mae . '%');
+                    }
+        
+                    if (isset($args['nascimento']) && strlen($args['nascimento']) > 0) {
+                        $this->db->where('p.nascimento', date("Y-m-d", strtotime(str_replace("/", "-", $args['nascimento']))));
+                    }
+        
+                    if (isset($args['cpf']) && strlen($args['cpf']) > 0) {
+                        $this->db->where('p.cpf ilike', '%' . $args ['cpf'] . '%');
+                    }
+        
+                    if (isset($args ['telefone']) && strlen($args ['telefone']) > 0) {
+                        $this->db->where("(p.celular ilike '%" . $args['telefone'] . "%' p.telefone ilike '%" . $args['telefone'] . "%')");
+                    }
+                   
+                   if (isset($args ['email']) && strlen($args ['email']) > 0) {
+                 $this->db->where("(p.email ilike '%" . $args['p.email'] . "%' OR p.email_alternativo ilike '%" . $args['email'] . "%')");
+                
+                   }
+                   
+                }
+                $this->db->where('p.ativo','t');
+                return $this->db;
+            }
+    
+
+    function mudarstatusestagio($paciente_id, $status){
+        $horario = date("Y-m-d H:i:s");
+        $operador_id = $this->session->userdata('operador_id');
+
+        $this->db->set('status_estagio', $status);
+        $this->db->set('data_cadastro', $horario);
+        $this->db->set('operador_cadastro', $operador_id);
+        $this->db->where('paciente_id', $paciente_id);
+        $this->db->update('tb_paciente');
     }
 
     function listarpesquisardesativado($args = array()) {

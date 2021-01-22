@@ -30,6 +30,126 @@ class pacientes extends BaseController {
         $this->loadView('cadastros/pacientes-lista');
     }
 
+    function anexararquivo($paciente_id){
+        $this->load->helper('directory');
+        
+        if (!is_dir("./upload/arquivoestagio/")) {
+            mkdir("./upload/arquivoestagio/");
+            $destino = "./upload/arquivoestagio/";
+            chmod($destino, 0777);
+        }
+
+
+        if (!is_dir("./upload/arquivoestagio/$paciente_id")) {
+            mkdir("./upload/arquivoestagio/$paciente_id");
+            $destino = "./upload/arquivoestagio/$paciente_id";
+            chmod($destino, 0777);
+        }
+ 
+        $data['documentos'] = $this->operador_m->listardocumentosprofissional();
+        $data['paciente_id'] = $paciente_id;
+        $this->loadView('cadastros/importacao-arquivos', $data);
+    }
+
+
+    function importararquivooperador() {
+
+        $tipoarquivo = $_POST['tipoarquivo'];
+        $paciente_id = $_POST['paciente_id'];
+
+        for ($i = 0; $i < count($_FILES['arquivos']['name']); $i++) {
+            $_FILES['userfile']['name'] = $_FILES['arquivos']['name'][$i];
+            $_FILES['userfile']['type'] = $_FILES['arquivos']['type'][$i];
+            $_FILES['userfile']['tmp_name'] = $_FILES['arquivos']['tmp_name'][$i];
+            $_FILES['userfile']['error'] = $_FILES['arquivos']['error'][$i];
+            $_FILES['userfile']['size'] = $_FILES['arquivos']['size'][$i];
+
+            if (!is_dir("./upload/arquivoestagio/$paciente_id/$tipoarquivo")) {
+                mkdir("./upload/arquivoestagio/$paciente_id/$tipoarquivo");
+                $destino = "./upload/arquivoestagio/$paciente_id/$tipoarquivo";
+                chmod($destino, 0777);
+            }
+
+            // $config['upload_path'] = "/home/vivi/projetos/clinica/upload/consulta/" . $paciente_id . "/";
+            $config['upload_path'] = "./upload/arquivoestagio/" . $paciente_id . "/" . $tipoarquivo;
+            $config['allowed_types'] = 'gif|jpg|BMP|bmp|png|jpeg|pdf|doc|docx|xls|xlsx|ppt|zip|rar|xml|txt';
+            $config['max_size'] = '0';
+            $config['overwrite'] = FALSE;
+            $config['encrypt_name'] = FALSE;
+            $this->load->library('upload', $config);
+            if (!$this->upload->do_upload()) {
+                $error = array('error' => $this->upload->display_errors());
+                if ($error['error'] == '<p>The uploaded file exceeds the maximum allowed size in your PHP configuration file.</pre>') {
+                    @$erro_detectado = 'O Arquivo enviado excede o tamanho máximo permitido.';
+                }
+                $data['mensagem'] = 'Erro, ' . $erro_detectado;
+            } else {
+                $error = null;
+                $data = array('upload_data' => $this->upload->data());
+                $data['mensagem'] = 'Sucesso ao enviar Arquivo.';
+
+
+                $this->load->helper('directory');
+                $documentos = $this->operador_m->listardocumentosprofissional();
+                $i = 0;
+                foreach($documentos as $item){
+                    $arquivo_pasta = directory_map("./upload/arquivoestagio/$paciente_id/$item->documentacao_profissional_id");
+                    if ($arquivo_pasta != false) {
+                        sort($arquivo_pasta);
+                    }else{
+                        $i++;
+                    }
+                }
+        
+                if($i == 0){
+                    $this->paciente->mudarstatusestagio($paciente_id, 'COMPLETO');
+                }
+            }
+        }
+
+        $this->session->set_flashdata('message', $data['mensagem']);
+
+//        var_dump($error); die;
+
+        redirect(base_url() . "cadastros/pacientes/anexararquivo/$paciente_id");
+    }
+
+    function excluirdocumentacao($paciente_id, $documentacao_profissional_id, $arquivo) {
+
+        $origem = "./upload/arquivoestagio/$paciente_id/$documentacao_profissional_id/$arquivo";
+        $destino = "./upload/arquivoestagio/$paciente_id/$documentacao_profissional_id/$arquivo";
+        copy($origem, $destino);
+        unlink($origem);
+
+        $this->load->helper('directory');
+        $documentos = $this->operador_m->listardocumentosprofissional();
+        $i = 0;
+        foreach($documentos as $item){
+            $arquivo_pasta = directory_map("./upload/arquivoestagio/$paciente_id/$item->documentacao_profissional_id");
+            if ($arquivo_pasta != false) {
+                sort($arquivo_pasta);
+            }else{
+                $i++;
+            }
+        }
+
+        if($i != 0){
+            $this->paciente->mudarstatusestagio($paciente_id, 'INCOMPLETO');
+        }
+
+        redirect(base_url() . "cadastros/pacientes/anexararquivo/$paciente_id/");
+    }
+
+    function adequadostatus($paciente_id){
+        $this->paciente->mudarstatusestagio($paciente_id, 'ADEQUADO');
+        redirect(base_url() . "seguranca/operador/pesquisarrecepcao");
+    }
+
+    function efetivadostatus($paciente_id){
+        $this->paciente->mudarstatusestagio($paciente_id, 'EFETIVADO');
+        redirect(base_url() . "seguranca/operador/pesquisarrecepcao");
+    }
+
     public function pesquisarGestaoEstagio($args = array()) {
         $this->loadView('cadastros/pacientesgestaoestagio-lista');
     }

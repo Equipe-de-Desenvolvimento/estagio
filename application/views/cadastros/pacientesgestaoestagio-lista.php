@@ -133,8 +133,8 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                     <th class="tabela_header">Email</th>
                                     <th class="tabela_header">Email Alternativo</th>
                                     <th class="tabela_header">Município</th>
-                                    <th class="tabela_header">
-                                <center>A&ccedil;&otilde;es</center></th>
+                                    <th class="tabela_header">Status</th>
+                                    <th class="tabela_header" colspan="4"><center>A&ccedil;&otilde;es</center></th>
                                 </tr>
 
                                 <?php
@@ -142,7 +142,7 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                 $consulta = $empresapermissoes[0]->consulta;
 
                                 $url = $this->utilitario->build_query_params(current_url(), $_GET);
-                                $consulta = $this->paciente->listar($_GET);
+                                $consulta = $this->paciente->listarestagios($_GET);
                                 @$total = $consulta->count_all_results();
                                 $limit = 10;
                                 isset($_GET['per_page']) ? $pagina = $_GET['per_page'] : $pagina = 0;
@@ -151,9 +151,22 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                     ?>
                                     <tbody>
                                         <?php
-                                        $lista = $this->paciente->listar($_GET)->orderby('nome')->limit($limit, $pagina)->get()->result();
+                                        $lista = $this->paciente->listarestagios($_GET)->orderby('nome')->limit($limit, $pagina)->get()->result();
                                         $estilo_linha = "tabela_content01";
                                         foreach ($lista as $item) {
+
+
+                                            if($item->status_estagio == 'INCOMPLETO'){
+                                                $color = 'red';
+                                             }elseif($item->status_estagio == 'COMPLETO'){
+                                                $color = 'blue';
+                                             }elseif($item->status_estagio == 'ADEQUADO'){
+                                                 $color = 'black';
+                                             }else{
+                                                 $color = 'green';
+                                             }
+
+
                                             ($estilo_linha == "tabela_content01") ? $estilo_linha = "tabela_content02" : $estilo_linha = "tabela_content01";
                                             if ($item->celular == "") {
                                                 $telefone = $item->telefone;
@@ -163,92 +176,42 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                             ?>
                                             <tr>
 
-                                                <td class="<?php echo $estilo_linha; ?>"width="200px;"><?php echo $item->nome; ?></td>
+                                                <td width="200px;"><?php echo $item->nome; ?></td>
                                                 <? if ($filtro_exame == 't') { ?>
-                                                    <td class="<?php echo $estilo_linha; ?>"></td>
+                                                    <td ></td>
                                                 <? } ?>
-                                                <td class="<?php echo $estilo_linha; ?>" width="200px;"><?php echo substr($item->cpf, 8, 3) . '.' . substr($item->cpf, 6, 3) . '.' . substr($item->cpf, 0, 3). '-' . substr($item->cpf, 0, 2);?></td>
-                                                <td class="<?php echo $estilo_linha; ?>" width="200px;"><?php echo substr($item->nascimento, 8, 2) . '/' . substr($item->nascimento, 5, 2) . '/' . substr($item->nascimento, 0, 4); ?></td>
-                                                <td class="<?php echo $estilo_linha; ?>" width="200px;"><?php echo  "(" . substr($item->telefone, 0, 2) . ")" . substr($item->telefone, 2, strlen($item->telefone) - 7) .  "" . substr($item->telefone, 6, 1) . "-" . substr($item->telefone, 7 , strlen($item->telefone) - 2); ?></td>
-                                                <td class="<?php echo $estilo_linha; ?>" width="200px;"><?php echo  "(" . substr($item->celular, 0, 2) . ")" . substr($item->celular, 2, strlen($item->celular) - 7) .  "" . substr($item->celular, 6, 1) . "-" . substr($item->celular, 7 , strlen($item->celular) - 2); ?></td>
-                                                <td class="<?php echo $estilo_linha; ?>" width="200px;"><?php echo $item->email; ?></td>
-                                                <td class="<?php echo $estilo_linha; ?>" width="200px;"><?php echo $item->email_alternativo; ?></td>
-                                                <td class="<?php echo $estilo_linha; ?>" width="200px;"><?php echo $item->municipio; ?></td>
-                                                
-                                                <?
-                                                if (($empresapermissoes[0]->tecnico_acesso_acesso == 't' && $this->session->userdata('perfil_id') == 7) || ($empresapermissoes[0]->tecnico_acesso_acesso == 't' && $this->session->userdata('perfil_id') == 15)) {
-                                                    ?>
-                                                    <td class="<?php echo $estilo_linha; ?> "width="50px;" colspan="9" >
-
-                                                    <? } else {
-                                                        ?>
-                                                    <td class="<?php echo $estilo_linha; ?> "width="50px;" colspan="9" >
-                                                        <?
-                                                    }
-                                                    ?>
-                                                    <?
-                                                    if (($empresapermissoes[0]->tecnico_acesso_acesso == 't' && $this->session->userdata('perfil_id') == 7) || ($empresapermissoes[0]->tecnico_acesso_acesso == 't' && $this->session->userdata('perfil_id') == 15)) {
-                                                        ?>
-                                                        <div class="bt_link" >
-                                                            <a href="<?= base_url() ?>cadastros/pacientes/visualizarcarregar/<?= $item->paciente_id ?>">
-                                                                <b>Visualizar</b>
-                                                            </a>
-                                                        </div>
-
-                                                        <?
-                                                    } else {
-                                                        ?>
-
-                                                        <? if (($tecnico_recepcao_editar == 't' || $perfil_id != 15) && $perfil_id != 24) { ?>
-                                                            <div style="width:700px;">
-                                                                <a class="btn btn-outline-default btn-round btn-sm" href="">
-                                                                    <b>Iniciar Estágio</b>
-                                                                </a>
-                                                                <a class="btn btn-outline-default btn-round btn-sm" href="">
-                                                                    <b>Transferir Estágio</b>
-                                                                </a>
-                                                                <a class="btn btn-outline-default btn-round btn-sm" href="">
-                                                                    <b>Encerrar Estágio</b>
-                                                                </a>
-                                                                
-                                                            </div>
-                                                        <? } else { ?>
-                                                            <div class="bt_link">
-                                                                <a href="<?= base_url() ?>cadastros/pacientes/novo/<?= $item->paciente_id ?>">
-                                                                    <b>Visualizar</b>
-                                                                </a>
-                                                            </div>
-                                                        <? } ?>
-                                                        
-                                                        
-
+                                                <td  width="200px;"><?php echo substr($item->cpf, 8, 3) . '.' . substr($item->cpf, 6, 3) . '.' . substr($item->cpf, 0, 3). '-' . substr($item->cpf, 0, 2);?></td>
+                                                <td  width="200px;"><?php echo substr($item->nascimento, 8, 2) . '/' . substr($item->nascimento, 5, 2) . '/' . substr($item->nascimento, 0, 4); ?></td>
+                                                <td  width="200px;"><?php echo  "(" . substr($item->telefone, 0, 2) . ")" . substr($item->telefone, 2, strlen($item->telefone) - 7) .  "" . substr($item->telefone, 6, 1) . "-" . substr($item->telefone, 7 , strlen($item->telefone) - 2); ?></td>
+                                                <td  width="200px;"><?php echo  "(" . substr($item->celular, 0, 2) . ")" . substr($item->celular, 2, strlen($item->celular) - 7) .  "" . substr($item->celular, 6, 1) . "-" . substr($item->celular, 7 , strlen($item->celular) - 2); ?></td>
+                                                <td  width="200px;"><?php echo $item->email; ?></td>
+                                                <td  width="200px;"><?php echo $item->email_alternativo; ?></td>
+                                                <td  width="200px;"><?php echo $item->municipio; ?></td>
+                                                <td width="150px;"><font color="<?=$color?>"><?php echo $item->status_estagio; ?> </font></td>
+                                                    
+                                                    <td>
+                                                        <a class="btn btn-outline-default btn-round btn-sm" target="_blank"  href="<?=base_url() ?>cadastros/pacientes/efetivadostatus/<?= $item->paciente_id ?>" class="btn btn-outline-default btn-round btn-sm" href="">
+                                                            <b>Efetivar</b>
+                                                        </a>
                                                     </td>
-                                                    <!--<td class="<?php echo $estilo_linha; ?>" width="50px;">-->
-                                                        <!--<div class="bt_link">-->
-                                                            <!--<a class="btn btn-outline-default btn-round btn-sm" href="<?= base_url() ?>emergencia/filaacolhimento/novo/<?= $item->paciente_id ?>">-->
-                                                                <!--<b>Op&ccedil;&otilde;es</b>-->
-                                                            <!--</a>-->
-                                                        <!--</div>-->
-                                                    <!--</td>-->
 
+                                                    <td> 
+                                                        <a class="btn btn-outline-default btn-round btn-sm" href="">
+                                                            <b>Iniciar Estágio</b>
+                                                        </a>
+                                                    </td>
 
-                                                    <?php
-                                                    
-                                                    if($valores_recepcao == 't' || $operador_id == 1 ){
-                                                    if($this->session->userdata('perfil_id') != 24){?>
-                                                    <!--<td class="<?php echo $estilo_linha; ?>" width="50px;">-->
-                                                        <!--<div class="bt_link">-->
-                                                            <!--<a class="btn btn-outline-default btn-round btn-sm" href="<?= base_url() ?>ambulatorio/guia/orcamento/<?= $item->paciente_id ?>">-->
-                                                                <!--<b>Or&ccedil;amento</b>-->
-                                                            <!--</a>-->
-                                                        <!--</div>-->
-                                                    <!--</td>-->
-                                                    
-                                                    
-                                                    
-                                                                <?php }
+                                                    <td>
+                                                        <a class="btn btn-outline-default btn-round btn-sm" href="">
+                                                            <b>Transferir Estágio</b>
+                                                        </a>
+                                                    </td>
 
-                                                    }?>
+                                                    <td>
+                                                        <a class="btn btn-outline-default btn-round btn-sm" href="">
+                                                            <b>Encerrar Estágio</b>
+                                                        </a>
+                                                    </td>
 
                                                     <?
                                                 }
@@ -258,12 +221,11 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                         </tbody>
                                         <?php
                                     }
-                                }
                                 ?>
                                 <tfoot>
                                     <tr>
                                         <div class="pagination">
-                                            <th class="tabela_footer" colspan="">
+                                            <th class="tabela_footer" colspan="14">
                                                 <?php $this->utilitario->paginacao($url, $total, $pagina, $limit); ?>
                                                 Total de registros: <?php echo $total; ?>
                                             </th>

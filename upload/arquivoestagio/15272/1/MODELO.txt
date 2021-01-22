@@ -1,0 +1,38 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:s="http://www.w3.org/2001/XMLSchema">
+  <s:Header xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  </s:Header>
+  <SOAP-ENV:Body>
+    <RecebeAtendimento xmlns="http://protocoloapoiadohsf.hsf.br">
+      <atendimento>
+        <CodigoApoiado>APCSF</CodigoApoiado>
+        <CodigoSenhaIntegracao>123456</CodigoSenhaIntegracao>
+        <Pedido>
+          <NumeroAtendimentoApoiado>0123</NumeroAtendimentoApoiado>
+          <PacienteApoiado>
+            <NomePaciente>TESTE</NomePaciente>
+            <SexoPaciente>M</SexoPaciente>
+            <DataNascimento>2018-07-20T00:00:00Z</DataNascimento>
+          </PacienteApoiado>
+          <CodigoPrioridade>R</CodigoPrioridade>
+          <AlturaPaciente>0</AlturaPaciente>
+          <PesoPaciente>0</PesoPaciente>
+          <ListaProcedimento>
+            <ct_Procedimento_V1>
+              <CodigoExameHSF>COVID19U</CodigoExameHSF>
+              <DescricaoExameApoiado>Coronavírus SARS-CoV-2 (COVID-19), PCR qualitativo</DescricaoExameApoiado>
+              <DescricaoRegiaoColeta>NASOFARING</DescricaoRegiaoColeta>
+            </ct_Procedimento_V1>
+          </ListaProcedimento>
+          <ListaSolicitante>
+            <ct_Solicitante_V1>
+              <NomeSolicitante>FLAVIA CERQUEIRA MASSOTE</NomeSolicitante>
+              <CodigoConselho>CRM</CodigoConselho>
+              <CodigoUFConselhoSolicitante>MG</CodigoUFConselhoSolicitante>
+              <CodigoConselhoSolicitante>32764</CodigoConselhoSolicitante>
+            </ct_Solicitante_V1>
+          </ListaSolicitante>
+        </Pedido>
+      </atendimento>
+    </RecebeAtendimento>
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
