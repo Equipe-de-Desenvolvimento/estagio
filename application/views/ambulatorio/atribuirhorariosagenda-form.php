@@ -5,7 +5,7 @@
         </a>
     </div>-->
     <div class="panel panel-default">
-        <div class="alert alert-info">Cadastro de Horario</div>
+        <div class="alert alert-primary">Cadastro de Horario</div>
         <div class="panel-body">
              <form name="form_horariostipo" id="form_horariostipo" action="<?= base_url() ?>ambulatorio/agenda/gravar" method="post">
             <div class="row">

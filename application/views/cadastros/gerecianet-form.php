@@ -6,7 +6,7 @@
     
         </div>-->
     <div class="panel panel-default">
-        <div class="alert alert-info">Atribuir Dados Gerencia Net</div>
+        <div class="alert alert-primary">Atribuir Dados Gerencia Net</div>
 
         <div class="panel-body">
             <form name="form_exame" id="form_exame" action="<?= base_url() ?>cadastros/empresa/gravargerencianet" method="post">

@@ -1,60 +1,68 @@
-<div class="content ficha_ceatox"> <!-- Inicio da DIV content -->
+<div class="panel-body"> <!-- Inicio da DIV content -->
     <form name="form_formapagamento_parcela" id="form_formapagamento_parcela" action="<?= base_url() ?>cadastros/formapagamento/gravarcontaempresa" method="post">
-        <!--<fieldset>-->
             <div>
-                <!--<label>&nbsp;</label>-->
-                <div class="bt_link_voltar"><a href="<?= base_url() ?>cadastros/formapagamento/">Voltar</a></div>
+                <div class="btn btn-outline-default btn-round btn-sm" ><a href="<?= base_url() ?>cadastros/formapagamento/">Voltar</a></div>
             </div>
-        <!--</fieldset>-->
-        <fieldset>
-            <legend>Forma de Pagamento</legend>
-            <input type="text" class="texto09" name="forma_nome" value="<?= @$formapagamento[0]->nome; ?>" readonly="">
-            <!--<legend>Cadastrar Valor Por Convênio</legend>-->
+            <br>
+
+            <div class="alert alert-primary"><b>Forma de Pagamento</b></div>
 
 
-        </fieldset>
+            <div class="row">
+                <div class="col-lg-4">
+                    <label for="">Nome</label>
+                    <input type="text" class="form-control" name="forma_nome" value="<?= @$formapagamento[0]->nome; ?>" readonly="">
+                </div>
+            </div>
+           
+           <br>
+            <div class="alert alert-primary"><b>Cadastro Conta Empresa</b></div>
         <fieldset>
-            <legend>Cadastro Conta Empresa</legend>
             <input type="hidden" name="formapagamento_id" value="<?= $formapagamento_id ?>">
             <!--<legend>Cadastrar Valor Por Convênio</legend>-->
             <div>
                 <? $perfil_id = $this->session->userdata('perfil_id'); ?>
-                <label>Empresa</label>
-                <select name="empresa" id="empresa" class="size4" required>
-                    <!--<option value="">SELECIONE</option>-->
-                    <? foreach ($empresa as $item) { ?>
-                        <option value="<?= $item->empresa_id ?>" <?
-                        if ($perfil_id == $item->empresa_id) {
-                            echo 'selected';
-                        }
-                        ?>><?= $item->nome ?></option>
-                            <? } ?>
-                </select>
-            </div>
-            <div>
-                <label>Conta</label>
-                <select name="conta" id="conta" class="size4" required>
-                    <!--<option value="">SELECIONE</option>-->
-                    <? foreach ($conta as $item) { ?>
-                        <option value="<?= $item->forma_entradas_saida_id ?>">
-                            <?= $item->descricao ?> 
-                            <? if ($item->agencia!='') echo "| Ag: ".$item->agencia ?> 
-                            <? if ($item->conta!='') echo "| Conta: ".$item->conta ?> 
-                    <? } ?>
-                </select>
-            </div>
 
-            <div>
-                <label>&nbsp;</label>
-                <button type="submit" name="btnEnviar">Adicionar</button>
-            </div>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <label>Empresa</label>
+                        <select class="form-control" name="empresa" id="empresa" required>
+                            <!--<option value="">SELECIONE</option>-->
+                            <? foreach ($empresa as $item) { ?>
+                                <option value="<?= $item->empresa_id ?>" <?
+                                if ($perfil_id == $item->empresa_id) {
+                                    echo 'selected';
+                                }
+                                ?>><?= $item->nome ?></option>
+                                    <? } ?>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <label>Conta</label>
+                        <select class="form-control" name="conta" id="conta" required>
+                            <!--<option value="">SELECIONE</option>-->
+                            <? foreach ($conta as $item) { ?>
+                                <option value="<?= $item->forma_entradas_saida_id ?>">
+                                    <?= $item->descricao ?> 
+                                    <? if ($item->agencia!='') echo "| Ag: ".$item->agencia ?> 
+                                    <? if ($item->conta!='') echo "| Conta: ".$item->conta ?> 
+                            <? } ?>
+                        </select>
+                    </div>
+
+                </div>
+                <br>
+                <button class="btn btn-outline-default btn-round btn-sm"  type="submit" name="btnEnviar">Adicionar</button>
+
             <!--<button type="submit">Enviar</button>-->
 
         </fieldset>
     </form>
+    <br>
     <div style="display: block; width: 100%;">
         <? if (count($empresa_conta) > 0) { ?>
-            <table class="taxas-feitas">
+            <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
                         <th class="tabela_header">Empresa</th>
@@ -76,7 +84,7 @@
                             <td class="<?php echo $estilo_linha; ?>"><?= $item->conta_id ?> - <?= $item->conta ?> </td>
                             <td class="<?php echo $estilo_linha; ?>"><?= $item->agencia ?> </td>
                             <td class="<?php echo $estilo_linha; ?>"><?= $item->numero_conta ?> </td>
-                            <td class="<?php echo $estilo_linha; ?>"><center><a class="delete" href="<?= base_url() ?>cadastros/formapagamento/excluircontaempresa/<?= $item->formapagamento_conta_empresa_id ?>/<?= $formapagamento_id ?>">delete</a></center></td>
+                            <td class="<?php echo $estilo_linha; ?>"><center><a class="btn btn-outline-default btn-round btn-sm" href="<?= base_url() ?>cadastros/formapagamento/excluircontaempresa/<?= $item->formapagamento_conta_empresa_id ?>/<?= $formapagamento_id ?>">Excluir</a></center></td>
                     </tr>
                 <? } ?>
                 </tbody>

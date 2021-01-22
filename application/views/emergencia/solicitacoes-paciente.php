@@ -247,7 +247,7 @@
     <div>
         <form name="form_paciente" id="form_paciente" action="<?= base_url() ?>cadastros/pacientes/gravar" method="post">
 <!--            <div class="panel panel-default ">-->
-        <div class="alert alert-info">
+        <div class="alert alert-primary">
             <b>Dados do Paciente</b>
         </div>
         <div class="panel-body">
@@ -338,7 +338,7 @@
         </div>
 
 
-        <div class="alert alert-info">
+        <div class="alert alert-primary">
             <b>Domicilio</b>
         </div>
         <div class="panel-body">

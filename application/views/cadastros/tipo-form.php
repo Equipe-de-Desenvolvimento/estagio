@@ -1,7 +1,6 @@
-<div class="content"> <!-- Inicio da DIV content -->
-    <div id="accordion">
-        <h3 class="singular"><a href="#">Cadastro de Tipo Entrada/saida</a></h3>
-        <div>
+<div class="panel-body"> <!-- Inicio da DIV content -->
+
+        <div class="alert alert-primary"><b>Cadastro de Tipo Entrada/saida</b></div>
             <form name="form_sala" id="form_sala" action="<?= base_url() ?>cadastros/tipo/gravar" method="post">
                 <?
                 
@@ -14,13 +13,15 @@
                 ?>
 
                 <dl class="dl_desconto_lista">
-                    <dt>
-                    <label>Nome</label>
-                    </dt>
-                    <dd>
-                        <input type="hidden" name="txtcadastrostipoid" class="texto10" value="<?= @$obj->_tipo_entradas_saida_id; ?>" />
-                        <input type="text" name="txtNome" class="texto10" value="<?= @$obj->_descricao; ?>" />
-                    </dd>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <label>Nome</label>
+                            <input type="hidden" name="txtcadastrostipoid" class="form-control" value="<?= @$obj->_tipo_entradas_saida_id; ?>" />
+                            <input type="text" name="txtNome" class="form-control" value="<?= @$obj->_descricao; ?>" />
+                        </div>
+                    </div>
+                
+
                     <?if($retorno[0]->financ_4n == 't'){?>
 <!--                    <dt>
                     <label>Nível 1</label>
@@ -49,13 +50,11 @@
                     <? } ?>
                 </dl>    
                 <hr/>
-                <button type="submit" name="btnEnviar">Enviar</button>
-                <button type="reset" name="btnLimpar">Limpar</button>
-                <button type="button" id="btnVoltar" name="btnVoltar">Voltar</button>
+                <button class="btn btn-outline-default btn-round btn-sm" type="submit" name="btnEnviar">Enviar</button>
+                <button class="btn btn-outline-default btn-round btn-sm" type="reset" name="btnLimpar">Limpar</button>
+                <button class="btn btn-outline-default btn-round btn-sm" type="button" id="btnVoltar" name="btnVoltar">Voltar</button>
                
             </form>
-        </div>
-    </div>
 </div> <!-- Final da DIV content -->
 
 <script type="text/javascript" src="<?= base_url() ?>js/jquery.validate.js"></script>

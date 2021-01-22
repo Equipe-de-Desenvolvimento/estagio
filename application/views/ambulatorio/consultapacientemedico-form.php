@@ -11,7 +11,7 @@
     </div>
     <form name="form_exametemp" id="form_exametemp" action="<?= base_url() ?>ambulatorio/exametemp/gravarpacienteconsultamedicotemp/<?= $agenda_exames_id ?>" method="post">
         <div class="panel panel-default ">
-            <div class="alert alert-info">
+            <div class="alert alert-primary">
                 Dados do Atendimento
             </div>
             <div class="panel-body">

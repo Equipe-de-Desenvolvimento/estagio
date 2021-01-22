@@ -443,26 +443,14 @@ function debug($object) {
                             <li>
                                 <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/caixa/pesquisar2">Saidas</a>
                             </li>
-                            <!-- <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/contaspagar">Contas a Pagar</a>
-                            </li> -->
                             <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/contasreceber">Contas</a>
+                                <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/contaspagar">Contas a Pagar</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/contasreceber">Contas a Receber</a>
                             </li>
                             <li>
                                 <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/fornecedor">Credor/Devedor</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/tipo">Manter Tipo</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/classe">Manter Classe</a>
-                            </li>
-                            <!-- <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/forma">Manter Conta</a>
-                            </li> -->
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/formapagamento">Manter Forma de Pagamento</a>
                             </li>
                         </ul>
                     </li>
@@ -676,6 +664,27 @@ function debug($object) {
                             
                         </ul>
                     </li> -->
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-money fa-fw"></i> Financeiro <span class="fa arrow"></span></a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/tipo">Manter Tipo</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/classe">Manter Classe</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/forma">Manter Conta</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/formapagamento">Manter Forma de Pagamento</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
                     <li class="dropdown">
                         <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-gear fa-fw"></i> Configuração <span class="fa arrow"></span></a>

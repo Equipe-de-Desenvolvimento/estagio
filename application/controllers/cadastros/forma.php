@@ -32,6 +32,8 @@ class Forma extends BaseController {
 
         $this->loadView('cadastros/forma-lista', $args);
 
+        
+        // $this->loadView('cadastros/forma-lista2', $args); CADASTRO DE VAGAS 
 //            $this->carregarView($data);
     }
 

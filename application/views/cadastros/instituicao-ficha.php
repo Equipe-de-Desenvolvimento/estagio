@@ -19,7 +19,7 @@
 //            var_dump(@$empresapermissoes); die;
             ?>
         <fieldset> 
-            <div class="alert alert-info">Nova Instituição</div>
+            <div class="alert alert-primary">Nova Instituição</div>
                 <div class="panel-body infodados">
                     <div class="row">
                         <div class="col-lg-3">
@@ -160,7 +160,7 @@
                 </div>
             </div>   
             
-            <div class="alert alert-info">Convênio</div>
+            <div class="alert alert-primary">Convênio</div>
                 <div class="panel-body infodados">
                     <div class="row">
                         <div class="col-lg-3">
@@ -198,7 +198,7 @@
                 </div> 
             </div>  
 
-            <div class="alert alert-info">Financeiro</div>
+            <div class="alert alert-primary">Financeiro</div>
                 <div class="panel-body infodados">
                     <div class="row">
                         <div class="col-lg-3">
@@ -235,7 +235,7 @@
                     </div>
                 </div> 
             </div>    
-            <div class="alert alert-info">Jurídico</div>
+            <div class="alert alert-primary">Jurídico</div>
                 <div class="panel-body infodados">
                     <div class="row">
                         <div class="col-lg-3">

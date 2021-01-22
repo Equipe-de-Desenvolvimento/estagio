@@ -14,12 +14,14 @@ if (count($_GET) > 0) {
 }
 
 ?>
-<div class="content"> <!-- Inicio da DIV content -->
+<div class="panel-body"> <!-- Inicio da DIV content -->
     <div class="bt_link_new">
-        <a class="btn btn-outline-primary btn-round btn-sm" href="<?php echo base_url() ?>cadastros/forma/carregarforma/0">
+        <a class="btn btn-outline-default btn-round btn-sm" href="<?php echo base_url() ?>cadastros/contaspagar/carregar/0/">
             Nova Conta
         </a>
     </div>
+
+    <br>
     <?
     $classe = $this->classe->listarclasse();
     $credores = $this->caixa->empresa();
@@ -40,9 +42,7 @@ if (count($_GET) > 0) {
         }
     }
     ?>
-    <div id="accordion">
-        <div class="alert alert-info"><b>Manter Contas a Pagar</b>  </div>
-            <div>
+        <div class="alert alert-primary"><b>Manter Contas a Pagar</b>  </div>
 
                 <form method="get" action="<?= base_url() ?>cadastros/contaspagar/pesquisar">
                     <fieldset>
@@ -124,7 +124,7 @@ if (count($_GET) > 0) {
                                 </div>
                                 <div>
                                     <label class="tabela_title">Observacao</label>
-                                    <input type="text"  id="obs" name="obs" class=" control-form"  value="<?php echo @$_GET['obs']; ?>" />
+                                    <input type="text"  id="obs" name="obs" class="form-control"  value="<?php echo @$_GET['obs']; ?>" />
                                 </div>
                             </div>
                             <div class="col-lg-2">
@@ -278,7 +278,7 @@ if (count($_GET) > 0) {
 
             <br>
             <br>
-            <table>
+            <table class="table table-striped table-bordered table-hover">
                 <thead>
                 <th class="tabela_header">Contas</th>
                 <th class="tabela_header">Saldo</th>
@@ -304,8 +304,6 @@ if (count($_GET) > 0) {
                     </tr>
                 </tfoot>
             </table>
-        </div>
-    </div>
 
 </div> <!-- Final da DIV content -->
 <script type="text/javascript" src="<?= base_url() ?>js/jquery-1.9.1.js" ></script>

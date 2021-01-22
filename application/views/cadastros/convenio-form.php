@@ -4,7 +4,7 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
 
 ?>
 <div class="content ficha_ceatox"> <!-- Inicio da DIV content -->
-    <div class="alert alert-info">Dados do Convenio</div>
+    <div class="alert alert-primary">Dados do Convenio</div>
         <form name="form_convenio" id="form_convenio" action="<?= base_url() ?>cadastros/convenio/gravar" method="post">
             <fieldset>
                 <!-- <div class="row"> -->
