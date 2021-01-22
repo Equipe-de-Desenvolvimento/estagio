@@ -18,101 +18,6 @@
                 </div>
             </div>
 
-<<<<<<< HEAD
-        <div class="alert alert-primary">Cadastro de vagas</div>
-            <div  class="panel-body infodados">
-                <table>
-                    <thead>
-                        <tr>
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <div >
-                                        <label>Situação</label>
-                                        <input type="text" id="txtSituacao" name="situacao" class="form-control" value="<?= @$obj[0]->situacao; ?>" required="true"  placeholder="">
-                                    </div>
-                                    <div>
-                                        <label>Instituição</label>
-                                        <input type="text" id="txtInstituicao" name="instituicao" class="form-control" value="<?= @$obj[0]->instituicao; ?>" required="true"  placeholder="">
-                                    </div>  
-                                    <div>
-                                        <label>Observa&ccedil;&otilde;es</label>
-                                        <textarea cols="70" rows="2" class="form-control" name="observacao" placeholder="" id="observacao"><?= @$obj->_observacao; ?></textarea><br/>
-                                    </div>
-                                </div>
-                                <div  class="col-lg-3">
-                                    <div>
-                                        <label>Pré-requisitos</label>
-                                        <input type="text" id="txtPre_requisitos" name="pre_requisitos" class="form-control" value="<?= @$obj[0]->pre_requisitos; ?>" required="true"  placeholder="">
-                                    </div>
-                                    <div>
-                                        <label>Concedente</label>
-                                        <input type="text" id="txtConcedente" name="concedente" class="form-control" value="<?= @$obj[0]->concedente; ?>" required="true"  placeholder="">
-                                    </div>
-                                </div> 
-                                <div class="col-lg-2">
-                                    <div>
-                                        <div>
-                                            <label>Nível</label>
-                                        </div>
-                                        <select name="nivel"  class="form-control" id="txtNivel" class="size2">
-                                            <option value="0">selecione</option>
-                                            <option>Graduado(a)</option>
-                                            <option>Pós graduado(a)</option>
-                                            <option>técnico(a)</option>
-                                            <option>Residência</option>
-                                            <option>Especialização</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label>Tipo de Estágio</label>
-                                    </div>
-                                    <div>
-                                        <select name="estagio"  class="form-control" id="txtEstagio">
-                                            <option value="0">selecione</option>
-                                            <option>Internato</option>
-                                            <option>Não internato</option>
-                                            <option>Obrigatório</option>
-                                            <option>Não obrigatório</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-gl-2">
-                                    <div>
-                                        <label>Àrea</label>
-                                    </div>
-                                    <div>
-                                        <select name="area"  class="form-control" id="area">
-                                            <option value="0">selecione</option>
-                                            <option>Suporte</option>
-                                            <option>Programação</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label>Vaga</label>
-                                    </div>
-                                    <div>
-                                        <select name="vaga"  class="form-control" id="txtVaga">
-                                            <option value="0">selecione</option>
-                                            <option>Ocupado</option>
-                                            <option>Em aberto</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <div>
-                                            <label>Horários/Turnos</label>
-                                        </div>
-                                        <select name="horario"  class="form-control" id="txtHorario">
-                                            <option value="0">selecione</option>
-                                            <option>Turno da Manhã</option>
-                                            <option>Turno da tarde</option>
-                                            <option>Turno Integral</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </tr>
-                    </thead>
-=======
         </form>
         <br>
 
@@ -135,7 +40,6 @@
 
                 if ($total > 0) {
                     ?>
->>>>>>> 243d21dc1ca96023a9474ce668f5b49a6576432c
                     <tbody>
                         <?php
                         $lista = $this->forma->listarconta($_GET)->orderby('c.empresa_id, e.nome')->limit($limit, $pagina)->get()->result();
