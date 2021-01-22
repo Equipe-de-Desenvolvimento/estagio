@@ -11,13 +11,13 @@
             <form name="form_procedimentoplano" id="form_procedimentoplano" action="<?= base_url() ?>ambulatorio/procedimentoplano/gravaragrupador" method="post">
 
                 <table class="dl_desconto_lista">
-                    <input type="hidden" name="txtprocedimentoplanoid" value="<?= @$obj->_procedimento_convenio_id; ?>" />
+                    <!-- <input type="hidden" name="txtprocedimentoplanoid" value="<?= @$obj->_procedimento_convenio_id; ?>" /> -->
                     <tr>
                         <td>
                             <label>Convenio *</label>
                         </td>
                         <td>
-                            <select name="convenio" id="convenio" class="size4" required="">
+                            <select name="convenio" id="convenio" class="control-form" required="">
                                 <option value="">Selecione</option>
                                 <? foreach ($convenio as $value) : ?>
                                     <option value="<?= $value->convenio_id; ?>"<?
@@ -33,16 +33,16 @@
                             <label>Grupo</label>
                         </td>
                         <td>                  
-                            <select name="grupo" id="grupo" class="size4">
-                                <option value="">SELECIONE</option>                        
-                                <? foreach ($grupos as $value) : ?>
+                            <select name="grupo" id="grupo" class="control-form">
+                                <option value="">Selecione</option>                        
+                                <!-- <? foreach ($grupos as $value) : ?>
                                     <option value="<?= $value->nome; ?>"><?php echo $value->nome; ?></option>
-                                <? endforeach; ?>
+                                <? endforeach; ?> -->
                             </select>
                         </td>
                     </tr>
-                    <tr id="procedimentodiv">
-                        <td>
+                    <!-- <tr id="procedimentodiv"> -->
+                        <!-- <td>
                             <label>Procedimento *</label>
                         </td>
                         <td>
@@ -55,8 +55,8 @@
                                     ?>><?php echo $value->nome; ?></option>
                                 <? endforeach; ?>
                             </select>
-                        </td>
-                    </tr>
+                        </td> -->
+                    <!-- </tr> -->
                     <tr>
                         <td>
                             <label>Empresa *</label>

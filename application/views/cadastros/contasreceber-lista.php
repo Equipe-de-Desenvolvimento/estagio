@@ -14,9 +14,9 @@ if (count($_GET) > 0) {
 ?>
 <div class="content"> <!-- Inicio da DIV content -->
     <div class="bt_link_new">
-        <button class="btn btn-outline-primary btn-round btn-sm" href="<?php echo base_url() ?>cadastros/contasreceber/carregar/0/<?=@$empresa_form_id ?>/<?=@$url?>">
+        <a class="btn btn-outline-primary btn-round btn-sm" href="<?php echo base_url() ?>cadastros/forma/carregarforma/0<?=@$empresa_form_id ?>/<?=@$url?>">
             Nova Conta
-        </button>
+        </a>
     </div>
     <?
     $classe = $this->classe->listarclasse();

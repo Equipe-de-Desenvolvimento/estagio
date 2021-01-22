@@ -1,97 +1,134 @@
 
-<div class="content"> <!-- Inicio da DIV content -->
-    <div class="bt_link_new">
-        <a href="<?php echo base_url() ?>cadastros/forma/carregarforma/0">
-            Nova Conta
-        </a>
-    </div>
-    <div id="accordion">
-        <h3 class="singular"><a href="#">Manter Conta</a></h3>
-        <div>
-            <table>
-                <thead>
-                    <tr>
-                        <th colspan="5" class="tabela_title">
-                            <form method="get" action="<?= base_url() ?>cadastros/forma/pesquisar">
-                                <input type="text" name="nome" class="texto10 bestupper" value="<?php echo @$_GET['nome']; ?>" />
-                                <button type="submit" id="enviar">Pesquisar</button>
-                            </form>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th class="tabela_header">Nome</th>
-                        <th class="tabela_header">Agência</th>
-                        <th class="tabela_header">Conta</th>
-                        <th class="tabela_header">Empresa</th>
-                        <th class="tabela_header" width="70px;" colspan="2"><center>Detalhes</center></th>
-                </tr>
-                </thead>
-                <?php
-                $url = $this->utilitario->build_query_params(current_url(), $_GET);
-                $consulta = $this->forma->listar($_GET);
-                $total = $consulta->count_all_results();
-                $limit = 10;
-                isset($_GET['per_page']) ? $pagina = $_GET['per_page'] : $pagina = 0;
+<div> 
+    <form>
+    
+ <!--        Chamando o Script para a Webcam   -->
+         <script src="<?= base_url() ?>js/webcam.js"></script>
+            
+            <?
+            
+            if (@$empresapermissoes[0]->campos_cadastro != '') {
+                $campos_obrigatorios = json_decode(@$empresapermissoes[0]->campos_cadastro);
+            } else {
+                $campos_obrigatorios = array();
+            }
+            $tecnico_recepcao_editar = @$empresapermissoes[0]->tecnico_recepcao_editar;
+            $perfil_id = $this->session->userdata('perfil_id');
 
-                if ($total > 0) {
-                    ?>
-                    <tbody>
-                        <?php
-                        $lista = $this->forma->listar($_GET)->orderby('c.empresa_id, e.nome')->limit($limit, $pagina)->get()->result();
-                        $estilo_linha = "tabela_content01";
-                        foreach ($lista as $item) { 
-                            ($estilo_linha == "tabela_content01") ? $estilo_linha = "tabela_content02" : $estilo_linha = "tabela_content01";
-//                             $dados = $this->forma->listar2($item->empresa_id);
-//                             echo'<pre>';
-//                             var_dump($dados);die;
-//                             foreach ($dados as $dado) {
-                            ?> 
-                            <tr>
-                                <td class="<?php echo $estilo_linha; ?>"><?= $item->descricao; ?></td>
-                                <td class="<?php echo $estilo_linha; ?>"><?= $item->agencia; ?></td>
-                                <td class="<?php echo $estilo_linha; ?>"><?= $item->conta; ?></td>
-                                <td class="<?php echo $estilo_linha; ?>"><?= $item->empresa; ?></td>
+            ?>
 
-                                <?
-                                $perfil_id = $this->session->userdata('perfil_id');
-                                ?>
-                                <? if ($perfil_id != 10) { ?>
-                                    <td class="<?php echo $estilo_linha; ?>" width="70px;">                                  
-                                        <a href="<?= base_url() ?>cadastros/forma/carregarforma/<?= $item->forma_entradas_saida_id ?>">Editar</a>
-                                    </td>
-                                    <td class="<?php echo $estilo_linha; ?>" width="70px;">                                  
-                                        <a onclick="javascript: return confirm('Deseja realmente exlcuir esse Forma?');" href="<?= base_url() ?>cadastros/forma/excluir/<?= $item->forma_entradas_saida_id ?>">Excluir</a>
-                                    </td>
-                                    
-                                    <?}else{?>
-                                    <td class="<?php echo $estilo_linha; ?>" width="70px;">                                  
-                                        Editar
-                                    </td>
-                                    <td class="<?php echo $estilo_linha; ?>" width="70px;">                                  
-                                        Excluir
-                                    </td>
-                                    
-                                <?}?>
-                                </tr>
-
-                            </tbody>
-                            <?php
-//                            }
-                        }
-                    }
-                    ?>
-                    <tfoot>
+        <div class="alert alert-info">Cadastro de vagas</div>
+            <div  class="panel-body infodados">
+                <table>
+                    <thead>
                         <tr>
-                            <th class="tabela_footer" colspan="7">
-                                <?php $this->utilitario->paginacao($url, $total, $pagina, $limit); ?>
-                                Total de registros: <?php echo $total; ?>
-                        </th>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-    </div>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div >
+                                        <label>Situação</label>
+                                        <input type="text" id="txtSituacao" name="situacao" class="form-control" value="<?= @$obj[0]->situacao; ?>" required="true"  placeholder="">
+                                    </div>
+                                    <div>
+                                        <label>Instituição</label>
+                                        <input type="text" id="txtInstituicao" name="instituicao" class="form-control" value="<?= @$obj[0]->instituicao; ?>" required="true"  placeholder="">
+                                    </div>  
+                                    <div>
+                                        <label>Observa&ccedil;&otilde;es</label>
+                                        <textarea cols="70" rows="2" class="form-control" name="observacao" placeholder="" id="observacao"><?= @$obj->_observacao; ?></textarea><br/>
+                                    </div>
+                                </div>
+                                <div  class="col-lg-3">
+                                    <div>
+                                        <label>Pré-requisitos</label>
+                                        <input type="text" id="txtPre_requisitos" name="pre_requisitos" class="form-control" value="<?= @$obj[0]->pre_requisitos; ?>" required="true"  placeholder="">
+                                    </div>
+                                    <div>
+                                        <label>Concedente</label>
+                                        <input type="text" id="txtConcedente" name="concedente" class="form-control" value="<?= @$obj[0]->concedente; ?>" required="true"  placeholder="">
+                                    </div>
+                                </div> 
+                                <div class="col-lg-2">
+                                    <div>
+                                        <div>
+                                            <label>Nível</label>
+                                        </div>
+                                        <select name="nivel"  class="form-control" id="txtNivel" class="size2">
+                                            <option value="0">selecione</option>
+                                            <option>Graduado(a)</option>
+                                            <option>Pós graduado(a)</option>
+                                            <option>técnico(a)</option>
+                                            <option>Residência</option>
+                                            <option>Especialização</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label>Tipo de Estágio</label>
+                                    </div>
+                                    <div>
+                                        <select name="estagio"  class="form-control" id="txtEstagio">
+                                            <option value="0">selecione</option>
+                                            <option>Internato</option>
+                                            <option>Não internato</option>
+                                            <option>Obrigatório</option>
+                                            <option>Não obrigatório</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-gl-2">
+                                    <div>
+                                        <label>Àrea</label>
+                                    </div>
+                                    <div>
+                                        <select name="area"  class="form-control" id="area">
+                                            <option value="0">selecione</option>
+                                            <option>Suporte</option>
+                                            <option>Programação</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label>Vaga</label>
+                                    </div>
+                                    <div>
+                                        <select name="vaga"  class="form-control" id="txtVaga">
+                                            <option value="0">selecione</option>
+                                            <option>Ocupado</option>
+                                            <option>Em aberto</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <label>Horários/Turnos</label>
+                                        </div>
+                                        <select name="horario"  class="form-control" id="txtHorario">
+                                            <option value="0">selecione</option>
+                                            <option>Turno da Manhã</option>
+                                            <option>Turno da tarde</option>
+                                            <option>Turno Integral</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       
+                            <div class="panel panel-default btngrp">
+                                <div class="panel-body">
+                                    <?if($tecnico_recepcao_editar == 't' || $perfil_id != 15){?>
+                                        <button type="reset" class="btn btn-warning btn-sm">Limpar</button>
+                                        <button type="submit" class="btn btn-success btn-sm">Enviar</button>
+                                            <?}?>
+                                        <a href="<?= base_url() ?>cadastros/pacientes/pesquisarMapaGestao/">
+                                            <button type="button" id="btnVoltar" class="btn btn-secondary btn-sm">Voltar</button>
+                                        </a>
 
+                                </div>
+                            </div>   
+                    </tbody>            
+                </table>
+            </div>
+        </div>
+    </form>
 </div> <!-- Final da DIV content -->
 <script type="text/javascript">
 

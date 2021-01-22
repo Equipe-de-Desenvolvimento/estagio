@@ -4,68 +4,69 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
 
 ?>
 <div class="content ficha_ceatox"> <!-- Inicio da DIV content -->
-    <div>
+    <div class="alert alert-info">Dados do Convenio</div>
         <form name="form_convenio" id="form_convenio" action="<?= base_url() ?>cadastros/convenio/gravar" method="post">
             <fieldset>
-                <legend>Dados do Convenio</legend>
-                <div>
-                    <label>Nome</label>
-                    <input type="hidden" name="txtconvenio_id" class="texto10 bestupper" value="<?= @$obj->_convenio_id; ?>" />
-                    <input type="text" name="txtNome" class="texto10 bestupper" value="<?= @$obj->_nome; ?>" /> 
-                </div>            
-                <div>
-                    <label>Raz&atilde;o social</label>
-                    <input type="text" name="txtrazaosocial" class="texto10" value="<?= @$obj->_razao_social; ?>" />
-                </div>
-                <div>
-                     <label>Tamanho da Carteira</label>                    
-                    <input type="number" name="tamanho_carteira" class="texto03" value="<?= @$obj->_tamanho_carteira; ?>" />
-                </div>
-               
-                <div>
-                    <label>Registro ANS</label>
-                    <input type="text" name="txtregistroans" class="texto10" value="<?= @$obj->_registroans; ?>" />               
-                </div>
-                
-                <div>
-                    <label>CNPJ</label>
-                    <input type="text" name="txtCNPJ" maxlength="14" alt="cnpj" class="texto03" value="<?= @$obj->_cnpj; ?>" />
-                </div>
-                <div>
-                    <label>Codigo identifica&ccedil;&atilde;o</label>
-                    <input type="text" name="txtcodigo" maxlength="20" class="texto03" value="<?= @$obj->_codigoidentificador; ?>" />               
-                </div>                
-                <div>
-                    <label>&nbsp;</label>
-                    <?php
-                    if (@$obj->_carteira_obrigatoria == "t") {
-                        ?>
-                        <input type="checkbox" name="txtcarteira" checked ="true" />Número da carteira/autorização obrigatorio
+                <!-- <div class="row"> -->
+                    <!-- <div class="col-lg-3"> -->
+                        <div>
+                            <label>Nome</label>
+                            <input type="hidden" name="txtconvenio_id" class="control-form" value="<?= @$obj->_convenio_id; ?>" />
+                            <input type="text" name="txtNome" class="control-form" value="<?= @$obj->_nome; ?>" /> 
+                        </div>            
+                        <div>
+                            <label>Raz&atilde;o social</label>
+                            <input type="text" name="txtrazaosocial" class="control-form" value="<?= @$obj->_razao_social; ?>" />
+                        </div>
+                        <!-- <div>
+                            <label>Tamanho da Carteira</label>                    
+                            <input type="number" name="tamanho_carteira" class="control-form" value="<?= @$obj->_tamanho_carteira; ?>" />
+                        </div> -->
+                        <div>
+                            <label>Registro ANS</label>
+                            <input type="text" name="txtregistroans" class="control-form" value="<?= @$obj->_registroans; ?>" />               
+                        </div>
+                    <!-- </div>     -->
+                        <div>
+                            <label>CNPJ</label>
+                            <input type="text" name="txtCNPJ" maxlength="14" alt="cnpj" class="control-form" value="<?= @$obj->_cnpj; ?>" />
+                        </div>
+                        <div>
+                            <label>Codigo identifica&ccedil;&atilde;o</label>
+                            <input type="text" name="txtcodigo" maxlength="20" class="control-form" value="<?= @$obj->_codigoidentificador; ?>" />               
+                        </div>                
+                        <div>
+                            <label>&nbsp;</label>
+                            <?php
+                            if (@$obj->_carteira_obrigatoria == "t") {
+                                ?>
+                                <input type="checkbox" name="txtcarteira" checked ="true" />Número da carteira/autorização obrigatorio
+                                <?php
+                            } else {
+                                ?>
+                                <input type="checkbox" name="txtcarteira"  />Número da carteira/autorização obrigatorio
+                                <?php
+                            }
+                            ?>
+                        </div>
+                    <!-- <div> -->
+                        <label>&nbsp;</label>
                         <?php
-                    } else {
+                        if (@$obj->_guia_prestador_unico == "t") {
+                            ?>
+                            <input type="checkbox" name="guia_prestador_unico" checked ="true" />Número único de guia do prestador (xml)
+                            <?php
+                        } else {
+                            ?>
+                            <input type="checkbox" name="guia_prestador_unico"  />Número único de guia do prestador (xml)
+                            <?php
+                        }
                         ?>
-                        <input type="checkbox" name="txtcarteira"  />Número da carteira/autorização obrigatorio
-                        <?php
-                    }
-                    ?>
-                </div>
-                <div>
-                    <label>&nbsp;</label>
-                    <?php
-                    if (@$obj->_guia_prestador_unico == "t") {
-                        ?>
-                        <input type="checkbox" name="guia_prestador_unico" checked ="true" />Número único de guia do prestador (xml)
-                        <?php
-                    } else {
-                        ?>
-                        <input type="checkbox" name="guia_prestador_unico"  />Número único de guia do prestador (xml)
-                        <?php
-                    }
-                    ?>
-                </div>
-                <div>
-                    <label>&nbsp;</label>
-                    <input type="checkbox" name="numero_guia" <?= ($obj->_numero_guia == 't') ? "checked":""; ?> /> Número de Guia(autorização)                     
+                    </div>
+                    <div>
+                        <label>&nbsp;</label>
+                        <input type="checkbox" name="numero_guia" <?= ($obj->_numero_guia == 't') ? "checked":""; ?> /> Número de Guia(autorização)                     
+                    </div>
                 </div>
             </fieldset>
             <fieldset>

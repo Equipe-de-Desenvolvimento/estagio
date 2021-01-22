@@ -1,5 +1,5 @@
 <div class="content"> <!-- Inicio da DIV content -->
-    <div id="accordion">
+    <div id="">
         <h3 class="singular"><a href="#">Cadastro de Conta</a></h3>
         <div>
             <form name="form_forma" id="form_sala" action="<?= base_url() ?>cadastros/forma/gravar" method="post">
@@ -45,6 +45,7 @@
                 <button type="submit" name="btnEnviar">Enviar</button>
                 <button type="reset" name="btnLimpar">Limpar</button>
                 <button type="button" id="btnVoltar" name="btnVoltar">Voltar</button>
+                <a href="<?= base_url() ?>cadastros/contasreceber/">
             </form>
         </div>
     </div>

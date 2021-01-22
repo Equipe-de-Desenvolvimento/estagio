@@ -16,9 +16,9 @@ if (count($_GET) > 0) {
 ?>
 <div class="content"> <!-- Inicio da DIV content -->
     <div class="bt_link_new">
-        <button class="btn btn-outline-primary btn-round btn-sm" href="<?php echo base_url() ?>cadastros/contaspagar/carregar/0/<?=@$empresa_form_id?>/<?=@$url?>">
+        <a class="btn btn-outline-primary btn-round btn-sm" href="<?php echo base_url() ?>cadastros/forma/carregarforma/0">
             Nova Conta
-        </button>
+        </a>
     </div>
     <?
     $classe = $this->classe->listarclasse();
@@ -124,7 +124,7 @@ if (count($_GET) > 0) {
                                 </div>
                                 <div>
                                     <label class="tabela_title">Observacao</label>
-                                    <input type="text"  id="obs" name="obs" class="size2"  value="<?php echo @$_GET['obs']; ?>" />
+                                    <input type="text"  id="obs" name="obs" class=" control-form"  value="<?php echo @$_GET['obs']; ?>" />
                                 </div>
                             </div>
                             <div class="col-lg-2">

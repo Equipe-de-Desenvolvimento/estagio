@@ -115,7 +115,7 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                         ?>
                     <br>
                         <a class="btn btn-outline-default btn-round btn-sm" href="<?php echo base_url() ?>cadastros/pacientes/novo">
-                            <i class="fa fa-plus fa-w"></i> Cadastrar
+                            <i></i> Cadastrar
                         </a>
                         <?
                     }
@@ -143,7 +143,7 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
 
                                 $url = $this->utilitario->build_query_params(current_url(), $_GET);
                                 $consulta = $this->paciente->listar($_GET);
-                                @$total = $consulta->count_all_results();
+                                $total = $consulta->count_all_results();
                                 $limit = 10;
                                 isset($_GET['per_page']) ? $pagina = $_GET['per_page'] : $pagina = 0;
 

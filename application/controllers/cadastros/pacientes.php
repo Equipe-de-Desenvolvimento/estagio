@@ -37,6 +37,10 @@ class pacientes extends BaseController {
         $this->loadView('cadastros/pacientesmapadevagas-lista');
     }
 
+    public function mapaGestaoCadastro($args = array()) {
+        $this->loadView('cadastros/mapaGestaoCadastro');
+    }
+
     public function pesquisardesativado($args = array()) {
         $this->loadView('cadastros/pacientesdesativados-lista');
     }
@@ -58,7 +62,8 @@ class pacientes extends BaseController {
         $data['listaconvenio'] = $this->paciente->listaconvenio();
         $obj_paciente = new paciente_model($paciente_id);
         $data['obj'] = $obj_paciente;
-        
+        // echo'<pre>';
+        // var_dump($data); die;
         $this->loadView('cadastros/paciente-ficha', $data);
     }
 
@@ -378,7 +383,7 @@ class pacientes extends BaseController {
         $data['procedimento'] = $this->procedimento->listarprocedimentos();
         $data['exames'] = $this->exametemp->listaragendaspacientefisioterapia($paciente_id);
         $data['grupos'] = $this->procedimento->listargruposespecialidade();
-//        var_dump($data['grupos']);die;
+//        dump($data['grupos']);die;
         $this->loadView('ambulatorio/procedimentoautorizarfisioterapia-form', $data);
 //        } else {
 //            $data['mensagem'] = 'Paciente com sessões pendentes.';
@@ -1650,13 +1655,43 @@ function carregarpacientecenso($prontuario = null, $nome = null, $procedimento =
         }
         redirect(base_url() . "cadastros/pacientes");
     }
-    function gravarestagiarios(){
-            
-        $data['listaLogradouro'] = $this->paciente->gravar();
 
-      //  print_r($_POST);
-        redirect(base_url() . "ambulatorio/fornecedor/fornecedor");
+    function novoMapaVagas($forma_entrada_saida_id = 0) {
+
+        $data['idade'] = 0;
+        $data['empresapermissoes'] = $this->guia->listarempresapermissoes();
+        $data['listaLogradouro'] = $this->paciente->listaTipoLogradouro();
+        $data['obj'] = $this->paciente->listarMapaVagasId($forma_entrada_saida_id);
+        $data['forma_entrada_saida_id'] = $forma_entrada_saida_id;
+        $this->loadView('cadastros/pacientes/pesquisarMapaGestao/', $data);
     }
 
+    function gravarMapaVagas() {
+        if ($this->paciente->gravarMapaVagas()) {
+            $data['mensagem'] = 'Gravado com sucesso';
+        } else {
+            $data['mensagem'] = 'Erro ao gravar';
+        }
+        $this->session->set_flashdata('message', $data['mensagem']);
+        redirect(base_url() . "cadastros/pacientes/pesquisarMapaGestao/");
+    }
+   
+    // function gravarMapaVagas(){
+        
+    //     $data['listaLogradouro'] = $this->paciente->gravarMapaVagas();
+
+    //     //  print_r($_POST);
+    //     redirect(base_url() . "cadastros/pacientes/pesquisarMapaGestao/");
+    // }
+
+    function excluirMapaVagas($forma_entradas_saidas_id) {
+        $teste = $this->paciente->excluirMapaVagas($forma_entradas_saidas_id);
+        if ($teste) {
+            $data['mensagem'] = 'Erro ao confirmar Cadastro';
+        } else {
+            $data['mensagem'] = 'Cadastro confirmado com sucesso';
+        }
+        redirect(base_url() . "cadastros/pacientes/pesquisarMapaGestao/");
+    }
 }
 ?>

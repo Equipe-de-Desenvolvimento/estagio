@@ -28,6 +28,7 @@ class pacientes extends BaseController {
         $this->loadView('cadastros/pacientes-lista');
     }
 
+
     public function pesquisarsubstituir($args = array()) {
         $data['paciente_temp_id'] = $args;
         $this->loadView('cadastros/pacientes-listasubstituir', $data);
@@ -39,6 +40,9 @@ class pacientes extends BaseController {
         $data['listaLogradouro'] = $this->paciente->listaTipoLogradouro();
         $data['listaconvenio'] = $this->paciente->listaconvenio();
         $this->loadView('cadastros/paciente-ficha', $data);
+    }
+    public function mapagestaocadastro($args = array()) {
+        $this->loadView('cadastros/pacientes/mapagestaocadastro');
     }
 
     function substituirambulatoriotemp($paciente_id, $paciente_temp_id) {
@@ -60,9 +64,6 @@ class pacientes extends BaseController {
             $destino = "./upload/paciente/$paciente_id";
             chmod($destino, 0777);
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 //        $data['arquivo_pasta'] = directory_map("./upload/$paciente_id/");
         $data['arquivo_pasta'] = directory_map("./upload/paciente/$paciente_id/");
         if ($data['arquivo_pasta'] != false) {
@@ -80,71 +81,8 @@ class pacientes extends BaseController {
             chmod($destino, 0777);
         }
 
-        $config['upload_path'] = "./upload/paciente/" . $paciente_id . "/";
-//        $config['upload_path'] = "./upload/paciente/" . $paciente_id . "/";
-=======
-//        $data['arquivo_pasta'] = directory_map("/home/sisprod/projetos/clinica/upload/$paciente_id/");
-        $data['arquivo_pasta'] = directory_map("/home/sisprod/projetos/clinica/upload/paciente/$paciente_id/");
-        if ($data['arquivo_pasta'] != false) {
-            sort($data['arquivo_pasta']);
-        }
-        $data['paciente_id'] = $paciente_id;
-        $this->loadView('ambulatorio/importacao-imagempaciente', $data);
-    }
-
-    function importarimagem() {
-        $paciente_id = $_POST['paciente_id'];
-        if (!is_dir("./upload/paciente/$paciente_id")) {
-            mkdir("./upload/paciente/$paciente_id");
-            $destino = "./upload/paciente/$paciente_id";
-            chmod($destino, 0777);
-        }
-
         $config['upload_path'] = "/home/sisprod/projetos/clinica/upload/paciente/" . $paciente_id . "/";
 //        $config['upload_path'] = "/home/sisprod/projetos/clinica/upload/paciente/" . $paciente_id . "/";
->>>>>>> origin/master
-=======
-//        $data['arquivo_pasta'] = directory_map("/home/sisprod/projetos/clinica/upload/$paciente_id/");
-        $data['arquivo_pasta'] = directory_map("/home/sisprod/projetos/clinica/upload/paciente/$paciente_id/");
-        if ($data['arquivo_pasta'] != false) {
-            sort($data['arquivo_pasta']);
-        }
-        $data['paciente_id'] = $paciente_id;
-        $this->loadView('ambulatorio/importacao-imagempaciente', $data);
-    }
-
-    function importarimagem() {
-        $paciente_id = $_POST['paciente_id'];
-        if (!is_dir("./upload/paciente/$paciente_id")) {
-            mkdir("./upload/paciente/$paciente_id");
-            $destino = "./upload/paciente/$paciente_id";
-            chmod($destino, 0777);
-        }
-
-        $config['upload_path'] = "/home/sisprod/projetos/clinica/upload/paciente/" . $paciente_id . "/";
-//        $config['upload_path'] = "/home/sisprod/projetos/clinica/upload/paciente/" . $paciente_id . "/";
->>>>>>> origin/master
-=======
-//        $data['arquivo_pasta'] = directory_map("/home/sisprod/projetos/clinica/upload/$paciente_id/");
-        $data['arquivo_pasta'] = directory_map("/home/sisprod/projetos/clinica/upload/paciente/$paciente_id/");
-        if ($data['arquivo_pasta'] != false) {
-            sort($data['arquivo_pasta']);
-        }
-        $data['paciente_id'] = $paciente_id;
-        $this->loadView('ambulatorio/importacao-imagempaciente', $data);
-    }
-
-    function importarimagem() {
-        $paciente_id = $_POST['paciente_id'];
-        if (!is_dir("./upload/paciente/$paciente_id")) {
-            mkdir("./upload/paciente/$paciente_id");
-            $destino = "./upload/paciente/$paciente_id";
-            chmod($destino, 0777);
-        }
-
-        $config['upload_path'] = "/home/sisprod/projetos/clinica/upload/paciente/" . $paciente_id . "/";
-//        $config['upload_path'] = "/home/sisprod/projetos/clinica/upload/paciente/" . $paciente_id . "/";
->>>>>>> origin/master
         $config['allowed_types'] = 'gif|jpg|png|jpeg|pdf|doc|docx|xls|xlsx|ppt';
         $config['max_size'] = '0';
         $config['overwrite'] = FALSE;

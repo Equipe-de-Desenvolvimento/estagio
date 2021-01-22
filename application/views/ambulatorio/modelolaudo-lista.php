@@ -137,7 +137,7 @@ $excluircadastro_id = $this->session->userdata('excluircadastro_id');
                                             
                                             ?>
                                         
-                                                <td class="<?php echo $estilo_linha; ?>"width="200px"><?php echo $item->nome; ?></td>
+                                                <td class="<?php echo $estilo_linha; ?>"width="200px;" ><?php echo $item->nome; ?></td>
                                                 <td class="<?php echo $estilo_linha; ?>"width="150px;" ><?php echo $item->cnpj; ?></td>
                                                 <td class="<?php echo $estilo_linha; ?>"width="150px;" ><?php echo $item->cpf; ?></td>
                                                 <td class="<?php echo $estilo_linha; ?>"width="150px;" ><?php echo $item->email; ?></td>
@@ -159,7 +159,7 @@ $excluircadastro_id = $this->session->userdata('excluircadastro_id');
 
                                                     <? } else {
                                                         ?>
-                                                    <td class="<?php echo $estilo_linha; ?>" width="50px;" colspan=" >
+                                                    <td class="<?php echo $estilo_linha; ?>" width="50px;" colspan="2" >
                                                         <?
                                                         
                                                     }
@@ -215,7 +215,7 @@ $excluircadastro_id = $this->session->userdata('excluircadastro_id');
                                 ?>
                                 <tfoot>
                                     <tr>
-                                        <th class="tabela_footer" colspan="9">
+                                        <th class="tabela_footer" colspan="10">
                                             <div class="pagination">
                                                 <?php $this->utilitario->paginacao($url, $total, $pagina, $limit); ?>
                                                 Total de registros: <?php echo $total; ?>

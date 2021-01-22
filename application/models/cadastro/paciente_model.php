@@ -44,7 +44,7 @@ class paciente_model extends BaseModel {
     var $_cbo_ocupacao_id = null;
     var $_cbo_nome = null;
     var $_indicacao = null;
-
+    
 //    var $_prontuario_antigo = null;
 
 
@@ -2993,7 +2993,119 @@ class paciente_model extends BaseModel {
         
         
     }
+
+    function listarMapaVagas($args = array()) {
+        $this->db->select('c.forma_entradas_saida_id,
+                            c.area,
+                            c.situacao,
+                            c.instituicao,
+                            c.nivel,
+                            c.pre_requisitos,
+                            c.convenio,
+                            c.concedente,
+                            c.observacao,
+                            c.vaga');
+        $this->db->from('tb_forma_entradas_saida c');
+        $this->db->where('c.ativo', 'true');
+        if (isset($args['instituicao']) && strlen($args['instituicao']) > 0) {
+            $instituicao = $this->removerCaracterEsp($args['instituicao']);
+            $this->db->where("translate(c.instituicao,  
+            'áàâãäåaaaÁÂÃÄÅAAAÀéèêëeeeeeEEEÉEEÈÊìíîïìiiiÌÍÎÏÌIIIóôõöoooòÒÓÔÕÖOOOùúûüuuuuÙÚÛÜUUUUçÇñÑýÝ',  
+            'aaaaaaaaaAAAAAAAAAeeeeeeeeeEEEEEEEEiiiiiiiiIIIIIIIIooooooooOOOOOOOOuuuuuuuuUUUUUUUUcCnNyY'   
+            ) ilike", '%' . $instituicao . '%');
+        }        
+        return $this->db;
+    }
+        
+            private function instanciarMapaVagas($forma_entradas_saida_id) {
+        
+                if ($forma_entradas_saida_id != 0) {
+                    $this->db->select('forma_entradas_saida_id, situacao, area, instituicao, empresa_id');
+                    $this->db->from('tb_forma_entradas_saida');
+                    $this->db->where("forma_entradas_saida_id", $forma_entradas_saida_id);
+                    $query = $this->db->get();
+                    $return = $query->result();
+                    $this->_forma_entradas_saida_id = $forma_entradas_saida_id;
+                } else {
+                    $this->_forma_entradas_saida_id = null;
+                }
+            }
+
+            function listarMapaVaga() {
+                $this->db->select(' c.forma_entradas_saida_id,
+                                    c.area,
+                                    c.situacao,
+                                    c.nivel,
+                                    c.pre_requisitos,
+                                    c.convenio,
+                                    c.concedente,
+                                    c.instituicao,
+                                    c.observacao,
+                                    c.vaga');
+                $this->db->from('tb_forma_entradas_saida c');        
+                // $this->db->join('tb_empresa e', 'e.empresa_id = c.empresa_id', 'left');        
+                $this->db->where('c.ativo', 'true');        
+                
+                $return = $this->db->get();
+                return $return->result();
+            }
+
+            function listaMapaVagas($forma_entradas_saida_id){
+                $this->db->select('c.forma_entradas_saida_id,
+                                  c.situacao, 
+                                  c.instituicao,
+                                  c.vaga,
+                                  c.nivel,
+                                  c.pre_requisitos,
+                                  c.convenio,
+                                  c.concedente,
+                                  c.observacao,
+                                  c.area');
+               $this->db->from('tb_c.forma_entradas_saida c');
+               $this->db->where('c.forma_entradas_saida_id',$cforma_entradas_saida_id);
+               $this->db->where('c.ativo','t');
+               $return = $this->db->get();
+               return $return->result();
+           }
  
+            function gravarMapaVagas(){
+
+                $horario = date("Y-m-d H:i:s");        
+                $this->db->set('situacao', $_POST['situacao']);
+                $this->db->set('instituicao', $_POST['instituicao']); 
+                $this->db->set('area', $_POST['area']);
+                $this->db->set('vaga', $_POST['vaga']); 
+                $this->db->set('pre_requisitos', $_POST['pre_requisitos']);
+                $this->db->set('observacao', $_POST['observacao']);
+                $this->db->set('convenio', $_POST['convenio']); 
+                $this->db->set('concedente', $_POST['concedente']);
+                $this->db->set('nivel', $_POST['nivel']);
+
+                        
+                if($_POST['forma_entradas_saida_id'] > 0 ){
+                    $this->db->set('data_atualizacao', $horario);
+                    $this->db->set('operador_atualizacao', $operador_id);
+                    $this->db->where('forma_entradas_saida_id', $_POST['forma_entradas_saida_id']);
+                    $this->db->update('tb_forma_entradas_saida_id');      
+                }
+                
+                else{
+                    $this->db->set('data_cadastro', $horario);
+                    $this->db->set('operador_cadastro', $operador_id);
+                    $this->db->insert('tb_forma_entradas_saida_id');
+                    $forma_entradas_saida_id = $this->db->insert_id();
+                }
+                return $this->db;
+            }
+
+            function excluirMapaVagas($forma_entradas_saidas_id) {
+                $this->db->set('ativo','f');
+                $this->db->where('forma_entradas_saidas_id',$forma_entradas_saidas_id); 
+                $this->db->update('tb_forma_entradas_saidas');
+                
+                return 1;
+        
+            }
 }
 
 ?>

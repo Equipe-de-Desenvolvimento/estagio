@@ -5,7 +5,7 @@ $empresapermissao = $this->guia->listarempresasaladepermissao();
 <div class="content"> <!-- Inicio da DIV content -->
     <? $perfil_id = $this->session->userdata('perfil_id'); ?>
     <div class="bt_link_new">
-        <a href="<?php echo base_url() ?>seguranca/operador/novo">
+        <a href="<?php echo base_url() ?>cadastros/pacientes/mapagestaocadastro">
             Novo Profissional
         </a>
     </div>
@@ -14,9 +14,20 @@ $empresapermissao = $this->guia->listarempresasaladepermissao();
         <div>
             <table>
                 <thead>
-                <form method="get" action="<?= base_url() ?>seguranca/operador/pesquisar">
-                </thead>
+                <form method="get" action="<?= base_url() ?>cadastros/pacientes/mapagestaocadastro">
+
+
+                     <!-- <tr>
+                    <th class="tabela_title">Nome</th>
+                     <th class="tabela_title">Status</th>
+                    </tr> -->
+
+                    </thead>
                     <tr>
+                         <!-- <th class="tabela_title">
+                           <input type="text" name="nome" value="<?php echo @$_GET['nome']; ?>" /> 
+
+                        </th> 
                         <th class="tabela_title">
                             <select name="ativo" id="empresa" class="size1">
                                 <option value="t" <?= ((@$_GET['ativo'] == 'f') ? '' : 'selected="selected"') ?>>Ativo</option>
@@ -24,9 +35,11 @@ $empresapermissao = $this->guia->listarempresasaladepermissao();
 
                             </select>
 
-                        </th>
+                        </th> -->
+                        <th></th>
+
                         <th class="tabela_title" style="text-align: left; width: 56%">
-                            <select name="ativo" id="empresa" class="size1">
+                        <select name="ativo" id="empresa" class="size1">
                                 <option value="t" <?= ((@$_GET['ativo'] == 'f') ? '' : 'selected="selected"') ?>>Ativo</option>
                                 <option value="f" <?= ((@$_GET['ativo'] == 'f') ? 'selected="selected"' : '') ?>>Não-ativo</option>
 
