@@ -7,125 +7,87 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
     <div class="alert alert-primary">Dados do Convenio</div>
         <form name="form_convenio" id="form_convenio" action="<?= base_url() ?>cadastros/convenio/gravar" method="post">
             <fieldset>
-            <div class="panel-body infodados">
+            <div class="panel-body">
                 <div class="row">
-                    <div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <label>Nome</label>
-                            <input type="hidden" name="txtconvenio_id" class="control-form" value="<?= @$obj->_convenio_id; ?>" />
-                            <input type="text" name="txtNome" class="control-form" value="<?= @$obj->_nome; ?>" /> 
+                            <input type="hidden" name="txtconvenio_id" class="form-control" value="<?= @$obj->_convenio_id; ?>" />
+                            <input type="text" name="txtNome" class="form-control" value="<?= @$obj->_nome; ?>" /> 
                         </div>      
-                    </div>
                     <div class="col-lg-2">      
-                        <div>
                             <label>Raz&atilde;o social</label>
-                            <input type="text" name="txtrazaosocial" class="control-form" value="<?= @$obj->_razao_social; ?>" />
-                        </div>
-                        <!-- <div>
-                            <label>Tamanho da Carteira</label>                    
-                            <input type="number" name="tamanho_carteira" class="control-form" value="<?= @$obj->_tamanho_carteira; ?>" />
-                        </div> -->
+                            <input type="text" name="txtrazaosocial" class="form-control" value="<?= @$obj->_razao_social; ?>" />
                     </div>
                     <div class="col-lg-2">
                         <div>
                             <label>Teste</label>
-                            <input type="text" name="txtcodigo" class="control-form" value="<?= @$obj->_codigoidentificador; ?>" />               
+                            <input type="text" name="txtcodigo" class="form-control" value="<?= @$obj->_codigoidentificador; ?>" />               
                         </div>
                     </div>
                     <div class="col-lg-2">   
                         <div>
                             <label>CNPJ</label>
-                            <input type="text" name="txtCNPJ" alt="cnpj" class="control-form" value="<?= @$obj->_cnpj; ?>" />
+                            <input type="text" name="txtCNPJ" alt="cnpj" class="form-control" value="<?= @$obj->_cnpj; ?>" />
                         </div>
                     </div>
                     <div class="col-lg-2">
                         <div>
                             <label>Codigo identifica&ccedil;&atilde;o</label>
-                            <input type="text" name="txtcodigo" class="control-form" value="<?= @$obj->_codigoidentificador; ?>" />               
+                            <input type="text" name="txtcodigo" class="form-control" value="<?= @$obj->_codigoidentificador; ?>" />               
                         </div> 
-                        <div>
-                            <label>&nbsp;</label>
-                            <?php
-                            if (@$obj->_carteira_obrigatoria == "t") {
-                                ?>
-                                <input type="checkbox"  class="control-form" name="txtcarteira" checked ="true" />Número da carteira/autorização obrigatorio
-                                <?php
-                            } else {
-                                ?>
-                                <input type="checkbox"  class="control-form" name="txtcarteira"  />Número da carteira/autorização obrigatorio
-                                <?php
-                            }
-                            ?>
-                        </div>
-                        <div>
-                            <label>&nbsp;</label>
-                            <?php
-                            if (@$obj->_guia_prestador_unico == "t") {
-                                ?>
-                                <input type="checkbox"  class="control-form" name="guia_prestador_unico" checked ="true" />Número único de guia do prestador (xml)
-                                <?php
-                            } else {
-                                ?>
-                                <input type="checkbox" class="control-form" name="guia_prestador_unico"  />Número único de guia do prestador (xml)
-                                <?php
-                            }
-                            ?>
-                        </div>
-                        <div>
-                            <label>&nbsp;</label>
-                            <input type="checkbox" name="numero_guia" <?= ($obj->_numero_guia == 't') ? "checked":""; ?> /> Número de Guia(autorização)                     
-                        </div>
+
                     </div>
                 </div>
             </fieldset>
+            <br>
             <fieldset>
                 <div class="alert alert-primary">Endereço</div>
                     <div class="row">
                         <div class="col-lg-2">      
                             <div>
                                 <label>Endere&ccedil;o</label>
-                                <input type="text" id="txtendereco"  class="control-form" name="endereco" value="<?= @$obj->_logradouro; ?>" />
+                                <input type="text" id="txtendereco"  class="form-control" name="endereco" value="<?= @$obj->_logradouro; ?>" />
                             </div>
                             <div>
                                 <label>N&uacute;mero</label>
-                                <input type="text" id="txtNumero"  class="control-form" name="numero" value="<?= @$obj->_numero; ?>" />
+                                <input type="text" id="txtNumero"  class="form-control" name="numero" value="<?= @$obj->_numero; ?>" />
                             </div>
                         </div>
                         <div class="col-lg-2">      
                             <div>
                                 <label>Bairro</label>
-                                <input type="text" id="txtBairro"  class="control-form" name="bairro" value="<?= @$obj->_bairro; ?>" />
+                                <input type="text" id="txtBairro"  class="form-control" name="bairro" value="<?= @$obj->_bairro; ?>" />
                             </div>
                             <div>
                                 <label>Complemento</label>
-                                <input type="text" id="txtComplemento"  class="control-form" name="complemento" value="<?= @$obj->_complemento; ?>" />
+                                <input type="text" id="txtComplemento"  class="form-control" name="complemento" value="<?= @$obj->_complemento; ?>" />
                             </div>
                         </div>
                         <div class="col-lg-2">      
                             <div>
                                 <label>Município</label>
-                                <input type="hidden" id="txtCidadeID"  class="control-form" name="municipio_id" value="<?= @$obj->_municipio_id; ?>" readonly="true" />
+                                <input type="hidden" id="txtCidadeID"  class="form-control" name="municipio_id" value="<?= @$obj->_municipio_id; ?>" readonly="true" />
                                 <input type="text" id="txtCidade" class="texto04" name="txtCidade" value="<?= @$obj->_cidade_nome; ?>" />
                             </div>
                             <div>
                                 <label>CEP</label>
-                                <input type="text" id="txtCep" class="control-form" name="cep" alt="cep" value="<?= @$obj->_cep; ?>" />
+                                <input type="text" id="txtCep" class="form-control" name="cep" alt="cep" value="<?= @$obj->_cep; ?>" />
                             </div>
                         </div>
                         <div class="col-lg-2">      
                             <div>
                                 <label>Telefone</label>
-                                <input type="text" id="txtTelefone" class="control-form" name="telefone" alt="phone" value="<?= @$obj->_telefone; ?>" />
+                                <input type="text" id="txtTelefone" class="form-control" name="telefone" alt="phone" value="<?= @$obj->_telefone; ?>" />
                             </div>
                             <div>
                                 <label>Celular</label>
-                                <input type="text" id="txtCelular"  class="control-form" name="celular" alt="phone" value="<?= @$obj->_celular; ?>" />
+                                <input type="text" id="txtCelular"  class="form-control" name="celular" alt="phone" value="<?= @$obj->_celular; ?>" />
                             </div>
                         </div>
                         <div class="col-lg-2">
                             <div>
                                 <label>T. logradouro</label>
-                                <select name="tipo_logradouro" id="txtTipoLogradouro"  class="control-form" >
+                                <select name="tipo_logradouro" id="txtTipoLogradouro"  class="form-control" >
                                     <option value='' >selecione</option>
                                     <?php
                                     $listaLogradouro = $this->paciente->listaTipoLogradouro($_GET);
@@ -145,6 +107,7 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
                     </div>
                 </div>
             </fieldset>
+            <br>
             <fieldset>
                 <div class="alert alert-primary">Detalhes</div>
                     <div class="row">
@@ -187,21 +150,21 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
                             </div>
                             <div id="ajuste-cbhpm"> 
                                 <label>Ajuste CBHPM Porte (%)</label>
-                                <input type="number" id="valor_ajuste_cbhpm" class="control-form" name="valor_ajuste_cbhpm" step="0.01" value="<?= @$obj->_valor_ajuste_cbhpm; ?>" />
+                                <input type="number" id="valor_ajuste_cbhpm" class="form-control" name="valor_ajuste_cbhpm" step="0.01" value="<?= @$obj->_valor_ajuste_cbhpm; ?>" />
                             </div>
 
                             <div id="ajuste-cbhpmfilme"> 
                                 <label>Ajuste CBHPM Filme (Valor)</label>
-                                <input type="number" id="valor_ajuste_cbhpm_filme" class="control-form" name="valor_ajuste_cbhpm_filme" step="0.01" value="<?= @$obj->_valor_ajuste_cbhpm_filme; ?>" />
+                                <input type="number" id="valor_ajuste_cbhpm_filme" class="form-control" name="valor_ajuste_cbhpm_filme" step="0.01" value="<?= @$obj->_valor_ajuste_cbhpm_filme; ?>" />
                             </div>
 
                             <div id="ajuste-cbhpmuco"> 
                                 <label>Ajuste CBHPM Uco (%)</label>
-                                <input type="number" id="valor_ajuste_cbhpm_uco" class="control-form" name="valor_ajuste_cbhpm_uco" step="0.01" value="<?= @$obj->_valor_ajuste_cbhpm_uco; ?>" />
+                                <input type="number" id="valor_ajuste_cbhpm_uco" class="form-control" name="valor_ajuste_cbhpm_uco" step="0.01" value="<?= @$obj->_valor_ajuste_cbhpm_uco; ?>" />
                             </div>
                             <div>
                                 <label>Grupo convenio</label>
-                                <select name="grupoconvenio" id="grupoconvenio" class="control-form" >
+                                <select name="grupoconvenio" id="grupoconvenio" class="form-control" >
                                     <option value='' >selecione</option>
                                     <?php
                                     $grupoconvenio = $this->grupoconvenio->listargrupoconvenios();
@@ -229,57 +192,58 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
                         <div class="col-lg-2">      
                             <div>
                                 <label>IR</label>
-                                <input type="text" id="ir" class="control-form" name="ir" alt="decimal" value="<?= @$obj->_ir; ?>" />
+                                <input type="text" id="ir" class="form-control" name="ir" alt="decimal" value="<?= @$obj->_ir; ?>" />
                             </div>
                             <div>
                                 <label>PIS</label>
-                                <input type="text" id="pis" class="control-form" name="pis" alt="decimal" value="<?= @$obj->_pis; ?>" />
+                                <input type="text" id="pis" class="form-control" name="pis" alt="decimal" value="<?= @$obj->_pis; ?>" />
                             </div>
                         </div>
                         <div class="col-lg-2">      
                             <div>
                                 <label>COFINS</label>
-                                <input type="text" id="cofins" class="control-form" name="cofins" alt="decimal" value="<?= @$obj->_cofins; ?>" />
+                                <input type="text" id="cofins" class="form-control" name="cofins" alt="decimal" value="<?= @$obj->_cofins; ?>" />
                             </div>
                             <div>
                                 <label>CSLL</label>
-                                <input type="text" id="csll" class="control-form" name="csll" alt="decimal" value="<?= @$obj->_csll; ?>" />
+                                <input type="text" id="csll" class="form-control" name="csll" alt="decimal" value="<?= @$obj->_csll; ?>" />
                             </div>
                         </div>
                         <div class="col-lg-2">      
                             <div>
                                 <label>Valor do Contrato</label>
-                                <input type="text" id="valor_contrato" class="control-form" name="valor_contrato" alt="decimal" value="<?= @$obj->_valor_contrato; ?>" />
+                                <input type="text" id="valor_contrato" class="form-control" name="valor_contrato" alt="decimal" value="<?= @$obj->_valor_contrato; ?>" />
                             </div>
                             <div>
                                 <label>ISS</label>
-                                <input type="text" id="iss" class="control-form" name="iss" alt="decimal" value="<?= @$obj->_iss; ?>" />
+                                <input type="text" id="iss" class="form-control" name="iss" alt="decimal" value="<?= @$obj->_iss; ?>" />
                             </div>
                         </div>
                         <div class="col-lg-2">      
                             <div>
                                 <label>Valor Base para Imposto</label>
-                                <input type="text" id="valor_base" class="control-form" name="valor_base" alt="decimal" value="<?= @$obj->_valor_base; ?>" />
+                                <input type="text" id="valor_base" class="form-control" name="valor_base" alt="decimal" value="<?= @$obj->_valor_base; ?>" />
                             </div>
                             <div>
                                 <label>Data entrega</label>
-                                <input type="text" id="entrega" class="control-form" name="entrega" alt="integer" value="<?= @$obj->_entrega; ?>" />
+                                <input type="text" id="entrega" class="form-control" name="entrega" alt="integer" value="<?= @$obj->_entrega; ?>" />
                             </div>
                         </div>
                         <div class="col-lg-2">      
                             <div>
                                 <label>Tempo para pagamento</label>
-                                <input type="text" id="pagamento" class="control-form" name="pagamento" alt="integer" value="<?= @$obj->_pagamento; ?>" />
+                                <input type="text" id="pagamento" class="form-control" name="pagamento" alt="integer" value="<?= @$obj->_pagamento; ?>" />
 
                             </div>
                             <div>
                                 <label>Dia de Aquisição</label>
-                                <input type="number" id="dia_aquisicao" name="dia_aquisicao" class="control-form" value="<?= @$obj->_dia_aquisicao; ?>" max="31" min="1"/>
+                                <input type="number" id="dia_aquisicao" name="dia_aquisicao" class="form-control" value="<?= @$obj->_dia_aquisicao; ?>" max="31" min="1"/>
                             </div>
                         </div>
                     </div>
                 </div>
             </fieldset>
+            <br>
                 <? if ($medicinadotrabalho == "t") { ?>
 
                     <fieldset>
@@ -310,6 +274,7 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
                         </div>
                     </fieldset>
                 <? } ?>
+                <br>
             <fieldset>
                 <div class="alert alert-primary">Condi&ccedil;&atilde;o de recebimento</div>
                     <div class="row">
@@ -360,19 +325,20 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
                     </div>
                 </div>
             </fieldset>
+            <br>
             <fieldset>
                 <div class="alert alert-primary">Fidelidade</div>
                     <div class="row">
                         <div class="col-lg-2">
                             <div>
                                 <label>Endereço IP</label>
-                                <input type="text" name="fidelidade_endereco_ip" class="control-form" placeholder="Ex: stgfidelidade.ddns.net/fidelidade" value="<?= @$obj->_fidelidade_endereco_ip; ?>" />
+                                <input type="text" name="fidelidade_endereco_ip" class="form-control" placeholder="Ex: stgfidelidade.ddns.net/fidelidade" value="<?= @$obj->_fidelidade_endereco_ip; ?>" />
                             </div>
                         </div>
                         <div class="col-lg-2"> 
                             <div>
                                 <label>Parceiro ID</label>
-                                <input type="number" name="fidelidade_parceiro_id" class="control-form" value="<?= @$obj->_fidelidade_parceiro_id; ?>" />
+                                <input type="number" name="fidelidade_parceiro_id" class="form-control" value="<?= @$obj->_fidelidade_parceiro_id; ?>" />
                             </div>
                         </div>
                         <div class="col-lg-4"> 
@@ -380,26 +346,18 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
                                 <label>Observa&ccedil;&atilde;o</label>
                             </div>
                             <div>
-                                <textarea cols="" rows="" name="txtObservacao" class="control-form" class="texto_area"><?= @$obj->_observacao; ?></textarea>
+                                <textarea cols="" rows="" name="txtObservacao" class="form-control" class="texto_area"><?= @$obj->_observacao; ?></textarea>
                             </div>
                         <div>
                     </div>
                 </div>
             </fieldset>
-            <fieldset>
-                <div class="alert alert-primary">Associaçao de Convenio</div>
-                    <div class="row">
-                        <div class="col-lg-2">
-                            <input type="checkbox" name="associaconvenio" id="associaconvenio" <?= (@$obj->_associado == 't') ? 'checked' : ""; ?>/> Associar a outro convenio
-                        </div>
-                    </div>
-                </div>
-            </fieldset>
+            <br>
                 <div>
-                    <button type="submit" class="btn btn-success btn-sm" name="btnEnviar">Enviar</button>
-                    <button type="reset"  class="btn btn-warning btn-sm" name="btnLimpar">Limpar</button>
+                    <button type="submit" class="btn btn-outline-default btn-sm" name="btnEnviar">Enviar</button>
+                    <button type="reset"  class="btn btn-outline-default btn-sm" name="btnLimpar">Limpar</button>
                     <a href="<?= base_url() ?>cadastros/convenio">
-                        <button type="button" id="btnVoltar" class="btn btn-secondary btn-sm">Voltar</button>
+                        <button type="button" id="btnVoltar" class="btn btn-outline-default btn-sm">Voltar</button>
                         </a>
                     </div>
                 </div>

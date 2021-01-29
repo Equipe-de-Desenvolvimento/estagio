@@ -54,26 +54,22 @@ $excluircadastro_id = $this->session->userdata('excluircadastro_id');
                     }
                     ?>
                         <div class="table-responsive">
-                            
-                              <div class="panel-body">
-                            <table  class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <table  class="table table-bordered table-hover" id="dataTables-example">
                                 <tr>
                                     
-                                    <th class="tabela_header">Razão Social</th>
-                                    <th class="tabela_header">CNPJ</th>
-                                    <th class="tabela_header">CPF</th>
-                                    <th class="tabela_header">Email</th>
-                                    <th class="tabela_header">Email Alternativo</th>
-                                    <th class="tabela_header">Telefone</th>
-                                    <th class="tabela_header">Telefone 2</th>
-                                    <th class="tabela_header">Whatsapp</th>
-                                    <th class="tabela_header">Endereço</th>
-                                    <th class="tabela_header">Município</th>
-                                    <th style="text-align: center;">Ações</th>
+                                    <th >Razão Social</th>
+                                    <th >CNPJ</th>
+                                    <th >CPF</th>
+                                    <th >Email</th>
+                                    <th >Telefone</th>
+                                    <th >Whatsapp</th>
+                                    <th >Endereço</th>
+                                    <th >Município</th>
+                                    <th>Ações</th>
                                           
                                         
                                     <? if ($filtro_exame == 't') { ?>
-                                        <th class="tabela_header"></th>
+                                        <th ></th>
                                         
                                     <? } ?>
                                  
@@ -137,77 +133,26 @@ $excluircadastro_id = $this->session->userdata('excluircadastro_id');
                                             
                                             ?>
                                         
-                                                <td class="<?php echo $estilo_linha; ?>"width="200px;" ><?php echo $item->nome; ?></td>
-                                                <td class="<?php echo $estilo_linha; ?>"width="150px;" ><?php echo $item->cnpj; ?></td>
-                                                <td class="<?php echo $estilo_linha; ?>"width="150px;" ><?php echo $item->cpf; ?></td>
-                                                <td class="<?php echo $estilo_linha; ?>"width="150px;" ><?php echo $item->email; ?></td>
-                                                <td class="<?php echo $estilo_linha; ?>"width="150px;" ><?php echo $item->email_alternativo; ?></td>
-                                                <td class="<?php echo $estilo_linha; ?>"width="150px;" ><?php echo $telefone; ?></td>
-                                                <td class="<?php echo $estilo_linha; ?>"width="150px;" ><?php echo $telefone2; ?></td>
-                                                <td class="<?php echo $estilo_linha; ?>"width="150px;" ><?php echo $whatsapp; ?></td>
-                                                <td class="<?php echo $estilo_linha; ?>"width="150px;" ><?php echo $item->endereco; ?></td>
-                                                <td class="<?php echo $estilo_linha; ?>"width="150px;" ><?php echo $item->municipio; ?></td>
-                                                
-                                                <? if ($filtro_exame == 't') { ?>
-                                                    <td class="<?php echo $estilo_linha; ?>"></td>
-                                                <? } ?>
+                                                <td ><?php echo $item->nome; ?></td>
+                                                <td  ><?php echo $item->cnpj; ?></td>
+                                                <td  ><?php echo $item->cpf; ?></td>
+                                                <td  ><?php echo $item->email; ?></td>
+                                                <td  ><?php echo $telefone; ?></td>
+                                                <td  ><?php echo $whatsapp; ?></td>
+                                                <td  ><?php echo $item->endereco; ?></td>
+                                                <td  ><?php echo $item->municipio; ?></td>
 
-                                                <?
-                                                if (($empresapermissoes[0]->tecnico_acesso_acesso == 't' && $this->session->userdata('perfil_id') == 7) || ($empresapermissoes[0]->tecnico_acesso_acesso == 't' && $this->session->userdata('perfil_id') == 15)) {
-                                                    ?>
-                                                    <td class="<?php echo $estilo_linha; ?>" width="50px;" colspan="2" >
+                                                    <td  width="50px;" colspan="" >
 
-                                                    <? } else {
-                                                        ?>
-                                                    <td class="<?php echo $estilo_linha; ?>" width="50px;" colspan="2" >
-                                                        <?
-                                                        
-                                                    }
-                                                    ?>
-                                                        
-                                                        
-                                                    <?
-                                                    if (($empresapermissoes[0]->tecnico_acesso_acesso == 't' && $this->session->userdata('perfil_id') == 7) || ($empresapermissoes[0]->tecnico_acesso_acesso == 't' && $this->session->userdata('perfil_id') == 15)) {
-                                                        ?>
-                                                            <a href="<?= base_url() ?>cadastros/pacientes/visualizarcarregar/<?= $item->paciente_id ?>">
-                                                                <b>Visualizar</b>
-                                                            </a>
-
-                                                        <?
-                                                    } else {
-                                                        ?>
-
-                                                        <? if (($tecnico_recepcao_editar == 't' || $perfil_id != 15) && $perfil_id != 24) { ?>
-                                                            <div class="bt_link">
-                                                                     <a class="btn btn-outline-default btn-round btn-sm" href="<?=base_url() ?>cadastros/pacientes/novainstituicao/<?= $item->instituicao_id ?>">
+                                                        <a style="width:90px;" class="btn btn-outline-default btn-round btn-sm" href="<?=base_url() ?>cadastros/pacientes/novainstituicao/<?= $item->instituicao_id ?>">
                                                                   <b>Editar</b>
-                                                                </a> 
-                                                            </div>
-                                                       <? } else { ?>
-                                                           <div class="bt_link">
-                                                               <a href="<?= base_url() ?>cadastros/pacientes/visualizarcarregar/<?= $item->paciente_id ?>">
-                                                                    <b>Visualizar</b>
-                                                                </a>
-                                                            </div>
-                                                        <? } ?>
+                                                        </a> 
+                                                        <br><br>
+
+                                                        <a style="width:90px;" class="btn btn-outline-default btn-round btn-sm" onclick="javascript:return confirm('Deseja realmente excluir a instituição?');" href="<?=base_url() ?>cadastros/pacientes/excluircadastro/<?= $item->instituicao_id ?>">       
+                                                            <b>Excluir</b>
+                                                        </a>
                                                     </td>
-
-                                                    <?php
-                                                    
-                                                    if($this->session->userdata('perfil_id') != 24){?>
-                                                    <td class="<?php echo $estilo_linha; ?>">
-                                                        <div class="bt_link">
-                                                            <a class="btn btn-outline-default btn-round btn-sm" onclick="javascript:return confirm('Deseja realmente excluir a instituição?');" href="<?=base_url() ?>cadastros/pacientes/excluircadastro/<?= $item->instituicao_id ?>">       
-                                                                <b>Excluir</b>
-                                                            </a></div>
-                                                    </td>
-                                                                <?php }
-                                                                
-                                                }
-                                                ?>
-
-
-
                                         </tbody>
                                         <?php
                                     }
@@ -215,7 +160,7 @@ $excluircadastro_id = $this->session->userdata('excluircadastro_id');
                                 ?>
                                 <tfoot>
                                     <tr>
-                                        <th class="tabela_footer" colspan="10">
+                                        <th class="tabela_footer" colspan="9">
                                             <div class="pagination">
                                                 <?php $this->utilitario->paginacao($url, $total, $pagina, $limit); ?>
                                                 Total de registros: <?php echo $total; ?>
@@ -224,7 +169,6 @@ $excluircadastro_id = $this->session->userdata('excluircadastro_id');
                                     </tr>
                                 </tfoot>
                             </table>
-                        </div>
                     </div>
             </div>
         </div>

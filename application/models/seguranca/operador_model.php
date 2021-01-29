@@ -85,6 +85,7 @@ class Operador_model extends BaseModel {
                 ->select('"tb_operador".*, tb_perfil.nome as nomeperfil');
 
         $this->db->where('tb_operador.usuario IS NOT NULL');
+        $this->db->where('tb_operador.perfil_id NOT IN (2,9)');
 //        $this->db->where('tb_operador.senha IS NOT NULL');
         $operador_id = $this->session->userdata('operador_id');
 

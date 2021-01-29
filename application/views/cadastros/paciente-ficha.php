@@ -12,10 +12,9 @@
             }
             $tecnico_recepcao_editar = @$empresapermissoes[0]->tecnico_recepcao_editar;
             $perfil_id = $this->session->userdata('perfil_id');
-//            echo'<pre>';
-//            var_dump(@$empresapermissoes); die;
+            
             ?>
-            <div class="alert alert-primary">Dados do Estagiário</div>
+            <div class="alert alert-primary"><b>Dados do Estagiário</b></div>
                 <div class="panel-body infodados">
                     <div class="row">
                         <div class="col-lg-3">
@@ -48,15 +47,9 @@
                                     <?= (in_array('email2', $campos_obrigatorios)) ? 'required' : '' ?>/>
                             </div>
                         </div>
-                        <div class="col-lg-123">
-                                <div>
+                        <div class="col-lg-2">
                                     <label>Idade</label>
                                     <input type="text" name="idade2" id="idade2" class="form-control" />
-                                </div>
-                                <div>
-                                    <label>Senha</label>
-                                    <input type="password" id="senha_app" name="senha_app"  class="form-control" value="<?= @$obj[0]->_senha_app; ?>" />
-                                </div>
                             </div>    
                         <div class="col-lg-2">
                             <div>
@@ -169,7 +162,7 @@
                     <!-- </div> -->
                 </div>
           
-            <div class="alert alert-primary">Documentos</div>
+            <div class="alert alert-primary"><b>Documentos</b></div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-2">
@@ -218,8 +211,8 @@
 
         </fieldset>
         <div class="panel panel-default alertresid">
-            <div class="alert alert-info ">
-                Domicilio
+            <div class="alert alert-primary ">
+            <b>Domicilio</b>
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -310,7 +303,7 @@
         </div>
     <div class="panel panel-default socialalert">
         <div class="alert alert-primary">
-            Dados Sociais
+            <b>Dados Sociais</b>
         </div>
         <div class="panel-body socialdata">
             <div class="row">
@@ -481,28 +474,19 @@
             </div>
         </div>
     </div>
-    <div class="accordion">
-        <div class="card">
-            <div class="card-header" id="headingOne">
-                Acesso
-                <button id="mostrarDadosExtras"type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#demo">
-                     +
-                </button>
-            </div>
-            <div id="demo" class="collapse">
-                    <div>
-                        <label>Nome usu&aacute;rio App</label>
+    <div class="alert alert-primary"><b>Acesso</b></div>
+    <div class="row">
+                    <div class="col-lg-3">
+                        <label>Nome Usuario</label>
 
-                        <input type="text" id="txtUsuarioapp" name="txtUsuarioapp"  class="texto04" value="<?= @$obj[0]->_usuario_app; ?>"/>
+                        <input type="text" id="txtUsuarioapp" name="txtUsuarioapp"  class="form-control" value="<?= @$obj[0]->_usuario_app; ?>" required/>
                     </div>
-                    <div>
-                        <label>Senha App:</label>
-                        <input type="password" name="txtSenhaapp" id="txtSenhaapp" class="texto04" >
+                    <div class="col-lg-3">
+                        <label>Senha Usuario:</label>
+                        <input type="password" name="txtSenhaapp" id="txtSenhaapp" class="form-control" >
                     </div>
-
-            </div>
         </div>
-    </div>
+
 <!--        <fieldset>-->
 <!--            <legend>Fotografia</legend>-->
 <!---->

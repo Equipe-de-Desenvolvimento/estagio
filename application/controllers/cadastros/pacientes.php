@@ -153,9 +153,115 @@ class pacientes extends BaseController {
     public function pesquisarGestaoEstagio($args = array()) {
         $this->loadView('cadastros/pacientesgestaoestagio-lista');
     }
+
     public function pesquisarMapaGestao($args = array()) {
-        $this->loadView('cadastros/pacientesmapadevagas-lista');
+        $this->loadView('cadastros/pacientesmapadevagas-lista', $args);
     }
+
+    function cadastrodevagas($vagas_id){
+        $data['instituicao'] = $this->paciente->listarinstituicao_vagas();
+        $data['convenios'] = $this->paciente->listarconvenios();
+        $data['vagas_id'] = $vagas_id;
+        $data['obj'] = $this->paciente->listarvagasinfo($vagas_id);
+        // echo '<pre>';
+        // print_r($data['obj']);
+        // die;
+        $this->loadView('cadastros/cadastrodevagas-form', $data);
+    }
+
+    function cadastrosolicitacaodevagas($solicitacao_vaga_id){
+        // $data['instituicao'] = $this->paciente->listarinstituicao_vagas();
+        // $data['convenios'] = $this->paciente->listarconvenios();
+        $data['solicitacao_vaga_id'] = $solicitacao_vaga_id;
+        $data['obj'] = $this->paciente->listarvagasinfo($solicitacao_vaga_id);
+        $this->loadView('cadastros/solicitacaodevagas-form', $data);
+    }
+    
+
+    function gravarcadastrovagas(){
+        $teste = $this->paciente->gravarvagas();
+
+        if($teste > 0){
+            $data['mensagem'] = 'Vaga gravado com sucesso';
+        }else{
+            $data['mensagem'] = 'Erro ao gravar a Vaga';
+        }
+
+        $this->session->set_flashdata('message', $data['mensagem']);
+        redirect(base_url() . "cadastros/pacientes/pesquisarMapaGestao");
+    }
+
+    function gravarsolicitacaodevagas(){
+        $teste = $this->paciente->gravarsolicitacaodevagas();
+
+        if($teste > 0){
+            $data['mensagem'] = 'Solicitação de vaga gravado com sucesso';
+        }else{
+            $data['mensagem'] = 'Erro ao gravar a Solicitação Vaga';
+        }
+
+        $this->session->set_flashdata('message', $data['mensagem']);
+        redirect(base_url() . "cadastros/pacientes/solicitarvagas");
+    }
+
+    function excluircadastrodevagas($vagas_id){
+        $teste = $this->paciente->excluirvagas($vagas_id);
+
+        if($teste){
+            $data['mensagem'] = 'Vaga excluida com sucesso';
+        }else{
+            $data['mensagem'] = 'Erro ao excluir a Vaga';
+        }
+
+        $this->session->set_flashdata('message', $data['mensagem']);
+        redirect(base_url() . "cadastros/pacientes/pesquisarMapaGestao");
+    }
+
+    function excluirsolicitacaodevagas($solicitacao_vaga_id){
+        $teste = $this->paciente->excluirsolicitacaodevagas($solicitacao_vaga_id);
+
+        if($teste){
+            $data['mensagem'] = 'Solicitação Vaga excluida com sucesso';
+        }else{
+            $data['mensagem'] = 'Erro ao excluir a Solicitação de Vaga';
+        }
+
+        $this->session->set_flashdata('message', $data['mensagem']);
+        redirect(base_url() . "cadastros/pacientes/solicitarvagas");
+    }
+
+    function negarsolicitacaodevagas($solicitacao_vaga_id){
+        $teste = $this->paciente->negarsolicitacaodevagas($solicitacao_vaga_id);
+
+        if($teste){
+            $data['mensagem'] = 'Solicitação Vaga negada com sucesso';
+        }else{
+            $data['mensagem'] = 'Erro ao negar a Solicitação de Vaga';
+        }
+
+        $this->session->set_flashdata('message', $data['mensagem']);
+        redirect(base_url() . "cadastros/pacientes/solicitarvagas");
+    }
+
+    function autorizarsolicitacaodevagas($solicitacao_vaga_id){
+        $teste = $this->paciente->autorizarsolicitacaodevagas($solicitacao_vaga_id);
+
+        if($teste){
+            $data['mensagem'] = 'Solicitação Vaga Autorizada com sucesso';
+        }else{
+            $data['mensagem'] = 'Erro ao Autorizada a Solicitação de Vaga';
+        }
+
+        $this->session->set_flashdata('message', $data['mensagem']);
+        redirect(base_url() . "cadastros/pacientes/solicitarvagas");
+    }
+    
+
+    function solicitarvagas($args = array()){
+        $this->loadView('cadastros/solicitacaodevagas-lista', $args);
+    }
+
+
 
     public function mapaGestaoCadastro($args = array()) {
         $this->loadView('cadastros/mapaGestaoCadastro');
@@ -174,16 +280,14 @@ class pacientes extends BaseController {
         $this->loadView('cadastros/precadastropaciente-lista',  $args);       
     }
 
-    function novo($paciente_id = null) {
+    function novo($paciente_id = 0) {
 
         $data['idade'] = 0;
         $data['empresapermissoes'] = $this->guia->listarempresapermissoes();
         $data['listaLogradouro'] = $this->paciente->listaTipoLogradouro();
         $data['listaconvenio'] = $this->paciente->listaconvenio();
         $obj_paciente = new paciente_model($paciente_id);
-        $data['obj'] = $obj_paciente;
-        // echo'<pre>';
-        // var_dump($data); die;
+        $data['obj'] = array($obj_paciente);
         $this->loadView('cadastros/paciente-ficha', $data);
     }
 
@@ -1733,18 +1837,16 @@ function carregarpacientecenso($prontuario = null, $nome = null, $procedimento =
     }
 
     function novainstituicao($instituicao_id = 0) {
-
         $data['idade'] = 0;
         $data['empresapermissoes'] = $this->guia->listarempresapermissoes();
         $data['listaLogradouro'] = $this->paciente->listaTipoLogradouro();
         $data['listaMunicipios'] = $this->paciente->buscarMunicipio();
-        // echo '<pre>';
-        // var_dump($data['listaMunicipios']); 
-        // die;
         $data['listaconvenio'] = $this->paciente->listaconvenio();
         $data['obj'] = $this->paciente->listarinstituicaoid($instituicao_id);
         $data['instituicao_id'] = $instituicao_id;
-    //  $data['empresaPermissao'] = $this->guia->listarempresapermissoes();
+        // $data['empresaPermissao'] = $this->guia->listarempresapermissoes();
+
+
         $this->loadView('cadastros/instituicao-ficha', $data);
     }
 

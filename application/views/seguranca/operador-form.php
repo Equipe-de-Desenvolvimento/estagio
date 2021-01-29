@@ -57,10 +57,6 @@
                 </div>
                 <?}?>
                 
-                <div class="col-lg-2">
-                    <label>Cor do Mapa</label>
-                    <input type="color" id="txtcolor" name="txtcolor"  class="form_control" value="<?= @$obj->_cor_mapa; ?>" />
-                </div>
                     <br>
 
                 <div class="col-lg-2"> 
@@ -74,23 +70,6 @@
                     <input type="text" id="txtcbo" class="form-control" name="txtcbo" value="<?= @$obj->_cbo_nome; ?>" />
                 </div>
                 
-                <div class="col-lg-2">
-                    <label>Grupos</label>
-                    <select data-placeholder="Selecione um ou mais grupo" name="grupo_agenda[]" id="grupo_agenda" class="form-control chosen-select" multiple>
-                        <?
-
-                        if (@$obj->_grupo_agenda != '') {
-                            $gruposExi = json_decode(@$obj->_grupo_agenda);
-                        } else {
-                            $gruposExi = array();
-                        }
-                        
-                        ?>
-                        <?foreach ($grupos as $key => $value) {?>
-                            <option <?= (@in_array($value->nome, $gruposExi)) ? 'selected' : ''; ?> value="<?=$value->nome?>"><?=$value->nome?></option>
-                        <?}?>
-                    </select>
-                </div>
 
                 <?
                 if (@$empresapermissao[0]->cirugico_manual == 't') {
@@ -117,21 +96,6 @@
                             <input type="checkbox" name="profissional_aluguel" <? if (@$obj->_profissional_aluguel == "t") echo 'checked' ?>  title="Ao marcar essa flag, o médico poder realizar agendamentos"/><b style="font-weight: normal;" title="Ao marcar essa flag o médico poderá realizar agendamentos.">Profissional Alugar Sala</b>
                             </div>
                         </div>    
-                        <div class="col-lg-2">
-                            <!-- <div>
-                                <label>Grupos</label>
-                                <select data-placeholder="Selecione um ou mais grupo" name="grupo_agenda[]" id="grupo_agenda" class="size2 chosen-select" multiple>
-                                    <?
-                                
-                                    
-                                    if (@$obj->_grupo_agenda != '') {
-                                        $gruposExi = json_decode(@$obj->_grupo_agenda);
-                                    } else {
-                                        $gruposExi = array();
-                                    }
-                                    ?> 
-                        </select>
-                    </div>
 
                     <div class="col-lg-2">
                         <label title="UF">UF</label> 
@@ -577,13 +541,10 @@
 }
 ?>
 
-</div> <!-- Final da DIV content -->
+</div> 
 
-<link rel="stylesheet" href="<?= base_url() ?>js/chosen/chosen.css">
-<!--<link rel="stylesheet" href="<?= base_url() ?>js/chosen/docsupport/style.css">-->
-<link rel="stylesheet" href="<?= base_url() ?>js/chosen/docsupport/prism.css">
-<script type="text/javascript" src="<?= base_url() ?>js/chosen/chosen.jquery.js"></script>
-<!--<script type="text/javascript" src="<?= base_url() ?>js/chosen/docsupport/prism.js"></script>-->
+
+<script type="text/javascript" src="<?= base_url() ?>js/chosen/docsupport/prism.js"></script>-->
 <script type="text/javascript" src="<?= base_url() ?>js/chosen/docsupport/init.js"></script>
 <script>
                         function mascaraTelefone(campo) {

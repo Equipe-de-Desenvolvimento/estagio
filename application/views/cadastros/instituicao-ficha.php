@@ -19,7 +19,7 @@
 //            var_dump(@$empresapermissoes); die;
             ?>
         <fieldset> 
-            <div class="alert alert-primary">Nova Instituição</div>
+            <div class="alert alert-primary"><b>Nova Instituição</b></div>
                 <div class="panel-body infodados">
                     <div class="row">
                         <div class="col-lg-3">
@@ -75,14 +75,6 @@
                     </div>
                 
                     <div class="col-lg-2">
-                        <!-- <div>
-                            <label>Tipo Pessoa</label>
-                            <select name="tipo_pessoa" class="form-control" id="tipo_pessoa" class="size6" required="">
-                                <option value="">Selecione</option>
-                                <option <?=(@$obj->_tipo_pessoa == 'pessoa_f')? 'selected':'' ; ?> value="pessoa_f">Pessoa Física</option>
-                                <option <?=(@$obj->_tipo_pessoa == 'pessoa_j')? 'selected':'' ; ?> value="pessoa_j">Pessoa Jurídica</option>
-                            </select>
-                        </div> -->
                         <div>
                             <label>CNPJ</label>
                             <input type="text" placeholder="CNPJ" name="cnpj" id ="txtCnpj" onblur="verificarCNPJ();" alt="cnpj" class="cnpj form-control" value="<?= @$obj[0]->cnpj; ?>"/>
@@ -160,8 +152,8 @@
                 </div>
             </div>   
             
-            <div class="alert alert-primary">Convênio</div>
-                <div class="panel-body infodados">
+            <div class="alert alert-primary"><b>Convênio</b></div>
+                <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-3">
                             <label>Nome do Responsável Pelo Convênio *</label>
@@ -188,17 +180,33 @@
                                 ?>
                             
                             <input type="text"  placeholder="(99)9999-99999" id="txtTelefone_convenio" name="telefone_convenio" class="form-control celular"  value="<?= @$obj[0]->telefone_convenio; ?>" <?= (in_array('telefone_convenio', $campos_obrigatorios)) ? 'required' : '' ?>/>
-                            <!--<button class="btn btn-outline-danger btn-sm" type=button id="btnWhats" onclick="pegarWhats();"> WP </button>-->
                         </div>
                         <div class="col-lg-3">
                             <label>Observação</label>
                             <input type="text" name="observacao_convenio" placeholder="Observações"  id="observacao_convenio" class="form-control" value="<?= @$obj[0]->observacao_convenio; ?>" />
                         </div>
+
                     </div>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>Nome usu&aacute;rio *</label>
+                            <input type="text" id="txtUsuario" name="txtUsuario"  class="form-control" value="<?= @$obj[0]->usuario; ?>" required="true"/>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <label>Senha: *</label>
+                            <input type="password" name="txtSenha" id="txtSenha" class="form-control" value="" <? if (@$obj[0]->senha == null) {
+                            ?>
+                                    required="true"
+                                <? } ?> />
+                        </div>
+                    </div>
+                    
                 </div> 
             </div>  
 
-            <div class="alert alert-primary">Financeiro</div>
+            <div class="alert alert-primary"><b>Financeiro</b></div>
                 <div class="panel-body infodados">
                     <div class="row">
                         <div class="col-lg-3">
@@ -226,7 +234,6 @@
                                 ?>
                             
                             <input type="text"  placeholder="(99)9999-99999" id="txtTelefone_financeiro" name="telefone_financeiro" class="form-control celular"  value="<?= @$obj[0]->telefone_financeiro; ?>" <?= (in_array('telefone_financeiro', $campos_obrigatorios)) ? 'required' : '' ?>/>
-                            <!--<button class="btn btn-outline-danger btn-sm" type=button id="btnWhats" onclick="pegarWhats();"> WP </button>-->
                         </div>
                         <div class="col-lg-3">
                             <label>Observação</label>
@@ -235,7 +242,7 @@
                     </div>
                 </div> 
             </div>    
-            <div class="alert alert-primary">Jurídico</div>
+            <div class="alert alert-primary"><b>Jurídico</b></div>
                 <div class="panel-body infodados">
                     <div class="row">
                         <div class="col-lg-3">

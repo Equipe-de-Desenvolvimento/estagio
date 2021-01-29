@@ -127,6 +127,10 @@ function debug($object) {
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 <!--    <link src="http://maxcdn.bootstrapcdn.com/font-awesome/5.10.0/css/font-awesome.min.css" rel="stylesheet">-->
     <!-- Font Awesome Icons -->
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
     <link href="<?= base_url() ?>bootstrap/assets/css/all.css" rel="stylesheet" />
 <!--    <link href="--><?//= base_url() ?><!--bootstrap/assets/css/fontawesome.css" rel="stylesheet" />-->
     <link href="<?= base_url() ?>bootstrap/assets/css/nucleo-svg.css" rel="stylesheet" />
@@ -252,6 +256,10 @@ function debug($object) {
                         
                         <li>
                             <a class="dropdown-item" href="<?= base_url() ?>ambulatorio/modelolaudo/pesquisar">Instituição de Ensino</a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="<?= base_url() ?>cadastros/pacientes/solicitarvagas">Solicitação de Vaga</a>
                         </li>
                     <!-- </li> -->
                 </ul>
@@ -547,10 +555,10 @@ function debug($object) {
                             <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/pacientes/pesquisarMapaGestao">Mapa de Vagas</a>
                         </li>
                         <li>
-                            <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/procedimentoplano">Convenio</a>
+                             <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/convenio">Manter Convenio</a>
                         </li>
                         <li>
-                             <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/convenio">Manter Convenio</a>
+                            <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/procedimentoplano">Convenios</a>
                         </li>
                     </ul>
             </li>

@@ -114,7 +114,7 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                     if (!(($empresapermissoes[0]->tecnico_acesso_acesso == 't' && $this->session->userdata('perfil_id') == 7) || ($empresapermissoes[0]->tecnico_acesso_acesso == 't' && $this->session->userdata('perfil_id') == 15) || $this->session->userdata('perfil_id') == 24 )) {
                         ?>
                     <br>
-                        <a class="btn btn-outline-default btn-round btn-sm" href="<?php echo base_url() ?>cadastros/pacientes/novo">
+                        <a class="btn btn-outline-default btn-round btn-sm" href="<?php echo base_url() ?>cadastros/pacientes/novo/0">
                             <i></i> Cadastrar
                         </a>
                         <?
@@ -122,19 +122,17 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                     ?>
                     
                     <div class="table-responsive">
-                       <div class="panel-body">
-                            <table  class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <table  class="table table-bordered table-hover" id="dataTables-example">
                                 <tr>
-                                    <th class="tabela_header">Nome</th>
-                                    <th class="tabela_header">CPF</th>
-                                    <th class="tabela_header">Nascimento</th>
-                                    <th class="tabela_header">Telefone</th>
-                                    <th class="tabela_header">Celular</th>
-                                    <th class="tabela_header">Email</th>
-                                    <th class="tabela_header">Email Alternativo</th>
-                                    <th class="tabela_header">Município</th>
-                                    <th class="tabela_header">Status</th>
-                                    <th class="tabela_header" colspan="4"><center>A&ccedil;&otilde;es</center></th>
+                                    <th >Nome</th>
+                                    <th >CPF</th>
+                                    <th >Nascimento</th>
+                                    <th >Telefone</th>
+                                    <th >Celular</th>
+                                    <th >Email</th>
+                                    <th >Município</th>
+                                    <th >Status</th>
+                                    <th  colspan="2"><center>A&ccedil;&otilde;es</center></th>
                                 </tr>
 
                                 <?php
@@ -174,49 +172,37 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                             ?>
                                             <tr>
 
-                                                <td width="350px;"><?php echo $item->nome; ?></td>
+                                                <td ><?php echo $item->nome; ?></td>
                                                 <? if ($filtro_exame == 't') { ?>
                                                     <td ></td>
                                                 <? } ?>
-                                                <td  width="150px;"><?php echo substr($item->cpf, 8, 3) . '.' . substr($item->cpf, 6, 3) . '.' . substr($item->cpf, 0, 3). '-' . substr($item->cpf, 0, 2);?></td>
-                                                <td  width="150px;"><?php echo substr($item->nascimento, 8, 2) . '/' . substr($item->nascimento, 5, 2) . '/' . substr($item->nascimento, 0, 4); ?></td>
-                                                <td  width="150px;"><?php echo  "(" . substr($item->telefone, 0, 2) . ")" . substr($item->telefone, 2, strlen($item->telefone) - 7) .  "" . substr($item->telefone, 6, 1) . "-" . substr($item->telefone, 7 , strlen($item->telefone) - 2); ?></td>
-                                                <td  width="200px;"><?php echo  "(" . substr($item->celular, 0, 2) . ")" . substr($item->celular, 2, strlen($item->celular) - 7) .  "" . substr($item->celular, 6, 1) . "-" . substr($item->celular, 7 , strlen($item->celular) - 2); ?></td>
-                                                <td  width="150px;"><?php echo $item->email; ?></td>
-                                                <td  width="150px;"><?php echo $item->email_alternativo; ?></td>
-                                                <td  width="150px;"><?php echo $item->municipio; ?></td>
-                                                <td  width="150px;"><font color="<?=$color?>"><?php echo $item->status_estagio; ?> </font></td>
+                                                <td ><?php echo substr($item->cpf, 8, 3) . '.' . substr($item->cpf, 6, 3) . '.' . substr($item->cpf, 0, 3). '-' . substr($item->cpf, 0, 2);?></td>
+                                                <td ><?php echo substr($item->nascimento, 8, 2) . '/' . substr($item->nascimento, 5, 2) . '/' . substr($item->nascimento, 0, 4); ?></td>
+                                                <td ><?php echo  "(" . substr($item->telefone, 0, 2) . ")" . substr($item->telefone, 2, strlen($item->telefone) - 7) .  "" . substr($item->telefone, 6, 1) . "-" . substr($item->telefone, 7 , strlen($item->telefone) - 2); ?></td>
+                                                <td><?php echo  "(" . substr($item->celular, 0, 2) . ")" . substr($item->celular, 2, strlen($item->celular) - 7) .  "" . substr($item->celular, 6, 1) . "-" . substr($item->celular, 7 , strlen($item->celular) - 2); ?></td>
+                                                <td ><?php echo $item->email; ?></td>
+                                                <td ><?php echo $item->municipio; ?></td>
+                                                <td ><font color="<?=$color?>"><?php echo $item->status_estagio; ?> </font></td>
                                                 
                                                 <td>
-                                                    <div>
-                                                        <a class="btn btn-outline-default btn-round btn-sm" href="<?= base_url() ?>cadastros/pacientes/carregar/<?= $item->paciente_id ?>">
+                                                        <a style="width:120px;" class="btn btn-outline-default btn-round btn-sm" href="<?= base_url() ?>cadastros/pacientes/carregar/<?= $item->paciente_id ?>">
                                                             <b>Editar</b>
                                                         </a>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <div class="bt_link">
-                                                        <a class="btn btn-outline-default btn-round btn-sm" target="_blank" href="<?=base_url() ?>cadastros/pacientes/anexararquivo/<?= $item->paciente_id ?>">       
+                                                <br><br>
+                                                        <a style="width:120px;" class="btn btn-outline-default btn-round btn-sm" target="_blank" href="<?=base_url() ?>cadastros/pacientes/anexararquivo/<?= $item->paciente_id ?>">       
                                                             <b>Documentação</b>
                                                         </a>
-                                                    </div>
                                                 </td>
 
                                                 <td>
-                                                    <div class="bt_link">
-                                                        <a class="btn btn-outline-default btn-round btn-sm" target="_blank"  href="<?=base_url() ?>cadastros/pacientes/adequadostatus/<?= $item->paciente_id ?>">       
+                                                        <a style="width:120px;" class="btn btn-outline-default btn-round btn-sm" target="_blank"  href="<?=base_url() ?>cadastros/pacientes/adequadostatus/<?= $item->paciente_id ?>">       
                                                             <b>Adequado</b>
                                                         </a>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <div class="bt_link">
-                                                            <a class="btn btn-outline-default btn-round btn-sm" href="<?=base_url() ?>cadastros/pacientes/excluircadastroestagiarios/<?= $item->paciente_id ?>">       
+                                                <br><br>
+                                                            <a style="width:120px;" class="btn btn-outline-default btn-round btn-sm" href="<?=base_url() ?>cadastros/pacientes/excluircadastroestagiarios/<?= $item->paciente_id ?>">       
                                                                 <b>Excluir</b>
                                                             </a>
-                                                        </div>
+
                                                 </td>
 
 
@@ -242,7 +228,6 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                     </tr>
                                 </tfoot>
                             </table>
-                        </div>
                     </form>
 
                 </div>

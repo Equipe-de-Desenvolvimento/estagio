@@ -63,17 +63,17 @@ class login_model extends Model {
                                 o.profissional_agendar_o,
                                 p.nome as perfil,
                                 a.modulo_id,
-                                oe.operador_empresa_id,
-                                o.medico_agenda'
+                                o.medico_agenda,
+                                o.instituicao_id'
         );
         $this->db->from('tb_operador o');
         $this->db->join('tb_perfil p', 'p.perfil_id = o.perfil_id');
         $this->db->join('tb_acesso a', 'a.perfil_id = o.perfil_id', 'left');
-        $this->db->join('tb_operador_empresas oe', 'oe.operador_id = o.operador_id', 'left');
+        // $this->db->join('tb_operador_empresas oe', 'oe.operador_id = o.operador_id', 'left');
         $this->db->where('o.usuario', $usuario);
         $this->db->where('o.senha', md5($senha));
-        $this->db->where('oe.empresa_id', $empresa);
-        $this->db->where('oe.ativo = true');
+        // $this->db->where('oe.empresa_id', $empresa);
+        // $this->db->where('oe.ativo = true');
         $this->db->where('o.ativo = true');
         $this->db->where('p.ativo = true');
         $return = $this->db->get()->result();
@@ -190,7 +190,8 @@ class login_model extends Model {
                 'logo_clinica' => $logo_clinica,
                 'subgrupo_procedimento' => $subgrupo_procedimento,
                 'empresa' => $empresanome,
-                'medico_agenda' => $return[0]->medico_agenda
+                'medico_agenda' => $return[0]->medico_agenda,
+                'instituicao_id' => $return[0]->instituicao_id
             );
             $this->session->set_userdata($p);
             return true;
