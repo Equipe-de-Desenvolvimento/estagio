@@ -26,12 +26,6 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                         </div>
                                     </div>
                                     <div>
-                                        <h6>Nascimento</h6>
-                                        <div class="inasc">
-                                            <input type="text" id="txtNascimento" name="nascimento" placeholder="00/00/0000" class="texto05" alt="data" value="<?php echo @$_GET['nascimento']; ?>" />
-                                        </div>
-                                    </div>
-                                    <div>
                                         <h6>Telefone</h6>
                                         <div>
                                             <input type="text" id="txtTelefone" name="telefone" placeholder="(99)9999-9999" class="texto05" value="<?php echo @$_GET['telefone']; ?>" />
@@ -43,21 +37,6 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                             <input type="text" name="Email" placeholder="Email" class="texto05" value="<?php echo @$_GET['email']; ?>" />
                                         </div>
                                     </div>
-
-                                    <?php
-                                    if (@$empresapermissoes[0]->pesquisar_responsavel == "t") { ?>
-                                        <div class="nmae">
-                                            <h6>Nome da Mãe</h6>
-                                        </div>
-                                        <div class="npai">
-                                            <h6>Nome do Pai</h6>
-                                        </div>
-                                        <?php } ?>
-                                    <? if ($filtro_exame == 't') { ?>
-                                        <div class="exam">
-                                            <h6>Exame</h6>
-                                        </div>
-                                    <? } ?>
                                        
                                     <?
                                     
@@ -110,39 +89,29 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                         </div>
                     </form>
 
-                    <?
-                    if (!(($empresapermissoes[0]->tecnico_acesso_acesso == 't' && $this->session->userdata('perfil_id') == 7) || ($empresapermissoes[0]->tecnico_acesso_acesso == 't' && $this->session->userdata('perfil_id') == 15) || $this->session->userdata('perfil_id') == 24 )) {
-                        ?>
-                    <br>
+                    <!-- <br>
                         <a class="btn btn-outline-default btn-round btn-sm" href="<?php echo base_url() ?>cadastros/pacientes/novo">
                             <i class="fa fa-plus fa-w"></i> Cadastrar
-                        </a>
-                        <?
-                    }
-                    ?>
+                        </a> -->
+
                     
                     <div class="table-responsive">
                        <div class="panel-body">
-                            <table  class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <table  class="table table-bordered table-hover" id="dataTables-example">
                                 <tr>
                                     <th class="tabela_header">Nome</th>
                                     <th class="tabela_header">CPF</th>
-                                    <th class="tabela_header">Nascimento</th>
                                     <th class="tabela_header">Telefone</th>
-                                    <th class="tabela_header">Celular</th>
                                     <th class="tabela_header">Email</th>
-                                    <th class="tabela_header">Email Alternativo</th>
-                                    <th class="tabela_header">Município</th>
-                                    <th class="tabela_header">Status</th>
-                                    <th class="tabela_header" colspan="4"><center>A&ccedil;&otilde;es</center></th>
+                                    <th class="tabela_header">Instituição</th>
+                                    <th class="tabela_header">Vaga</th>
+                                    <th class="tabela_header">Data Associado</th>
+                                    <th class="tabela_header" colspan="2"><center>A&ccedil;&otilde;es</center></th>
                                 </tr>
 
                                 <?php
-                                $imagem = $empresapermissoes[0]->imagem;
-                                $consulta = $empresapermissoes[0]->consulta;
-
                                 $url = $this->utilitario->build_query_params(current_url(), $_GET);
-                                $consulta = $this->paciente->listarestagios($_GET);
+                                $consulta = $this->paciente->listaralunosestagio($_GET);
                                 @$total = $consulta->count_all_results();
                                 $limit = 10;
                                 isset($_GET['per_page']) ? $pagina = $_GET['per_page'] : $pagina = 0;
@@ -151,21 +120,9 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                     ?>
                                     <tbody>
                                         <?php
-                                        $lista = $this->paciente->listarestagios($_GET)->orderby('nome')->limit($limit, $pagina)->get()->result();
+                                        $lista = $this->paciente->listaralunosestagio($_GET)->orderby('nome')->limit($limit, $pagina)->get()->result();
                                         $estilo_linha = "tabela_content01";
                                         foreach ($lista as $item) {
-
-
-                                            if($item->status_estagio == 'INCOMPLETO'){
-                                                $color = 'red';
-                                             }elseif($item->status_estagio == 'COMPLETO'){
-                                                $color = 'blue';
-                                             }elseif($item->status_estagio == 'ADEQUADO'){
-                                                 $color = 'black';
-                                             }else{
-                                                 $color = 'green';
-                                             }
-
 
                                             ($estilo_linha == "tabela_content01") ? $estilo_linha = "tabela_content02" : $estilo_linha = "tabela_content01";
                                             if ($item->celular == "") {
@@ -176,28 +133,24 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                             ?>
                                             <tr>
 
-                                                <td width="200px;"><?php echo $item->nome; ?></td>
-                                                <? if ($filtro_exame == 't') { ?>
-                                                    <td ></td>
-                                                <? } ?>
-                                                <td  width="200px;"><?php echo substr($item->cpf, 8, 3) . '.' . substr($item->cpf, 6, 3) . '.' . substr($item->cpf, 0, 3). '-' . substr($item->cpf, 0, 2);?></td>
-                                                <td  width="200px;"><?php echo substr($item->nascimento, 8, 2) . '/' . substr($item->nascimento, 5, 2) . '/' . substr($item->nascimento, 0, 4); ?></td>
-                                                <td  width="200px;"><?php echo  "(" . substr($item->telefone, 0, 2) . ")" . substr($item->telefone, 2, strlen($item->telefone) - 7) .  "" . substr($item->telefone, 6, 1) . "-" . substr($item->telefone, 7 , strlen($item->telefone) - 2); ?></td>
-                                                <td  width="200px;"><?php echo  "(" . substr($item->celular, 0, 2) . ")" . substr($item->celular, 2, strlen($item->celular) - 7) .  "" . substr($item->celular, 6, 1) . "-" . substr($item->celular, 7 , strlen($item->celular) - 2); ?></td>
-                                                <td  width="200px;"><?php echo $item->email; ?></td>
-                                                <td  width="200px;"><?php echo $item->email_alternativo; ?></td>
-                                                <td  width="200px;"><?php echo $item->municipio; ?></td>
-                                                <td width="150px;"><font color="<?=$color?>"><?php echo $item->status_estagio; ?> </font></td>
-                                                    
-                                                    <td>
-                                                        <a class="btn btn-outline-default btn-round btn-sm" target="_blank"  href="<?=base_url() ?>cadastros/pacientes/efetivadostatus/<?= $item->paciente_id ?>" class="btn btn-outline-default btn-round btn-sm" href="">
-                                                            <b>Efetivar</b>
+                                                <td><?php echo $item->nome; ?></td>
+                                                <td><?php echo substr($item->cpf, 0, 3) . '.' . substr($item->cpf, 3, 3) . '.' . substr($item->cpf, 6, 3). '-' . substr($item->cpf, 9, 2);?></td>
+                                                <td ><?php echo  "(" . substr($item->telefone, 0, 2) . ")" . substr($item->telefone, 2, strlen($item->telefone) - 6) . "-" . substr($item->telefone, 8 , strlen($item->telefone) - 2); ?></td>
+                                                <td> <?php echo $item->cns; ?></td>
+                                                <td ><?php echo $item->nome_fantasia; ?></td>
+                                                <td ><?php echo $item->nome_vaga; ?></td>
+                                                <td ><?php echo substr($item->data_cadastro, 8, 2).'/'.substr($item->data_cadastro, 5, 2).'/'.substr($item->data_cadastro, 0, 4); ?></td>
+                                                
+                                                <?if($item->status_estagio == 'ANALISE'){?>
+                                                    <td> 
+                                                        <a class="btn btn-outline-default btn-round btn-sm" target="_blank" href="<?=base_url() ?>cadastros/pacientes/iniciaestagio/<?= $item->aluno_estagio_id ?>" class="btn btn-outline-default btn-round btn-sm">
+                                                            <b>Iniciar Estágio</b>
                                                         </a>
                                                     </td>
-
-                                                    <td> 
-                                                        <a class="btn btn-outline-default btn-round btn-sm" href="">
-                                                            <b>Iniciar Estágio</b>
+                                                <?}else{?>
+                                                    <td>
+                                                        <a class="btn btn-outline-default btn-round btn-sm" target="_blank"  href="<?=base_url() ?>cadastros/pacientes/efetivadostatus/<?= $item->aluno_estagio_id ?>" class="btn btn-outline-default btn-round btn-sm" href="">
+                                                            <b>Efetivar</b>
                                                         </a>
                                                     </td>
 
@@ -205,13 +158,12 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                                         <a class="btn btn-outline-default btn-round btn-sm" href="">
                                                             <b>Transferir Estágio</b>
                                                         </a>
-                                                    </td>
-
-                                                    <td>
+                                                    <br><br>
                                                         <a class="btn btn-outline-default btn-round btn-sm" href="">
                                                             <b>Encerrar Estágio</b>
                                                         </a>
                                                     </td>
+                                                <?}?>
 
                                                     <?
                                                 }

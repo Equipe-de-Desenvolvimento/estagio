@@ -35,8 +35,6 @@
                                          $limit = 10;
                                          isset($_GET['per_page']) ? $pagina = $_GET['per_page'] : $pagina = 0;
 
-                                         if ($total > 0) {
-                                         }
                                          ?>
                                             
                                          <body>

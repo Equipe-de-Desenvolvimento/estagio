@@ -201,7 +201,14 @@
                                     required="true"
                                 <? } ?> />
                         </div>
+
+                        <div class="col-lg-2">
+                            <label>Valor Por Estagiario: *</label>
+                            <input type="text" name="valor" id="valor" class="form-control" value="<?=@$obj[0]->valor_por_estagio?>" required />
+                        </div>
                     </div>
+
+
                     
                 </div> 
             </div>  

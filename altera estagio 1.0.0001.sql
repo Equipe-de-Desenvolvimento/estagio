@@ -55,3 +55,27 @@ data_atualizacao timestamp without time zone
 );
 ALTER TABLE ponto.tb_solicitacao_vagas_empresas
   OWNER TO postgres;
+
+ALTER TABLE ponto.tb_instituicao ADD COLUMN valor_por_estagio NUMERIC(10,2);
+
+ALTER TABLE ponto.tb_paciente ADD COLUMN associado_a_vaga BOOLEAN DEFAULT FALSE;
+
+
+CREATE TABLE ponto.tb_aluno_estagio(
+aluno_estagio_id serial primary key NOT NULL,
+aluno_id integer,
+instituicao_id integer,
+vaga_id integer,
+status_estagio varchar(100),
+ativo BOOLEAN DEFAULT TRUE,
+operador_cadastro integer,
+data_cadastro timestamp without time zone,
+operador_atualizacao integer,
+data_atualizacao timestamp without time zone
+)WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ponto.tb_aluno_estagio
+  OWNER TO postgres;
+
+ALTER TABLE ponto.tb_paciente ADD COLUMN data_inicio_estagio timestamp without time zone;

@@ -110,16 +110,11 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                         </div>
                     </form>
 
-                    <?
-                    if (!(($empresapermissoes[0]->tecnico_acesso_acesso == 't' && $this->session->userdata('perfil_id') == 7) || ($empresapermissoes[0]->tecnico_acesso_acesso == 't' && $this->session->userdata('perfil_id') == 15) || $this->session->userdata('perfil_id') == 24 )) {
-                        ?>
                     <br>
                         <a class="btn btn-outline-default btn-round btn-sm" href="<?php echo base_url() ?>cadastros/pacientes/novo/0">
-                            <i></i> Cadastrar
+                             Cadastrar
                         </a>
-                        <?
-                    }
-                    ?>
+
                     
                     <div class="table-responsive">
                             <table  class="table table-bordered table-hover" id="dataTables-example">
@@ -176,13 +171,19 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                                 <? if ($filtro_exame == 't') { ?>
                                                     <td ></td>
                                                 <? } ?>
-                                                <td ><?php echo substr($item->cpf, 8, 3) . '.' . substr($item->cpf, 6, 3) . '.' . substr($item->cpf, 0, 3). '-' . substr($item->cpf, 0, 2);?></td>
+                                                <td><?php echo substr($item->cpf, 0, 3) . '.' . substr($item->cpf, 3, 3) . '.' . substr($item->cpf, 6, 3). '-' . substr($item->cpf, 9, 2);?></td>
                                                 <td ><?php echo substr($item->nascimento, 8, 2) . '/' . substr($item->nascimento, 5, 2) . '/' . substr($item->nascimento, 0, 4); ?></td>
-                                                <td ><?php echo  "(" . substr($item->telefone, 0, 2) . ")" . substr($item->telefone, 2, strlen($item->telefone) - 7) .  "" . substr($item->telefone, 6, 1) . "-" . substr($item->telefone, 7 , strlen($item->telefone) - 2); ?></td>
-                                                <td><?php echo  "(" . substr($item->celular, 0, 2) . ")" . substr($item->celular, 2, strlen($item->celular) - 7) .  "" . substr($item->celular, 6, 1) . "-" . substr($item->celular, 7 , strlen($item->celular) - 2); ?></td>
+                                                <td ><?php echo  "(" . substr($item->telefone, 0, 2) . ")" . substr($item->telefone, 2, strlen($item->telefone) - 6) . "-" . substr($item->telefone, 8 , strlen($item->telefone) - 2); ?></td>
+                                                <td><?php echo  "(" . substr($item->celular, 0, 2) . ")" . substr($item->celular, 2, strlen($item->celular) - 6) . "-" . substr($item->celular, 8 , strlen($item->celular) - 2); ?></td>
                                                 <td ><?php echo $item->email; ?></td>
                                                 <td ><?php echo $item->municipio; ?></td>
-                                                <td ><font color="<?=$color?>"><?php echo $item->status_estagio; ?> </font></td>
+                                                <td align="center">
+                                                    <font color="<?=$color?>"><?php echo $item->status_estagio; ?> </font>
+                                                    <br><br>
+                                                    <a style="width:120px;" class="btn btn-outline-default btn-round btn-sm"  onclick="javascript:window.open('<?= base_url() ?>cadastros/pacientes/visualizardocumentacao/<?= $item->paciente_id ?>', '_blank', 'toolbar=no,Location=no,menubar=no, width=800,height=600');" href="#">
+                                                        <b>Visualizar</b>
+                                                    </a>
+                                                </td>
                                                 
                                                 <td>
                                                         <a style="width:120px;" class="btn btn-outline-default btn-round btn-sm" href="<?= base_url() ?>cadastros/pacientes/carregar/<?= $item->paciente_id ?>">

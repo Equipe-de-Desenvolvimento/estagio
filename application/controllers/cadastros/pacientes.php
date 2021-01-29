@@ -30,6 +30,13 @@ class pacientes extends BaseController {
         $this->loadView('cadastros/pacientes-lista');
     }
 
+    function visualizardocumentacao($paciente_id){
+        $this->load->helper('directory');
+        $data['listas'] = $this->paciente->listarpacientearquivosdocumentacao($paciente_id);
+        $data['paciente_id'] = $paciente_id;
+        $this->load->View("cadastros/pacienteinfo", $data);
+    }
+
     function anexararquivo($paciente_id){
         $this->load->helper('directory');
         
@@ -150,12 +157,56 @@ class pacientes extends BaseController {
         redirect(base_url() . "seguranca/operador/pesquisarrecepcao");
     }
 
+    function iniciaestagio($aluno_estagio_id){
+        $this->paciente->iniciarestagio($aluno_estagio_id, 'INICIO ESTAGIO');
+        redirect(base_url() . "seguranca/operador/pesquisarrecepcao");
+    }
+
     public function pesquisarGestaoEstagio($args = array()) {
         $this->loadView('cadastros/pacientesgestaoestagio-lista');
     }
 
     public function pesquisarMapaGestao($args = array()) {
         $this->loadView('cadastros/pacientesmapadevagas-lista', $args);
+    }
+
+
+    function relatoriodeestagiovagas(){
+        $data['instituicao'] = $this->paciente->listarinstituicao_vagas();
+        // print_r($data['instituicao']);
+        // die;
+        $this->loadView('cadastros/relatoriodeestagiovagas-lista', $data);
+    }
+
+    function gerarrelatoriovagasassociadas(){
+
+        $data['txtdata_inicio'] = date("Y-m-d", strtotime(str_replace('/', '-', $_POST['data_inicio'])));
+        $data['txtdata_fim'] = date("Y-m-d", strtotime(str_replace('/', '-', $_POST['data_final'])));
+        $data['relatorio'] = $this->paciente->gerarrelatoriovagasassociadas();
+        $data['instituicao'] = $_POST['instituicao_id'];
+
+        $instituicao = $this->paciente->listarinstituicao_vagas();
+        foreach($instituicao as $item){
+                if($_POST['instituicao_id'] == $item->instituicao_id){
+                    $data['instituicao_nome'] = $item->nome_fantasia;
+                }
+        }
+        // print_r($data['relatorio']);
+        // die;
+        $this->load->View('cadastros/gerarrelatoriovagasassociadas', $data);
+    }
+
+    function associaralunoaestagio($vagas_id, $instituicao_id){
+        $data['vagas'] = $this->paciente->listarvagasinfo($vagas_id);
+        $data['alunos'] = $this->paciente->alunosadequados($instituicao_id);
+        $data['instituicao_id'] = $instituicao_id;
+        $data['vaga_id'] = $vagas_id;
+        $this->load->View('cadastros/associaralunoaestagio-form', $data);
+    }
+
+    function gravaralunosvagas(){
+        $teste = $this->paciente->gravaralunosvagas();
+        redirect(base_url() . "seguranca/operador/pesquisarrecepcao");
     }
 
     function cadastrodevagas($vagas_id){
@@ -202,6 +253,32 @@ class pacientes extends BaseController {
 
         $this->session->set_flashdata('message', $data['mensagem']);
         redirect(base_url() . "cadastros/pacientes/solicitarvagas");
+    }
+
+    function gravardocumentacaoestagio(){
+        $teste = $this->paciente->gravardocumentacaoestagio();
+
+        if($teste > 0){
+            $data['mensagem'] = 'Documentação de Estagio gravado com sucesso';
+        }else{
+            $data['mensagem'] = 'Erro ao gravar a Documentação de Estagio';
+        }
+
+        $this->session->set_flashdata('message', $data['mensagem']);
+        redirect(base_url() . "cadastros/pacientes/listardocumentacaoprofissional");
+    }
+
+    function excluirdocumentacaoestagio($documentacao_profissional_id){
+        $teste = $this->paciente->excluirdocumentacaoestagio($documentacao_profissional_id);
+
+        if($teste){
+            $data['mensagem'] = 'Documentação de Estagio excluida com sucesso';
+        }else{
+            $data['mensagem'] = 'Erro ao excluir a Documentação de Estagio';
+        }
+
+        $this->session->set_flashdata('message', $data['mensagem']);
+        redirect(base_url() . "cadastros/pacientes/listardocumentacaoprofissional");
     }
 
     function excluircadastrodevagas($vagas_id){
@@ -259,6 +336,16 @@ class pacientes extends BaseController {
 
     function solicitarvagas($args = array()){
         $this->loadView('cadastros/solicitacaodevagas-lista', $args);
+    }
+
+    function listardocumentacaoprofissional($args = array()){
+        $this->loadView('cadastros/listardocumentacaoprofissional-lista', $args);
+    }
+
+    function novadocumentacao($documentacao_profissional_id){
+        $data['documentacao_profissional_id'] = $documentacao_profissional_id;
+        $data['obj'] = $this->paciente->listardocumentacaoestagio2($documentacao_profissional_id);
+        $this->loadView('cadastros/listardocumentacaoprofissional-form', $data);
     }
 
 
@@ -1851,7 +1938,9 @@ function carregarpacientecenso($prontuario = null, $nome = null, $procedimento =
     }
 
     function gravarinstituicao(){
-        
+        // $valor = str_replace(",", "", $_POST['valor']);
+        // print_r($valor);
+        // die;
         $data['listaLogradouro'] = $this->paciente->gravarinstituicao();
 
         //  print_r($_POST);

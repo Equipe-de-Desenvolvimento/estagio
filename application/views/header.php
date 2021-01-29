@@ -254,10 +254,11 @@ function debug($object) {
                             <a class="dropdown-item"  href="<?= base_url() ?>cadastros/pacientes">Aluno</a>
                         </li>
                         
+                        <?if($this->session->userdata('perfil_id') != 9){?>
                         <li>
                             <a class="dropdown-item" href="<?= base_url() ?>ambulatorio/modelolaudo/pesquisar">Instituição de Ensino</a>
                         </li>
-
+                        <?}?>
                         <li>
                             <a class="dropdown-item" href="<?= base_url() ?>cadastros/pacientes/solicitarvagas">Solicitação de Vaga</a>
                         </li>
@@ -436,6 +437,7 @@ function debug($object) {
 
             </li>
 
+            <?if($this->session->userdata('perfil_id') != 9){?>
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-university fa-fw"></i> Gestão Financeira </a>
@@ -479,73 +481,8 @@ function debug($object) {
                     </li>
                 </ul>
             </li>
+                <?}?>
 
-            <li class="nav-item dropdown">
-
-
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li>
-                        <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-edit fa-fw"></i> Rotinas <span class="fa arrow"></span></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>estoque/solicitacao">Manter Solicitacao</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>estoque/entrada">Manter Entrada</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>estoque/nota">Manter Nota Fiscal</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>estoque/inventario">Manter Inventar</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>estoque/fornecedor">Manter Fornecedor</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>estoque/produto">Manter Produto</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>estoque/pedido">Manter Pedido Compra</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Relatorios <span class="fa arrow"></span></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>estoque/entrada/relatoriosaldoproduto">Relatorio Saldo Produtos</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>estoque/nota/relatorionotas">Relatorio Nota</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>estoque/entrada/relatorioentradaarmazem">Relatorio Entrada Produtos</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>estoque/entrada/relatoriosaidaarmazem">Relatorio Saida Produtos</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>estoque/entrada/relatoriominimo">Relatorio Estoque Minimo</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>estoque/entrada/relatorioprodutos">Relatorio Produtos</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>estoque/entrada/relatoriofornecedores">Relatorio Fornecedores</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>estoque/entrada/relatoriosaldo">Relatorio Saldo Produtos Por Fornecedor</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item drop-head" href="<?= base_url() ?>estoque/entrada/relatoriosaldoarmazem">Relatorio Saldo Produtos Por Entrada</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
 
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -554,14 +491,25 @@ function debug($object) {
                         <li>
                             <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/pacientes/pesquisarMapaGestao">Mapa de Vagas</a>
                         </li>
+
+                        <?if($this->session->userdata('perfil_id') != 9){?>
                         <li>
                              <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/convenio">Manter Convenio</a>
                         </li>
                         <li>
                             <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/procedimentoplano">Convenios</a>
                         </li>
+
+                        <li>
+                            <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/pacientes/relatoriodeestagiovagas">Relatorio de Vagas Associadas</a>
+                        </li>
+                        <?}?>
+
+
                     </ul>
             </li>
+
+            <?if($this->session->userdata('perfil_id') != 9){?>
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-line-chart"></i> Gestão de Estágio </a>
@@ -572,7 +520,9 @@ function debug($object) {
                             </li>
                         </ul>
             </li>
+            <?}?>
 
+            <?if($this->session->userdata('perfil_id') != 9){?>
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-cogs fa-fw"></i>Gestão de Acessos</a>
@@ -698,6 +648,9 @@ function debug($object) {
                             <i class="fa fa-gear fa-fw"></i> Configuração <span class="fa arrow"></span></a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li>
+                                <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/pacientes/listardocumentacaoprofissional">Documentação Estagiarios</a>
+                            </li>
+                            <li>
                                 <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/empresa/gerecianet">Manter Gerencia Net</a>
                             </li>
                             <li>
@@ -710,6 +663,7 @@ function debug($object) {
                     </li>
                 </ul>
             </li>
+            <?}?>
             <li class="nav-item nav-item-user dropdown">
                 <a class="dropdown-toggle" href="#" id="navbar-primary_dropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Seja bem-vindo, <?= $this->session->userdata('login'); ?>

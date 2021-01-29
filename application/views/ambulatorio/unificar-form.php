@@ -91,13 +91,9 @@
         $(".competencia").accordion({autoHeight: false});
         $(".accordion").accordion({autoHeight: false, active: false});
         $(".lotacao").accordion({
-
             active: true,
             autoheight: false,
             clearStyle: true
-
         });
-
-
     });
 </script>

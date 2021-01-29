@@ -20,6 +20,8 @@
                                             <input type="text" name="nome_vaga" class="texto05" value="<?php echo @$_GET['nome_vaga']; ?>" />
                                         </div>
                                     </div>
+    
+                                    <?if($this->session->userdata('instituicao_id') == ''){?>
                                     <div class="nome">
                                         <h6>Instituição</h6>
                                         <div>
@@ -31,6 +33,7 @@
                                         </select>
                                         </div>
                                     </div>
+                                        <?}?>
                                     <div>
                                         <h6>Tipo</h6>
                                         <div>
@@ -54,15 +57,13 @@
                             <table  class="table table-bordered table-hover" id="dataTables-example">
                                 <tr>
                                     <th class="tabela_header">Área</th>
+                                    <?if($this->session->userdata('instituicao_id') == ''){?>
                                     <th class="tabela_header">Instituição</th>
+                                    <?}?>
                                     <th class="tabela_header">Tipo</th>
                                     <th class="tabela_header">Qtd de Vagas</th>
                                     <th class="tabela_header" colspan="2"><center>A&ccedil;&otilde;es</center></th>
 
-                                    <? if ($filtro_exame == 't') { ?>
-                                        <th class="tabela_header"></th>
-                                        
-                                    <? } ?>
                                 </tr>
                                      <?php
                                          $url = $this->utilitario->build_query_params(current_url(), $_GET);
@@ -78,18 +79,31 @@
                                             
                                          <body>
                                                 <?php
-                                                    $lista = $this->paciente->listarvagasestagio($_GET)->limit($limit, $pagina)->orderby("nome_vaga")->get()->result();
+                                                    $lista = $this->paciente->listarvagasestagio($_GET)->limit($limit, $pagina)->orderby("qtde_vagas", 'desc')->orderby("nome_vaga")->get()->result();
                                                     $estilo_linha = "tabela_content01";
+                                                    $qtd_total_vagas = 0;
                                                      foreach ($lista as $item) {
+
+                                                        $qtd_total_vagas = $qtd_total_vagas + $item->qtde_vagas;
                                                     ($estilo_linha == "tabela_content01") ? $estilo_linha = "tabela_content02" : $estilo_linha = "tabela_content02";
                                                         ?>
                                                         <tr>
                                                             <td ><?php echo $item->nome_vaga; ?></td>
+                                                            <?if($this->session->userdata('instituicao_id') == ''){?>
                                                             <td ><?php echo $item->nome_fantasia; ?></td> 
+                                                            <?}?>
                                                             <td ><?php echo $item->tipo_vaga; ?></td>
-                                                            <td ><?php echo $item->qtde_vagas; ?></td> 
+                                                            <td ><?php echo $item->qtde_vagas; ?></td>
+
+                                                             <?if($this->session->userdata('instituicao_id') == ''){?>
                                                             <td> <a class="btn btn-outline-default btn-sm" href="<?=base_url()?>cadastros/pacientes/cadastrodevagas/<?=$item->vaga_id?>">Editar</a></td>
                                                             <td> <a class="btn btn-outline-default btn-sm" href="<?=base_url()?>cadastros/pacientes/excluircadastrodevagas/<?=$item->vaga_id?>">Excluir</a></td>
+                                                            <?}elseif($item->qtde_vagas > 0){?>
+                                                                <td colspan="2"> <a class="btn btn-outline-default btn-sm" onclick="javascript:window.open('<?= base_url() ?>cadastros/pacientes/associaralunoaestagio/<?= $item->vaga_id ?>/<?=$item->instituicao_id?>', '_blank', 'toolbar=no,Location=no,menubar=no, width=800,height=600');" href="#"> Associar Estagiario </a></td>
+                                                            <?}else{?>
+                                                                <td> </td>
+                                                                <td> </td>
+                                                            <?}?>
                                                         </tr> 
 
                                                     <?}?>
@@ -100,7 +114,7 @@
                                         <th class="tabela_footer" colspan="6">
                                             <div class="pagination">
                                                 <?php $this->utilitario->paginacao($url, $total, $pagina, $limit); ?>
-                                                Total de registros: <?php echo $total; ?>
+                                                Total de Vagas: <?php echo $qtd_total_vagas; ?>
                                             </div>
                                         </th>
                                     </tr> 
