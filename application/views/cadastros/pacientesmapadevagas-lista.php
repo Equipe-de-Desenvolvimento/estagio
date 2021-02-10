@@ -14,33 +14,29 @@
             <div class="" id="pesquisar">
                 <form method="get" action="<?php echo base_url() ?>cadastros/pacientes/pesquisarMapaGestao">
                     <div class="row">
-                                    <div class="nome">
-                                        <h6>Área</h6>
-                                        <div>
-                                            <input type="text" name="nome_vaga" class="texto05" value="<?php echo @$_GET['nome_vaga']; ?>" />
-                                        </div>
+                                    <div class="col-lg-2">
+                                        <label>Área</label>
+                                        <input type="text" name="nome_vaga" class="form-control" value="<?php echo @$_GET['nome_vaga']; ?>" />
                                     </div>
     
                                     <?if($this->session->userdata('instituicao_id') == ''){?>
-                                    <div class="nome">
-                                        <h6>Instituição</h6>
-                                        <div>
-                                        <select name="instituicao_id" id="instituicao_id"> 
+                                    <div class="col-lg-2">
+                                        <label>Convenio</label>
+                                        <select name="instituicao_id" id="instituicao_id" class="form-control"> 
                                             <option value="">Selecione</option>
                                             <?foreach($instituicao as $item){?>
                                                 <option value="<?=$item->instituicao_id?>" <?=(@$_GET['instituicao_id'] == $item->instituicao_id)? 'selected': ''?>><?=$item->nome_fantasia?></option>
                                             <?}?>
                                         </select>
-                                        </div>
                                     </div>
                                         <?}?>
-                                    <div>
-                                        <h6>Tipo</h6>
-                                        <div>
-                                            <input type="text" id="txtEmpresa" name="tipo_vaga" class="texto05" value="<?php echo @$_GET['tipo_vaga']; ?>" />
-                                        </div>
+                                    <div class="col-lg-2">
+                                        <label>Tipo</label>
+                                        <input type="text" id="txtEmpresa" name="tipo_vaga" class="form-control" value="<?php echo @$_GET['tipo_vaga']; ?>" />
                                     </div>  
-                                    <div class="btnenvio" >
+
+                                    <div class="col-lg-2 btnenvio" >
+                                    <br>
                                         <button type="submit" class="btn btn-outline-default btn-round btn-sm btn-src" name="enviar">Pesquisar</button>
                                     </div>
                     </div>
@@ -58,8 +54,9 @@
                                 <tr>
                                     <th class="tabela_header">Área</th>
                                     <?if($this->session->userdata('instituicao_id') == ''){?>
-                                    <th class="tabela_header">Instituição</th>
+                                        <th class="tabela_header">Tipo Vaga</th>
                                     <?}?>
+                                    <th class="tabela_header">Convenio</th>
                                     <th class="tabela_header">Tipo</th>
                                     <th class="tabela_header">Qtd de Vagas</th>
                                     <th class="tabela_header" colspan="2"><center>A&ccedil;&otilde;es</center></th>
@@ -90,8 +87,9 @@
                                                         <tr>
                                                             <td ><?php echo $item->nome_vaga; ?></td>
                                                             <?if($this->session->userdata('instituicao_id') == ''){?>
-                                                            <td ><?php echo $item->nome_fantasia; ?></td> 
+                                                            <td ><?php echo $item->status_vaga; ?></td> 
                                                             <?}?>
+                                                            <td ><?php echo $item->convenio; ?></td> 
                                                             <td ><?php echo $item->tipo_vaga; ?></td>
                                                             <td ><?php echo $item->qtde_vagas; ?></td>
 
@@ -99,7 +97,7 @@
                                                             <td> <a class="btn btn-outline-default btn-sm" href="<?=base_url()?>cadastros/pacientes/cadastrodevagas/<?=$item->vaga_id?>">Editar</a></td>
                                                             <td> <a class="btn btn-outline-default btn-sm" href="<?=base_url()?>cadastros/pacientes/excluircadastrodevagas/<?=$item->vaga_id?>">Excluir</a></td>
                                                             <?}elseif($item->qtde_vagas > 0){?>
-                                                                <td colspan="2"> <a class="btn btn-outline-default btn-sm" onclick="javascript:window.open('<?= base_url() ?>cadastros/pacientes/associaralunoaestagio/<?= $item->vaga_id ?>/<?=$item->instituicao_id?>', '_blank', 'toolbar=no,Location=no,menubar=no, width=800,height=600');" href="#"> Associar Estagiario </a></td>
+                                                                <td colspan="2"> <a class="btn btn-outline-default btn-sm" onclick="javascript:window.open('<?= base_url() ?>cadastros/pacientes/associaralunoaestagio/<?= $item->vaga_id ?>/<?=$this->session->userdata('instituicao_id')?>/<?=$item->convenio_id?>', '_blank', 'toolbar=no,Location=no,menubar=no, width=800,height=600');" href="#"> Associar Estagiario </a></td>
                                                             <?}else{?>
                                                                 <td> </td>
                                                                 <td> </td>
@@ -111,7 +109,7 @@
                                         </body>
                                 <tfoot>
                                      <tr>
-                                        <th class="tabela_footer" colspan="6">
+                                        <th class="tabela_footer" colspan="7">
                                             <div class="pagination">
                                                 <?php $this->utilitario->paginacao($url, $total, $pagina, $limit); ?>
                                                 Total de Vagas: <?php echo $qtd_total_vagas; ?>

@@ -79,3 +79,32 @@ ALTER TABLE ponto.tb_aluno_estagio
   OWNER TO postgres;
 
 ALTER TABLE ponto.tb_aluno_estagio ADD COLUMN data_inicio_estagio timestamp without time zone;
+
+ALTER TABLE ponto.tb_convenio ADD COLUMN valor_por_estagio NUMERIC(10,2);
+
+
+CREATE TABLE ponto.tb_convenio_instituicao
+(
+  convenio_instituicao_id serial NOT NULL,
+  convenio_id integer,
+  instituicao_id integer,
+  ativo boolean DEFAULT true,
+  data_cadastro timestamp without time zone,
+  operador_cadastro integer,
+  data_atualizacao timestamp without time zone,
+  operador_atualizacao integer,
+  CONSTRAINT tb_convenio_instituicao_pkey PRIMARY KEY (convenio_instituicao_id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ponto.tb_convenio_instituicao
+  OWNER TO postgres;
+
+ALTER TABLE ponto.tb_convenio ADD COLUMN valor_por_estagio NUMERIC(10,2);
+
+ALTER TABLE ponto.tb_vagas_empresas ADD COLUMN convenio_id INTEGER;
+ALTER TABLE ponto.tb_vagas_empresas ADD COLUMN status_vaga TEXT;
+ALTER TABLE ponto.tb_aluno_estagio ADD COLUMN convenio_id INTEGER;
+ALTER TABLE ponto.tb_solicitacao_vagas_empresas ADD COLUMN convenio_id INTEGER;
+

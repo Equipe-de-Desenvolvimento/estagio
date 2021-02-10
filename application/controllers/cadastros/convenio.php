@@ -82,8 +82,10 @@ class Convenio extends BaseController {
     }
 
     function empresaconvenio($convenio_id) {
-        $data['empresa'] = $this->empresa->listarempresasativo();
-        $data['empresa_conta'] = $this->convenio->buscarconvenioempresa($convenio_id);
+        // $data['empresa'] = $this->empresa->listarempresasativo();
+        $data['instituicao'] = $this->paciente->listarinstituicao_vagas();
+        // $data['empresa_conta'] = $this->convenio->buscarconvenioempresa($convenio_id);
+        $data['empresa_conta'] = $this->convenio->buscarconvenioinstituicao($convenio_id);
         $data['convenio_selecionado'] = $this->convenio->listarconvenioselecionado($convenio_id);
         $data['convenioid'] = $convenio_id;
         $this->loadView('cadastros/empresaconvenio-form', $data);
@@ -226,7 +228,6 @@ class Convenio extends BaseController {
         }
        
         $convenio_id = $this->convenio->gravar();
-
         if ($convenio_id == "-1") {
             $data['mensagem'] = 'Erro ao gravar Convenio. Opera&ccedil;&atilde;o cancelada.';
         } else {

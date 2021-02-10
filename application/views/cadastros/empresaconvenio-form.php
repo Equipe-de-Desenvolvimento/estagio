@@ -1,42 +1,35 @@
-<div class="content ficha_ceatox"> <!-- Inicio da DIV content -->
+<div class="panel-body"> <!-- Inicio da DIV content -->
     <fieldset>
-        <legend>Copiar Procedimentos Convenio</legend>
+        <div class="alert alert-primary"><b>Associar Instituição ao Convenio</b></div>
         
-        <div>
             <form name="form_convenio" id="form_convenio" action="<?= base_url() ?>cadastros/convenio/gravarconvenioempresa" method="post">
+                <div class="row">
+                    <div class="col-lg-3">
+                            <label>Convênio</label>
+                            <input type="text" class="form-control" name="convenio_selecionado" value="<?= $convenio_selecionado[0]->nome; ?>" readonly="" />
+                    </div>
 
-
-
-                <div>
-                    <label>Convênio</label>
-
-
-
-                    <input type="text" name="convenio_selecionado" value="<?= $convenio_selecionado[0]->nome; ?>" readonly="" />
+                    <div class="col-lg-3">
+                        <label>Instituição</label>
+                        <select name="instituicao_id" id="instituicao" class="form-control">
+                            <!--<option value="">TODOS</option>-->
+                            <? foreach ($instituicao as $value) : ?>
+                                <option value="<?= $value->instituicao_id; ?>"><?php echo $value->nome_fantasia; ?></option>
+                            <? endforeach; ?>
+                        </select>
+                        <input type="hidden" name="convenio_id" value="<?= $convenioid; ?>" />
+                    </div>
                 </div>
-
-
-                <div>
-                    <label>Empresa</label>
-                    <select name="empresa" id="empresa" class="size4">
-                        <!--<option value="">TODOS</option>-->
-                        <? foreach ($empresa as $value) : ?>
-                            <option value="<?= $value->empresa_id; ?>"><?php echo $value->nome; ?></option>
-                        <? endforeach; ?>
-                    </select>
-                    <input type="hidden" name="convenio_id" value="<?= $convenioid; ?>" />
-                </div>
-
-                <hr/>
-                <button type="submit" name="btnEnviar">Enviar</button>
-                <button type="reset" name="btnLimpar">Limpar</button>
+                                <br>
+                <button class="btn btn-outline-default btn-round btn-sm" type="submit" name="btnEnviar">Enviar</button>
+                <button class="btn btn-outline-danger btn-round btn-sm" type="reset" name="btnLimpar">Limpar</button>
             </form>
-        </div>
     </fieldset>
+    <br>
     <fieldset>
         <div style="display: block; width: 100%;">
             <? if (count($empresa_conta) > 0) { ?>
-                <table class="taxas-feitas">
+                <table class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
                             <th class="tabela_header">Empresa</th>
@@ -52,7 +45,7 @@
 
                             <tr>
                                 <td class="<?php echo $estilo_linha; ?>"><?= $item->empresa ?></td>
-                                <td class="<?php echo $estilo_linha; ?>"><center><a class="delete" href="<?= base_url() ?>cadastros/convenio/excluirconvenioempresa/<?= $item->convenio_empresa_id ?>/<?= $convenioid ?>">delete</a></center></td>
+                                <td class="<?php echo $estilo_linha; ?>"><center><a class="btn btn-outline-danger btn-round btn-sm" href="<?= base_url() ?>cadastros/convenio/excluirconvenioempresa/<?= $item->convenio_instituicao_id ?>/<?= $convenioid ?>">delete</a></center></td>
                             </tr>
                     <? } ?>
                     </tbody>

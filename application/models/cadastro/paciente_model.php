@@ -1057,7 +1057,7 @@ class paciente_model extends BaseModel {
         $this->db->set('tipo_vaga', $_POST['tipovaga']);
         // $this->db->set('empresa_vaga', $_POST['empresa_id']);
         $this->db->set('qtde_vagas', $_POST['qtdvagas']);
-        $this->db->set('instituicao_id', $_POST['instituicao_id']);
+        $this->db->set('convenio_id', $_POST['convenio_id']);
 
         if($_POST['vaga_id'] > 0){
             $this->db->set('data_atualizacao', $horario);
@@ -1065,6 +1065,7 @@ class paciente_model extends BaseModel {
             $this->db->where('vaga_id', $_POST['vaga_id']);
             $this->db->update('tb_vagas_empresas');
         }else{
+            $this->db->set('status_vaga', 'PACTUADA');
             $this->db->set('data_cadastro', $horario);
             $this->db->set('operador_cadastro', $operador_id);
             $this->db->set('qtde_inicial', $_POST['qtdvagas']);
@@ -1083,9 +1084,10 @@ class paciente_model extends BaseModel {
 
 
         if($this->session->userdata('instituicao_id') == ''){
-             $this->db->set('instituicao_id', $_POST['instituicao_id']);
+             $this->db->set('convenio_id', $_POST['convenio_id']);
         }else{
             $this->db->set('instituicao_id', $this->session->userdata('instituicao_id'));
+            $this->db->set('convenio_id', $_POST['convenio_id']);
         }
 
         if($_POST['solicitacao_vaga_id'] > 0){
@@ -1198,10 +1200,11 @@ class paciente_model extends BaseModel {
         $this->db->set('nome_vaga', $return[0]->nome_vaga);
         $this->db->set('tipo_vaga', $return[0]->tipo_vaga);
         $this->db->set('qtde_vagas', $return[0]->qtde_vagas);
-        $this->db->set('instituicao_id', $return[0]->instituicao_id);
+        $this->db->set('convenio_id', $return[0]->convenio_id);
         $this->db->set('data_cadastro', $horario);
         $this->db->set('operador_cadastro', $operador_id);
         $this->db->set('qtde_inicial', $return[0]->qtde_vagas);
+        $this->db->set('status_vaga', 'SOB DEMANDA');
         $this->db->insert('tb_vagas_empresas');
 
         return true;
@@ -1254,6 +1257,7 @@ class paciente_model extends BaseModel {
 
         $this->db->set('aluno_id', $_POST['aluno_id']);
         $this->db->set('instituicao_id', $_POST['instituicao_id']);
+        $this->db->set('convenio_id', $_POST['convenio_id']);
         $this->db->set('vaga_id', $_POST['vaga_id']);
         $this->db->set('status_estagio', 'ANALISE');
         $this->db->set('data_cadastro', $horario);
@@ -1271,13 +1275,17 @@ class paciente_model extends BaseModel {
     }
 
     function listarvagasestagio($args = array()){
-        $this->db->select('ve.vaga_id, ve.nome_vaga, ve.tipo_vaga, ve.qtde_vagas, i.nome_fantasia, i.instituicao_id');
+        $this->db->select('ve.vaga_id, ve.nome_vaga, ve.tipo_vaga, ve.qtde_vagas, i.nome_fantasia, i.instituicao_id, c.nome as convenio, ve.status_vaga, c.convenio_id');
         $this->db->from('tb_vagas_empresas ve');
         $this->db->join('tb_instituicao i', 'i.instituicao_id = ve.instituicao_id', 'left');
+        $this->db->join('tb_convenio c', 've.convenio_id = c.convenio_id', 'left');
         $this->db->where('ve.ativo', 't');
 
         if($this->session->userdata('instituicao_id') > 0){
-            $this->db->where('ve.instituicao_id', $this->session->userdata('instituicao_id'));
+            // $this->db->where('ve.instituicao_id', $this->session->userdata('instituicao_id'));
+            $this->db->join('tb_convenio_instituicao cc', 'c.convenio_id = cc.convenio_id', 'left');
+            $this->db->where('cc.instituicao_id', $this->session->userdata('instituicao_id'));
+            $this->db->where('cc.ativo', 't');
         }
 
         if ($args) {
@@ -1323,6 +1331,17 @@ class paciente_model extends BaseModel {
         $this->db->from('tb_convenio');
         $this->db->where('ativo', 't');
         $this->db->orderby('nome');
+        return $this->db->get()->result();
+    }
+
+    function listarconveniosinstituicao(){
+        $this->db->select('c.convenio_id, c.nome');
+        $this->db->from('tb_convenio c');
+        $this->db->join('tb_convenio_instituicao cc', 'cc.convenio_id = c.convenio_id', 'left');
+        $this->db->where('cc.instituicao_id', $this->session->userdata('instituicao_id'));
+        $this->db->where('cc.ativo', 't');
+        $this->db->where('c.ativo', 't');
+        $this->db->orderby('c.nome');
         return $this->db->get()->result();
     }
 

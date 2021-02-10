@@ -21,11 +21,11 @@
         </div>
 
         <div class="col-lg-3">
-            <label for="">Instituição</label>
-            <select name="instituicao_id" id="instituicao_id" class="form-control" required> 
+            <label for="">Convenio</label>
+            <select name="convenio_id" id="convenio_id" class="form-control" required> 
                 <option value="">Selecione</option>
-                <?foreach($instituicao as $item){?>
-                    <option value="<?=$item->instituicao_id?>" <?=(@$obj[0]->instituicao_id == $item->instituicao_id)? 'selected': ''?>><?=$item->nome_fantasia?></option>
+                <?foreach($convenios as $item){?>
+                    <option value="<?=$item->convenio_id?>" <?=(@$obj[0]->convenio_id == $item->convenio_id)? 'selected': ''?>><?=$item->nome?></option>
                 <?}?>
             </select>
             <div class="invalid-feedback">

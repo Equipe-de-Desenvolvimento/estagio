@@ -34,6 +34,7 @@
                         <label for="">Aluno</label><br>
                         <input type="hidden" name="instituicao_id" value="<?=$instituicao_id?>">
                         <input type="hidden" name="vaga_id" value="<?=$vaga_id?>">
+                        <input type="hidden" name="convenio_id" value="<?=$convenio_id?>">
                         <select name="aluno_id" required>
                             <option value=""> Selecione </option>
                             <?foreach($alunos as $item){?>

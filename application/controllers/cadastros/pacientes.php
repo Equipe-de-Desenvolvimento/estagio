@@ -196,11 +196,12 @@ class pacientes extends BaseController {
         $this->load->View('cadastros/gerarrelatoriovagasassociadas', $data);
     }
 
-    function associaralunoaestagio($vagas_id, $instituicao_id){
+    function associaralunoaestagio($vagas_id, $instituicao_id, $convenio_id){
         $data['vagas'] = $this->paciente->listarvagasinfo($vagas_id);
         $data['alunos'] = $this->paciente->alunosadequados($instituicao_id);
         $data['instituicao_id'] = $instituicao_id;
         $data['vaga_id'] = $vagas_id;
+        $data['convenio_id'] = $convenio_id;
         $this->load->View('cadastros/associaralunoaestagio-form', $data);
     }
 
@@ -222,7 +223,11 @@ class pacientes extends BaseController {
 
     function cadastrosolicitacaodevagas($solicitacao_vaga_id){
          $data['instituicao'] = $this->paciente->listarinstituicao_vagas();
-        // $data['convenios'] = $this->paciente->listarconvenios();
+        if($this->session->userdata('instituicao_id') == ''){
+            $data['convenios'] = $this->paciente->listarconvenios();
+        }else{
+            $data['convenios'] = $this->paciente->listarconveniosinstituicao();
+        }
         $data['solicitacao_vaga_id'] = $solicitacao_vaga_id;
         $data['obj'] = $this->paciente->listarvagasinfo($solicitacao_vaga_id);
         $this->loadView('cadastros/solicitacaodevagas-form', $data);

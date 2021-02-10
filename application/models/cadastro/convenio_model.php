@@ -433,12 +433,23 @@ class Convenio_model extends Model {
     }
 
     function buscarconvenioempresa($convenio_id) {
-        $this->db->select('e.nome as empresa, convenio_empresa_id');
+        $this->db->select('e.nome_fantasia as empresa, convenio_empresa_id');
         $this->db->from('tb_convenio_empresa ce');
         $this->db->join('tb_empresa e', 'ce.empresa_id = e.empresa_id', 'left');
         $this->db->where("ce.ativo", 't');
         $this->db->where("ce.convenio_id", $convenio_id);
         $this->db->orderby("ce.empresa_id");
+        $return = $this->db->get();
+        return $return->result();
+    }
+
+    function buscarconvenioinstituicao($convenio_id) {
+        $this->db->select('e.nome as empresa, convenio_instituicao_id');
+        $this->db->from('tb_convenio_instituicao ce');
+        $this->db->join('tb_instituicao e', 'ce.instituicao_id = e.instituicao_id', 'left');
+        $this->db->where("ce.ativo", 't');
+        $this->db->where("ce.convenio_id", $convenio_id);
+        $this->db->orderby("ce.instituicao_id");
         $return = $this->db->get();
         return $return->result();
     }
@@ -2064,22 +2075,22 @@ class Convenio_model extends Model {
             $this->db->set('nome', $_POST['txtNome']);
             $this->db->set('razao_social', $_POST['txtrazaosocial']);
             $this->db->set('cnpj', $cnpj);    
-            $this->db->set('registroans', $_POST['txtregistroans']);
-            $this->db->set('codigoidentificador', $_POST['txtcodigo']);
+            // $this->db->set('registroans', $_POST['txtregistroans']);
+            // $this->db->set('codigoidentificador', $_POST['txtcodigo']);
 
-            if ($_POST['grupo'] != '') {
-                $this->db->set('grupo_cbhpm', $_POST['grupo']);
-            }else{
-                $this->db->set('grupo_cbhpm', '');
-            }             
-            if ($_POST['tamanho_carteira'] != "") {
-               $this->db->set('tamanho_carteira', $_POST['tamanho_carteira']);   
-            } 
-            if (isset($_POST['guia_prestador_unico'])) {
-                $this->db->set('guia_prestador_unico', 't');
-            } else {
-                $this->db->set('guia_prestador_unico', 'f');
-            }
+            // if ($_POST['grupo'] != '') {
+            //     $this->db->set('grupo_cbhpm', $_POST['grupo']);
+            // }else{
+            //     $this->db->set('grupo_cbhpm', '');
+            // }             
+            // if ($_POST['tamanho_carteira'] != "") {
+            //    $this->db->set('tamanho_carteira', $_POST['tamanho_carteira']);   
+            // } 
+            // if (isset($_POST['guia_prestador_unico'])) {
+            //     $this->db->set('guia_prestador_unico', 't');
+            // } else {
+            //     $this->db->set('guia_prestador_unico', 'f');
+            // }
              
             if (isset($_POST['numero_guia'])) {
                 $this->db->set('numero_guia', 't');
@@ -2099,69 +2110,69 @@ class Convenio_model extends Model {
                 $this->db->set('credor_devedor_id', $financeiro_credor_devedor_id);
             }
 //            if ($_POST['fidadelidade_endereco_ip'] != "") {
-            $this->db->set('fidelidade_endereco_ip', $_POST['fidelidade_endereco_ip']);
+            // $this->db->set('fidelidade_endereco_ip', $_POST['fidelidade_endereco_ip']);
 //            }
-            if ($_POST['fidelidade_parceiro_id'] != "") {
-                $this->db->set('fidelidade_parceiro_id', $_POST['fidelidade_parceiro_id']);
-            }
+            // if ($_POST['fidelidade_parceiro_id'] != "") {
+            //     $this->db->set('fidelidade_parceiro_id', $_POST['fidelidade_parceiro_id']);
+            // }
             if ($_POST['conta'] != "") {
                 $this->db->set('conta_id', $_POST['conta']);
             }
-            if ($_POST['grupoconvenio'] != "") {
-                $this->db->set('convenio_grupo_id', $_POST['grupoconvenio']);
-            }
+            // if ($_POST['grupoconvenio'] != "") {
+            //     $this->db->set('convenio_grupo_id', $_POST['grupoconvenio']);
+            // }
             $this->db->set('cep', $_POST['cep']);
             if ($_POST['tipo_logradouro'] != "") {
                 $this->db->set('tipo_logradouro_id', $_POST['tipo_logradouro']);
             }
-            if ($_POST['valor_ajuste_cbhpm'] != "") {
-                $this->db->set('valor_ajuste_cbhpm', str_replace(",", ".", $_POST['valor_ajuste_cbhpm']));
-            }
-            if ($_POST['valor_ajuste_cbhpm_uco'] != "") {
-                $this->db->set('valor_ajuste_cbhpm_uco', str_replace(",", ".", $_POST['valor_ajuste_cbhpm_uco']));
-            }
-            if ($_POST['valor_ajuste_cbhpm_filme'] != "") {
-                $this->db->set('valor_ajuste_cbhpm_filme', str_replace(",", ".", $_POST['valor_ajuste_cbhpm_filme']));
-            }
-            if ($_POST['valor_ajuste_cbhpm_uco'] != "") {
-                $this->db->set('valor_ajuste_cbhpm_uco', str_replace(",", ".", str_replace(".", "", $_POST['valor_ajuste_cbhpm_uco'])));
-            }
-            if ($_POST['valor_ajuste_cbhpm_filme'] != "") {
-                $this->db->set('valor_ajuste_cbhpm_filme', str_replace(",", ".", str_replace(".", "", $_POST['valor_ajuste_cbhpm_filme'])));
-            }
-            if ($_POST['ir'] != "") {
-                $this->db->set('ir', str_replace(",", ".", $_POST['ir']));
-            }
-            if ($_POST['pis'] != "") {
-                $this->db->set('pis', str_replace(",", ".", $_POST['pis']));
-            }
-            if ($_POST['cofins'] != "") {
-                $this->db->set('cofins', str_replace(",", ".", $_POST['cofins']));
-            }
-            if ($_POST['csll'] != "") {
-                $this->db->set('csll', str_replace(",", ".", $_POST['csll']));
-            }
-            if ($_POST['valor_contrato'] != "") {
-                $this->db->set('valor_contrato', str_replace(",", ".", $_POST['valor_contrato']));
-            }
-            if ($_POST['iss'] != "") {
-                $this->db->set('iss', str_replace(",", ".", $_POST['iss']));
-            }
-            if ($_POST['valor_base'] != "") {
-                $this->db->set('valor_base', str_replace(",", ".", $_POST['valor_base']));
-            }
-            if ($_POST['entrega'] != "") {
-                $this->db->set('entrega', $_POST['entrega']);
-            }
-            if ($_POST['pagamento'] != "") {
-                $this->db->set('pagamento', $_POST['pagamento']);
-            }
-            if ($_POST['dia_aquisicao'] != "") {
-                $this->db->set('dia_aquisicao', $_POST['dia_aquisicao']);
-            } else {
-                $this->db->set('dia_aquisicao', null);
-            }
-            $this->db->set('convenio_pasta', $_POST['convenio_pasta']);
+            // if ($_POST['valor_ajuste_cbhpm'] != "") {
+            //     $this->db->set('valor_ajuste_cbhpm', str_replace(",", ".", $_POST['valor_ajuste_cbhpm']));
+            // }
+            // if ($_POST['valor_ajuste_cbhpm_uco'] != "") {
+            //     $this->db->set('valor_ajuste_cbhpm_uco', str_replace(",", ".", $_POST['valor_ajuste_cbhpm_uco']));
+            // }
+            // if ($_POST['valor_ajuste_cbhpm_filme'] != "") {
+            //     $this->db->set('valor_ajuste_cbhpm_filme', str_replace(",", ".", $_POST['valor_ajuste_cbhpm_filme']));
+            // }
+            // if ($_POST['valor_ajuste_cbhpm_uco'] != "") {
+            //     $this->db->set('valor_ajuste_cbhpm_uco', str_replace(",", ".", str_replace(".", "", $_POST['valor_ajuste_cbhpm_uco'])));
+            // }
+            // if ($_POST['valor_ajuste_cbhpm_filme'] != "") {
+            //     $this->db->set('valor_ajuste_cbhpm_filme', str_replace(",", ".", str_replace(".", "", $_POST['valor_ajuste_cbhpm_filme'])));
+            // }
+            // if ($_POST['ir'] != "") {
+            //     $this->db->set('ir', str_replace(",", ".", $_POST['ir']));
+            // }
+            // if ($_POST['pis'] != "") {
+            //     $this->db->set('pis', str_replace(",", ".", $_POST['pis']));
+            // }
+            // if ($_POST['cofins'] != "") {
+            //     $this->db->set('cofins', str_replace(",", ".", $_POST['cofins']));
+            // }
+            // if ($_POST['csll'] != "") {
+            //     $this->db->set('csll', str_replace(",", ".", $_POST['csll']));
+            // }
+            // if ($_POST['valor_contrato'] != "") {
+            //     $this->db->set('valor_contrato', str_replace(",", ".", $_POST['valor_contrato']));
+            // }
+            // if ($_POST['iss'] != "") {
+            //     $this->db->set('iss', str_replace(",", ".", $_POST['iss']));
+            // }
+            // if ($_POST['valor_base'] != "") {
+            //     $this->db->set('valor_base', str_replace(",", ".", $_POST['valor_base']));
+            // }
+            // if ($_POST['entrega'] != "") {
+            //     $this->db->set('entrega', $_POST['entrega']);
+            // }
+            // if ($_POST['pagamento'] != "") {
+            //     $this->db->set('pagamento', $_POST['pagamento']);
+            // }
+            // if ($_POST['dia_aquisicao'] != "") {
+            //     $this->db->set('dia_aquisicao', $_POST['dia_aquisicao']);
+            // } else {
+            //     $this->db->set('dia_aquisicao', null);
+            // }
+            // $this->db->set('convenio_pasta', $_POST['convenio_pasta']);
             $this->db->set('logradouro', $_POST['endereco']);
             $this->db->set('numero', $_POST['numero']);
             $this->db->set('bairro', $_POST['bairro']);
@@ -2171,19 +2182,19 @@ class Convenio_model extends Model {
             }
             $this->db->set('telefone', $_POST['telefone']);
             $this->db->set('celular', $_POST['celular']);
-            $this->db->set('tabela', $_POST['tipo']);
-            $this->db->set('procedimento1', $_POST['procedimento1']);
-            $this->db->set('procedimento2', $_POST['procedimento2']);
+            // $this->db->set('tabela', $_POST['tipo']);
+            // $this->db->set('procedimento1', $_POST['procedimento1']);
+            // $this->db->set('procedimento2', $_POST['procedimento2']);
             if (isset($_POST['txtdinheiro'])) {
                 $this->db->set('dinheiro', $_POST['txtdinheiro']);
             } else {
                 $this->db->set('dinheiro', 'f');
             }
-            if ($_POST['coordenador'] != "") {
-                $this->db->set('coordenador_id', $_POST['coordenador']);
-            } else {
-                $this->db->set('coordenador_id', 0);
-            }
+            // if ($_POST['coordenador'] != "") {
+            //     $this->db->set('coordenador_id', $_POST['coordenador']);
+            // } else {
+            //     $this->db->set('coordenador_id', 0);
+            // }
             if (isset($_POST['padrao_particular'])) {
                 $this->db->set('padrao_particular', $_POST['padrao_particular']);
             } else {
@@ -2198,7 +2209,8 @@ class Convenio_model extends Model {
             }
             
             
-            $this->db->set('observacao', $_POST['txtObservacao']);
+            // $this->db->set('observacao', $_POST['txtObservacao']);
+            $this->db->set('valor_por_estagio', str_replace(',','',$_POST['valor_por_estagio']));
             $horario = date("Y-m-d H:i:s");
             $operador_id = $this->session->userdata('operador_id');
 
@@ -2238,10 +2250,10 @@ class Convenio_model extends Model {
 
             /* Atualiza os valores no procedimento convenio baseado no valor de ajuste informado
               e no valor do porte que está la no cadastro do TUSS. */
-            if ($_POST['tipo'] == 'CBHPM') {
-                // Só ira recalcular os valores, se o usuario informar que o convenio usa CBHPM
-                $this->atualizarValoresProcedimentosCBHPM($exame_sala_id);
-            }
+            // if ($_POST['tipo'] == 'CBHPM') {
+            //     // Só ira recalcular os valores, se o usuario informar que o convenio usa CBHPM
+            //     $this->atualizarValoresProcedimentosCBHPM($exame_sala_id);
+            // }
 
             return $exame_sala_id;
         } catch (Exception $exc) {
@@ -2252,10 +2264,10 @@ class Convenio_model extends Model {
     function gravarconvenioempresa() {
 
 
-        $this->db->select('convenio_empresa_id');
-        $this->db->from('tb_convenio_empresa ce');
+        $this->db->select('convenio_instituicao_id');
+        $this->db->from('tb_convenio_instituicao ce');
         $this->db->where("ce.ativo", 't');
-        $this->db->where('empresa_id', $_POST['empresa']);
+        $this->db->where('instituicao_id', $_POST['instituicao_id']);
         $this->db->where('convenio_id', $_POST['convenio_id']);
         $return = $this->db->get()->result();
 
@@ -2264,11 +2276,11 @@ class Convenio_model extends Model {
             $horario = date("Y-m-d H:i:s");
             $operador_id = $this->session->userdata('operador_id');
 
-            $this->db->set('empresa_id', $_POST['empresa']);
+            $this->db->set('instituicao_id', $_POST['instituicao_id']);
             $this->db->set('convenio_id', $_POST['convenio_id']);
             $this->db->set('data_cadastro', $horario);
             $this->db->set('operador_cadastro', $operador_id);
-            $this->db->insert('tb_convenio_empresa');
+            $this->db->insert('tb_convenio_instituicao');
 
             return true;
         } else {
@@ -2376,8 +2388,8 @@ class Convenio_model extends Model {
         $this->db->set('ativo', 'f');
         $this->db->set('data_atualizacao', $horario);
         $this->db->set('operador_atualizacao', $operador_id);
-        $this->db->where('convenio_empresa_id', $convenio_empresa_id);
-        $this->db->update('tb_convenio_empresa');
+        $this->db->where('convenio_instituicao_id', $convenio_empresa_id);
+        $this->db->update('tb_convenio_instituicao');
 
         return true;
     }
@@ -2562,7 +2574,8 @@ class Convenio_model extends Model {
                                 co.valor_contrato,
                                 co.valor_ajuste_cbhpm,
                                 fcd.razao_social as credor,
-                                co.numero_guia');
+                                co.numero_guia,
+                                co.valor_por_estagio');
             $this->db->from('tb_convenio co');
             $this->db->join('tb_municipio c', 'c.municipio_id = co.municipio_id', 'left');
             $this->db->join('tb_tipo_logradouro tp', 'tp.tipo_logradouro_id = co.tipo_logradouro_id', 'left');
@@ -2626,6 +2639,7 @@ class Convenio_model extends Model {
             $this->_credor = $return[0]->credor;
             $this->_tamanho_carteira = $return[0]->tamanho_carteira;
             $this->_numero_guia = $return[0]->numero_guia;
+            $this->_valor_por_estagio = $return[0]->valor_por_estagio;
         } else {
             $this->_convenio_id = null;
         }
