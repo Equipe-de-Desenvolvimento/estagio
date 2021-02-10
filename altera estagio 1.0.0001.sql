@@ -78,4 +78,4 @@ data_atualizacao timestamp without time zone
 ALTER TABLE ponto.tb_aluno_estagio
   OWNER TO postgres;
 
-ALTER TABLE ponto.tb_paciente ADD COLUMN data_inicio_estagio timestamp without time zone;
+ALTER TABLE ponto.tb_aluno_estagio ADD COLUMN data_inicio_estagio timestamp without time zone;

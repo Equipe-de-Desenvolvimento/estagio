@@ -221,7 +221,7 @@ class pacientes extends BaseController {
     }
 
     function cadastrosolicitacaodevagas($solicitacao_vaga_id){
-        // $data['instituicao'] = $this->paciente->listarinstituicao_vagas();
+         $data['instituicao'] = $this->paciente->listarinstituicao_vagas();
         // $data['convenios'] = $this->paciente->listarconvenios();
         $data['solicitacao_vaga_id'] = $solicitacao_vaga_id;
         $data['obj'] = $this->paciente->listarvagasinfo($solicitacao_vaga_id);
