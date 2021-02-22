@@ -1210,6 +1210,41 @@ class paciente_model extends BaseModel {
         return true;
     }
 
+    function gravarinformacaovagas(){
+        $horario = date("Y-m-d H:i:s");
+        $operador_id = $this->session->userdata('operador_id');
+
+        $this->db->set('descricao', $_POST['descricao']);
+        $this->db->set('tipo', $_POST['tipo']);
+        if($_POST['informacaovaga_id'] > 0){
+            $this->db->set('data_atualizacao', $horario);
+            $this->db->set('operador_atualizacao', $operador_id);
+            $this->db->where('informacaovaga_id', $_POST['informacaovaga_id']);
+            $this->db->update('tb_informacaovaga');
+        }else{
+            $this->db->set('data_cadastro', $horario);
+            $this->db->set('operador_cadastro', $operador_id);
+            $this->db->insert('tb_informacaovaga');
+        }
+    }
+
+    function listarinformacaovaga(){
+        $this->db->select('descricao, tipo, informacaovaga_id');
+        $this->db->from('tb_informacaovaga');
+        $this->db->where('ativo', 't');
+
+        return $this->db;
+    }
+
+    function cadastrodeinfomacaovagas($informacaovaga){
+        $this->db->select('descricao, tipo');
+        $this->db->from('tb_informacaovaga');
+        $this->db->where('ativo', 't');
+        $this->db->where('informacaovaga_id', $informacaovaga);
+
+        return $this->db->get()->result();
+    }
+
     function listardocumentacaoestagio($args){
         $this->db->select('ve.documentacao_profissional_id, ve.nome');
         $this->db->from('tb_documentacao_profissional ve');
@@ -2957,7 +2992,7 @@ class paciente_model extends BaseModel {
             $this->load->library('upload', $config);
             if (!$this->upload->do_upload()) {
                 $error = array('error' => $this->upload->display_errors());
-                if ($error['error'] == '<p>The uploaded file exceeds the maximum allowed size in your PHP configuration file.</p>') {
+                if ($error['error'] == '<p>The uploaded file exceeds the maximum allowed size in your PHP configuration file.</pr>') {
                     @$erro_detectado = 'O Arquivo enviado excede o tamanho máximo permitido.';
                 }
                 $data['mensagem'] = 'Erro, ' . $erro_detectado;

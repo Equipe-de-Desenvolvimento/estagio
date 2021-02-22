@@ -178,6 +178,21 @@ class pacientes extends BaseController {
         $this->loadView('cadastros/relatoriodeestagiovagas-lista', $data);
     }
 
+    function confinformacao($args = array()){
+        $this->loadView('cadastros/confinformacaovagas-lista', $args);
+    }
+
+    function cadastrodeinfomacaovagas($informacaovaga){
+        $data['informacaovaga_id'] = $informacaovaga;
+        $data['obj'] = $this->paciente->cadastrodeinfomacaovagas($informacaovaga);
+        $this->loadView('cadastros/confinformacaovagas-form', $data);
+    }
+
+    function gravarinformacaovagas(){
+        $this->paciente->gravarinformacaovagas();
+        redirect(base_url() . "cadastros/pacientes/confinformacao");
+    }
+
     function gerarrelatoriovagasassociadas(){
 
         $data['txtdata_inicio'] = date("Y-m-d", strtotime(str_replace('/', '-', $_POST['data_inicio'])));

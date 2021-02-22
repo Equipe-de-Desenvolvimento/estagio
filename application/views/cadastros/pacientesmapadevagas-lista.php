@@ -74,7 +74,7 @@
                                          }
                                          ?>
                                             
-                                         <body>
+                                         <tbody>
                                                 <?php
                                                     $lista = $this->paciente->listarvagasestagio($_GET)->limit($limit, $pagina)->orderby("qtde_vagas", 'desc')->orderby("nome_vaga")->get()->result();
                                                     $estilo_linha = "tabela_content01";
@@ -106,7 +106,7 @@
 
                                                     <?}?>
             
-                                        </body>
+                                        </tbody>
                                 <tfoot>
                                      <tr>
                                         <th class="tabela_footer" colspan="7">

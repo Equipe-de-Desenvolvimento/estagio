@@ -503,6 +503,10 @@ function debug($object) {
                         <li>
                             <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/pacientes/relatoriodeestagiovagas">Relatorio de Vagas Associadas</a>
                         </li>
+
+                        <li>
+                            <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/pacientes/confinformacao">Configuração de Informações</a>
+                        </li>
                         <?}?>
 
 

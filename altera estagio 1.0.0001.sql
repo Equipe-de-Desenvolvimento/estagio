@@ -108,3 +108,21 @@ ALTER TABLE ponto.tb_vagas_empresas ADD COLUMN status_vaga TEXT;
 ALTER TABLE ponto.tb_aluno_estagio ADD COLUMN convenio_id INTEGER;
 ALTER TABLE ponto.tb_solicitacao_vagas_empresas ADD COLUMN convenio_id INTEGER;
 
+
+CREATE TABLE ponto.tb_informacaovaga
+(
+  informacaovaga_id serial NOT NULL,
+  descricao TEXT,
+  tipo TEXT,
+  ativo boolean DEFAULT true,
+  data_cadastro timestamp without time zone,
+  operador_cadastro integer,
+  data_atualizacao timestamp without time zone,
+  operador_atualizacao integer,
+  CONSTRAINT tb_informacaovaga_pkey PRIMARY KEY (informacaovaga_id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ponto.tb_informacaovaga
+  OWNER TO postgres;
