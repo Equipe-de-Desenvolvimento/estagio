@@ -126,3 +126,12 @@ WITH (
 );
 ALTER TABLE ponto.tb_informacaovaga
   OWNER TO postgres;
+
+
+ALTER TABLE ponto.tb_vagas_empresas ADD COLUMN formacao INTEGER;
+ALTER TABLE ponto.tb_vagas_empresas ADD COLUMN curso INTEGER;
+ALTER TABLE ponto.tb_vagas_empresas ADD COLUMN periodo INTEGER;
+ALTER TABLE ponto.tb_vagas_empresas ADD COLUMN periodicidade INTEGER;
+ALTER TABLE ponto.tb_vagas_empresas ADD COLUMN setor INTEGER;
+ALTER TABLE ponto.tb_vagas_empresas ADD COLUMN tipodavaga INTEGER;
+ALTER TABLE ponto.tb_vagas_empresas ADD COLUMN disciplina INTEGER;

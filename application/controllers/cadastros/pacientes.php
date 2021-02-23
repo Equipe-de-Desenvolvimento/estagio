@@ -193,6 +193,11 @@ class pacientes extends BaseController {
         redirect(base_url() . "cadastros/pacientes/confinformacao");
     }
 
+    function excluirinfomacaovagas($informacaovaga){
+        $this->paciente->excluirinfomacaovagas($informacaovaga);
+        redirect(base_url() . "cadastros/pacientes/confinformacao");
+    }
+
     function gerarrelatoriovagasassociadas(){
 
         $data['txtdata_inicio'] = date("Y-m-d", strtotime(str_replace('/', '-', $_POST['data_inicio'])));
@@ -230,6 +235,7 @@ class pacientes extends BaseController {
         $data['convenios'] = $this->paciente->listarconvenios();
         $data['vagas_id'] = $vagas_id;
         $data['obj'] = $this->paciente->listarvagasinfo($vagas_id);
+        $data['informacoes'] = $this->paciente->listarinformacaovaga()->get()->result();
         // echo '<pre>';
         // print_r($data['obj']);
         // die;

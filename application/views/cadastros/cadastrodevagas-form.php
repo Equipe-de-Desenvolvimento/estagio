@@ -33,6 +33,90 @@
             </div>
         </div>
 
+          <div class="col-lg-2">
+            <label for="">Nível de Formação</label>
+            <select name="formacao" id="" class="form-control" required>
+                  <option value="">Selecione</option>
+                  <?foreach($informacoes as $item){?>
+                    <?if($item->tipo == 'escolaridade'){?>
+                        <option value="<?=$item->informacaovaga_id?> <?=(@$obj[0]->escolaridade == $item->informacaovaga_id)?'selected':''?>"><?=$item->descricao?></option>
+                    <?}?>
+                  <?}?>
+            </select>
+        </div>
+
+        <div class="col-lg-2">
+            <label for="">Curso</label>
+            <select name="curso" id="" class="form-control" required>
+                  <option value="">Selecione</option>
+                  <?foreach($informacoes as $item){?>
+                    <?if($item->tipo == 'curso'){?>
+                        <option value="<?=$item->informacaovaga_id?>" <?=(@$obj[0]->curso == $item->informacaovaga_id)?'selected':''?>><?=$item->descricao?></option>
+                    <?}?>
+                  <?}?>
+            </select>
+        </div>
+
+        <div class="col-lg-2">
+            <label for="">Disciplina</label>
+            <select name="disciplina" id="" class="form-control" required>
+                  <option value="">Selecione</option>
+                  <?foreach($informacoes as $item){?>
+                    <?if($item->tipo == 'disciplina'){?>
+                        <option value="<?=$item->informacaovaga_id?>" <?=(@$obj[0]->disciplina == $item->informacaovaga_id)?'selected':''?>><?=$item->descricao?></option>
+                    <?}?>
+                  <?}?>
+            </select>
+        </div>
+
+        <div class="col-lg-2">
+            <label for="">Setor</label>
+            <select name="setor" id="" class="form-control" required>
+                  <option value="">Selecione</option>
+                  <?foreach($informacoes as $item){?>
+                    <?if($item->tipo == 'setor'){?>
+                        <option value="<?=$item->informacaovaga_id?>" <?=(@$obj[0]->setor == $item->informacaovaga_id)?'selected':''?>><?=$item->descricao?></option>
+                    <?}?>
+                  <?}?>
+            </select>
+        </div>
+
+        <div class="col-lg-2">
+            <label for="">Periodo</label>
+            <select name="periodo" id="" class="form-control" required>
+                  <option value="">Selecione</option>
+                  <?foreach($informacoes as $item){?>
+                    <?if($item->tipo == 'periodo'){?>
+                        <option value="<?=$item->informacaovaga_id?>" <?=(@$obj[0]->periodo == $item->informacaovaga_id)?'selected':''?>><?=$item->descricao?></option>
+                    <?}?>
+                  <?}?>
+            </select>
+        </div>
+
+        <div class="col-lg-2">
+            <label for="">Periodicidade</label>
+            <select name="periodicidade" id="" class="form-control" required>
+                  <option value="">Selecione</option>
+                  <?foreach($informacoes as $item){?>
+                    <?if($item->tipo == 'periodicidade'){?>
+                        <option value="<?=$item->informacaovaga_id?>" <?=(@$obj[0]->periodicidade == $item->informacaovaga_id)?'selected':''?>><?=$item->descricao?></option>
+                    <?}?>
+                  <?}?>
+            </select>
+        </div>
+
+        <div class="col-lg-2">
+            <label for="">Tipo da Vaga</label>
+            <select name="tipodavaga" id="" class="form-control" required>
+                  <option value="">Selecione</option>
+                  <?foreach($informacoes as $item){?>
+                    <?if($item->tipo == 'tipovaga'){?>
+                        <option value="<?=$item->informacaovaga_id?>" <?=(@$obj[0]->tipodavaga == $item->informacaovaga_id)?'selected':''?>><?=$item->descricao?></option>
+                    <?}?>
+                  <?}?>
+            </select>
+        </div>
+
         <div class="col-lg-2">
             <label for="">Qtde de Vagas</label>
             <input type="number" name="qtdvagas" class="form-control" value="<?=@$obj[0]->qtde_vagas?>" required>

@@ -54,7 +54,7 @@
                                 <tr>
                                     <th class="tabela_header">Área</th>
                                     <?if($this->session->userdata('instituicao_id') == ''){?>
-                                        <th class="tabela_header">Tipo Vaga</th>
+                                        <!-- <th class="tabela_header">Tipo Vaga</th> -->
                                     <?}?>
                                     <th class="tabela_header">Convenio</th>
                                     <th class="tabela_header">Tipo</th>
@@ -87,7 +87,7 @@
                                                         <tr>
                                                             <td ><?php echo $item->nome_vaga; ?></td>
                                                             <?if($this->session->userdata('instituicao_id') == ''){?>
-                                                            <td ><?php echo $item->status_vaga; ?></td> 
+                                                            <!-- <td ><?php echo $item->status_vaga; ?></td>  -->
                                                             <?}?>
                                                             <td ><?php echo $item->convenio; ?></td> 
                                                             <td ><?php echo $item->tipo_vaga; ?></td>

@@ -1059,6 +1059,14 @@ class paciente_model extends BaseModel {
         $this->db->set('qtde_vagas', $_POST['qtdvagas']);
         $this->db->set('convenio_id', $_POST['convenio_id']);
 
+        $this->db->set('formacao', $_POST['formacao']);
+        $this->db->set('curso', $_POST['curso']);
+        $this->db->set('disciplina', $_POST['disciplina']);
+        $this->db->set('periodo', $_POST['periodo']);
+        $this->db->set('periodicidade', $_POST['periodicidade']);
+        $this->db->set('tipodavaga', $_POST['tipodavaga']);
+        $this->db->set('setor', $_POST['setor']);
+
         if($_POST['vaga_id'] > 0){
             $this->db->set('data_atualizacao', $horario);
             $this->db->set('operador_atualizacao', $operador_id);
@@ -1245,6 +1253,17 @@ class paciente_model extends BaseModel {
         return $this->db->get()->result();
     }
 
+    function excluirinfomacaovagas($excluirinfomacaovagas){
+        $horario = date("Y-m-d H:i:s");
+        $operador_id = $this->session->userdata('operador_id');
+
+        $this->db->set('ativo', 'f');
+        $this->db->set('data_atualizacao', $horario);
+        $this->db->set('operador_atualizacao', $operador_id);
+        $this->db->where('informacaovaga_id', $excluirinfomacaovagas);
+        $this->db->update('tb_informacaovaga');
+    }
+
     function listardocumentacaoestagio($args){
         $this->db->select('ve.documentacao_profissional_id, ve.nome');
         $this->db->from('tb_documentacao_profissional ve');
@@ -1352,7 +1371,7 @@ class paciente_model extends BaseModel {
     }
 
     function listarvagasinfo($vaga_id){
-        $this->db->select('vaga_id, nome_vaga, tipo_vaga, qtde_vagas, qtde_inicial, instituicao_id');
+        $this->db->select('*');
         $this->db->from('tb_vagas_empresas');
         $this->db->where('ativo', 't');
         $this->db->where('vaga_id', $vaga_id);
