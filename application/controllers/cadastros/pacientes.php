@@ -170,12 +170,66 @@ class pacientes extends BaseController {
         $this->loadView('cadastros/pacientesmapadevagas-lista', $args);
     }
 
+    function visualizarvaga($vagas_id){
+        $data['instituicao'] = $this->paciente->listarinstituicao_vagas();
+        $data['convenios'] = $this->paciente->listarconvenios();
+        $data['vagas_id'] = $vagas_id;
+        $data['obj'] = $this->paciente->listarvagasinfo($vagas_id);
+        $data['informacoes'] = $this->paciente->listarinformacaovaga()->get()->result();
+        $data['resporigem'] = $this->paciente->listarrespnorigem();
+        $data['respijf'] = $this->paciente->listarrespnijf();
+        // echo '<pre>';
+        // print_r($data['obj']);
+        // die;
+        $this->loadView('cadastros/visualizarvaga-form', $data);
+    }
+
 
     function relatoriodeestagiovagas(){
         $data['instituicao'] = $this->paciente->listarinstituicao_vagas();
         // print_r($data['instituicao']);
         // die;
         $this->loadView('cadastros/relatoriodeestagiovagas-lista', $data);
+    }
+
+    function responsavelorigem($args = array()){
+        $this->loadView('cadastros/responsavelorigem-lista', $args);
+    }
+
+    function cadastroresponsavelorigem($responsavel_origem_id){
+        $data['responsavel_origem_id'] = $responsavel_origem_id;
+        $data['obj'] = $this->paciente->cadastroresponsavelorigem($responsavel_origem_id);
+        $this->loadView('cadastros/responsavelorigem-form', $data);
+    }
+
+    function gravarresponsavelorigem(){
+        $this->paciente->gravarresponsavelorigem();
+        redirect(base_url() . "cadastros/pacientes/responsavelorigem");
+    }
+
+    function excluirresponsavelorigem($responsavel_origem_id){
+        $this->paciente->excluirresponsavelorigem($responsavel_origem_id);
+        redirect(base_url() . "cadastros/pacientes/responsavelorigem");
+    }
+
+    function responsavelifj($args = array()){
+        $this->loadView('cadastros/responsavelifj-lista', $args);
+    }
+
+    function cadastroresponsavelifj($responsavel_ifj_id){
+        $data['responsavel_ifj_id'] = $responsavel_ifj_id;
+        $data['obj'] = $this->paciente->cadastroresponsavelifj($responsavel_ifj_id);
+        $this->loadView('cadastros/responsavelifj-form', $data);
+    }
+
+    function gravarresponsavelifj(){
+        $this->paciente->gravarresponsavelifj();
+        redirect(base_url() . "cadastros/pacientes/responsavelifj");
+    }
+
+    function excluirresponsavelifj($responsavel_ifj_id){
+        $this->paciente->excluirresponsavelifj($responsavel_ifj_id);
+        redirect(base_url() . "cadastros/pacientes/responsavelifj");
     }
 
     function confinformacao($args = array()){
@@ -218,6 +272,7 @@ class pacientes extends BaseController {
 
     function associaralunoaestagio($vagas_id, $instituicao_id, $convenio_id){
         $data['vagas'] = $this->paciente->listarvagasinfo($vagas_id);
+        $data['informacoes'] = $this->paciente->listarinformacaovaga()->get()->result();
         $data['alunos'] = $this->paciente->alunosadequados($instituicao_id);
         $data['instituicao_id'] = $instituicao_id;
         $data['vaga_id'] = $vagas_id;
@@ -236,6 +291,8 @@ class pacientes extends BaseController {
         $data['vagas_id'] = $vagas_id;
         $data['obj'] = $this->paciente->listarvagasinfo($vagas_id);
         $data['informacoes'] = $this->paciente->listarinformacaovaga()->get()->result();
+        $data['resporigem'] = $this->paciente->listarrespnorigem();
+        $data['respijf'] = $this->paciente->listarrespnijf();
         // echo '<pre>';
         // print_r($data['obj']);
         // die;
@@ -250,12 +307,19 @@ class pacientes extends BaseController {
             $data['convenios'] = $this->paciente->listarconveniosinstituicao();
         }
         $data['solicitacao_vaga_id'] = $solicitacao_vaga_id;
-        $data['obj'] = $this->paciente->listarvagasinfo($solicitacao_vaga_id);
+        $data['obj'] = $this->paciente->listarsolicitacaovagasinfo($solicitacao_vaga_id);
+        $data['informacoes'] = $this->paciente->listarinformacaovaga()->get()->result();
+        $data['alunos'] = $this->paciente->alunosadequados($this->session->userdata('instituicao_id'));
+
+        // echo '<pre>';
+        // print_r($data['obj']);
+        // die;
         $this->loadView('cadastros/solicitacaodevagas-form', $data);
     }
     
 
     function gravarcadastrovagas(){
+
         $teste = $this->paciente->gravarvagas();
 
         if($teste > 0){
@@ -782,6 +846,22 @@ class pacientes extends BaseController {
         $data['idade'] = 1;
         $data['agendado'] = $agendado;
         $this->loadView('cadastros/paciente-ficha', $data);
+    }
+
+    function gravardataprova(){
+        $this->paciente->gravardataprova();
+        
+        echo json_encode(true);
+    }
+
+    function buscarDatasProvas(){
+        $paciente_id = $_GET['paciente_id'];
+        $info = $this->paciente->buscarDatasProvas($paciente_id);
+        $result = array();
+            foreach($info as $item){
+                $result[] = date("d/m/Y", strtotime(str_replace('-', '/', $item->data_prova))); 
+            }
+        echo json_encode($result);
     }
 
     function carregarcirurgico($paciente_id, $agendado = NULL) {

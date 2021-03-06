@@ -22,6 +22,9 @@
                                     <?if($this->session->userdata('instituicao_id') == ''){?>
                                     <th class="tabela_header">Instituição</th>
                                     <?}?>
+                                    <th>Aluno</th>
+                                    <th>Convenio</th>
+                                    <th>Data Prevista</th>
                                     <th class="tabela_header">Tipo</th>
                                     <th class="tabela_header">Qtd de Vagas</th>
                                     <th class="tabela_header">Status</th>
@@ -39,7 +42,7 @@
                                             
                                          <body>
                                                 <?php
-                                                    $lista = $this->paciente->listarsolicitacaovagasestagio($_GET)->limit($limit, $pagina)->orderby("nome_vaga")->orderby("status_vaga", "desc")->get()->result();
+                                                    $lista = $this->paciente->listarsolicitacaovagasestagio($_GET)->limit($limit, $pagina)->orderby("ii.descricao")->orderby("status_vaga", "desc")->get()->result();
                                                     $estilo_linha = "tabela_content01";
                                                      foreach ($lista as $item) {
                                                     ($estilo_linha == "tabela_content01") ? $estilo_linha = "tabela_content02" : $estilo_linha = "tabela_content02";
@@ -49,6 +52,9 @@
                                                             <?if($this->session->userdata('instituicao_id') == ''){?>
                                                             <td ><?php echo $item->nome_fantasia; ?></td> 
                                                             <?}?>
+                                                            <td><?php echo $item->paciente; ?></td>
+                                                            <td><?php echo $item->convenio; ?></td>
+                                                            <td><?php echo substr($item->data_inicio, 8, 2).'/'.substr($item->data_inicio, 5, 2).'/'.substr($item->data_inicio, 0, 4); ?> - <?php echo substr($item->data_final, 8, 2).'/'.substr($item->data_final, 5, 2).'/'.substr($item->data_final, 0, 4); ?></td>
                                                             <td ><?php echo $item->tipo_vaga; ?></td>
                                                             <td ><?php echo $item->qtde_vagas; ?></td> 
                                                             <td ><?php echo $item->status_vaga; ?></td>

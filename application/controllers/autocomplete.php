@@ -2741,6 +2741,24 @@ class Autocomplete extends Controller {
         echo json_encode($result);
     }
 
+    function listarinstituicaoconvenio(){
+        if (isset($_GET['convenio_id'])) {
+            $result = $this->exametemp->listarinstituicaoconvenio($_GET['convenio_id']);
+        } else {
+            $result = $this->exametemp->listarinstituicaoconvenio();
+        }
+        echo json_encode($result);
+    }
+
+    function valorestagioporconvenio(){
+        if (isset($_GET['convenio_id'])) {
+            $result = $this->exametemp->valorestagioporconvenio($_GET['convenio_id']);
+        } else {
+            $result = $this->exametemp->valorestagioporconvenio();
+        }
+        echo json_encode($result);
+    }
+
     function procedimentoconvenioatendimentonovo() {
 
         if (isset($_GET['convenio1'])) {

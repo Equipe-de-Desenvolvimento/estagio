@@ -288,11 +288,17 @@ class paciente_model extends BaseModel {
             }
 
             function listaralunosestagio($args = array()){
-                $this->db->select('p.nome, p.cpf, p.cns, p.telefone, p.celular, i.nome_fantasia, v.nome_vaga, ae.data_cadastro, ae.status_estagio, ae.aluno_estagio_id');
+                $this->db->select('p.nome, p.cpf, p.cns, p.telefone, p.celular, 
+                                    i.nome_fantasia, ae.data_cadastro, 
+                                    ae.status_estagio, ae.aluno_estagio_id, ii.descricao as nome_vaga,
+                                    ae.data_inicio, ae.data_final');
                 $this->db->from('tb_aluno_estagio ae');
                 $this->db->join('tb_paciente p', 'p.paciente_id = ae.aluno_id', 'left');
                 $this->db->join('tb_instituicao i', 'i.instituicao_id = ae.instituicao_id', 'left');
                 $this->db->join('tb_vagas_empresas v', 'v.vaga_id = ae.vaga_id',' left');
+                $this->db->join('tb_informacaovaga ii', 'v.curso = ii.informacaovaga_id', 'left');
+                
+                
                 $this->db->where('ae.ativo', 't');
 
                 if ($args) {
@@ -1053,19 +1059,23 @@ class paciente_model extends BaseModel {
         $horario = date("Y-m-d H:i:s");
         $operador_id = $this->session->userdata('operador_id');
 
-        $this->db->set('nome_vaga', $_POST['vaganome']);
+        // $this->db->set('nome_vaga', $_POST['vaganome']);
         $this->db->set('tipo_vaga', $_POST['tipovaga']);
-        // $this->db->set('empresa_vaga', $_POST['empresa_id']);
         $this->db->set('qtde_vagas', $_POST['qtdvagas']);
         $this->db->set('convenio_id', $_POST['convenio_id']);
-
+        $this->db->set('instituicao_id', $_POST['instituicao_id']);
         $this->db->set('formacao', $_POST['formacao']);
         $this->db->set('curso', $_POST['curso']);
         $this->db->set('disciplina', $_POST['disciplina']);
-        $this->db->set('periodo', $_POST['periodo']);
-        $this->db->set('periodicidade', $_POST['periodicidade']);
         $this->db->set('tipodavaga', $_POST['tipodavaga']);
         $this->db->set('setor', $_POST['setor']);
+        $this->db->set('objetivo', $_POST['objetivo']);
+        $this->db->set('responsavel_origem', $_POST['resporigem']);
+        $this->db->set('responsavel_ijf', $_POST['respifj']);
+
+        // $this->db->set('periodo', $_POST['periodo']);
+        // $this->db->set('periodicidade', $_POST['periodicidade']);
+
 
         if($_POST['vaga_id'] > 0){
             $this->db->set('data_atualizacao', $horario);
@@ -1085,10 +1095,22 @@ class paciente_model extends BaseModel {
 
         $horario = date("Y-m-d H:i:s");
         $operador_id = $this->session->userdata('operador_id');
+        $datainicio = date("Y-m-d", strtotime(str_replace('/', '-', $_POST['data_inicio'])));
+        $datafinal = date("Y-m-d", strtotime(str_replace('/', '-', $_POST['data_final'])));
 
-        $this->db->set('nome_vaga', $_POST['vaganome']);
+
+        $this->db->set('disciplina', $_POST['disciplina']);
+        $this->db->set('formacao', $_POST['formacao']);
+        $this->db->set('curso', $_POST['curso']);
+        $this->db->set('setor', $_POST['setor']);
+        $this->db->set('aluno_id', $_POST['aluno_id']);
+        $this->db->set('tipodavaga', $_POST['tipodavaga']);
+
+        $this->db->set('data_inicio', $datainicio);
+        $this->db->set('data_final', $datafinal);
+
         $this->db->set('tipo_vaga', $_POST['tipovaga']);
-        $this->db->set('qtde_vagas', $_POST['qtdvagas']);
+        $this->db->set('qtde_vagas', 1);
 
 
         if($this->session->userdata('instituicao_id') == ''){
@@ -1097,6 +1119,8 @@ class paciente_model extends BaseModel {
             $this->db->set('instituicao_id', $this->session->userdata('instituicao_id'));
             $this->db->set('convenio_id', $_POST['convenio_id']);
         }
+
+
 
         if($_POST['solicitacao_vaga_id'] > 0){
             $this->db->set('data_atualizacao', $horario);
@@ -1209,6 +1233,18 @@ class paciente_model extends BaseModel {
         $this->db->set('tipo_vaga', $return[0]->tipo_vaga);
         $this->db->set('qtde_vagas', $return[0]->qtde_vagas);
         $this->db->set('convenio_id', $return[0]->convenio_id);
+
+        $this->db->set('instituicao_id', $return[0]->instituicao_id);
+        $this->db->set('disciplina', $return[0]->disciplina);
+        $this->db->set('formacao', $return[0]->formacao);
+        $this->db->set('curso', $return[0]->curso);
+        $this->db->set('tipo_vaga', $return[0]->tipo_vaga);
+        $this->db->set('setor', $return[0]->setor);
+        $this->db->set('tipodavaga', $return[0]->tipodavaga);
+        // $this->db->set('data_inicio', $return[0]->data_inicio);
+        // $this->db->set('data_final', $return[0]->data_final);
+
+
         $this->db->set('data_cadastro', $horario);
         $this->db->set('operador_cadastro', $operador_id);
         $this->db->set('qtde_inicial', $return[0]->qtde_vagas);
@@ -1305,9 +1341,16 @@ class paciente_model extends BaseModel {
         $horario = date("Y-m-d H:i:s");
         $operador_id = $this->session->userdata('operador_id');
 
+        $datainicio = date("Y-m-d", strtotime(str_replace('/', '-', $_POST['data_inicio'])));
+        $datafinal = date("Y-m-d", strtotime(str_replace('/', '-', $_POST['data_final'])));
+
         $this->db->set('associado_a_vaga', 't');
         $this->db->where('paciente_id', $_POST['aluno_id']);
         $this->db->update('tb_paciente');
+
+        $this->db->set('data_inicio', $datainicio);
+        $this->db->set('data_final', $datafinal);
+        $this->db->set('tipo_vaga', $_POST['tipodavaga']);
 
         $this->db->set('aluno_id', $_POST['aluno_id']);
         $this->db->set('instituicao_id', $_POST['instituicao_id']);
@@ -1328,27 +1371,51 @@ class paciente_model extends BaseModel {
         $this->db->update('tb_vagas_empresas');
     }
 
+    function gravardataprova(){
+        $horario = date("Y-m-d H:i:s");
+        $operador_id = $this->session->userdata('operador_id');
+
+        $data = date("Y-m-d", strtotime(str_replace('/', '-', $_POST['dataprova'])));
+        $this->db->set('data_prova', $data);
+        $this->db->set('paciente_id', $_POST['paciente_id']);
+        $this->db->set('data_cadastro', $horario);
+        $this->db->set('operador_cadastro', $operador_id);
+        $this->db->insert('tb_paciente_dataprova');
+    }
+
+    function buscarDatasProvas($paciente_id){
+        $this->db->select('data_prova');
+        $this->db->from('tb_paciente_dataprova');
+        $this->db->where('ativo', 't');
+        $this->db->where('paciente_id', $paciente_id);
+
+        return $this->db->get()->result();
+    }
+    
     function listarvagasestagio($args = array()){
-        $this->db->select('ve.vaga_id, ve.nome_vaga, ve.tipo_vaga, ve.qtde_vagas, i.nome_fantasia, i.instituicao_id, c.nome as convenio, ve.status_vaga, c.convenio_id');
+        $this->db->select('ve.vaga_id, ve.tipo_vaga, ve.qtde_vagas, 
+                            i.nome_fantasia, i.instituicao_id, c.nome as convenio, ve.status_vaga, 
+                            c.convenio_id, ii.descricao as nome_vaga');
         $this->db->from('tb_vagas_empresas ve');
         $this->db->join('tb_instituicao i', 'i.instituicao_id = ve.instituicao_id', 'left');
         $this->db->join('tb_convenio c', 've.convenio_id = c.convenio_id', 'left');
+        $this->db->join('tb_informacaovaga ii', 've.curso = ii.informacaovaga_id', 'left');
         $this->db->where('ve.ativo', 't');
 
         if($this->session->userdata('instituicao_id') > 0){
-            // $this->db->where('ve.instituicao_id', $this->session->userdata('instituicao_id'));
-            $this->db->join('tb_convenio_instituicao cc', 'c.convenio_id = cc.convenio_id', 'left');
-            $this->db->where('cc.instituicao_id', $this->session->userdata('instituicao_id'));
-            $this->db->where('cc.ativo', 't');
+            $this->db->where('ve.instituicao_id', $this->session->userdata('instituicao_id'));
+            // $this->db->join('tb_convenio_instituicao cc', 'c.convenio_id = cc.convenio_id', 'left');
+            // $this->db->where('cc.instituicao_id', $this->session->userdata('instituicao_id'));
+            // $this->db->where('cc.ativo', 't');
         }
 
         if ($args) {
             if(isset($args['nome_vaga'])){
-                $this->db->where('nome_vaga ilike', '%' . $args ['nome_vaga'] . '%');
+                $this->db->where('ii.descricao ilike', '%' . $args ['nome_vaga'] . '%');
                 // $this->db->where("nome_vaga ilike %".$args['nome_vaga']."%");
             }
             if(isset($args['tipo_vaga'])){
-                $this->db->where('tipo_vaga ilike', '%' . $args ['tipo_vaga'] . '%');
+                $this->db->where('ve.tipo_vaga ilike', '%' . $args ['tipo_vaga'] . '%');
             }
             if(isset($args['instituicao_id'])){
                 $this->db->where('ve.instituicao_id', $args['instituicao_id']);
@@ -1358,9 +1425,14 @@ class paciente_model extends BaseModel {
     }
 
     function listarsolicitacaovagasestagio($args = array()){
-        $this->db->select('ve.solicitacao_vaga_id, ve.nome_vaga, ve.tipo_vaga, ve.qtde_vagas, i.nome_fantasia, ve.status_vaga');
+        $this->db->select('ve.solicitacao_vaga_id, ii.descricao as nome_vaga, ve.tipo_vaga, 
+                            ve.qtde_vagas, i.nome_fantasia, ve.status_vaga,
+                            p.nome as paciente, ve.data_inicio, ve.data_final, c.nome as convenio');
         $this->db->from('tb_solicitacao_vagas_empresas ve');
         $this->db->join('tb_instituicao i', 'i.instituicao_id = ve.instituicao_id', 'left');
+        $this->db->join('tb_informacaovaga ii', 've.curso = ii.informacaovaga_id', 'left');
+        $this->db->join('tb_paciente p', 'p.paciente_id = ve.aluno_id', 'left');
+        $this->db->join('tb_convenio c', 'c.convenio_id = ve.convenio_id', 'left');
         $this->db->where('ve.ativo', 't');
 
         if($this->session->userdata('instituicao_id') > 0){
@@ -1370,15 +1442,147 @@ class paciente_model extends BaseModel {
         return $this->db;
     }
 
-    function listarvagasinfo($vaga_id){
+    function listarsolicitacaovagasinfo($solicitacao_vaga_id){
         $this->db->select('*');
-        $this->db->from('tb_vagas_empresas');
-        $this->db->where('ativo', 't');
+        $this->db->from('tb_solicitacao_vagas_empresas');
+        $this->db->where('solicitacao_vaga_id', $solicitacao_vaga_id);
+
+        return $this->db->get()->result();
+    }
+
+    function listarvagasinfo($vaga_id){
+        $this->db->select('ve.*, i.*, c.*, ii.*');
+        $this->db->from('tb_vagas_empresas ve');
+        $this->db->join('tb_instituicao i', 'i.instituicao_id = ve.instituicao_id', 'left');
+        $this->db->join('tb_convenio c', 've.convenio_id = c.convenio_id', 'left');
+        $this->db->join('tb_informacaovaga ii', 've.curso = ii.informacaovaga_id', 'left');
+        $this->db->where('ve.ativo', 't');
         $this->db->where('vaga_id', $vaga_id);
         return $this->db->get()->result();
     }
 
+    function listarresponsavelorigem($args = array()){
+        $this->db->select('responsavel_origem_id, nome, email, cargo');
+        $this->db->from('tb_responsavel_origem');
+        $this->db->where('ativo', 't');
+
+        if ($args) {
+            if(isset($args['nome'])){
+                $this->db->where('nome ilike', '%' . $args ['nome'] . '%');
+            }
+        }
+
+        return $this->db;
+    }
+
+    function cadastroresponsavelorigem($responsavel_origem_id){
+        $this->db->select('responsavel_origem_id, nome, email, cargo');
+        $this->db->from('tb_responsavel_origem');
+        $this->db->where('responsavel_origem_id', $responsavel_origem_id);
+
+        return $this->db->get()->result();
+    }
+
+    function gravarresponsavelorigem(){
+        $horario = date("Y-m-d H:i:s");
+        $operador_id = $this->session->userdata('operador_id');
+
+        $this->db->set('nome', $_POST['nome']);
+        $this->db->set('email', $_POST['email']);
+        $this->db->set('cargo', $_POST['cargo']);
+
+        if($_POST['responsavel_origem_id'] > 0){
+            $this->db->set('data_atualizacao', $horario);
+            $this->db->set('operador_atualizacao', $operador_id);
+            $this->db->where('responsavel_origem_id', $_POST['responsavel_origem_id']);
+            $this->db->update('tb_responsavel_origem');
+        }else{
+            $this->db->set('data_cadastro', $horario);
+            $this->db->set('operador_cadastro', $operador_id);
+            $this->db->insert('tb_responsavel_origem');
+        }
+    }
+
+    function excluirresponsavelorigem($responsavel_origem_id){
+        $horario = date("Y-m-d H:i:s");
+        $operador_id = $this->session->userdata('operador_id');
+
+        $this->db->set('ativo', 'f');
+        $this->db->set('data_atualizacao', $horario);
+        $this->db->set('operador_atualizacao', $operador_id);
+        $this->db->where('responsavel_origem_id', $responsavel_origem_id);
+        $this->db->update('tb_responsavel_origem');
+    }
+
+
+    function listarresponsavelifj($args = array()){
+        $this->db->select('responsavel_ifj_id, nome, email, cargo');
+        $this->db->from('tb_responsavel_ifj');
+        $this->db->where('ativo', 't');
+
+        if ($args) {
+            if(isset($args['nome'])){
+                $this->db->where('nome ilike', '%' . $args ['nome'] . '%');
+            }
+        }
+
+        return $this->db;
+    }
+
+    function cadastroresponsavelifj($responsavel_ifj_id){
+        $this->db->select('responsavel_ifj_id, nome, email, cargo');
+        $this->db->from('tb_responsavel_ifj');
+        $this->db->where('responsavel_ifj_id', $responsavel_ifj_id);
+
+        return $this->db->get()->result();
+    }
+
+    function gravarresponsavelifj(){
+        $horario = date("Y-m-d H:i:s");
+        $operador_id = $this->session->userdata('operador_id');
+
+        $this->db->set('nome', $_POST['nome']);
+        $this->db->set('email', $_POST['email']);
+        $this->db->set('cargo', $_POST['cargo']);
+
+        if($_POST['responsavel_ifj_id'] > 0){
+            $this->db->set('data_atualizacao', $horario);
+            $this->db->set('operador_atualizacao', $operador_id);
+            $this->db->where('responsavel_ifj_id', $_POST['responsavel_ifj_id']);
+            $this->db->update('tb_responsavel_ifj');
+        }else{
+            $this->db->set('data_cadastro', $horario);
+            $this->db->set('operador_cadastro', $operador_id);
+            $this->db->insert('tb_responsavel_ifj');
+        }
+    }
+
+    function excluirresponsavelifj($responsavel_ifj_id){
+        $horario = date("Y-m-d H:i:s");
+        $operador_id = $this->session->userdata('operador_id');
+
+        $this->db->set('ativo', 'f');
+        $this->db->set('data_atualizacao', $horario);
+        $this->db->set('operador_atualizacao', $operador_id);
+        $this->db->where('responsavel_ifj_id', $responsavel_ifj_id);
+        $this->db->update('tb_responsavel_ifj');
+    }
     
+    function listarrespnorigem(){
+        $this->db->select('responsavel_origem_id, nome, email, cargo');
+        $this->db->from('tb_responsavel_origem');
+        $this->db->where('ativo', 't');
+        
+        return $this->db->get()->result();
+    }
+
+    function listarrespnijf(){
+        $this->db->select('responsavel_ifj_id, nome, email, cargo');
+        $this->db->from('tb_responsavel_ifj');
+        $this->db->where('ativo', 't');
+        
+        return $this->db->get()->result();
+    }
 
     function listarconvenios(){
         $this->db->select('convenio_id, nome');

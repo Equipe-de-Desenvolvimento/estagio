@@ -474,6 +474,36 @@
             </div>
         </div>
     </div>
+    
+    <?if(@$obj[0]->_paciente_id > 0){?>
+    <div class="alert alert-primary"><b>Dia de Prova</b></div>
+        <div class="row">
+            <div class="col-lg-2">
+                <label>Data Prova</label>
+                <input type="hidden" id="pacienteprova" name="pacienteprova" value="<?= @$obj[0]->_paciente_id; ?>"/>
+                <input type="text" id="dataprova" name="dataprova"  class="form-control datas" value="<?= @$obj[0]->_usuario_app; ?>" required/>
+            </div>
+
+            <div class="col-lg-2"> 
+                <br>
+                <button type="button" class="btn btn-outline-dark btn-sm" onclick="adicionarDataProva()"> Adicionar </button>
+            </div>
+        </div>
+        <br>
+
+        <table class="table" style="width: 30%;">
+            <tr>
+                <th>Data Prova</th>
+            </tr>
+
+            <tbody id="tabelaprova">
+            
+            </tbody>
+        </table>
+            <br>
+    <?}?>
+
+
     <div class="alert alert-primary"><b>Acesso</b></div>
     <div class="row">
                     <div class="col-lg-3">
@@ -930,7 +960,7 @@ $("#mostrarDadosExtras").click(function () {
     }
 
     $(document).ready(function () {
-
+        buscarDatasProvas();
         function limpa_formulário_cep() {
             // Limpa valores do formulário de cep.
 //            $("#rua").val("");
@@ -1084,5 +1114,44 @@ $("#mostrarDadosExtras").click(function () {
     }
 
     calculoidade_conjuge();
+
+
+
+    function adicionarDataProva(){
+        if($("#dataprova").val() == ''){
+            alert('Data não pode ser vazia');
+        }else{
+            $.ajax({
+                type: "POST",
+                data: {
+                        paciente_id: $("#pacienteprova").val(),
+                        dataprova: $("#dataprova").val()
+                    },
+                url: "<?= base_url() ?>cadastros/pacientes/gravardataprova/",
+                success: function (data) {
+                    buscarDatasProvas();
+                    $("#dataprova").val('');
+                },
+                error: function (data) {
+                    alert('Erro');
+                }
+            });
+        }
+    }
+
+    function buscarDatasProvas(){
+        $.getJSON('<?= base_url() ?>cadastros/pacientes/buscarDatasProvas/', {paciente_id: $("#pacienteprova").val(), ajax: true}, function (j) {
+                table = "";
+
+                for (var c = 0; c < j.length; c++) {
+                    table += "<tr>";
+                    table +="<td>"+j[c]+"</td>";
+                    table += "</tr>";
+                }
+                $('#tabelaprova tr').remove();
+                $('#tabelaprova').append(table);
+                
+            });
+    }
 
 </script>

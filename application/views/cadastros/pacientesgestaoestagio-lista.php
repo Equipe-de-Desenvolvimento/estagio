@@ -106,6 +106,7 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                     <th class="tabela_header">Instituição</th>
                                     <th class="tabela_header">Vaga</th>
                                     <th class="tabela_header">Data Associado</th>
+                                    <th>Data Prevista Estagio</th>
                                     <th class="tabela_header" colspan="2"><center>A&ccedil;&otilde;es</center></th>
                                 </tr>
 
@@ -140,9 +141,10 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                                 <td ><?php echo $item->nome_fantasia; ?></td>
                                                 <td ><?php echo $item->nome_vaga; ?></td>
                                                 <td ><?php echo substr($item->data_cadastro, 8, 2).'/'.substr($item->data_cadastro, 5, 2).'/'.substr($item->data_cadastro, 0, 4); ?></td>
-                                                
+                                                <td><?php echo substr($item->data_inicio, 8, 2).'/'.substr($item->data_inicio, 5, 2).'/'.substr($item->data_inicio, 0, 4); ?> - <?php echo substr($item->data_final, 8, 2).'/'.substr($item->data_final, 5, 2).'/'.substr($item->data_final, 0, 4); ?></td>
+
                                                 <?if($item->status_estagio == 'ANALISE'){?>
-                                                    <td> 
+                                                    <td colspan="2"> 
                                                         <a class="btn btn-outline-default btn-round btn-sm" target="_blank" href="<?=base_url() ?>cadastros/pacientes/iniciaestagio/<?= $item->aluno_estagio_id ?>" class="btn btn-outline-default btn-round btn-sm">
                                                             <b>Iniciar Estágio</b>
                                                         </a>

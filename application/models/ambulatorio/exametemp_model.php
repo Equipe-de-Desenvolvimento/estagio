@@ -9510,6 +9510,25 @@ class exametemp_model extends Model {
         return $return->result();
     }
 
+    function listarinstituicaoconvenio($convenio_id){
+        $this->db->select('i.nome, i.instituicao_id');
+        $this->db->from('tb_convenio_instituicao ci');
+        $this->db->join('tb_instituicao i', 'i.instituicao_id = ci.instituicao_id', 'left');
+        $this->db->where('ci.convenio_id', $convenio_id);
+        $this->db->where('ci.ativo', 't');
+        $this->db->where('i.ativo', 't');
+
+        return $this->db->get()->result();
+    }
+
+    function valorestagioporconvenio($convenio_id){
+        $this->db->select('valor_por_estagio');
+        $this->db->from('tb_convenio');
+        $this->db->where('convenio_id', $convenio_id);
+
+        return $this->db->get()->result();
+    }
+
     function listarautocompleteprocedimentosatendimentonovo($parametro, $grupo = null) {
         $this->db->select(' pc.procedimento_convenio_id,
                             pt.codigo,

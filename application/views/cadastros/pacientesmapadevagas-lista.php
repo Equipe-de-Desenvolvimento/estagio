@@ -57,6 +57,7 @@
                                         <!-- <th class="tabela_header">Tipo Vaga</th> -->
                                     <?}?>
                                     <th class="tabela_header">Convenio</th>
+                                    <th class="tabela_header">Instituicao</th>
                                     <th class="tabela_header">Tipo</th>
                                     <th class="tabela_header">Qtd de Vagas</th>
                                     <th class="tabela_header" colspan="2"><center>A&ccedil;&otilde;es</center></th>
@@ -90,6 +91,7 @@
                                                             <!-- <td ><?php echo $item->status_vaga; ?></td>  -->
                                                             <?}?>
                                                             <td ><?php echo $item->convenio; ?></td> 
+                                                            <td ><?php echo $item->nome_fantasia; ?></td> 
                                                             <td ><?php echo $item->tipo_vaga; ?></td>
                                                             <td ><?php echo $item->qtde_vagas; ?></td>
 
@@ -97,7 +99,8 @@
                                                             <td> <a class="btn btn-outline-default btn-sm" href="<?=base_url()?>cadastros/pacientes/cadastrodevagas/<?=$item->vaga_id?>">Editar</a></td>
                                                             <td> <a class="btn btn-outline-default btn-sm" href="<?=base_url()?>cadastros/pacientes/excluircadastrodevagas/<?=$item->vaga_id?>">Excluir</a></td>
                                                             <?}elseif($item->qtde_vagas > 0){?>
-                                                                <td colspan="2"> <a class="btn btn-outline-default btn-sm" onclick="javascript:window.open('<?= base_url() ?>cadastros/pacientes/associaralunoaestagio/<?= $item->vaga_id ?>/<?=$this->session->userdata('instituicao_id')?>/<?=$item->convenio_id?>', '_blank', 'toolbar=no,Location=no,menubar=no, width=800,height=600');" href="#"> Associar Estagiario </a></td>
+                                                                <td> <a class="btn btn-outline-default btn-sm" onclick="javascript:window.open('<?= base_url() ?>cadastros/pacientes/associaralunoaestagio/<?= $item->vaga_id ?>/<?=$this->session->userdata('instituicao_id')?>/<?=$item->convenio_id?>', '_blank', 'toolbar=no,Location=no,menubar=no, width=800,height=600');" href="#"> Associar Estagiario </a></td>
+                                                                <td> <a class="btn btn-outline-default btn-sm" target="_blank" href="<?= base_url() ?>cadastros/pacientes/visualizarvaga/<?= $item->vaga_id ?>"> Visualizar Vaga </a></td>
                                                             <?}else{?>
                                                                 <td> </td>
                                                                 <td> </td>

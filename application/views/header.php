@@ -172,7 +172,7 @@ function debug($object) {
     <script src="<?= base_url() ?>bootstrap/assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
     <script src="<?= base_url() ?>bootstrap/assets/js/plugins/moment.min.js" type="text/javascript"></script>
     <script src="<?= base_url() ?>bootstrap/assets/js/plugins/datetimepicker.js" type="text/javascript"></script>
-    <script src="<?= base_url() ?>bootstrap/assets/js/plugins/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <!-- <script src="<?= base_url() ?>bootstrap/assets/js/plugins/bootstrap-datepicker.min.js" type="text/javascript"></script> -->
     <script type="text/javascript" src="<?= base_url() ?>bootstrap/vendor/autocomplete/jquery.easy-autocomplete.js" ></script>
     <script type="text/javascript" src="<?= base_url() ?>js/jquery.maskedinput.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>js/jquery.maskMoney.js"></script>
@@ -198,14 +198,20 @@ function debug($object) {
     <!--Scripts necessários para o calendário-->
     <link href="<?= base_url() ?>bootstrap/fullcalendar-scheduler/main.css" rel='stylesheet'/>
     <script src="<?= base_url() ?>bootstrap/fullcalendar-scheduler/main.js"></script>
-    <script src="<?= base_url() ?>bootstrap/fullcalendar/locales/pt-br.js"></script>
+    <script src="<?= base_url() ?>bootstrap/fullcalendar-scheduler/locales/pt-br.js"></script>
 
+    <script type="text/javascript" src="<?= base_url() ?>js/tinymce5/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
 
     <script>
         $(document).ready(function () {
-            $('.datepicker').datepicker({
-                format: 'dd/mm/yyyy',
-                language: 'pt-BR'
+            $('.datas').datepicker({
+                autosize: true,
+                changeYear: true,
+                changeMonth: true,
+                monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+                buttonImage: '<?= base_url() ?>img/form/date.png',
+                dateFormat: 'dd/mm/yy'
             });
         });
 
@@ -496,16 +502,23 @@ function debug($object) {
                         <li>
                              <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/convenio">Manter Convenio</a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/procedimentoplano">Convenios</a>
+                        </li> -->
+                        <li>
+                            <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/pacientes/confinformacao">Configuração de Informações</a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/pacientes/responsavelorigem">Responsáveis de Origem</a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/pacientes/responsavelifj">Responsáveis IFJ</a>
                         </li>
 
                         <li>
                             <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/pacientes/relatoriodeestagiovagas">Relatorio de Vagas Associadas</a>
-                        </li>
-
-                        <li>
-                            <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/pacientes/confinformacao">Configuração de Informações</a>
                         </li>
                         <?}?>
 

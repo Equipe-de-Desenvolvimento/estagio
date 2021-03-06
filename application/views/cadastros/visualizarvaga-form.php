@@ -1,29 +1,12 @@
 <div class="panel-body">
     <div class="alert alert-primary"><b>Cadastro de Vagas</b></div>
 
-    <form action="<?=base_url()?>cadastros/pacientes/gravarcadastrovagas" method="POST">
     <div class="row">
     <input type="hidden" name="vaga_id" value="<?=$vagas_id?>">
-        <!-- <div class="col-lg-3">
-            <label for="vaganome">Vaga</label>
-            <input type="hidden" name="vaga_id" value="<?=$vagas_id?>">
-            <input type="text" name="vaganome" id="vaganome" class="form-control" value="<?=@$obj[0]->nome_vaga?>" required>
-            <div class="invalid-feedback">
-                    Preechar o seguinte campo!
-            </div>
-        </div>
-
-        <div class="col-lg-2">
-            <label for="tipovaga">Tipo</label>
-            <input type="text" name="tipovaga" id="tipovaga" class="form-control" value="<?=@$obj[0]->tipo_vaga?>" required>
-            <div class="invalid-feedback">
-                Preechar o seguinte campo!
-            </div>
-        </div> -->
 
         <div class="col-lg-3">
             <label for="">Convenio</label>
-            <select name="convenio_id" id="convenio_id" class="form-control" required> 
+            <select name="convenio_id" id="convenio_id" class="form-control" disabled> 
                 <option value="">Selecione</option>
                 <?foreach($convenios as $item){?>
                     <option value="<?=$item->convenio_id?>" <?=(@$obj[0]->convenio_id == $item->convenio_id)? 'selected': ''?>><?=$item->nome?></option>
@@ -36,14 +19,14 @@
 
         <div class="col-lg-3">
             <label for="">Instituição de Origem</label>
-            <select name="instituicao_id" id="instituicao_id" class="form-control" required>
+            <select name="instituicao_id" id="instituicao_id" class="form-control" disabled>
                   <option value="">Selecione</option>
             </select>
         </div>
 
         <div class="col-lg-3">
             <label for="">Disciplina</label>
-            <select name="disciplina" id="" class="form-control" required>
+            <select name="disciplina" id="" class="form-control" disabled>
                   <option value="">Selecione</option>
                   <?foreach($informacoes as $item){?>
                     <?if($item->tipo == 'disciplina'){?>
@@ -55,7 +38,7 @@
 
           <div class="col-lg-2">
             <label for="">Nível de Formação</label>
-            <select name="formacao" id="" class="form-control" required>
+            <select name="formacao" id="" class="form-control" disabled>
                   <option value="">Selecione</option>
                   <?foreach($informacoes as $item){?>
                     <?if($item->tipo == 'escolaridade'){?>
@@ -67,7 +50,7 @@
 
         <div class="col-lg-3">
             <label for="">Curso</label>
-            <select name="curso" id="" class="form-control" required>
+            <select name="curso" id="" class="form-control" disabled>
                   <option value="">Selecione</option>
                   <?foreach($informacoes as $item){?>
                     <?if($item->tipo == 'curso'){?>
@@ -79,12 +62,12 @@
 
         <div class="col-lg-2">
             <label for="">Tipo de Estagio</label>
-            <input type="text" name="tipovaga" id="tipovaga" class="form-control" value="<?=@$obj[0]->tipo_vaga?>">
+            <input type="text" name="tipovaga" id="tipovaga" class="form-control" disabled value="<?=@$obj[0]->tipo_vaga?>">
         </div>
 
         <div class="col-lg-3">
             <label for="">Responsável na Origem</label>
-            <select name="resporigem" id="" class="form-control" required>
+            <select name="resporigem" id="" class="form-control" disabled>
                   <option value="">Selecione</option>
                   <?foreach($resporigem as $item){?>
                         <option value="<?=$item->responsavel_origem_id?>" <?=(@$obj[0]->responsavel_origem == $item->responsavel_origem_id)?'selected':''?>><?=$item->nome?></option>
@@ -94,7 +77,7 @@
 
         <div class="col-lg-3">
             <label for="">Responsável na IJF</label>
-            <select name="respifj" id="" class="form-control" required>
+            <select name="respifj" id="" class="form-control" disabled>
                   <option value="">Selecione</option>
                   <?foreach($respijf as $item){?>
                         <option value="<?=$item->responsavel_ifj_id?>" <?=(@$obj[0]->responsavel_ijf == $item->responsavel_ifj_id)?'selected':''?>><?=$item->nome?></option>
@@ -107,7 +90,7 @@
       <div class="row"> 
           <div class="col-lg-12">
               <label for="">Objetivos do Estagio e Plano de Atividades</label>
-              <textarea class="tinymce" name="objetivo"> <?=@$obj[0]->objetivo ?></textarea>
+              <textarea class="tinymce" name="objetivo" disabled> <?=@$obj[0]->objetivo ?></textarea>
           </div>
       </div>
 
@@ -128,7 +111,7 @@
 
         <div class="col-lg-2">
             <label for="">Setor</label>
-            <select name="setor" id="" class="form-control" required>
+            <select name="setor" id="" class="form-control" disabled>
                   <option value="">Selecione</option>
                   <?foreach($informacoes as $item){?>
                     <?if($item->tipo == 'setor'){?>
@@ -140,7 +123,7 @@
 
         <div class="col-lg-2">
             <label for="">Tipo da Vaga</label>
-            <select name="tipodavaga" id="" class="form-control" required>
+            <select name="tipodavaga" id="" class="form-control" disabled>
                   <option value="">Selecione</option>
                   <?foreach($informacoes as $item){?>
                     <?if($item->tipo == 'tipovaga'){?>
@@ -152,7 +135,7 @@
 
         <div class="col-lg-2">
             <label for="">Qtde de Vagas</label>
-            <input type="number" name="qtdvagas" class="form-control" value="<?=@$obj[0]->qtde_vagas?>" required>
+            <input type="number" name="qtdvagas" class="form-control" value="<?=@$obj[0]->qtde_vagas?>" disabled>
             <div class="invalid-feedback">
                     Preechar o seguinte campo!
             </div>
@@ -166,12 +149,6 @@
             <?}?>
 
         </div>
-
-        <br>
-        <button class="btn btn-outline-default btn-round btn-sm" type="submit">Enviar</button>
-        <button class="btn btn-outline-default btn-round btn-sm" type="reset">Limpar</button>
-
-        </form>
 </div>
 
 <script>
@@ -240,6 +217,7 @@
 tinymce.init({
   selector: 'textarea.tinymce',
   // width: 800,
+  readonly : 1,
   height: 350,
   plugins: [
       "advlist autolink autosave save link image lists charmap print preview hr anchor pagebreak",
@@ -315,37 +293,11 @@ document.addEventListener('DOMContentLoaded', function() {
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
-    // dateClick: function(info) {
-    // //   alert('clicked ' + info.dateStr);
-    // },
+    dateClick: function(info) {
+      alert('clicked ' + info.dateStr);
+    },
     select: function(info) {
-        console.log(info.view.type);
-
-
-        if(info.view.type == 'dayGridMonth'){
-            var date = new Date(info.startStr + 'T00:00:00');
-            var dateend = new Date(info.endStr + 'T00:00:00');
-
-            calendar.addEvent({
-              title: 'Horario Trabalho',
-              start: date,
-              end: dateend,
-              allDay: true
-            });
-
-        }else{
-            var date = info.startStr.replace('-03:00', '');
-            var dateend = info.endStr.replace('-03:00', '');
-
-            calendar.addEvent({
-              title: 'Horario Trabalho',
-              start: date,
-              end: dateend,
-              allDay: false
-            });
-        }
-
-            alert('Evento adicionado com sucesso...');
+      alert('selected ' + info.startStr + ' to ' + info.endStr);
     }
   });
 
