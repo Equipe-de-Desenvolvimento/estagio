@@ -3532,15 +3532,21 @@ class paciente_model extends BaseModel {
         $horario = date("Y-m-d H:i:s"); 
         $operador_id = $this->session->userdata('operador_id');
         $credorInstituicao = $_POST['credor_devedor_id'];
-
+         
         if ($credorInstituicao == 0) {
             $this->db->set('razao_social', $_POST['nome']);
             $this->db->set('cep', $_POST['cep']);
-            if ($_POST['cnpj'] != '') {
-                $this->db->set('cnpj', str_replace("-", "", str_replace(".", "", str_replace("/", "", $_POST['cnpj']))));
-            } else {
-                $this->db->set('cnpj', null);
+           
+            if($_POST['cpfcnpj'] != ""){ 
+                if($_POST['seletorcpf'] == "CPF"){
+                    $this->db->set('cpf', str_replace("-", "", str_replace(".", "", str_replace("/", "", $_POST['cpfcnpj']))));
+                    $this->db->set('cnpj',null);
+                }elseif($_POST['seletorcpf'] == "CNPJ"){
+                    $this->db->set('cnpj', str_replace("-", "", str_replace(".", "", str_replace("/", "", $_POST['cpfcnpj']))));
+                    $this->db->set('cpf',null);
+                }
             }
+            
             $this->db->set('telefone', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['telefone']))));
             if ($_POST['municipio_id'] != '') {
                 $this->db->set('municipio_id', $_POST['municipio_id']);
@@ -3561,18 +3567,33 @@ class paciente_model extends BaseModel {
        
         $this->db->set('nome', $_POST['nome']);
         $this->db->set('endereco', $_POST['endereco']);
+        if(isset($_POST['numero']) && $_POST['numero'] != ""){
+          $this->db->set('numero', $_POST['numero']);
+        }else{
+          $this->db->set('numero',null);  
+        }
+        if(isset($_POST['bairro']) && $_POST['bairro']){
+          $this->db->set('bairro', $_POST['bairro']);
+        }else{
+          $this->db->set('bairro',null);
+        }
 
-
-            if($_POST['telefone'] != ''){
-                $this->db->set('telefone', str_replace('.', '',str_replace(' ', '',str_replace('-', '',str_replace(')', '',str_replace('(', '', $_POST['telefone']))))));   
-            }
+        if($_POST['telefone'] != ''){
+            $this->db->set('telefone', str_replace('.', '',str_replace(' ', '',str_replace('-', '',str_replace(')', '',str_replace('(', '', $_POST['telefone']))))));   
+        }else{
+            $this->db->set('telefone', null);   
+        } 
             
-            if($_POST['telefone2'] != ''){
-                $this->db->set('telefone2', str_replace('.', '',str_replace(' ', '',str_replace('-', '',str_replace(')', '',str_replace('(', '', $_POST['telefone2']))))));
-            }
+        if($_POST['telefone2'] != ''){
+            $this->db->set('telefone2', str_replace('.', '',str_replace(' ', '',str_replace('-', '',str_replace(')', '',str_replace('(', '', $_POST['telefone2']))))));
+        }else{
+             $this->db->set('telefone2', null);
+        }
 
-            if($_POST['municipio_id'] != ''){
+        if($_POST['municipio_id'] != ''){
             $this->db->set('municipio', $_POST['municipio_id']); //print_r($_POST);
+        }else{
+            $this->db->set('municipio',null); //print_r($_POST);
         }
 
         if($_POST['whatsapp'] != ''){
@@ -3583,14 +3604,16 @@ class paciente_model extends BaseModel {
         $this->db->set('email', $_POST['emailprincipal']); 
         }
 
-        if($_POST['cnpj'] != ''){
-        $this->db->set('cnpj', $_POST['cnpj']); 
+        if ($_POST['cpfcnpj'] != "") {
+            if ($_POST['seletorcpf'] == "CPF") {
+                $this->db->set('cpf', str_replace("-", "", str_replace(".", "", str_replace("/", "", $_POST['cpfcnpj']))));
+                $this->db->set('cnpj', null);
+            } elseif ($_POST['seletorcpf'] == "CNPJ") {
+                $this->db->set('cnpj', str_replace("-", "", str_replace(".", "", str_replace("/", "", $_POST['cpfcnpj']))));
+                $this->db->set('cpf', null);
+            }
         }
 
-        if($_POST['cpf'] != ''){
-        $this->db->set('cpf', $_POST['cpf']); 
-        }
-        
         if($_POST['observacao'] != ''){
         $this->db->set('observacao', $_POST['observacao']); 
         }
@@ -3662,7 +3685,7 @@ class paciente_model extends BaseModel {
         $this->db->set('credor_devedor_id', $financeiro_credor_devedor_id);
 
         $valor = str_replace(",", "", $_POST['valor']);
-        $this->db->set('valor_por_estagio', $valor);
+//        $this->db->set('valor_por_estagio', $valor);
 
         if($_POST['instituicao_id'] > 0 ){
             $this->db->set('data_atualizacao', $horario);
@@ -3763,7 +3786,8 @@ class paciente_model extends BaseModel {
    
     
     function listarinstituicaoid($instituicao_id){
-         $this->db->select('m.municipio_id, m.nome as municipio, 
+         $this->db->select('m.municipio_id, 
+                          m.nome as municipio, 
                            i.nome, 
                            i.observacao,
                            i.complemento,
@@ -3793,7 +3817,9 @@ class paciente_model extends BaseModel {
                            i.email_financeiro,
                            o.usuario,
                            o.senha,
-                           i.valor_por_estagio');
+                           i.valor_por_estagio,
+                           i.numero,
+                           i.bairro');
         $this->db->from('tb_instituicao i');
         $this->db->join('tb_municipio m', 'm.municipio_id = i.municipio', 'left');
         $this->db->join('tb_operador o', 'o.instituicao_id = i.instituicao_id', 'left');
@@ -3956,6 +3982,49 @@ class paciente_model extends BaseModel {
                 return 1;
         
             }
+            
+          function listarinstituicoes(){
+                $this->db->select('m.municipio_id, 
+                                     m.nome as municipio, 
+                                      i.nome, 
+                                      i.observacao,
+                                      i.complemento,
+                                      i.cnpj,
+                                      i.cpf,
+                                      i.email,
+                                      i.email_alternativo,
+                                      i.endereco,
+                                      i.telefone,
+                                      i.instituicao_id,
+                                      i.telefone2,
+                                      i.whatsapp,
+                                      i.cep,
+                                      i.nome_fantasia,
+                                      i.telefone_convenio,
+                                      i.telefone_financeiro,
+                                      i.telefone_juridico,
+                                      i.financeiro,
+                                      i.convenio,
+                                      i.juridico,
+                                      i.observacao_convenio,
+                                      i.observacao_financeiro,
+                                      i.observacao_juridico,
+                                      i.credor_devedor_id,
+                                      i.email_juridico,
+                                      i.email_convenio,
+                                      i.email_financeiro,
+                                      o.usuario,
+                                      o.senha,
+                                      i.valor_por_estagio,
+                                      i.numero,
+                                      i.bairro');
+                   $this->db->from('tb_instituicao i');
+                   $this->db->join('tb_municipio m', 'm.municipio_id = i.municipio', 'left');
+                   $this->db->join('tb_operador o', 'o.instituicao_id = i.instituicao_id', 'left'); 
+                   $this->db->where('i.ativo','t');
+                   return   $this->db->get()->result();
+
+          }
 }
 
 ?>

@@ -5155,7 +5155,7 @@ class Autocomplete extends Controller {
         echo json_encode($var);
     }
 
-    function cep() {
+    function cep() { 
         if (isset($_GET['term'])) {
             $cep = str_replace("-", "", $_GET['term']);
             $result = $this->paciente_m->cep($cep);
@@ -5860,8 +5860,19 @@ class Autocomplete extends Controller {
         $html = $this->load->View('ambulatorio/historicopordiatipo-lista', $data, true);
                     
         echo json_encode($html);
-        
-        
+                    
+    }
+    
+      function listarinstituicao() {
+
+        header('Access-Control-Allow-Origin: *');
+        if (isset($_GET['instituicao_id'])) {
+            $result = $this->paciente_m->listarinstituicaoid($_GET['instituicao_id']);
+        } else {
+            $result = $this->paciente_m->listarinstituicaoid();
+        }  
+
+        echo json_encode($result);
     }
     
 }

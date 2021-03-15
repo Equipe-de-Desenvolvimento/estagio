@@ -60,7 +60,8 @@ class Convenio extends BaseController {
         $data['convenio'] = $this->convenio->listardados();
         $data['grupos'] = $this->procedimento->listargrupos();
 //        $data['tamanho_carteira'] = $this->convenio->lista_tamanho($convenio_id);
-        $data['medicos'] = $this->operador_m->listarmedicos();        
+        $data['medicos'] = $this->operador_m->listarmedicos(); 
+        $data['instituicao'] = $this->paciente->listarinstituicoes();
         $this->loadView('cadastros/convenio-form', $data);
        
     }
@@ -249,8 +250,8 @@ class Convenio extends BaseController {
         } else {
             $this->convenio->removeassociacoescomoutrosconvenios($convenio_id);
         }
-
-        redirect(base_url() . "cadastros/convenio");
+ 
+        redirect(base_url() . "cadastros/convenio/empresaconvenio/".$convenio_id);
     }
 
     function gravarcopia() {

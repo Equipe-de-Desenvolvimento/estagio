@@ -445,8 +445,8 @@ function debug($object) {
 
             <?if($this->session->userdata('perfil_id') != 9){?>
             <li class="nav-item dropdown">
-                <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-university fa-fw"></i> Gestão Financeira </a>
+<!--                <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-university fa-fw"></i> Gestão Financeira </a>-->
 
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li class="dropdown">

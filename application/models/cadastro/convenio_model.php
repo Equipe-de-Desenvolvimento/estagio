@@ -2044,7 +2044,7 @@ class Convenio_model extends Model {
                 $this->db->set('cep', $_POST['cep']);
                 $this->db->set('telefone', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['telefone']))));
                 $this->db->set('celular', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['celular']))));
-                if ($_POST['tipo_logradouro'] != "") {
+                if (isset($_POST['tipo_logradouro']) && $_POST['tipo_logradouro'] != "") {
                     $this->db->set('tipo_logradouro_id', $_POST['tipo_logradouro']);
                 }
 
@@ -2122,7 +2122,7 @@ class Convenio_model extends Model {
             //     $this->db->set('convenio_grupo_id', $_POST['grupoconvenio']);
             // }
             $this->db->set('cep', $_POST['cep']);
-            if ($_POST['tipo_logradouro'] != "") {
+            if (isset($_POST['tipo_logradouro']) && $_POST['tipo_logradouro'] != "") {
                 $this->db->set('tipo_logradouro_id', $_POST['tipo_logradouro']);
             }
             // if ($_POST['valor_ajuste_cbhpm'] != "") {
@@ -2208,9 +2208,18 @@ class Convenio_model extends Model {
                 $this->db->set('carteira_obrigatoria', 'f');
             }
             
+            if (isset($_POST['instituicao']) && $_POST['instituicao'] != "") {
+                $this->db->set('instituicao_id', $_POST['instituicao']);
+            } else {
+                $this->db->set('instituicao_id', null);
+            }  
             
             // $this->db->set('observacao', $_POST['txtObservacao']);
-            $this->db->set('valor_por_estagio', str_replace(',','',$_POST['valor_por_estagio']));
+            if(isset($_POST['valor_por_estagio']) && $_POST['valor_por_estagio'] != ""){
+               $this->db->set('valor_por_estagio', str_replace(',','',$_POST['valor_por_estagio'])); 
+            }else{
+               $this->db->set('valor_por_estagio', 0.00);   
+            }
             $horario = date("Y-m-d H:i:s");
             $operador_id = $this->session->userdata('operador_id');
 
@@ -2575,7 +2584,8 @@ class Convenio_model extends Model {
                                 co.valor_ajuste_cbhpm,
                                 fcd.razao_social as credor,
                                 co.numero_guia,
-                                co.valor_por_estagio');
+                                co.valor_por_estagio,
+                                co.instituicao_id');
             $this->db->from('tb_convenio co');
             $this->db->join('tb_municipio c', 'c.municipio_id = co.municipio_id', 'left');
             $this->db->join('tb_tipo_logradouro tp', 'tp.tipo_logradouro_id = co.tipo_logradouro_id', 'left');
@@ -2640,6 +2650,7 @@ class Convenio_model extends Model {
             $this->_tamanho_carteira = $return[0]->tamanho_carteira;
             $this->_numero_guia = $return[0]->numero_guia;
             $this->_valor_por_estagio = $return[0]->valor_por_estagio;
+            $this->_instituicao_id = $return[0]->instituicao_id;
         } else {
             $this->_convenio_id = null;
         }

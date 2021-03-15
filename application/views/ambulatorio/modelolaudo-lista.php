@@ -62,7 +62,7 @@ $excluircadastro_id = $this->session->userdata('excluircadastro_id');
                                     <th >CPF</th>
                                     <th >Email</th>
                                     <th >Telefone</th>
-                                    <th >Whatsapp</th>
+                                  
                                     <th >Endereço</th>
                                     <th >Município</th>
                                     <th>Ações</th>
@@ -99,7 +99,7 @@ $excluircadastro_id = $this->session->userdata('excluircadastro_id');
                                                 if (preg_match('/\(/', $item->telefone)) {
                                                     $telefone = $item->telefone;
                                                 } else {
-                                                    $telefone = "(" . substr($item->telefone, 0, 2) . ")" . substr($item->telefone, 2, strlen($item->telefone) - 7) .  "" . substr($item->whatsapp, 6, 1) . "-" . substr($item->whatsapp, 7 , strlen($item->whatsapp) - 2);
+                                                    $telefone = "(" . substr($item->telefone, 0, 2) . ")" . substr($item->telefone, 2, strlen($item->telefone) - 7) .  "" . substr($item->telefone, 6, 1) . "-" . substr($item->telefone, 7 , strlen($item->telefone) - 2);
                                                 }
                                             } else {
                                                 $telefone = '';
@@ -138,7 +138,7 @@ $excluircadastro_id = $this->session->userdata('excluircadastro_id');
                                                 <td  ><?php echo $item->cpf; ?></td>
                                                 <td  ><?php echo $item->email; ?></td>
                                                 <td  ><?php echo $telefone; ?></td>
-                                                <td  ><?php echo $whatsapp; ?></td>
+                                                
                                                 <td  ><?php echo $item->endereco; ?></td>
                                                 <td  ><?php echo $item->municipio; ?></td>
 
