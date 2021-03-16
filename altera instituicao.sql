@@ -9,3 +9,11 @@ ALTER TABLE ponto.tb_instituicao ADD COLUMN telefone_juridico text;
 ALTER TABLE ponto.tb_instituicao ADD COLUMN observacao_juridico text;
 
 ALTER TABLE ponto.tb_paciente ADD COLUMN paciente_operador_id integer;
+
+--15/03/2021
+
+ALTER TABLE ponto.tb_instituicao ADD COLUMN numero character varying(50);
+
+ALTER TABLE ponto.tb_instituicao ADD COLUMN bairro character varying(200);
+
+ALTER TABLE ponto.tb_convenio ADD COLUMN instituicao_id integer;

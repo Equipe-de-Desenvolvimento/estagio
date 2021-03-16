@@ -25,80 +25,33 @@
                         <div class="col-lg-3">
                             <div>
                                 <label>Razão Social</label>
-                                <input type="text" id="txtNome" name="nome" class="form-control" value="<?= @$obj[0]->nome; ?>" required="true"  placeholder="Nome da Instituição">
+                                <input type="text" placeholder="Razão Social" id="txtNome" name="nome" class="form-control" value="<?= @$obj[0]->nome; ?>" required="true"  placeholder="Nome da Instituição">
                                 <input type="hidden" id="txtinstituicao" name="instituicao_id" value="<?= $instituicao_id; ?>" >
                             </div>
                             <div>
                                 <label>Nome Fantasia</label>
-                                <input type="text" id="txtNome_fantasia" name="nome_fantasia" class="form-control" value="<?= @$obj[0]->nome_fantasia; ?>" required="true"  placeholder="">
+                                <input type="text"  placeholder="Nome Fantasia" id="txtNome_fantasia" name="nome_fantasia" class="form-control" value="<?= @$obj[0]->nome_fantasia; ?>" required="true"  placeholder="">
                                 <input type="hidden" id="credor_devedor_id" name="credor_devedor_id" class="form-control" value="<?= @$obj[0]->credor_devedor_id; ?>"  placeholder="">
-                            </div>  
-                            <div>
-                                <label>Complemento</label>
-                                <input type="text" name="complemento" placeholder="Complementos"  id="complemento" class="form-control" value="<?= @$obj[0]->complemento; ?>" />
+                            </div> 
+                             <div>
+                                 <label>CPF/CNPJ </label> 
+                                <? if (strlen(@$obj[0]->cpf) <= 11 && @$obj[0]->cpf != "") { ?>
+                                    <input <?= (in_array('cpf', $campos_obrigatorios)) ? 'required' : '' ?> type="radio" name="seletorcpf" id="seletorcpf"  value="CPF"  checked/>CPF
+                                    <input <?= (in_array('cpf', $campos_obrigatorios)) ? 'required' : '' ?> type="radio" name="seletorcpf" id="seletorcnpj" value="CNPJ"  />CNJP<br>
+                                <? } elseif (strlen(@$obj[0]->cnpj) > 11) { ?>
+                                    <input <?= (in_array('cpf', $campos_obrigatorios)) ? 'required' : '' ?> type="radio" name="seletorcpf" id="seletorcpf"  value="CPF" <?= (@$obj[0]->cpf != "") ? "checked" : "";?>  />CPF
+                                    <input <?= (in_array('cpf', $campos_obrigatorios)) ? 'required' : '' ?> type="radio" name="seletorcpf" id="seletorcnpj" value="CNPJ" <?= (@$obj[0]->cnpj != "") ? "checked" : "";?> />CNJP<br>
+                                <? } else { ?>
+                                    <input <?= (in_array('cpf', $campos_obrigatorios)) ? 'required' : '' ?> type="radio" name="seletorcpf" id="seletorcpf"  value="CPF" checked/>CPF
+                                    <input <?= (in_array('cpf', $campos_obrigatorios)) ? 'required' : '' ?> type="radio" name="seletorcpf" id="seletorcnpj" value="CNPJ" />CNJP<br>
+                                <? } ?> 
+                            </div>
+                            <div> 
+                                <input type="text" name="cpfcnpj" id ="cpfcnpj"  onblur="verificarCPFCNPJ();" class="form-control" value="<?= (@$obj[0]->cpf != "") ? @$obj[0]->cpf : @$obj[0]->cnpj; ?>" />
+                                <?= (in_array('cnpj', $campos_obrigatorios)) ? 'required' : '' ?> 
                             </div>
                             <div>
-                                <label>Observa&ccedil;&atilde;o</label>
-                                <textarea cols="70" rows="2" class="form-control" name="observacao" placeholder="Observações sobre o Credor/Devedor" id="observacao"><?= @$obj->_observacao; ?></textarea><br/>
-                            </div>
-                        </div>
-         
-                    <div class="col-lg-2">    
-                        <div>
-                            <label>Endereço</label>
-                                <input type="text" id="endereco" class="form-control" name="endereco"  value="<?= @$obj[0]->endereco; ?>" required="true" placeholder="Endereço da Instituição" />
-                        </div>
-                        <?
-                        // var_dump($obj[0]->municipio_id); 
-                        // die;
-                        ?>
-                        <div>
-                            <label>Município</label>
-                            <select name="municipio_id" class="form-control" id="municipio_id">
-                                <option value="">Selecione</option>
-                                <?foreach ($listaMunicipios as $key => $value) {?>
-                                    <option <?if($value->municipio_id == @$obj[0]->municipio_id){echo 'selected';}?> value="<?=$value->municipio_id?>"><?=$value->nome?></option>
-                                <?}?>
-                               
-                            </select>
-                        </div>    
-                        <div>
-                            <label>Email</label>
-                            <input  placeholder="Email" type="text"  placeholder="Email da Instituição" id="txtEmail" onchange="validaremail()" name="emailprincipal"  class="form-control" value="<?= @$obj[0]->email; ?>" />
-                             <?= (in_array('email', $campos_obrigatorios)) ? 'required' : '' ?>
-                        </div>
-                        <div>
-                            <label>Email Alternativo</label>
-                            <input type="text" id="txtemail_alternativo"  placeholder="Email alternativo da Instituição" onchange="validaremail_alternativo()" name="email_alternativo" class="form-control" value="<?= @$obj[0]->email_alternativo; ?>"
-                            <?= (in_array('email_alternativo', $campos_obrigatorios)) ? 'required' : '' ?>/>
-                        </div>
-                    </div>
-                
-                    <div class="col-lg-2">
-                        <div>
-                            <label>CNPJ</label>
-                            <input type="text" placeholder="CNPJ" name="cnpj" id ="txtCnpj" onblur="verificarCNPJ();" alt="cnpj" class="cnpj form-control" value="<?= @$obj[0]->cnpj; ?>"/>
-                            <?= (in_array('cnpj', $campos_obrigatorios)) ? 'required' : '' ?> 
-                        </div>
-                        <div>
-                            <label>CPF</label>
-                            <input type="text" name="cpf" id ="txtCpf" placeholder="000.000.000-00" onblur="verificarCPF();" class="form-control cpf" value="<?= @$obj[0]->cpf; ?>" />
-                            <?= (in_array('cnpj', $campos_obrigatorios)) ? 'required' : '' ?> 
-                        </div>
-                        <div>
-                            <label>Cep</label>
-                            <input type="text" name="cep" id ="txtCep" placeholder="Cep" onblur="verificarCPF();" alt="cep" class="cep form-control" value="<?= @$obj[0]->cep; ?>" />
-                            <?= (in_array('cep', $campos_obrigatorios)) ? 'required' : '' ?> 
-                        </div>
-                        <div>
-                            <label>Whatsapp</label>
-                            <input type="text"  placeholder="(99)9999-9999" id="txtwhatsapp" name="whatsapp" class="form-control" value="<?= @$obj[0]->whatsapp; ?>" />
-
-                        </div>
-                    </div>
-        
-                    <div class="col-lg-2">
-                            <label>Telefone 1*</label>
+                                <label>Telefone 1*</label>
                             <?
                             if (@$obj->_telefone != '' && strlen(@$obj->_telefone) > 3) {
 
@@ -115,7 +68,9 @@
                             <input type="text"  placeholder="(99)9999-99999" id="txtTelefone" name="telefone" class="form-control"  value="<?= @$obj[0]->telefone; ?>" <?= (in_array('telefone', $campos_obrigatorios)) ? 'required' : '' ?>/>
                             <!--<button class="btn btn-outline-danger btn-sm" type=button id="btnWhats" onclick="pegarWhats();"> WP </button>-->
                     
-                            <label>Telefone 2*</label>
+                            </div>
+                            <div>
+                                <label>Telefone 2*</label>
                             <?
                             if (@$obj[0]->_telefone != '' && strlen(@$obj[0]->telefone) > 3) {
 
@@ -147,7 +102,52 @@
                             }
                             ?>
                         <input type="text"  placeholder="(99)9999-9999" id="txtTelefone2" class="form-control" name="telefone2"  value="<?= @$obj[0]->telefone; ?>" <?= (in_array('telefone2', $campos_obrigatorios)) ? 'required' : '' ?>/>
-                        <!--<button class="btn btn-outline-danger btn-sm" type=button id="btnWhats" onclick="pegarWhats();"> WP? </button>-->
+
+                         </div>
+                         <div>
+                            <label>Email Institucional</label>
+                            <input  type="text"  placeholder="Email Institucional" id="txtEmail" onchange="validaremail()" name="emailprincipal"  class="form-control" value="<?= @$obj[0]->email; ?>" />
+                             <?= (in_array('email', $campos_obrigatorios)) ? 'required' : '' ?>
+                        </div>
+                        </div>
+         
+                    <div cslass="col-lg-2">    
+                         <div>
+                            <label>Cep</label>
+                            <input type="text" name="cep" id ="txtCep" placeholder="Cep" onblur="verificarCPF();" alt="cep" class="cep form-control" value="<?= @$obj[0]->cep; ?>" />
+                            <?= (in_array('cep', $campos_obrigatorios)) ? 'required' : '' ?> 
+                        </div> 
+                        <div>
+                            <label>Endereço</label>
+                                <input type="text" id="endereco" class="form-control" name="endereco"  value="<?= @$obj[0]->endereco; ?>" required="true" placeholder="Endereço da Instituição" />
+                        </div> 
+                        <div>
+                            <label>Número</label>
+                                <input type="text" id="numero" class="form-control" name="numero"  value="<?= @$obj[0]->numero; ?>" required="true" placeholder="Número da Instituição" />
+                        </div> 
+                        <div>
+                            <label>Município</label>  
+                            <input type="hidden" id="txtCidadeID" class="texto_id" name="municipio_id" value="<?= @$obj[0]->municipio_id; ?>" readonly="true" />
+                            <input type="text" id="txtCidade"  class="form-control" placeholder="Município"  name="txtCidade" value="<?= @$obj[0]->municipio; ?>"  <?= (in_array('municipio', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                        </div>
+
+                        <div>
+                            <label>Complemento</label>
+                            <input type="text" name="complemento" placeholder="Complemento"  id="complemento" class="form-control" value="<?= @$obj[0]->complemento; ?>" />
+                         </div>
+                         <div>
+                            <label>Bairro</label>
+                            <input type="text" name="bairro" placeholder="Bairro"  id="bairro" class="form-control" value="<?= @$obj[0]->bairro; ?>" />
+                         </div> 
+                      
+                    </div>
+                 
+        
+                     <div class="col-lg-5"> 
+                         <div>
+                            <label>Observa&ccedil;&atilde;o</label>
+                            <textarea cols="70" rows="2" class="form-control" name="observacao" placeholder="Observação" id="observacao"><?= @$obj[0]->observacao; ?></textarea><br/>
+                        </div> 
                     </div>
                 </div>
             </div>   
@@ -200,12 +200,8 @@
                             ?>
                                     required="true"
                                 <? } ?> />
-                        </div>
-
-                        <div class="col-lg-2">
-                            <label>Valor Por Estagiario: *</label>
-                            <input type="text" name="valor" id="valor" class="form-control" value="<?=@$obj[0]->valor_por_estagio?>" required />
-                        </div>
+                        </div> 
+                     
                     </div>
 
 
@@ -342,7 +338,143 @@
 
 <script>
 
+    $(document).ready(function () {
+           if($("#seletorcpf").prop("checked")){
+                 $("#cpfcnpj").mask("999.999.999-99");
+                 $("#cpfcnpj").attr("placeholder", "CPF");  
+                  
+           }else{
+              $("#cpfcnpj").mask("99.999.999/9999-99");
+              $("#cpfcnpj").attr("placeholder", "CNPJ"); 
+              
+           }
+    });
 
+$("#seletorcpf").click(function () { 
+    $("#cpfcnpj").mask("999.999.999-99");
+    $("#cpfcnpj").val('');
+    $("#cpfcnpj").attr("placeholder", "CPF");
+    if($("#txtinstituicao").val() != ""){
+        $.getJSON('<?= base_url() ?>autocomplete/listarinstituicao', {instituicao_id: $("#txtinstituicao").val(), ajax: true}, function (j) {
+           $("#cpfcnpj").val(j[0].cpf);  
+        });
+    } 
+});
+
+$("#seletorcnpj").click(function () {
+    $("#cpfcnpj").mask("99.999.999/9999-99");
+    $("#cpfcnpj").attr("placeholder", "CNPJ"); 
+    if($("#txtinstituicao").val() != ""){
+            $.getJSON('<?= base_url() ?>autocomplete/listarinstituicao', {instituicao_id: $("#txtinstituicao").val(), ajax: true}, function (j) {
+                $("#cpfcnpj").val(j[0].cnpj); 
+           });
+     }
+});
+       
+    function verificarCPFCNPJ(){
+         if($("#seletorcpf").prop("checked")){
+            verificarCPF();
+         }else{
+            verificarCnpj();
+         }
+    }   
+      
+      
+        $(function () {
+        $("#txtCidade").autocomplete({
+            source: "<?= base_url() ?>index.php?c=autocomplete&m=cidade",
+            minLength: 3,
+            focus: function (event, ui) {
+                $("#txtCidade").val(ui.item.label);
+                return false;
+            },
+            select: function (event, ui) {
+                $("#txtCidade").val(ui.item.value);
+                $("#txtCidadeID").val(ui.item.id);
+                return false;
+            }
+        });
+    });
+    
+    
+    $(document).ready(function () { 
+     
+        $("#txtCep").mask("99999-999");
+        //Quando o campo cep perde o foco.
+        $("#txtCep").blur(function () {
+
+            //Nova variável "cep" somente com dígitos.
+            var cep = $(this).val().replace(/\D/g, '');
+
+            //Verifica se campo cep possui valor informado.
+            if (cep != "") {
+
+                //Expressão regular para validar o CEP.
+                var validacep = /^[0-9]{8}$/;
+
+                //Valida o formato do CEP.
+                if (validacep.test(cep)) {
+
+                    //Preenche os campos com "..." enquanto consulta webservice.
+//                    $("#rua").val("Aguarde...");
+//                    $("#bairro").val("Aguarde...");
+//                    $("#txtCidade").val("Aguarde...");
+//                    $("#uf").val("Aguarde...");
+
+                    //Consulta o webservice viacep.com.br/
+                    $.getJSON("//viacep.com.br/ws/" + cep + "/json/?callback=?", function (dados) {
+
+                        if (!("erro" in dados)) {
+                            //Atualiza os campos com os valores da consulta.
+                            $("#endereco").val(dados.logradouro);
+//                            $("#txtBairro").val(dados.bairro);
+                            $("#txtCidade").val(dados.localidade);
+//                            $("#uf").val(dados.uf);
+                            $("#ibge").val(dados.ibge);
+                            $.getJSON('<?= base_url() ?>autocomplete/cidadeibge', {ibge: dados.ibge}, function (j) {
+                                $("#txtCidade").val(j[0].value);
+                                $("#txtCidadeID").val(j[0].id);
+
+//                                console.log(j);
+                            });
+//                            console.log(dados);
+//                            console.log(dados.bairro);
+
+                        } //end if.
+                        else {
+                            //CEP pesquisado não foi encontrado.
+//                            limpa_formulário_cep();
+                            alert("CEP não encontrado.");
+
+//                            swal({
+//                                title: "Correios informa!",
+//                                text: "CEP não encontrado.",
+//                                imageUrl: "<?= base_url() ?>img/correios.png"
+//                            });
+                        }
+                    });
+
+                } //end if.
+                else {
+                    //cep é inválido.
+                    limpa_formulário_cep();
+//                    alert("Formato de CEP inválido.");
+                    swal({
+                        title: "Correios informa!",
+                        text: "Formato de CEP inválido.",
+                        imageUrl: "<?= base_url() ?>img/correios.png"
+                    });
+                }
+            } //end if.
+            else {
+                //cep sem valor, limpa formulário.
+                limpa_formulário_cep();
+            }
+        });
+    });
+    
+    
+    
 $("#txtconvenio").change(function() {
     var $this, secao, atual, campos;
   
@@ -406,60 +538,15 @@ $("#mostrarDadosExtras").click(function () {
 
             });
         });
-
-
-
-
-
-
-        function mascaraTelefone(campo) {
-
-            function trata(valor, isOnBlur) {
-
-                valor = valor.replace(/\D/g, "");
-                valor = valor.replace(/^(\d{2})(\d)/g, "($1)$2");
-
-                if (isOnBlur) {
-
-                    valor = valor.replace(/(\d)(\d{4})$/, "$1-$2");
-                } else {
-
-                    valor = valor.replace(/(\d)(\d{3})$/, "$1-$2");
-                }
-                return valor;
-            }
-
-            campo.onkeypress = function (evt) {
-
-                var code = (window.event) ? window.event.keyCode : evt.which;
-                var valor = this.value
-
-                if (code > 57 || (code < 48 && code != 8 && code != 0)) {
-                    return false;
-                } else {
-                    this.value = trata(valor, false);
-                }
-            }
-
-            campo.onblur = function () {
-
-                var valor = this.value;
-                if (valor.length < 13) {
-                    this.value = ""
-                } else {
-                    this.value = trata(this.value, true);
-                }
-            }
-
-            campo.maxLength = 14;
-        }
+ 
+         
 
 
 </script>
 <script type="text/javascript">
-    mascaraTelefone(form_paciente.txtTelefone);
-    mascaraTelefone(form_paciente.txtwhatsapp);
-    mascaraTelefone(form_paciente.txtCelular);
+//    mascaraTelefone(form_paciente.txtTelefone);
+//    mascaraTelefone(form_paciente.txtwhatsapp);
+//    mascaraTelefone(form_paciente.txtCelular);
      $(function () {
          $("#vencimento_carteira").datepicker({
              autosize: true,
@@ -604,21 +691,7 @@ $("#mostrarDadosExtras").click(function () {
         });
     });
 
-    $(function () {
-        $("#txtCidade").autocomplete({
-            source: "<?= base_url() ?>index.php?c=autocomplete&m=cidade",
-            minLength: 3,
-            focus: function (event, ui) {
-                $("#txtCidade").val(ui.item.label);
-                return false;
-            },
-            select: function (event, ui) {
-                $("#txtCidade").val(ui.item.value);
-                $("#txtCidadeID").val(ui.item.id);
-                return false;
-            }
-        });
-    });
+  
     $(function () {
         $("#txtEstado").autocomplete({
             source: "<?= base_url() ?>index.php?c=autocomplete&m=estado",
@@ -637,41 +710,21 @@ $("#mostrarDadosExtras").click(function () {
 
 
 
-    $(function () {
-        $("#cep").autocomplete({
-            source: "<?= base_url() ?>index.php?c=autocomplete&m=cep",
-            minLength: 3,
-            focus: function (event, ui) {
-                $("#cep").val(ui.item.label);
-                return false;
-            },
-            select: function (event, ui) {
-                $("#cep").val(ui.item.cep);
-                $("#txtendereco").val(ui.item.logradouro_nome);
-                $("#txtBairro").val(ui.item.nome_bairro);
-//                        $("#txtCidade").val(ui.item.localidade_nome);
-                $("#txtTipoLogradouro").val(ui.item.tipo_logradouro);
-
-                return false;
-            }
-        });
-    });
 
     function verificarCPF() {
         // txtCpf
-        var cpf = $("#txtCpf").val();
+        var cpf = $("#cpfcnpj").val();
         var paciente_id = $("#txtPacienteId").val();
         if($('#cpf_responsavel').prop('checked')){
             var cpf_responsavel = 'on';
         }else{
             var cpf_responsavel = '';
-        }
-        
+        } 
         // alert(cpf_responsavel);
         $.getJSON('<?= base_url() ?>autocomplete/verificarcpfpaciente', {cpf: cpf, cpf_responsavel: cpf_responsavel, paciente_id: paciente_id,  ajax: true}, function (j) {
             if(j != ''){
                 alert(j);
-                $("#txtCpf").val('');
+                $("#cpfcnpj").val('');
             }
         });
     }
@@ -711,7 +764,7 @@ $("#mostrarDadosExtras").click(function () {
 
     function verificarCnpj() {
         // txtCnpj
-        var cnpj = $("#txtCnpj").val();
+        var cnpj = $("#cpfcnpj").val();
         var paciente_id = $("#txtPacienteId").val();
         var cnpj = '';
 
@@ -720,94 +773,12 @@ $("#mostrarDadosExtras").click(function () {
         $.getJSON('<?= base_url() ?>autocomplete/verificarcnpjpaciente', {cnpj: cnpj, cnpj: cnpj, paciente_id: paciente_id,  ajax: true}, function (j) {
             if(j != ''){
                 alert(j);
-                $("#txtCnpj").val('');
+                $("#cpfcnpj").val('');
             }
         });
     }
 
-    $(document).ready(function () {
-
-        function limpa_formulário_cep() {
-            // Limpa valores do formulário de cep.
-//            $("#rua").val("");
-//            $("#bairro").val("");
-//            $("#txtCidade").val("");
-//            $("#uf").val("");
-//            $("#ibge").val("");
-        }
-        $("#cep").mask("99999-999");
-        //Quando o campo cep perde o foco.
-        $("#cep").blur(function () {
-
-            //Nova variável "cep" somente com dígitos.
-            var cep = $(this).val().replace(/\D/g, '');
-
-            //Verifica se campo cep possui valor informado.
-            if (cep != "") {
-
-                //Expressão regular para validar o CEP.
-                var validacep = /^[0-9]{8}$/;
-
-                //Valida o formato do CEP.
-                if (validacep.test(cep)) {
-
-                    //Preenche os campos com "..." enquanto consulta webservice.
-//                    $("#rua").val("Aguarde...");
-//                    $("#bairro").val("Aguarde...");
-//                    $("#txtCidade").val("Aguarde...");
-//                    $("#uf").val("Aguarde...");
-
-                    //Consulta o webservice viacep.com.br/
-                    $.getJSON("//viacep.com.br/ws/" + cep + "/json/?callback=?", function (dados) {
-
-                        if (!("erro" in dados)) {
-                            //Atualiza os campos com os valores da consulta.
-                            $("#txtendereco").val(dados.logradouro);
-                            $("#txtBairro").val(dados.bairro);
-                            $("#txtCidade").val(dados.localidade);
-//                            $("#uf").val(dados.uf);
-                            $("#ibge").val(dados.ibge);
-                            $.getJSON('<?= base_url() ?>autocomplete/cidadeibge', {ibge: dados.ibge}, function (j) {
-                                $("#txtCidade").val(j[0].value);
-                                $("#txtCidadeID").val(j[0].id);
-
-//                                console.log(j);
-                            });
-//                            console.log(dados);
-//                            console.log(dados.bairro);
-
-                        } //end if.
-                        else {
-                            //CEP pesquisado não foi encontrado.
-//                            limpa_formulário_cep();
-                            alert("CEP não encontrado.");
-
-//                            swal({
-//                                title: "Correios informa!",
-//                                text: "CEP não encontrado.",
-//                                imageUrl: "<?= base_url() ?>img/correios.png"
-//                            });
-                        }
-                    });
-
-                } //end if.
-                else {
-                    //cep é inválido.
-                    limpa_formulário_cep();
-//                    alert("Formato de CEP inválido.");
-                    swal({
-                        title: "Correios informa!",
-                        text: "Formato de CEP inválido.",
-                        imageUrl: "<?= base_url() ?>img/correios.png"
-                    });
-                }
-            } //end if.
-            else {
-                //cep sem valor, limpa formulário.
-                limpa_formulário_cep();
-            }
-        });
-    });
+    
 
 
 

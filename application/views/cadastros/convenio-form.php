@@ -28,7 +28,7 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
                         <div class="col-lg-2">   
                             <div>
                                 <label>CNPJ</label>
-                                <input type="text" name="txtCNPJ" alt="cnpj" class="form-control" value="<?= @$obj->_cnpj; ?>" />
+                                <input type="text" id="txtCNPJ" name="txtCNPJ" alt="cnpj" class="form-control" value="<?= @$obj->_cnpj; ?>" />
                             </div>
                         </div>
                     <!-- <div class="col-lg-2">
@@ -44,66 +44,63 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
             <fieldset>
                 <div class="alert alert-primary"><b>Endereço</b></div>
                     <div class="row">
-                        <div class="col-lg-2">      
+                          
+                        <div class="col-lg-2">    
+                             <div>
+                                <label>Instituição</label>
+                                <select name="instituicao" id="instituicao"  class="form-control">
+                                    <option value="">Selecione</option>
+                                    <?php foreach($instituicao as $item){ ?>
+                                         <option value="<?= $item->instituicao_id; ?>" <?= ($item->instituicao_id == @$obj->_instituicao_id) ? "selected": ""; ?>><?= $item->nome; ?></option>
+                                   <? } ?>
+                                </select> 
+                            </div>
                             <div>
                                 <label>Endere&ccedil;o</label>
                                 <input type="text" id="txtendereco"  class="form-control" name="endereco" value="<?= @$obj->_logradouro; ?>" />
                             </div>
-                            <div>
+                           
+                        </div>
+                        <div class="col-lg-2">  
+                             <div>
                                 <label>N&uacute;mero</label>
                                 <input type="text" id="txtNumero"  class="form-control" name="numero" value="<?= @$obj->_numero; ?>" />
                             </div>
-                        </div>
-                        <div class="col-lg-2">      
                             <div>
                                 <label>Bairro</label>
                                 <input type="text" id="txtBairro"  class="form-control" name="bairro" value="<?= @$obj->_bairro; ?>" />
                             </div>
-                            <div>
+                          
+                        </div>
+                        <div class="col-lg-2"> 
+                              <div>
                                 <label>Complemento</label>
                                 <input type="text" id="txtComplemento"  class="form-control" name="complemento" value="<?= @$obj->_complemento; ?>" />
                             </div>
-                        </div>
-                        <div class="col-lg-2">      
                             <div>
                                 <label>Município</label>
                                 <input type="hidden" id="txtCidadeID"  class="form-control" name="municipio_id" value="<?= @$obj->_municipio_id; ?>" readonly="true" />
                                 <input type="text" id="txtCidade" class="form-control" name="txtCidade" value="<?= @$obj->_cidade_nome; ?>" />
                             </div>
+                          
+                        </div>
+                        <div class="col-lg-2">   
                             <div>
                                 <label>CEP</label>
                                 <input type="text" id="txtCep" class="form-control" name="cep" alt="cep" value="<?= @$obj->_cep; ?>" />
                             </div>
-                        </div>
-                        <div class="col-lg-2">      
                             <div>
                                 <label>Telefone</label>
                                 <input type="text" id="txtTelefone" class="form-control" name="telefone" alt="phone" value="<?= @$obj->_telefone; ?>" />
                             </div>
+                            
+                        </div>
+                        <div class="col-lg-2">
                             <div>
                                 <label>Celular</label>
                                 <input type="text" id="txtCelular"  class="form-control" name="celular" alt="phone" value="<?= @$obj->_celular; ?>" />
                             </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div>
-                                <label>T. logradouro</label>
-                                <select name="tipo_logradouro" id="txtTipoLogradouro"  class="form-control" >
-                                    <option value='' >selecione</option>
-                                    <?php
-                                    $listaLogradouro = $this->paciente->listaTipoLogradouro($_GET);
-                                    foreach ($listaLogradouro as $item) {
-                                        ?>
-
-                                        <option   value =<?php echo $item->tipo_logradouro_id; ?> <?
-                                        if (@$obj->_tipo_logradouro == $item->tipo_logradouro_id):echo 'selected';
-                                        endif;
-                                        ?>><?php echo $item->descricao; ?></option>
-                                                <?php
-                                            }
-                                            ?> 
-                                </select>
-                            </div>
+                            
                         </div>
                     </div>
             </fieldset>
@@ -288,7 +285,38 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
 </div> <!-- Final da DIV content -->
 
 
-<script type="text/javascript">
+<script type="text/javascript"> 
+   $("#txtCNPJ").mask("99.999.999/9999-99");
+   
+   $(function () {
+            $('#instituicao').change(function () {
+                if ($(this).val()) { 
+                    $('.carregando').show(); 
+                    $.getJSON('<?= base_url() ?>autocomplete/listarinstituicao', {instituicao_id: $(this).val(), ajax: true}, function (j) {
+                       $("#txtNumero").val(j[0].numero);
+                       $("#txtComplemento").val(j[0].complemento);
+                       $("#txtCep").val(j[0].cep);
+                       $("#txtendereco").val(j[0].endereco);
+                       $("#txtBairro").val(j[0].bairro);
+                       $("#txtCidade").val(j[0].municipio);
+                       $("#txtCidadeID").val(j[0].municipio_id);  
+                    });
+                }else{
+                      $("#txtNumero").val("");
+                      $("#txtComplemento").val("");
+                      $("#txtCep").val("");
+                      $("#txtendereco").val("");
+                      $("#txtBairro").val("");
+                      $("#txtCidade").val("");
+                      $("#txtCidadeID").val("");  
+                }
+
+            });
+        });
+        
+        
+        
+   
 <? if (@$obj->_associado != 't') { ?>
         $("#div_associacao").hide();
 <?
