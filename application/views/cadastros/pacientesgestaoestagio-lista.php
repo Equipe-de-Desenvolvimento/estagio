@@ -6,6 +6,10 @@ $empresapermissoes = $this->guia->listarempresapermissoes($empresa_id);
 $filtro_exame = @$empresapermissoes[0]->filtro_exame_cadastro;
 $tecnico_recepcao_editar = @$empresapermissoes[0]->tecnico_recepcao_editar;
 $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
+$instituicao_origem = $this->paciente->listarinstituicaoorigem();
+$disciplinas = $this->paciente->listardisciplinas();
+ 
+
 ?>
 <link href="<?= base_url() ?>css/cadastro/paciente-lista.css?v=1" rel="stylesheet"/>
         <div class="col-sm-12">
@@ -14,29 +18,34 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                     <form method="get" action="<?php echo base_url() ?>cadastros/pacientes/pesquisarGestaoEstagio">
                         <div class="row">
                                     <div class="nome">
-                                        <h6>Nome</h6>
+                                        <h6>Nome Aluno</h6>
                                         <div>
-                                            <input type="text" name="nome" placeholder="Nome do estagiário" class="texto05" value="<?php echo @$_GET['nome']; ?>" />
+                                            <input type="text" name="nome" placeholder="Nome do Aluno" class="texto05" value="<?php echo @$_GET['nome']; ?>" />
                                         </div>
                                     </div>
                                     <div>
-                                        <h6>CPF</h6>
+                                        <h6>Instituição de Origem</h6>
                                         <div>
-                                            <input type="text" id="txtCpf" name="cpf" placeholder="CPF" class="texto05" value="<?php echo @$_GET['cpf']; ?>" />
+                                            <select name="instituicao">
+                                                <option value="">Selecione</option>
+                                                <?php foreach($instituicao_origem as $item){?>
+                                                <option value="<?= $item->instituicao_id; ?>" <?= (isset($_GET['instituicao']) && $_GET['instituicao'] == $item->instituicao_id) ? "selected" : "";  ?>><?= $item->nome; ?></option>
+                                                <?php }?> 
+                                            </select>
+                                            
                                         </div>
                                     </div>
                                     <div>
-                                        <h6>Telefone</h6>
+                                        <h6>Disciplina</h6>
                                         <div>
-                                            <input type="text" id="txtTelefone" name="telefone" placeholder="(99)9999-9999" class="texto05" value="<?php echo @$_GET['telefone']; ?>" />
+                                            <select name="disciplina">
+                                                 <option value="">Selecione</option>
+                                                <?php foreach($disciplinas as $item){?>
+                                                        <option  value="<?= $item->informacaovaga_id; ?>"  <?= (isset($_GET['disciplina']) && $_GET['disciplina'] == $item->informacaovaga_id) ? "selected" : "";  ?>><?= $item->descricao; ?></option>
+                                                <?php }?>
+                                            </select>
                                         </div>
-                                    </div>
-                                    <div>
-                                        <h6>Email</h6>
-                                        <div>
-                                            <input type="text" name="Email" placeholder="Email" class="texto05" value="<?php echo @$_GET['email']; ?>" />
-                                        </div>
-                                    </div>
+                                    </div>  
                                        
                                     <?
                                     
@@ -146,21 +155,21 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                                 <?if($item->status_estagio == 'ANALISE'){?>
                                                     <td colspan="2"> 
                                                         <a class="btn btn-outline-default btn-round btn-sm" target="_blank" href="<?=base_url() ?>cadastros/pacientes/iniciaestagio/<?= $item->aluno_estagio_id ?>" class="btn btn-outline-default btn-round btn-sm">
-                                                            <b>Iniciar Estágio</b>
+                                                            <b>Confirmar Estágio</b>
                                                         </a>
                                                     </td>
                                                 <?}else{?>
-                                                    <td>
+<!--                                                    <td>
                                                         <a class="btn btn-outline-default btn-round btn-sm" target="_blank"  href="<?=base_url() ?>cadastros/pacientes/efetivadostatus/<?= $item->aluno_estagio_id ?>" class="btn btn-outline-default btn-round btn-sm" href="">
                                                             <b>Efetivar</b>
                                                         </a>
-                                                    </td>
+                                                    </td>-->
 
                                                     <td>
-                                                        <a class="btn btn-outline-default btn-round btn-sm" href="">
+<!--                                                        <a class="btn btn-outline-default btn-round btn-sm" href="">
                                                             <b>Transferir Estágio</b>
-                                                        </a>
-                                                    <br><br>
+                                                        </a>-->
+                                                    <!--<br><br>-->
                                                         <a class="btn btn-outline-default btn-round btn-sm" href="">
                                                             <b>Encerrar Estágio</b>
                                                         </a>

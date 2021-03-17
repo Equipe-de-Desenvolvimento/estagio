@@ -21,7 +21,7 @@
     <br>
     <div>
         <a class="btn btn-outline-default btn-round btn-sm" href="<?php echo base_url() ?>cadastros/pacientes/cadastroresponsavelifj/0">
-            <i></i> Novo Responsavel
+            <i></i> Novo Supervisor IJF
         </a>
     </div>
     <br>

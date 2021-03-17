@@ -510,11 +510,11 @@ function debug($object) {
                         </li>
 
                         <li>
-                            <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/pacientes/responsavelorigem">Responsáveis de Origem</a>
+                            <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/pacientes/responsavelorigem">Supervisores na Origem</a>
                         </li>
 
                         <li>
-                            <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/pacientes/responsavelifj">Responsáveis IFJ</a>
+                            <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/pacientes/responsavelifj">Supervisores IJF</a>
                         </li>
 
                         <li>

@@ -21,7 +21,7 @@
     
                                     <?if($this->session->userdata('instituicao_id') == ''){?>
                                     <div class="col-lg-2">
-                                        <label>Convenio</label>
+                                        <label>Convênio</label>
                                         <select name="instituicao_id" id="instituicao_id" class="form-control"> 
                                             <option value="">Selecione</option>
                                             <?foreach($instituicao as $item){?>
@@ -56,11 +56,11 @@
                                     <?if($this->session->userdata('instituicao_id') == ''){?>
                                         <!-- <th class="tabela_header">Tipo Vaga</th> -->
                                     <?}?>
-                                    <th class="tabela_header">Convenio</th>
-                                    <th class="tabela_header">Instituicao</th>
+                                    <th class="tabela_header">Convênio</th>
+                                    <th class="tabela_header">Instituição</th>
                                     <th class="tabela_header">Tipo</th>
                                     <th class="tabela_header">Qtd de Vagas</th>
-                                    <th class="tabela_header" colspan="2"><center>A&ccedil;&otilde;es</center></th>
+                                    <th class="tabela_header" colspan="3"><center>A&ccedil;&otilde;es</center></th>
 
                                 </tr>
                                      <?php
@@ -98,8 +98,11 @@
                                                              <?if($this->session->userdata('instituicao_id') == ''){?>
                                                             <td> <a class="btn btn-outline-default btn-sm" href="<?=base_url()?>cadastros/pacientes/cadastrodevagas/<?=$item->vaga_id?>">Editar</a></td>
                                                             <td> <a class="btn btn-outline-default btn-sm" href="<?=base_url()?>cadastros/pacientes/excluircadastrodevagas/<?=$item->vaga_id?>">Excluir</a></td>
+                                                                <?php if($this->session->userdata('perfil_id') == 1){ ?>
+                                                                  <td> <a class="btn btn-outline-default btn-sm" onclick="javascript:window.open('<?= base_url() ?>cadastros/pacientes/associaralunoaestagio/<?= $item->vaga_id ?>/<?= $item->instituicao_id; ?>/<?=$item->convenio_id?>', '_blank', 'toolbar=no,Location=no,menubar=no, width=800,height=600');" href="#"> Associar Estagiario </a></td>
+                                                                <?}?>
                                                             <?}elseif($item->qtde_vagas > 0){?>
-                                                                <td> <a class="btn btn-outline-default btn-sm" onclick="javascript:window.open('<?= base_url() ?>cadastros/pacientes/associaralunoaestagio/<?= $item->vaga_id ?>/<?=$this->session->userdata('instituicao_id')?>/<?=$item->convenio_id?>', '_blank', 'toolbar=no,Location=no,menubar=no, width=800,height=600');" href="#"> Associar Estagiario </a></td>
+                                                                <td> <a class="btn btn-outline-default btn-sm" onclick="javascript:window.open('<?= base_url() ?>cadastros/pacientes/associaralunoaestagio/<?= $item->vaga_id ?>/<?= $this->session->userdata('instituicao_id'); ?>/<?=$item->convenio_id?>', '_blank', 'toolbar=no,Location=no,menubar=no, width=800,height=600');" href="#"> Associar Estagiario </a></td>
                                                                 <td> <a class="btn btn-outline-default btn-sm" target="_blank" href="<?= base_url() ?>cadastros/pacientes/visualizarvaga/<?= $item->vaga_id ?>"> Visualizar Vaga </a></td>
                                                             <?}else{?>
                                                                 <td> </td>
@@ -112,7 +115,7 @@
                                         </tbody>
                                 <tfoot>
                                      <tr>
-                                        <th class="tabela_footer" colspan="7">
+                                        <th class="tabela_footer" colspan="8">
                                             <div class="pagination">
                                                 <?php $this->utilitario->paginacao($url, $total, $pagina, $limit); ?>
                                                 Total de Vagas: <?php echo $qtd_total_vagas; ?>

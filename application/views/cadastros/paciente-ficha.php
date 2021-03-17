@@ -47,10 +47,7 @@
                                     <?= (in_array('email2', $campos_obrigatorios)) ? 'required' : '' ?>/>
                             </div>
                         </div>
-                        <div class="col-lg-2">
-                                    <label>Idade</label>
-                                    <input type="text" name="idade2" id="idade2" class="form-control" />
-                            </div>    
+                        
                         <div class="col-lg-2">
                             <div>
                                 <label>Sexo*</label>
@@ -67,20 +64,50 @@
                                     if (@$obj[0]->_sexo == "F"):echo 'selected';
                                     endif;
                                     ?>>Feminino</option>
+                                     <option value="O" <?
+                                    if (@$obj[0]->_sexo == "O"):echo 'selected';
+                                    endif;
+                                    ?>>Outros</option>
                                 </select>
-                                    <label>Data de Nascimento*</label>
-                                    <input type="text" name="nascimento" id="txtNascimento" required="true" alt="date" class="form-control"
-                                        placeholder="00/00/0000"
+                            </div>
+                         
+                            <div>
+                                <label>Data de Nascimento*</label>
+                                <input type="text" name="nascimento" id="txtNascimento" required="true" alt="date" class="form-control"
+                                    placeholder="00/00/0000"
 
-                                        value="<?php
-                                        if (@$obj[0]->_nascimento != '') {
-                                            echo substr(@$obj[0]->_nascimento, 8, 2) . '/' . substr(@$obj[0]->_nascimento, 5, 2) . '/' . substr(@$obj[0]->_nascimento, 0, 4);
-                                        }
-                                        ?>"
-                                    >
-                                </div>
+                                    value="<?php
+                                    if (@$obj[0]->_nascimento != '') {
+                                        echo substr(@$obj[0]->_nascimento, 8, 2) . '/' . substr(@$obj[0]->_nascimento, 5, 2) . '/' . substr(@$obj[0]->_nascimento, 0, 4);
+                                    }
+                                    ?>"
+                                onblur="calculoIdade()"  >
+                            </div>
+                           
                             
                         </div>
+                         
+                        <div class="col-lg-2">
+                             <div id="sexo_real_div"  style="display: none;">
+                               <label>Sexo Biológico</label>
+                               <select  class="form-control" name="sexo_real" id="sexo_real" class="size1"  >
+                                    <option value="" <?
+                                    if (@$obj[0]->_sexo_real == ""):echo 'selected';
+                                    endif;
+                                    ?>>Selecione</option>
+                                    <option value="M" <?
+                                    if (@$obj[0]->_sexo_real == "M"):echo 'selected';
+                                    endif;
+                                    ?>>Masculino</option>
+                                    <option value="F" <?
+                                    if (@$obj[0]->_sexo_real == "F"):echo 'selected';
+                                    endif;
+                                    ?>>Feminino</option>
+                            </select>
+                          </div>
+                                    <label>Idade</label>
+                                    <input type="text" name="idade2" id="idade2" class="form-control" readonly/>
+                         </div>    
                     </div>            
 
                             <!-- <div>
@@ -178,32 +205,7 @@
                                 <input type="text" name="rg" <?= (in_array('rg', $campos_obrigatorios)) ? 'required' : '' ?>  id="txtDocumento" class="form-control" value="<?= @$obj[0]->_documento; ?>" />
                             </div>
                         </div>
-                        <div class="col-lg-2">
-                            <div>
-                                <label>CNH</label>
-                                <input type="text" name="cnh" <?= (in_array('cnh', $campos_obrigatorios)) ? 'required' : '' ?>  id="txtDocumento" class="form-control"value="<?= @$obj[0]->_cnh; ?>" />
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div>
-                                <label>Vencimento CNH</label>
-                                <input type="text" id="vencimento_cnh" class="form-control" name="vencimento_cnh" value="<?
-                                if (@$obj[0]->_vencimento_cnh != '') {
-                                    echo date("d/m/Y", strtotime(@$obj[0]->_vencimento_cnh));
-                                }
-                                ?>" <?= (in_array('vencimento_cnh', $campos_obrigatorios)) ? 'required' : '' ?>/>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div>
-                                <label>Vencimento Carteira</label>
-                                <input type="text" id="vencimento_carteira" class="form-control" name="vencimento_carteira" value="<?
-                                if (@$obj[0]->_vencimento_carteira != '') {
-                                 echo date("d/m/Y", strtotime(@$obj[0]->_vencimento_carteira));
-                                 }
-                                 ?>" <?= (in_array('vencimento_carteira', $campos_obrigatorios)) ? 'required' : '' ?>/>
-                            </div>
-                        </div>
+                         
                      </div>
                 </div>
             </div>
@@ -219,8 +221,8 @@
                     <div class="col-lg-2">
                         <div>
                             <label>Município</label>
-                            <input type="hidden" id="txtCidadeID" class="texto_id" name="municipio_id" value="<?= @$obj[0]->_municipio_id; ?>" readonly="true" />
-                            <input type="text" id="txtCidade" class="form-control" name="txtCidade" value="<?= @$obj[0]->_municipio_id; ?>" />
+                            <input type="hidden" id="txtCidadeID" class="texto_id" name="municipio_id" value="<?= @$obj[0]->_cidade; ?>" readonly="true" />
+                            <input type="text" id="txtCidade" class="form-control" name="txtCidade" value="<?= @$obj[0]->_cidade_nome; ?>" />
                         </div>
                         <div>
                                 <label>CEP</label>
@@ -300,179 +302,46 @@
                     </div>
                 </div>
             </div>
-        </div>
+ 
     <div class="panel panel-default socialalert">
         <div class="alert alert-primary">
-            <b>Dados Sociais</b>
+            <b>Seguro de acidentes pessoais</b>
         </div>
-        <div class="panel-body socialdata">
+         <div class="panel-body">
             <div class="row">
                 <div class="col-lg-2">
                     <div>
-                        <label>Plano de Saude</label>
-                        <select <?= (@$empresapermissoes[0]->carteira_administrador == 't' && $perfil_id != 1) ? 'disabled' : '' ?> name="convenio" id="txtconvenio" class="form-control texto04" <?= (in_array('plano_saude', $campos_obrigatorios)) ? 'required' : '' ?>>
-                            <option value='' >selecione</option>
-                            <?php
-                            $listaconvenio = $this->paciente->listaconvenio($_GET);
-                            foreach ($listaconvenio as $item) {
-                                $operador_id = $this->session->userdata('operador_id');
-                                if(@$obj[0]->_convenio != $item->convenio_id && @$obj[0]->_convenio > 0 && $empresapermissoes[0]->travar_convenio_paciente == 't' && $operador_id != 1){
-                                    continue;
-                                }
-                                ?>
-
-                                <option value =<?php echo $item->convenio_id; ?> <?
-                                if (@$obj[0]->_convenio == $item->convenio_id):echo 'selected';
-                                endif;
-                                ?>><?php echo $item->nome; ?></option>
-                                          <?php
-                                      }
-                                      ?>
-                                      <option data-section="plano" value="OUTROS">OUTROS</option>
-                        </select>
+                       <label>Seguradora</label> 
+                       <input type="text"  placeholder="Seguradora" id="seguradora" name="seguradora"  class="form-control" value="<?= @$obj[0]->_seguradora; ?>"/>
                     </div>
                     <div>
-                        <label>Outro Plano de Saude</label>
-                        <input type="text" name="outroplano" class="form-control" id="outroplano" value="<?=@$obj[0]->_outro_convenio?>">
-                    </div>
-                </div>
-            
-                    <div class="col-lg-2">
-                        <div>
-                            <label>Ra&ccedil;a / Cor</label>
-                            <select name="raca_cor" id="txtRacaCor" class="form-control" <?= (in_array('raca_cor', $campos_obrigatorios)) ? 'required' : '' ?>>
-
-                                <option value=''  <?
-                                if (@$obj[0]->_raca_cor == ''):echo 'selected';
-                                endif;
-                                ?>>Selecione</option>
-                                <option value=1 <?
-                                if (@$obj[0]->_raca_cor == 1):echo 'selected';
-                                endif;
-                                ?>>Branca</option>
-                                <option value=2 <?
-                                if (@$obj[0]->_raca_cor == 2):echo 'selected';
-                                endif;
-                                ?>>Amarela</option>
-                                <option value=3 <?
-                                if (@$obj[0]->_raca_cor == 3):echo 'selected';
-                                endif;
-                                ?>>Preta</option>
-                                <option value=4 <?
-                                if (@$obj[0]->_raca_cor == 4):echo 'selected';
-                                endif;
-                                ?>>Parda</option>
-                                <option value=5 <?
-                                if (@$obj[0]->_raca_cor == 5):echo 'selected';
-                                endif;
-                                ?>>Ind&iacute;gena</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label>Nacionalidade</label>
-                            <input type="text" id="nacionalidade" class="form-control" name="nacionalidade" value="<?= @$obj[0]->_nacionalidade; ?>" <?= (in_array('nacionalidade', $campos_obrigatorios)) ? 'required' : '' ?>/>
-                        </div>
-                    </div>
-                    <div class="col-lg-2">
-                    <div>
-                            <label>Estado civil</label>
-                            <select name="estado_civil_id" id="txtEstadoCivil" class="form-control" selected="<?= @$obj[0]->_estado_civil; ?>" <?= (in_array('estado_civil', $campos_obrigatorios)) ? 'required' : '' ?>>
-                                <option value='' <?
-                                if (@$obj[0]->_estado_civil == ''):echo 'selected';
-                                endif;
-                                ?>>Selecione</option>
-                                <option value=1 <?
-                                if (@$obj[0]->_estado_civil == 1):echo 'selected';
-                                endif;
-                                ?>>Solteiro</option>
-                                <option value=2 <?
-                                if (@$obj[0]->_estado_civil == 2):echo 'selected';
-                                endif;
-                                ?>>Casado</option>
-                                <option value=3 <?
-                                if (@$obj[0]->_estado_civil == 3):echo 'selected';
-                                endif;
-                                ?>>Divorciado</option>
-                                <option value=4 <?
-                                if (@$obj[0]->_estado_civil == 4):echo 'selected';
-                                endif;
-                                ?>>Viuvo</option>
-                                <option value=5 <?
-                                if (@$obj[0]->_estado_civil == 5):echo 'selected';
-                                endif;
-                                ?>>Outros</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label>N&uacute;mero</label>
-                            <div name="numero_caracter" id="numero_caracter" class="size2">
-                                <input type="text"  id="txtconvenionumero" class="form-control" name="convenionumero" value="<?= @$obj[0]->_convenionumero; ?>" <?= (in_array('numero_carteira', $campos_obrigatorios)) ? 'required' : '' ?>>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2">
-                        <div>
-                            <label>Escolaridade</label>
-
-                            <select name="escolaridade" id="escolaridade" class="form-control" selected="<?= @$obj[0]->_escolaridade_id; ?>" <?= (in_array('escolaridade', $campos_obrigatorios)) ? 'required' : '' ?>>
-                                <option value='' <?
-                                if (@$obj[0]->_escolaridade_id == ''):echo 'selected';
-                                endif;
-                                ?>>Selecione</option>
-                                <option value=1 <?
-                                if (@$obj[0]->_escolaridade_id == 1):echo 'selected';
-                                endif;
-                                ?>>Fundamental-Incompleto </option>
-                                <option value=2 <?
-                                if (@$obj[0]->_escolaridade_id == 2):echo 'selected';
-                                endif;
-                                ?>>Fundamental-Completo</option>
-
-                                <option value=3 <?
-                                if (@$obj[0]->_escolaridade_id == 3):echo 'selected';
-                                endif;
-                                ?>>Médio
-                                    -
-                                    Incompleto</option>
-                                <option value=4 <?
-                                if (@$obj[0]->_escolaridade_id == 4):echo 'selected';
-                                endif;
-                                ?>>Médio
-                                    -
-                                    Completo
-                                </option>
-                                <option value=5 <?
-                                if (@$obj[0]->_escolaridade_id == 5):echo 'selected';
-                                endif;
-                                ?>>Superior
-                                    -
-                                    Incompleto</option>
-                                <option value=6 <?
-                                if (@$obj[0]->_escolaridade_id == 6):echo 'selected';
-                                endif;
-                                ?>>Superior-Completo </option>
-
-                            </select>
-                        </div>
-                        <div>
-                            <label>Ocupa&ccedil;&atilde;o</label>
-                            <input type="hidden" id="txtcboID" class="form-control" class="texto_id" name="txtcboID" value="<?= @$obj[0]->_cbo_ocupacao_id; ?>" readonly="true" />
-                            <input type="text" id="txtcbo" class="form-control" name="txtcbo" value="<?= @$obj[0]->_cbo_nome; ?>" <?= (in_array('ocupacao', $campos_obrigatorios)) ? 'required' : '' ?>/>
-                            <input type="hidden" id="txtcbohidden" class="form-control" name="txtcbohidden" value="<?= @$obj[0]->_cbo_nome; ?>" />
-                        </div>
-                </div>
+                       <label>Número da Apólice</label> 
+                       <input type="text"  placeholder="Número da Apólice" id="num_apolice" name="num_apolice"  class="form-control" value="<?= @$obj[0]->_num_apolice; ?>"/>
+                    </div> 
+                </div> 
                 <div class="col-lg-2">
                     <div>
-                        <label>Instagram (ex: @exemplo)</label>
-                        <input type="text" id="instagram" class="form-control" name="instagram" value="<?= @$obj[0]->_instagram; ?>" <?= (in_array('instagram', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                       <label>Vigência da Apólice</label> 
+                       <input type="text"  placeholder="Vigência da Apólice" id="vigencia_apolice" name="vigencia_apolice"  class="form-control" value="<?= @$obj[0]->_vigencia_apolice; ?>"/>
                     </div>
+                    <div>
+                       <label>Matrícula</label> 
+                       <input type="text"  placeholder="Matrícula" id="matricula" name="matricula"  class="form-control" value="<?= @$obj[0]->_matricula; ?>"/>
+                    </div> 
+                </div> 
+                 <div class="col-lg-2">
+                    <div>
+                       <label>Data Inicial</label> 
+                       <input type="text"  placeholder="Data Inicial" id="data_inicial" name="data_inicial"  class="form-control datas" value="<?= @(isset($obj[0]->_data_inicial) && $obj[0]->_data_inicial != "") ? date('d/m/Y',strtotime($obj[0]->_data_inicial)) : ""; ?>"/>
+                    </div>
+                    <div>
+                       <label>Data Final</label> 
+                       <input type="text"  placeholder="Data Final" id="data_final" name="data_final"  class="form-control datas" value="<?= @(isset($obj[0]->_data_final) && $obj[0]->_data_final != "") ? date('d/m/Y',strtotime($obj[0]->_data_final)) : ""; ?>"/>
+                    </div> 
                 </div>
-
-
-
-
             </div>
-        </div>
+         </div>
+        
     </div>
     
     <?if(@$obj[0]->_paciente_id > 0){?>
@@ -857,25 +726,7 @@ $("#mostrarDadosExtras").click(function () {
 
 
 
-    $(function () {
-        $("#cep").autocomplete({
-            source: "<?= base_url() ?>index.php?c=autocomplete&m=cep",
-            minLength: 3,
-            focus: function (event, ui) {
-                $("#cep").val(ui.item.label);
-                return false;
-            },
-            select: function (event, ui) {
-                $("#cep").val(ui.item.cep);
-                $("#txtendereco").val(ui.item.logradouro_nome);
-                $("#txtBairro").val(ui.item.nome_bairro);
-//                        $("#txtCidade").val(ui.item.localidade_nome);
-                $("#txtTipoLogradouro").val(ui.item.tipo_logradouro);
-
-                return false;
-            }
-        });
-    });
+     
 
     function verificarCPF() {
         // txtCpf
@@ -996,8 +847,8 @@ $("#mostrarDadosExtras").click(function () {
 
                         if (!("erro" in dados)) {
                             //Atualiza os campos com os valores da consulta.
-                            $("#txtendereco").val(dados.logradouro);
-                            $("#txtBairro").val(dados.bairro);
+                            $("#rua").val(dados.logradouro);
+                            $("#bairro").val(dados.bairro);
                             $("#txtCidade").val(dados.localidade);
 //                            $("#uf").val(dados.uf);
                             $("#ibge").val(dados.ibge);

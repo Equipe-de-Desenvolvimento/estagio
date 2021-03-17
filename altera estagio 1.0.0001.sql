@@ -212,3 +212,12 @@ ALTER TABLE ponto.tb_solicitacao_vagas_empresas ADD COLUMN tipodavaga INTEGER;
 ALTER TABLE ponto.tb_solicitacao_vagas_empresas ADD COLUMN data_inicio date;
 ALTER TABLE ponto.tb_solicitacao_vagas_empresas ADD COLUMN data_final date;
 
+
+--17/03/2021
+
+ALTER TABLE ponto.tb_paciente ADD COLUMN data_inicial date;
+ALTER TABLE ponto.tb_paciente ADD COLUMN data_final date;
+
+ALTER TABLE ponto.tb_vagas_empresas ADD COLUMN data_inicio date;
+ALTER TABLE ponto.tb_vagas_empresas ADD COLUMN data_final date;
+

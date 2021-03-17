@@ -196,14 +196,16 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                                 </td>
 
                                                 <td>
-                                                        <a style="width:120px;" class="btn btn-outline-default btn-round btn-sm" target="_blank"  href="<?=base_url() ?>cadastros/pacientes/adequadostatus/<?= $item->paciente_id ?>">       
-                                                            <b>Adequado</b>
-                                                        </a>
-                                                <br><br>
-                                                            <a style="width:120px;" class="btn btn-outline-default btn-round btn-sm" href="<?=base_url() ?>cadastros/pacientes/excluircadastroestagiarios/<?= $item->paciente_id ?>">       
-                                                                <b>Excluir</b>
+                                                        <?php if ($item->status_estagio != "INCOMPLETO") { ?>
+                                                            <a style="width:120px;" class="btn btn-outline-default btn-round btn-sm" target="_blank"  href="<?= base_url() ?>cadastros/pacientes/adequadostatus/<?= $item->paciente_id ?>">       
+                                                                <b>Adequado</b>
                                                             </a>
-
+                                                           
+                                                        <?php } ?>
+                                                       <br><br>
+                                                        <a style="width:120px;" class="btn btn-outline-default btn-round btn-sm" href="<?=base_url() ?>cadastros/pacientes/excluircadastroestagiarios/<?= $item->paciente_id ?>">       
+                                                            <b>Excluir</b>
+                                                        </a> 
                                                 </td>
 
 

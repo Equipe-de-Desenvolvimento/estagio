@@ -20,9 +20,16 @@
                 Preechar o seguinte campo!
             </div>
         </div> -->
-
-        <div class="col-lg-3">
-            <label for="">Convenio</label>
+        <div class="col-lg-2">
+            <label for="">Tipo da Vaga</label>
+            <select id="tipodavaga" name="tipodavaga" id="" class="form-control" required>
+                  <option value="">Selecione</option> 
+                  <option value="1"  <?=(@$obj[0]->tipodavaga == 1)?'selected':''?>>Pactuado</option>
+                  <option value="2" <?=(@$obj[0]->tipodavaga == 2)?'selected':''?>>Não Pactuado</option>
+            </select>
+        </div>
+        <div class="col-lg-3" id="div_convenio" style="display: none;">
+            <label for="">Convênio</label>
             <select name="convenio_id" id="convenio_id" class="form-control" required> 
                 <option value="">Selecione</option>
                 <?foreach($convenios as $item){?>
@@ -34,7 +41,7 @@
             </div>
         </div>
 
-        <div class="col-lg-3">
+        <div class="col-lg-3" id="div_instituicao" style="display: none;">
             <label for="">Instituição de Origem</label>
             <select name="instituicao_id" id="instituicao_id" class="form-control" required>
                   <option value="">Selecione</option>
@@ -78,8 +85,12 @@
         </div>
 
         <div class="col-lg-2">
-            <label for="">Tipo de Estagio</label>
-            <input type="text" name="tipovaga" id="tipovaga" class="form-control" value="<?=@$obj[0]->tipo_vaga?>">
+            <label for="">Tipo de Estágio</label>
+            <select name="tipovaga"  class="form-control">
+                <option value="">Selecione</option>
+                <option value="Obrigatório" <?=@(isset($obj[0]->tipo_vaga) && $obj[0]->tipo_vaga == "Obrigatório") ? "selected": "";?> >Obrigatório</option>
+                <option value="Não Obrigatório" <?=@(isset($obj[0]->tipo_vaga) && $obj[0]->tipo_vaga == "Não Obrigatório") ? "selected": "";?>  >Não Obrigatório</option>
+            </select> 
         </div>
 
         <div class="col-lg-3">
@@ -121,12 +132,13 @@
       <br>
 
       <div class="row">
+           
             <div class="col-lg-3">
                 <label for="">Valor Por Aluno</label>
                 <input type="text" readonly class="form-control" id="valorconvenio">
             </div>
 
-        <div class="col-lg-2">
+        <div class="col-lg-2"> 
             <label for="">Setor</label>
             <select name="setor" id="" class="form-control" required>
                   <option value="">Selecione</option>
@@ -138,17 +150,22 @@
             </select>
         </div>
 
-        <div class="col-lg-2">
-            <label for="">Tipo da Vaga</label>
-            <select name="tipodavaga" id="" class="form-control" required>
-                  <option value="">Selecione</option>
-                  <?foreach($informacoes as $item){?>
-                    <?if($item->tipo == 'tipovaga'){?>
-                        <option value="<?=$item->informacaovaga_id?>" <?=(@$obj[0]->tipodavaga == $item->informacaovaga_id)?'selected':''?>><?=$item->descricao?></option>
-                    <?}?>
-                  <?}?>
-            </select>
+      
+           <div class="col-lg-2">
+            <label for="">Data Início</label>
+            <input type="text" name="data_inicio" class="form-control datas" value="<?=@(isset($obj[0]->data_inicio) && $obj[0]->data_inicio != "") ? date('d/m/Y',strtotime($obj[0]->data_inicio)) : "";?>" required>
+            <div class="invalid-feedback">
+                    Preechar o seguinte campo!
+            </div>
         </div>
+            <div class="col-lg-2">
+            <label for="">Data Final</label>
+            <input type="text" name="data_final" class="form-control datas" value="<?=@(isset($obj[0]->data_final) && $obj[0]->data_final != "") ? date('d/m/Y',strtotime($obj[0]->data_final)) : "";?>" required>
+            <div class="invalid-feedback">
+                    Preechar o seguinte campo!
+            </div>
+        </div>
+
 
         <div class="col-lg-2">
             <label for="">Qtde de Vagas</label>
@@ -175,12 +192,42 @@
 </div>
 
 <script>
+     if($('#tipodavaga').val() == "1"){
+        $('#convenio_id').attr('required', true);
+        $('#instituicao_id').attr('required', true);
+        $("#div_convenio").show();
+        $("#div_instituicao").show();
+     }else{
+        $('#convenio_id').attr('required', false);
+        $('#instituicao_id').attr('required', false);
+        $("#div_convenio").hide();
+        $("#div_instituicao").hide();
+     }
+     
+    $(function () {
+          $('#tipodavaga').change(function () {
+              if($('#tipodavaga').val() == "1"){
+                  $('#convenio_id').attr('required', true);
+                  $('#instituicao_id').attr('required', true); 
+                  $("#div_convenio").show();
+                  $("#div_instituicao").show();
+              }else{
+                $('#convenio_id').attr('required', false);
+                $('#instituicao_id').attr('required', false);
+                $("#div_convenio").hide();
+                $("#div_instituicao").hide();
+              }
+             
+          });
+      });
+ 
+    
     $(function () {
         if($('#convenio_id').val != ''){
             $.getJSON('<?= base_url() ?>autocomplete/listarinstituicaoconvenio', {convenio_id: $('#convenio_id').val()}, function (j) {
                       options = '<option value=""></option>';
 
-                      instituicao_id = '<?=@$obj[0]->instituicao_id?>';
+                      instituicao_id = '<?=@$obj[0]->institu_id?>';
                       for (var c = 0; c < j.length; c++) {
                           if(instituicao_id == j[c].instituicao_id){
                             options += '<option value="' + j[c].instituicao_id + '" selected>' + j[c].nome +'</option>';

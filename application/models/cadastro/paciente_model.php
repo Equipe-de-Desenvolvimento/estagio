@@ -311,9 +311,15 @@ class paciente_model extends BaseModel {
                          ) ilike", '%' . $nome . '%');
                     }
 
-                    if (isset($args['cpf']) && strlen($args['cpf']) > 0) {
-                        $this->db->where('p.cpf ilike', '%' . $args ['cpf'] . '%');
+                    if (isset($args['instituicao']) && strlen($args['instituicao']) > 0) {
+                        $this->db->where('v.instituicao_id',$args ['instituicao']);
                     }
+                    if (isset($args['disciplina']) && strlen($args['disciplina']) > 0) {
+                       $this->db->where('v.disciplina',$args ['disciplina']);
+                    }
+//                    if (isset($args['cpf']) && strlen($args['cpf']) > 0) {
+//                       $this->db->where('i.instituicao_id',$args ['cpf']);
+//                    }
                 }
 
                 return $this->db;
@@ -443,7 +449,7 @@ class paciente_model extends BaseModel {
     }
 
     function removerCaracterEsp($string) {
-        return preg_replace(array("/(á|à|ã|â|ä)/", "/(Á|À|Ã|Â|Ä)/", "/(é|è|ê|ë)/", "/(É|È|Ê|Ë)/", "/(í|ì|î|ï)/", "/(Í|Ì|Î|Ï)/", "/(ó|ò|õ|ô|ö)/", "/(Ó|Ò|Õ|Ô|Ö)/", "/(ú|ù|û|ü)/", "/(Ú|Ù|Û|Ü)/", "/(ñ)/", "/(Ñ)/"), explode(" ", "a A e E i I o O u U n N"), $string);
+        return preg_replace(array("/(á|à|ã|â|ä)/", "/(Á|À|Ã|Â|Ä)/", "/(é|è|ê|ë)/", "/(É|È|Ê|Ë)/", "/(í|ì|î|ï)/", "/(Í|Ì|Î|Ï)/", "/(ó|ò|õ|ô|ö)/", "/(Ó|Ò|Õ|Ô|Ö)/", "/(ú|ù|û|ü)/", "/(Ú|Ù|Û|Ü)/", "/(ñ)/", "/(Ñ)/", "/(Ç|ç)/"), explode(" ", "a A e E i I o O u U n N c"), $string);
     }
 
     function listarCidadesibge($parametro = null) {
@@ -647,6 +653,12 @@ class paciente_model extends BaseModel {
             $this->_whatsapp = $return[0]->whatsapp;
             $this->_usuario_app = @$return[0]->usuario_app;
             $this->_senha_app = $return[0]->senha_app;
+            $this->_seguradora = $return[0]->seguradora;
+            $this->_num_apolice = $return[0]->num_apolice;
+            $this->_vigencia_apolice = $return[0]->vigencia_apolice;
+            $this->_matricula = $return[0]->matricula;
+            $this->_data_inicial = $return[0]->data_inicial;
+            $this->_data_final = $return[0]->data_final;
         }
     }
 
@@ -768,6 +780,38 @@ class paciente_model extends BaseModel {
             //     $this->db->set('paciente_operador_id', $paciente_operador_id);
 
             // }
+            if (isset($_POST['seguradora']) && $_POST['seguradora'] != '') {
+                $this->db->set('seguradora',$_POST['seguradora']);
+            } else {
+                $this->db->set('seguradora', null);
+            }
+            if (isset($_POST['num_apolice']) && $_POST['num_apolice'] != '') {
+                $this->db->set('num_apolice',$_POST['num_apolice']);
+            } else {
+                $this->db->set('num_apolice', null);
+            }
+            if (isset($_POST['vigencia_apolice']) && $_POST['vigencia_apolice'] != '') {
+                $this->db->set('vigencia_apolice',$_POST['vigencia_apolice']);
+            } else {
+                $this->db->set('vigencia_apolice', null);
+            }
+            if (isset($_POST['matricula']) && $_POST['matricula'] != '') {
+                $this->db->set('matricula',$_POST['matricula']);
+            } else {
+                $this->db->set('matricula', null);
+            }
+             
+            if (isset($_POST['data_inicial']) && $_POST['data_inicial'] != '') {
+                $this->db->set('data_inicial',date("Y-m-d", strtotime(str_replace('/', '-', $_POST['data_inicial']))));
+            } else {
+                $this->db->set('data_inicial', null);
+            } 
+            
+            if (isset($_POST['data_final']) && $_POST['data_final'] != '') {
+                $this->db->set('data_final',date("Y-m-d", strtotime(str_replace('/', '-', $_POST['data_final']))));
+            } else {
+                $this->db->set('data_final', null);
+            }
 
             $this->db->set('nome', $_POST['nome']);
            
@@ -1062,8 +1106,16 @@ class paciente_model extends BaseModel {
         // $this->db->set('nome_vaga', $_POST['vaganome']);
         $this->db->set('tipo_vaga', $_POST['tipovaga']);
         $this->db->set('qtde_vagas', $_POST['qtdvagas']);
-        $this->db->set('convenio_id', $_POST['convenio_id']);
-        $this->db->set('instituicao_id', $_POST['instituicao_id']);
+        if(isset($_POST['convenio_id']) && $_POST['convenio_id'] != "" && $_POST['tipodavaga'] != "2"){
+          $this->db->set('convenio_id', $_POST['convenio_id']);
+        }else{
+             $this->db->set('convenio_id', null); 
+        }
+        if(isset($_POST['instituicao_id']) && $_POST['instituicao_id'] != ""  && $_POST['tipodavaga'] != "2"){
+           $this->db->set('instituicao_id', $_POST['instituicao_id']);
+        }else{
+           $this->db->set('instituicao_id', null); 
+        }
         $this->db->set('formacao', $_POST['formacao']);
         $this->db->set('curso', $_POST['curso']);
         $this->db->set('disciplina', $_POST['disciplina']);
@@ -1072,6 +1124,17 @@ class paciente_model extends BaseModel {
         $this->db->set('objetivo', $_POST['objetivo']);
         $this->db->set('responsavel_origem', $_POST['resporigem']);
         $this->db->set('responsavel_ijf', $_POST['respifj']);
+        if(isset($_POST['data_inicio']) && $_POST['data_inicio']){ 
+            $this->db->set('data_inicio', date("Y-m-d", strtotime(str_replace('/', '-', $_POST['data_inicio']))));
+        }else{
+            $this->db->set('data_inicio', null);
+        }
+       
+        if(isset($_POST['data_final']) && $_POST['data_final']){ 
+           $this->db->set('data_final', date("Y-m-d", strtotime(str_replace('/', '-', $_POST['data_final']))));
+        }else{
+            $this->db->set('data_final', null);
+        }
 
         // $this->db->set('periodo', $_POST['periodo']);
         // $this->db->set('periodicidade', $_POST['periodicidade']);
@@ -1272,10 +1335,23 @@ class paciente_model extends BaseModel {
         }
     }
 
-    function listarinformacaovaga(){
+    function listarinformacaovaga($args=null){
         $this->db->select('descricao, tipo, informacaovaga_id');
         $this->db->from('tb_informacaovaga');
         $this->db->where('ativo', 't');
+         if ($args) {
+            if (isset($args['tipo']) && strlen($args['tipo']) > 0) {
+                $this->db->where('tipo', $args['tipo']);
+            } 
+            if (isset($args['nome']) && strlen($args['nome']) > 0) {
+                $nome = $this->removerCaracterEsp($args['nome']);
+//                var_dump($nome); die;
+                $this->db->where("translate(descricao,  
+                'áàâãäåaaaÁÂÃÄÅAAAÀéèêëeeeeeEEEÉEEÈÊìíîïìiiiÌÍÎÏÌIIIóôõöoooòÒÓÔÕÖOOOùúûüuuuuÙÚÛÜUUUUçÇñÑýÝ',  
+                'aaaaaaaaaAAAAAAAAAeeeeeeeeeEEEEEEEEiiiiiiiiIIIIIIIIooooooooOOOOOOOOuuuuuuuuUUUUUUUUcCnNyY'   
+                 ) ilike", '%' . $nome . '%');
+            }  
+        }
 
         return $this->db;
     }
@@ -1332,8 +1408,7 @@ class paciente_model extends BaseModel {
         $this->db->from('tb_paciente');
         $this->db->where('status_estagio', 'ADEQUADO');
         $this->db->where('instituicao_id', $instituicao_id);
-        $this->db->where('associado_a_vaga', 'f');
-
+        $this->db->where('associado_a_vaga', 'f'); 
         return $this->db->get()->result();
     }
 
@@ -1341,34 +1416,38 @@ class paciente_model extends BaseModel {
         $horario = date("Y-m-d H:i:s");
         $operador_id = $this->session->userdata('operador_id');
 
-        $datainicio = date("Y-m-d", strtotime(str_replace('/', '-', $_POST['data_inicio'])));
-        $datafinal = date("Y-m-d", strtotime(str_replace('/', '-', $_POST['data_final'])));
+//        $datainicio = date("Y-m-d", strtotime(str_replace('/', '-', $_POST['data_inicio'])));
+//        $datafinal = date("Y-m-d", strtotime(str_replace('/', '-', $_POST['data_final'])));
 
-        $this->db->set('associado_a_vaga', 't');
-        $this->db->where('paciente_id', $_POST['aluno_id']);
-        $this->db->update('tb_paciente');
+        foreach($_POST['aluno_id'] as $item){
+        
+      
+            $this->db->set('associado_a_vaga', 't');
+            $this->db->where('paciente_id', $item);
+            $this->db->update('tb_paciente');
 
-        $this->db->set('data_inicio', $datainicio);
-        $this->db->set('data_final', $datafinal);
-        $this->db->set('tipo_vaga', $_POST['tipodavaga']);
+    //      $this->db->set('data_inicio', $datainicio);
+    //      $this->db->set('data_final', $datafinal);
+            $this->db->set('tipo_vaga', $_POST['tipodavaga']);
 
-        $this->db->set('aluno_id', $_POST['aluno_id']);
-        $this->db->set('instituicao_id', $_POST['instituicao_id']);
-        $this->db->set('convenio_id', $_POST['convenio_id']);
-        $this->db->set('vaga_id', $_POST['vaga_id']);
-        $this->db->set('status_estagio', 'ANALISE');
-        $this->db->set('data_cadastro', $horario);
-        $this->db->set('operador_cadastro', $operador_id);
-        $this->db->insert('tb_aluno_estagio');
+            $this->db->set('aluno_id', $item);
+            $this->db->set('instituicao_id', $_POST['instituicao_id']);
+            $this->db->set('convenio_id', $_POST['convenio_id']);
+            $this->db->set('vaga_id', $_POST['vaga_id']);
+            $this->db->set('status_estagio', 'ANALISE');
+            $this->db->set('data_cadastro', $horario);
+            $this->db->set('operador_cadastro', $operador_id);
+            $this->db->insert('tb_aluno_estagio');
 
-        $this->db->select('qtde_vagas');
-        $this->db->from('tb_vagas_empresas');
-        $this->db->where('vaga_id', $_POST['vaga_id']);
-        $return = $this->db->get()->result();
+            $this->db->select('qtde_vagas');
+            $this->db->from('tb_vagas_empresas');
+            $this->db->where('vaga_id', $_POST['vaga_id']);
+            $return = $this->db->get()->result();
 
-        $this->db->set('qtde_vagas', $return[0]->qtde_vagas - 1);
-        $this->db->where('vaga_id', $_POST['vaga_id']);
-        $this->db->update('tb_vagas_empresas');
+            $this->db->set('qtde_vagas', $return[0]->qtde_vagas - 1);
+            $this->db->where('vaga_id', $_POST['vaga_id']);
+            $this->db->update('tb_vagas_empresas');
+        }
     }
 
     function gravardataprova(){
@@ -1403,7 +1482,8 @@ class paciente_model extends BaseModel {
         $this->db->where('ve.ativo', 't');
 
         if($this->session->userdata('instituicao_id') > 0){
-            $this->db->where('ve.instituicao_id', $this->session->userdata('instituicao_id'));
+            $instituicao_id = $this->session->userdata('instituicao_id');
+            $this->db->where("(ve.instituicao_id = '$instituicao_id' OR ve.tipodavaga = 2)");
             // $this->db->join('tb_convenio_instituicao cc', 'c.convenio_id = cc.convenio_id', 'left');
             // $this->db->where('cc.instituicao_id', $this->session->userdata('instituicao_id'));
             // $this->db->where('cc.ativo', 't');
@@ -1451,11 +1531,13 @@ class paciente_model extends BaseModel {
     }
 
     function listarvagasinfo($vaga_id){
-        $this->db->select('ve.*, i.*, c.*, ii.*');
+        $this->db->select('ve.*, i.*, c.*, ii.*,ve.instituicao_id as institu_id,iic.descricao as setor1,iid.descricao as disciplina1');
         $this->db->from('tb_vagas_empresas ve');
         $this->db->join('tb_instituicao i', 'i.instituicao_id = ve.instituicao_id', 'left');
         $this->db->join('tb_convenio c', 've.convenio_id = c.convenio_id', 'left');
         $this->db->join('tb_informacaovaga ii', 've.curso = ii.informacaovaga_id', 'left');
+        $this->db->join('tb_informacaovaga iic', 'iic.informacaovaga_id = ve.setor', 'left');
+        $this->db->join('tb_informacaovaga iid', 'iid.informacaovaga_id = ve.disciplina', 'left');
         $this->db->where('ve.ativo', 't');
         $this->db->where('vaga_id', $vaga_id);
         return $this->db->get()->result();
@@ -4025,6 +4107,23 @@ class paciente_model extends BaseModel {
                    return   $this->db->get()->result();
 
           }
+          
+   function listarinstituicaoorigem() {
+        $this->db->select('i.nome, i.instituicao_id');
+        $this->db->from('tb_instituicao i');  
+        $this->db->where('i.ativo', 't');
+        return $this->db->get()->result();
+    }
+
+    function listardisciplinas() {
+        $this->db->select('descricao, tipo, informacaovaga_id');
+        $this->db->from('tb_informacaovaga');
+        $this->db->where('ativo', 't');
+        $this->db->where('tipo', 'disciplina');
+        return $this->db->get()->result();
+    }
+    
+
 }
 
 ?>

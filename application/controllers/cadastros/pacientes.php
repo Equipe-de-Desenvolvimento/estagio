@@ -270,8 +270,8 @@ class pacientes extends BaseController {
         $this->load->View('cadastros/gerarrelatoriovagasassociadas', $data);
     }
 
-    function associaralunoaestagio($vagas_id, $instituicao_id, $convenio_id){
-        $data['vagas'] = $this->paciente->listarvagasinfo($vagas_id);
+    function associaralunoaestagio($vagas_id, $instituicao_id=0, $convenio_id=0){
+        $data['vagas'] = $this->paciente->listarvagasinfo($vagas_id); 
         $data['informacoes'] = $this->paciente->listarinformacaovaga()->get()->result();
         $data['alunos'] = $this->paciente->alunosadequados($instituicao_id);
         $data['instituicao_id'] = $instituicao_id;

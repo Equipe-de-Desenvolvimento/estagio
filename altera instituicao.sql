@@ -17,3 +17,9 @@ ALTER TABLE ponto.tb_instituicao ADD COLUMN numero character varying(50);
 ALTER TABLE ponto.tb_instituicao ADD COLUMN bairro character varying(200);
 
 ALTER TABLE ponto.tb_convenio ADD COLUMN instituicao_id integer;
+--16/03/2021
+ALTER TABLE ponto.tb_paciente ADD COLUMN seguradora text;
+ALTER TABLE ponto.tb_paciente ADD COLUMN num_apolice text;
+ALTER TABLE ponto.tb_paciente ADD COLUMN vigencia_apolice text;
+ALTER TABLE ponto.tb_paciente ADD COLUMN matricula text;
+
