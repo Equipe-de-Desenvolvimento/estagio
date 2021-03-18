@@ -20,13 +20,13 @@ $disciplinas = $this->paciente->listardisciplinas();
                                     <div class="nome">
                                         <h6>Nome Aluno</h6>
                                         <div>
-                                            <input type="text" name="nome" placeholder="Nome do Aluno" class="texto05" value="<?php echo @$_GET['nome']; ?>" />
+                                            <input type="text" class="form-control" name="nome" placeholder="Nome do Aluno" class="texto05" value="<?php echo @$_GET['nome']; ?>" />
                                         </div>
                                     </div>
                                     <div>
                                         <h6>Instituição de Origem</h6>
                                         <div>
-                                            <select name="instituicao">
+                                            <select name="instituicao" class="form-control">
                                                 <option value="">Selecione</option>
                                                 <?php foreach($instituicao_origem as $item){?>
                                                 <option value="<?= $item->instituicao_id; ?>" <?= (isset($_GET['instituicao']) && $_GET['instituicao'] == $item->instituicao_id) ? "selected" : "";  ?>><?= $item->nome; ?></option>
@@ -38,14 +38,21 @@ $disciplinas = $this->paciente->listardisciplinas();
                                     <div>
                                         <h6>Disciplina</h6>
                                         <div>
-                                            <select name="disciplina">
+                                            <select name="disciplina" class="form-control">
                                                  <option value="">Selecione</option>
                                                 <?php foreach($disciplinas as $item){?>
                                                         <option  value="<?= $item->informacaovaga_id; ?>"  <?= (isset($_GET['disciplina']) && $_GET['disciplina'] == $item->informacaovaga_id) ? "selected" : "";  ?>><?= $item->descricao; ?></option>
                                                 <?php }?>
                                             </select>
                                         </div>
-                                    </div>  
+                                    </div> 
+                                      <div>
+                                          <h6>&nbsp;</h6>
+                                         <div>
+                                          <button class="form-control" type="submit" class="btn btn-outline-default btn-round btn-sm btn-src" name="enviar">Pesquisar</button>
+                                        </div>
+                                    </div> 
+                        
                                        
                                     <?
                                     
@@ -92,21 +99,20 @@ $disciplinas = $this->paciente->listardisciplinas();
 
                                     }
                                     ?>
-                                    <div class="btnenvio" >
-                                        <button type="submit" class="btn btn-outline-default btn-round btn-sm btn-src" name="enviar">Pesquisar</button>
-                                    </div>
+                                    
                         </div>
                     </form>
-
-                    <!-- <br>
-                        <a class="btn btn-outline-default btn-round btn-sm" href="<?php echo base_url() ?>cadastros/pacientes/novo">
-                            <i class="fa fa-plus fa-w"></i> Cadastrar
-                        </a> -->
-
+ 
                     
                     <div class="table-responsive">
                        <div class="panel-body">
+                           <form action="<?=base_url()?>cadastros/pacientes/confirmartodosestagios" method="POST" target="_blank">
                             <table  class="table table-bordered table-hover" id="dataTables-example">
+                                <tr>
+                                    <td colspan="8"></td> 
+                                    <td colspan="1"> <input type="checkbox" onclick="marcardesmarcar()"></td>
+                                    <td colspan="2"><button class="form-control"  >Autorizar Todos</button></td>
+                                </tr>
                                 <tr>
                                     <th class="tabela_header">Nome</th>
                                     <th class="tabela_header">CPF</th>
@@ -115,8 +121,8 @@ $disciplinas = $this->paciente->listardisciplinas();
                                     <th class="tabela_header">Instituição</th>
                                     <th class="tabela_header">Vaga</th>
                                     <th class="tabela_header">Data Associado</th>
-                                    <th>Data Prevista Estagio</th>
-                                    <th class="tabela_header" colspan="2"><center>A&ccedil;&otilde;es</center></th>
+                                    <th>Data Prevista Estagio</th>  
+                                    <th class="tabela_header" colspan="3"><center>A&ccedil;&otilde;es</center></th>
                                 </tr>
 
                                 <?php
@@ -151,11 +157,16 @@ $disciplinas = $this->paciente->listardisciplinas();
                                                 <td ><?php echo $item->nome_vaga; ?></td>
                                                 <td ><?php echo substr($item->data_cadastro, 8, 2).'/'.substr($item->data_cadastro, 5, 2).'/'.substr($item->data_cadastro, 0, 4); ?></td>
                                                 <td><?php echo substr($item->data_inicio, 8, 2).'/'.substr($item->data_inicio, 5, 2).'/'.substr($item->data_inicio, 0, 4); ?> - <?php echo substr($item->data_final, 8, 2).'/'.substr($item->data_final, 5, 2).'/'.substr($item->data_final, 0, 4); ?></td>
-
+                                                <?php if($item->status_estagio == 'ANALISE'){ ?>
+                                                 <td><input type="checkbox" class='marcar' name='check[]' value="<?= $item->aluno_estagio_id ?>"> </td>
+                                                <?php }else{ ?>
+                                                 <td></td>
+                                                <?php }?>
                                                 <?if($item->status_estagio == 'ANALISE'){?>
+                                                
                                                     <td colspan="2"> 
-                                                        <a class="btn btn-outline-default btn-round btn-sm" target="_blank" href="<?=base_url() ?>cadastros/pacientes/iniciaestagio/<?= $item->aluno_estagio_id ?>" class="btn btn-outline-default btn-round btn-sm">
-                                                            <b>Confirmar Estágio</b>
+                                                        <a class="btn btn-outline-default btn-round btn-sm"   onclick="javascript:window.open('<?=base_url() ?>cadastros/pacientes/iniciaestagio/<?= $item->aluno_estagio_id ?>');" href="#!" class="btn btn-outline-default btn-round btn-sm">
+                                                            <b>Confirmar Estágio </b>
                                                         </a>
                                                     </td>
                                                 <?}else{?>
@@ -165,7 +176,7 @@ $disciplinas = $this->paciente->listardisciplinas();
                                                         </a>
                                                     </td>-->
 
-                                                    <td>
+                                                    <td colspan="2">
 <!--                                                        <a class="btn btn-outline-default btn-round btn-sm" href="">
                                                             <b>Transferir Estágio</b>
                                                         </a>-->
@@ -196,8 +207,9 @@ $disciplinas = $this->paciente->listardisciplinas();
                                     </tr>
                                 </tfoot>
                             </table>
+                            </form>
                         </div>
-                    </form>
+                    
 
                 </div>
             </div>
@@ -210,8 +222,19 @@ $disciplinas = $this->paciente->listardisciplinas();
 
 
 <!-- Final da DIV content -->
-<link rel="stylesheet" href="<?php base_url() ?>css/jquery-ui-1.8.5.custom.css">
+<link rel="stylesheet" href="<?php // base_url() ?>css/jquery-ui-1.8.5.custom.css">
 <script type="text/javascript">
+function marcardesmarcar(){ 
+    $(".marcar").each(
+        function() {
+            if ($(this).prop("checked")) {
+                $(this).prop("checked", false);
+            } else {
+                $(this).prop("checked", true);
+            }
+        }
+    );
+}
 
  function verificarCPF() {
         // txtCpf

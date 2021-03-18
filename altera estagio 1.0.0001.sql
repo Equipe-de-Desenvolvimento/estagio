@@ -221,3 +221,7 @@ ALTER TABLE ponto.tb_paciente ADD COLUMN data_final date;
 ALTER TABLE ponto.tb_vagas_empresas ADD COLUMN data_inicio date;
 ALTER TABLE ponto.tb_vagas_empresas ADD COLUMN data_final date;
 
+--18/03/2021
+ALTER TABLE ponto.tb_empresa ADD COLUMN email_institucional character varying(200);
+ALTER TABLE ponto.tb_empresa ADD COLUMN representante_unidade character varying(200);
+ALTER TABLE ponto.tb_empresa ADD COLUMN cbo_ocupacao_id integer;

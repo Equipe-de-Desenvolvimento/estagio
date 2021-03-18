@@ -676,6 +676,9 @@ function debug($object) {
                             <li>
                                 <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/empresa/listarpesquisaSatisfacao">Pesquisa Satisfação</a>
                             </li>
+                            <li>
+                                <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/empresa/">Dados da Empresa</a>
+                            </li>
                         </ul>
                     </li>
                 </ul>

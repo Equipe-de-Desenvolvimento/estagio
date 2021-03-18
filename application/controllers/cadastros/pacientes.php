@@ -2110,5 +2110,12 @@ function carregarpacientecenso($prontuario = null, $nome = null, $procedimento =
         }
         redirect(base_url() . "cadastros/pacientes/pesquisarMapaGestao/");
     }
+    
+    function confirmartodosestagios(){ 
+        foreach($_POST['check'] as $aluno_estagio_id){
+            $this->paciente->iniciarestagio($aluno_estagio_id, 'INICIO ESTAGIO');
+        } 
+       redirect(base_url() . "seguranca/operador/pesquisarrecepcao");
+    }
 }
 ?>
