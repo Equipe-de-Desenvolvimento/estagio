@@ -2117,5 +2117,59 @@ function carregarpacientecenso($prontuario = null, $nome = null, $procedimento =
         } 
        redirect(base_url() . "seguranca/operador/pesquisarrecepcao");
     }
+    
+    
+    function salvarcargahorario(){
+        $retorno = $this->paciente->salvarcargahorario(); 
+        if(count($retorno) > 0){
+            echo json_encode($retorno);
+        }else{
+            echo json_encode(false);
+        } 
+    }
+    
+    function listarhorarioscalendario(){
+         $retorno = $this->paciente->listarhorarioscalendario($_POST['vaga_id']);
+
+        $var = array();
+
+        foreach($retorno as $value){
+            $data = $value->data; 
+            $horario_inicial = $value->horario_inicial;
+            $horario_final = $value->horario_final;
+
+            $infos['start'] = $data. "T" .$horario_inicial;
+            $infos['end'] = $data. "T" .$horario_final;
+            $infos['title'] = 'Horario';
+
+            $infos['description'] = "ssssssss";
+            $infos['allDay'] = false;
+            $infos['resourceId'] = $value->carga_horario_id;
+//            $infos['color'] = 'rgb(143, 223, 130)';
+
+            $var[] = $infos;
+       }
+
+        echo json_encode($var);
+        
+    }
+    
+    function carregartermo($paciente_id){
+        $this->load->plugin('mpdf');
+        
+        $nomepdf = "Cadastrosfeitos-.pdf";
+        $cabecalhopdf = "";      
+        $rodapepdf = ""; 
+                            
+        $data['instituicao'] = $this->paciente->listarinstituicaopaciente($paciente_id); 
+            
+        $texto = $this->load->View('cadastros/termoaluno', $data, true);
+       
+          pdf($texto, $nomepdf, $cabecalhopdf, $rodapepdf);     
+
+        
+    }
+    
+    
 }
 ?>

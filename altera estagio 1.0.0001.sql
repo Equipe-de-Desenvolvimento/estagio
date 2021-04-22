@@ -225,3 +225,32 @@ ALTER TABLE ponto.tb_vagas_empresas ADD COLUMN data_final date;
 ALTER TABLE ponto.tb_empresa ADD COLUMN email_institucional character varying(200);
 ALTER TABLE ponto.tb_empresa ADD COLUMN representante_unidade character varying(200);
 ALTER TABLE ponto.tb_empresa ADD COLUMN cbo_ocupacao_id integer;
+
+--20/03/2021
+
+CREATE TABLE ponto.tb_carga_horario
+(
+  carga_horario_id serial NOT NULL,
+  vaga_id integer,
+  horario_inicial character varying(50),
+  horario_final character varying(50),
+  CONSTRAINT tb_carga_horario_pkey PRIMARY KEY (carga_horario_id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ponto.tb_carga_horario
+  OWNER TO postgres;
+
+ALTER TABLE ponto.tb_carga_horario ADD COLUMN data_cadastro timestamp without time zone;
+ALTER TABLE ponto.tb_carga_horario ADD COLUMN operador_cadastro integer;
+ALTER TABLE ponto.tb_carga_horario ADD COLUMN data_atualizacao timestamp without time zone;
+ALTER TABLE ponto.tb_carga_horario ADD COLUMN operador_atualizacao integer;
+
+--22/03/2021
+ALTER TABLE ponto.tb_carga_horario ADD COLUMN ativo boolean;
+ALTER TABLE ponto.tb_carga_horario ALTER COLUMN ativo SET DEFAULT true;
+
+ALTER TABLE ponto.tb_carga_horario ADD COLUMN data date;
+
+

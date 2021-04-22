@@ -146,7 +146,8 @@ class paciente_model extends BaseModel {
                            p.telefone,
                            p.celular,
                            p.paciente_id,
-                           p.status_estagio');
+                           p.status_estagio,
+                           p.associado_a_vaga');
         $this->db->from('tb_paciente p');
         $this->db->join('tb_municipio m', 'm.municipio_id = p.municipio_id', 'left');
 
@@ -1044,6 +1045,8 @@ class paciente_model extends BaseModel {
             if($this->session->userdata('instituicao_id') > 0){
                 $this->db->set('instituicao_id', $this->session->userdata('instituicao_id'));
             }
+            
+            die();
             if ($_POST['paciente_id'] == "") {// insert
                 $this->db->set('data_cadastro', $data);
                 $this->db->set('operador_cadastro', $operador_id);
@@ -4123,6 +4126,40 @@ class paciente_model extends BaseModel {
         return $this->db->get()->result();
     }
     
+    function salvarcargahorario(){
+        $horario = date('Y-m-d H:i:s');
+        $operador = $this->session->userdata('operador_id');
+        $this->db->set('data_cadastro',$horario);
+        $this->db->set('operador_cadastro',$operador);
+        $this->db->set('data', $_POST['data']);
+        $this->db->set('vaga_id',$_POST['vaga_id']);
+        $this->db->set('horario_inicial',$_POST['horario_inicial']);
+        $this->db->set('horario_final',$_POST['horario_final']);
+        $this->db->insert('tb_carga_horario');
+        
+    }
+    
+    function listarhorarioscalendario($vaga_id){
+        
+        $this->db->select('*');
+        $this->db->from('tb_carga_horario');
+        $this->db->where('ativo','t');
+        $this->db->where('vaga_id',$vaga_id);
+        return $this->db->get()->result();
+        
+    }
+    
+    function listarinstituicaopaciente($paciente_id){
+        
+        $this->db->select('p.nome as paciente');
+        $this->db->from('tb_aluno_estagio ae');
+        $this->db->join('tb_paciente p','p.paciente_id = ae.aluno_id','left');
+        $this->db->join('tb_instituicao i', 'i.instituicao_id = ae.instituicao_id', 'left'); 
+        $this->db->where('ae.aluno_id',$paciente_id);
+        $this->db->where('ae.ativo','t');
+        return $this->db->get()->result();   
+        
+    }
 
 }
 

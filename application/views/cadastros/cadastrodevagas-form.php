@@ -1,9 +1,10 @@
 <div class="panel-body">
     <div class="alert alert-primary"><b>Cadastro de Vagas</b></div>
-
+  
+ <script type="text/javascript" src="<?= base_url() ?>js/jquery.maskedinput.js"></script>
     <form action="<?=base_url()?>cadastros/pacientes/gravarcadastrovagas" method="POST">
     <div class="row">
-    <input type="hidden" name="vaga_id" value="<?=$vagas_id?>">
+        <input type="hidden" name="vaga_id" id="vaga_id" value="<?=$vagas_id?>">
         <!-- <div class="col-lg-3">
             <label for="vaganome">Vaga</label>
             <input type="hidden" name="vaga_id" value="<?=$vagas_id?>">
@@ -169,7 +170,7 @@
 
         <div class="col-lg-2">
             <label for="">Qtde de Vagas</label>
-            <input type="number" name="qtdvagas" class="form-control" value="<?=@$obj[0]->qtde_vagas?>" required>
+            <input type="number" name="qtdvagas" id="qtdvagas" class="form-control" value="<?=@$obj[0]->qtde_vagas?>" required>
             <div class="invalid-feedback">
                     Preechar o seguinte campo!
             </div>
@@ -191,7 +192,16 @@
         </form>
 </div>
 
+ <link href="<?= base_url() ?>bootstrap/vendor/confirm/jquery-confirm.min.css" rel="stylesheet">
+ <script  src="<?= base_url() ?>bootstrap/vendor/confirm/jquery-confirm.min.js" type="text/javascript"></script>
+  
 <script>
+    function ativarmascara(){ 
+         $('#horario_inicial').mask("99:99");
+         $('#horario_final').mask("99:99");
+    }
+   
+     
      if($('#tipodavaga').val() == "1"){
         $('#convenio_id').attr('required', true);
         $('#instituicao_id').attr('required', true);
@@ -357,6 +367,10 @@ document.addEventListener('DOMContentLoaded', function() {
   var calendar = new FullCalendar.Calendar(calendarEl, {
     locale: 'pt-br',
     selectable: true,
+    editable: false,
+    eventLimit: false,
+    schedulerLicenseKey: 'CC-Attribution-Commercial-NoDerivatives',
+    showNonCurrentDates: false,
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
@@ -366,34 +380,144 @@ document.addEventListener('DOMContentLoaded', function() {
     // //   alert('clicked ' + info.dateStr);
     // },
     select: function(info) {
-        console.log(info.view.type);
+//        console.log(info.view.type);
+        
+      var date = info.startStr.replace('-03:00', '');
+     if($("#vaga_id").val() == 0){  
+        $.alert('Erro, é preciso cadastro uma vaga primeiro.'); 
+        return;
+     }
+     
+      
+//       console.log(date);
 
+     $.confirm({
+                title: 'Informar os Dados Adicionais!',
+                boxWidth: '36%',
+                useBootstrap: false,
+                theme: 'modern',
+                type: 'blue',
+                typeAnimated: true,
+//                icon: 'fas fa-briefcase-medical',
+                content: '' +
+            '<form action="" class="formName">' + 
+            '<div class="row">'+
+                '<div class="col-lg-5">' +
+                '<label>Horario Inicial</label>' +
+                '<input type="text" name="horario_inicial" id="horario_inicial" onclick="ativarmascara()"  placeholder="00:00" class="form-control" required />' +
+                '</div>' +
 
-        if(info.view.type == 'dayGridMonth'){
-            var date = new Date(info.startStr + 'T00:00:00');
-            var dateend = new Date(info.endStr + 'T00:00:00');
+                '<div class="col-lg-5">' +
+                 '<label>Horario Final</label>' +
+                '<input type="text" name="horario_final" id="horario_final"  onclick="ativarmascara()"  placeholder="00:00" class="form-control" required />' +
+                '</div>' +  
+            '</div>'+
+            '<br><br>'+
+            '</form>',
+               buttons: {
+                   confirm:{
+                    text: 'Confirmar',
+                    action: function () {  
+                      var vaga_id = $("#vaga_id").val(); 
+                      var date_marcada = info.startStr.replace('-03:00', '');
+//                       $.alert('Confirmed!'); 
+                       
+                        $.ajax({
+                            type: "POST",
+                            data: {
+                                vaga_id: vaga_id,
+                                horario_inicial: $("#horario_inicial").val(),
+                                horario_final: $("#horario_final").val(),
+                                data:date_marcada
+                            },
+                            url: "<?= base_url() ?>cadastros/pacientes/salvarcargahorario/",
+                            dataType: 'json',
+                            success: function(data) {
+                                $.alert('Horário salvo com Sucesso!');
+                                var date = new Date(info.startStr + 'T00:00:00');
+                                var dateend = new Date(info.endStr + 'T00:00:00');
+                                console.log(data);
+                                calendar.addEvent({
+                                    title: 'Horário',
+                                    description: '',
+                                    start: date_marcada+'T'+$("#horario_inicial").val(),
+                                    end: date_marcada+'T'+$("#horario_final").val(),
+                                    allDay: false,
+                                    resourceId: 1
+                                });
+ 
+                                return true;
+                            },
+                            error: function(data) {
+                                $.alert('Erro ao gravar o Horário.');
+                                return true;
+                            }
+                        });
+                       
+//                        if(info.view.type == 'dayGridMonth'){
+//
+//                            var date = new Date(info.startStr + 'T00:00:00');
+//                            var dateend = new Date(info.endStr + 'T00:00:00');
+//
+//                            calendar.addEvent({
+//                              title: 'Horario Trabalho',
+//                              start: date,
+//                              end: dateend,
+//                              allDay: true
+//                            });
+//
+//                        }else{
+//                            var date = info.startStr.replace('-03:00', '');
+//                            var dateend = info.endStr.replace('-03:00', '');
+//
+//                            calendar.addEvent({
+//                              title: 'Horario Trabalho',
+//                              start: date,
+//                              end: dateend,
+//                              allDay: false
+//                            });
+//                        }
+                       
+                   }},
+                   cancel: {
+                       text: 'Cancelar',
+                         action: function () { 
+                              $.alert('Cancelado!');
+                       }
+               }
+//               ,
+//                   somethingElse: {
+//                       text: 'Something else',
+//                       btnClass: 'btn-blue',
+//                       keys: ['enter', 'shift'],
+//                       action: function(){
+//                          $.alert('Something else?');
+//                       }
+//                   }
+               }
+           }); 
+           
+       
 
-            calendar.addEvent({
-              title: 'Horario Trabalho',
-              start: date,
-              end: dateend,
-              allDay: true
-            });
-
-        }else{
-            var date = info.startStr.replace('-03:00', '');
-            var dateend = info.endStr.replace('-03:00', '');
-
-            calendar.addEvent({
-              title: 'Horario Trabalho',
-              start: date,
-              end: dateend,
-              allDay: false
-            });
+//            alert('Evento adicionado com sucesso...');
+    },
+    eventSources: [
+        {
+            url: '<?= base_url() ?>cadastros/pacientes/listarhorarioscalendario',
+            method: 'POST',
+            extraParams: {
+                 vaga_id: $("#vaga_id").val()
+            },
+            success: function (e){
+//                console.log(e); 
+            },
+            error: function (e) {
+//                alert('tt');
+               console.log(e);
+            }
         }
 
-            alert('Evento adicionado com sucesso...');
-    }
+    ],
   });
 
   calendar.render();
