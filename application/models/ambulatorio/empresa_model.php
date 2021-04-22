@@ -1583,7 +1583,9 @@ class empresa_model extends Model {
             }
             $operador_id = $this->session->userdata('operador_id');
             /* inicia o mapeamento no banco */ 
-            $this->db->set('nome', @$_POST['txtNome']);
+            
+          
+            $this->db->set('nome', @$_POST['txtrazaosocial']);
             $this->db->set('razao_social', @$_POST['txtrazaosocial']);
             $this->db->set('razao_socialxml', @$_POST['txtrazaosocialxml']);
 //            $this->db->set('cep', $_POST['CEP']);

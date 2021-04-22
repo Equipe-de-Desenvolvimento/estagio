@@ -320,10 +320,10 @@
                     </div> 
                 </div> 
                 <div class="col-lg-2">
-                    <div>
+<!--                    <div>
                        <label>Vigência da Apólice</label> 
                        <input type="text"  placeholder="Vigência da Apólice" id="vigencia_apolice" name="vigencia_apolice"  class="form-control" value="<?= @$obj[0]->_vigencia_apolice; ?>"/>
-                    </div>
+                    </div>-->
                     <div>
                        <label>Matrícula</label> 
                        <input type="text"  placeholder="Matrícula" id="matricula" name="matricula"  class="form-control" value="<?= @$obj[0]->_matricula; ?>"/>

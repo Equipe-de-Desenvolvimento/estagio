@@ -25,11 +25,11 @@
             <label for="">Tipo da Vaga</label>
             <select id="tipodavaga" name="tipodavaga" id="" class="form-control" required>
                   <option value="">Selecione</option> 
-                  <option value="1"  <?=(@$obj[0]->tipodavaga == 1)?'selected':''?>>Pactuado</option>
-                  <option value="2" <?=(@$obj[0]->tipodavaga == 2)?'selected':''?>>Não Pactuado</option>
+                  <option value="1"  <?=(@$obj[0]->tipodavaga == 1)?'selected':''?>>Pactuada</option>
+                  <option value="2" <?=(@$obj[0]->tipodavaga == 2)?'selected':''?>>Não-pactuada</option>
             </select>
         </div>
-        <div class="col-lg-3" id="div_convenio" style="display: none;">
+        <div class="col-lg-3" >
             <label for="">Convênio</label>
             <select name="convenio_id" id="convenio_id" class="form-control" required> 
                 <option value="">Selecione</option>
@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        <div class="col-lg-3" id="div_instituicao" style="display: none;">
+        <div class="col-lg-3"    >
             <label for="">Instituição de Origem</label>
             <select name="instituicao_id" id="instituicao_id" class="form-control" required>
                   <option value="">Selecione</option>
@@ -105,7 +105,7 @@
         </div>
 
         <div class="col-lg-3">
-            <label for="">Responsável na IJF</label>
+            <label for="">Responsável no IJF</label>
             <select name="respifj" id="" class="form-control" required>
                   <option value="">Selecione</option>
                   <?foreach($respijf as $item){?>
@@ -202,34 +202,34 @@
     }
    
      
-     if($('#tipodavaga').val() == "1"){
-        $('#convenio_id').attr('required', true);
-        $('#instituicao_id').attr('required', true);
-        $("#div_convenio").show();
-        $("#div_instituicao").show();
-     }else{
-        $('#convenio_id').attr('required', false);
-        $('#instituicao_id').attr('required', false);
-        $("#div_convenio").hide();
-        $("#div_instituicao").hide();
-     }
+//     if($('#tipodavaga').val() == "1"){
+//        $('#convenio_id').attr('required', true);
+//        $('#instituicao_id').attr('required', true);
+//        $("#div_convenio").show();
+//        $("#div_instituicao").show();
+//     }else{
+//        $('#convenio_id').attr('required', false);
+//        $('#instituicao_id').attr('required', false);
+//        $("#div_convenio").hide();
+//        $("#div_instituicao").hide();
+//     }
      
-    $(function () {
-          $('#tipodavaga').change(function () {
-              if($('#tipodavaga').val() == "1"){
-                  $('#convenio_id').attr('required', true);
-                  $('#instituicao_id').attr('required', true); 
-                  $("#div_convenio").show();
-                  $("#div_instituicao").show();
-              }else{
-                $('#convenio_id').attr('required', false);
-                $('#instituicao_id').attr('required', false);
-                $("#div_convenio").hide();
-                $("#div_instituicao").hide();
-              }
-             
-          });
-      });
+//    $(function () {
+//          $('#tipodavaga').change(function () {
+//              if($('#tipodavaga').val() == "1"){
+//                  $('#convenio_id').attr('required', true);
+//                  $('#instituicao_id').attr('required', true); 
+//                  $("#div_convenio").show();
+//                  $("#div_instituicao").show();
+//              }else{
+//                $('#convenio_id').attr('required', false);
+//                $('#instituicao_id').attr('required', false);
+//                $("#div_convenio").hide();
+//                $("#div_instituicao").hide();
+//              }
+//             
+//          });
+//      });
  
     
     $(function () {

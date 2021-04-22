@@ -15,22 +15,22 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
                             <input type="text" name="txtNome" class="form-control" value="<?= @$obj->_nome; ?>" /> 
                         </div>    
 
-                        <div class="col-lg-2">      
+<!--                        <div class="col-lg-2">      
                                 <label>Raz&atilde;o social</label>
                                 <input type="text" name="txtrazaosocial" class="form-control" value="<?= @$obj->_razao_social; ?>" />
-                        </div>
+                        </div>-->
                     <!-- <div class="col-lg-2">
                         <div>
                             <label>Teste</label>
                             <input type="text" name="txtcodigo" class="form-control" value="<?= @$obj->_codigoidentificador; ?>" />               
                         </div>
                     </div> -->
-                        <div class="col-lg-2">   
+<!--                        <div class="col-lg-2">   
                             <div>
                                 <label>CNPJ</label>
                                 <input type="text" id="txtCNPJ" name="txtCNPJ" alt="cnpj" class="form-control" value="<?= @$obj->_cnpj; ?>" />
                             </div>
-                        </div>
+                        </div>-->
                     <!-- <div class="col-lg-2">
                         <div>
                             <label>Codigo identifica&ccedil;&atilde;o</label>
@@ -42,7 +42,7 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
             </fieldset>
             <br>
             <fieldset>
-                <div class="alert alert-primary"><b>Endereço</b></div>
+                <div class="alert alert-primary"><b>Instituição</b></div>
                     <div class="row">
                           
                         <div class="col-lg-2">    
@@ -288,6 +288,22 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
 <script type="text/javascript"> 
    $("#txtCNPJ").mask("99.999.999/9999-99");
    
+     jQuery("#txtTelefone")
+            .mask("(99) 9999-9999?9")
+            .focusout(function (event) {
+                var target, phone, element;
+                target = (event.currentTarget) ? event.currentTarget : event.srcElement;
+                phone = target.value.replace(/\D/g, '');
+                element = $(target);
+                element.unmask();
+                if (phone.length > 10) {
+                    element.mask("(99) 99999-999?9");
+                } else {
+                    element.mask("(99) 9999-9999?9");
+                }
+            });
+
+   
    $(function () {
             $('#instituicao').change(function () {
                 if ($(this).val()) { 
@@ -299,7 +315,14 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
                        $("#txtendereco").val(j[0].endereco);
                        $("#txtBairro").val(j[0].bairro);
                        $("#txtCidade").val(j[0].municipio);
-                       $("#txtCidadeID").val(j[0].municipio_id);  
+                       $("#txtCidadeID").val(j[0].municipio_id); 
+                       if(j[0].telefone == "" || j[0].telefone == null){
+                             $("#txtTelefone").val(j[0].telefone2);  
+                       }else{
+                             $("#txtTelefone").val(j[0].telefone);  
+                       }
+//                       alert(j[0].telefone);
+                     
                     });
                 }else{
                       $("#txtNumero").val("");
@@ -309,6 +332,7 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
                       $("#txtBairro").val("");
                       $("#txtCidade").val("");
                       $("#txtCidadeID").val("");  
+                      $("#txtTelefone").val("");  
                 }
 
             });

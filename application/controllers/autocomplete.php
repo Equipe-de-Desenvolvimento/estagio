@@ -5870,8 +5870,8 @@ class Autocomplete extends Controller {
             $result = $this->paciente_m->listarinstituicaoid($_GET['instituicao_id']);
         } else {
             $result = $this->paciente_m->listarinstituicaoid();
-        }  
-
+        }            
+        
         echo json_encode($result);
     }
                     

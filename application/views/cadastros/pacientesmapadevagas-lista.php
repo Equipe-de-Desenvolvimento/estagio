@@ -15,13 +15,13 @@
                 <form method="get" action="<?php echo base_url() ?>cadastros/pacientes/pesquisarMapaGestao">
                     <div class="row">
                                     <div class="col-lg-2">
-                                        <label>Área</label>
+                                        <label>Instituição</label>
                                         <input type="text" name="nome_vaga" class="form-control" value="<?php echo @$_GET['nome_vaga']; ?>" />
                                     </div>
     
                                     <?if($this->session->userdata('instituicao_id') == ''){?>
                                     <div class="col-lg-2">
-                                        <label>Convênio</label>
+                                        <label>Curso</label>
                                         <select name="instituicao_id" id="instituicao_id" class="form-control"> 
                                             <option value="">Selecione</option>
                                             <?foreach($instituicao as $item){?>
@@ -31,7 +31,7 @@
                                     </div>
                                         <?}?>
                                     <div class="col-lg-2">
-                                        <label>Tipo</label>
+                                        <label>Disciplina</label>
                                         <input type="text" id="txtEmpresa" name="tipo_vaga" class="form-control" value="<?php echo @$_GET['tipo_vaga']; ?>" />
                                     </div>  
 
@@ -52,13 +52,13 @@
                        <div class="panel-body">
                             <table  class="table table-bordered table-hover" id="dataTables-example">
                                 <tr>
-                                    <th class="tabela_header">Área</th>
+                                    <th class="tabela_header">Instituição</th>
                                     <?if($this->session->userdata('instituicao_id') == ''){?>
                                         <!-- <th class="tabela_header">Tipo Vaga</th> -->
                                     <?}?>
-                                    <th class="tabela_header">Convênio</th>
-                                    <th class="tabela_header">Instituição</th>
-                                    <th class="tabela_header">Tipo</th>
+                                    <th class="tabela_header">Curso</th>
+                                    <th class="tabela_header">Disciplina</th>
+                                    <th class="tabela_header">Setor</th>
                                     <th class="tabela_header">Qtd de Vagas</th>
                                     <th class="tabela_header" colspan="3"><center>A&ccedil;&otilde;es</center></th>
 

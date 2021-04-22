@@ -101,7 +101,7 @@
                                 $whatsapp = '';
                             }
                             ?>
-                        <input type="text"  placeholder="(99)9999-9999" id="txtTelefone2" class="form-control" name="telefone2"  value="<?= @$obj[0]->telefone; ?>" <?= (in_array('telefone2', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                        <input type="text"  placeholder="(99)9999-9999" id="txtTelefone2" class="form-control" name="telefone2"  value="<?= @$obj[0]->telefone2; ?>" <?= (in_array('telefone2', $campos_obrigatorios)) ? 'required' : '' ?>/>
 
                          </div>
                          <div>
@@ -118,7 +118,7 @@
                             <?= (in_array('cep', $campos_obrigatorios)) ? 'required' : '' ?> 
                         </div> 
                         <div>
-                            <label>Endereço</label>
+                            <label>Logradouro (rua, avenida)</label>
                                 <input type="text" id="endereco" class="form-control" name="endereco"  value="<?= @$obj[0]->endereco; ?>" required="true" placeholder="Endereço da Instituição" />
                         </div> 
                         <div>
@@ -157,7 +157,7 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <label>Nome do Responsável Pelo Convênio *</label>
-                            <input type="text" id="txtConvenio" name="convenio" class="form-control" value="<?= @$obj[0]->convenio; ?>" required="true"  placeholder="Convênio">
+                            <input type="text" id="txtConvenio" name="convenio" class="form-control" value="<?= @$obj[0]->convenio; ?>"   placeholder="Convênio">
                         </div>   
                         <div class="col-lg-2">
                             <label>Email *</label>
@@ -191,15 +191,12 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <label>Nome usu&aacute;rio *</label>
-                            <input type="text" id="txtUsuario" name="txtUsuario"  class="form-control" value="<?= @$obj[0]->usuario; ?>" required="true"/>
+                            <input type="text" id="txtUsuario" name="txtUsuario"  class="form-control" value="<?= @$obj[0]->usuario; ?>" />
                         </div>
 
                         <div class="col-lg-3">
                             <label>Senha: *</label>
-                            <input type="password" name="txtSenha" id="txtSenha" class="form-control" value="" <? if (@$obj[0]->senha == null) {
-                            ?>
-                                    required="true"
-                                <? } ?> />
+                            <input type="password" name="txtSenha" id="txtSenha" class="form-control" value=""  />
                         </div> 
                      
                     </div>
@@ -214,7 +211,7 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <label>Nome do Responsável Pelo Financeiro *</label>
-                            <input type="text" id="txtFinanceiro" name="financeiro" class="form-control" value="<?= @$obj[0]->financeiro; ?>" required="true"  placeholder="Financeiro">
+                            <input type="text" id="txtFinanceiro" name="financeiro" class="form-control" value="<?= @$obj[0]->financeiro; ?>"   placeholder="Financeiro">
                         </div>   
                         <div class="col-lg-2">
                             <label>Email *</label>
@@ -250,7 +247,7 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <label>Nome do Responsável Pelo Jurídico *</label>
-                            <input type="text" id="txtJuridico" name="juridico" class="form-control" value="<?= @$obj[0]->juridico; ?>" required="true"  placeholder="Jurídico">
+                            <input type="text" id="txtJuridico" name="juridico" class="form-control" value="<?= @$obj[0]->juridico; ?>"   placeholder="Jurídico">
                         </div>   
                         <div class="col-lg-2">
                             <label>Email *</label>

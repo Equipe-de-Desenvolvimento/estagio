@@ -96,12 +96,12 @@
 
         <div class="col-lg-2">
             <label for="">Data Inicio: </label>
-            <input type="text" id="datainicio" class="data form-control" name="data_inicio" value="<?=date("d/m/Y", strtotime(str_replace('-', '/', $obj[0]->data_inicio)));?>" required/>
+            <input type="text" id="datainicio" class="data form-control" name="data_inicio" value="<?=date("d/m/Y", strtotime(str_replace('-', '/', @$obj[0]->data_inicio)));?>" required/>
         </div>
 
         <div class="col-lg-2">
             <label for="">Data Fim: </label>
-            <input type="text" id="datafinal" class="data form-control" name="data_final" value="<?=date("d/m/Y", strtotime(str_replace('-', '/', $obj[0]->data_final)));?>" required/>
+            <input type="text" id="datafinal" class="data form-control" name="data_final" value="<?=date("d/m/Y", strtotime(str_replace('-', '/', @$obj[0]->data_final)));?>" required/>
         </div>
 
         </div>

@@ -495,18 +495,18 @@ function debug($object) {
                     <i class="fa fa-handshake-o"></i> Gestão de Vagas </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/pacientes/pesquisarMapaGestao">Mapa de Vagas</a>
+                            <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/pacientes/pesquisarMapaGestao">Cadastro de vagas</a>
                         </li>
 
                         <?if($this->session->userdata('perfil_id') != 9){?>
                         <li>
-                             <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/convenio">Manter Convenio</a>
+                             <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/convenio">Cadastrar convênio</a>
                         </li>
                         <!-- <li>
                             <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/procedimentoplano">Convenios</a>
                         </li> -->
                         <li>
-                            <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/pacientes/confinformacao">Configuração de Informações</a>
+                            <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/pacientes/confinformacao">Configuração de campos</a>
                         </li>
 
                         <li>

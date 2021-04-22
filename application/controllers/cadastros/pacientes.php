@@ -309,6 +309,7 @@ class pacientes extends BaseController {
         $data['solicitacao_vaga_id'] = $solicitacao_vaga_id;
         $data['obj'] = $this->paciente->listarsolicitacaovagasinfo($solicitacao_vaga_id);
         $data['informacoes'] = $this->paciente->listarinformacaovaga()->get()->result();
+        
         $data['alunos'] = $this->paciente->alunosadequados($this->session->userdata('instituicao_id'));
 
         // echo '<pre>';
@@ -1217,7 +1218,7 @@ class pacientes extends BaseController {
         $base_url = base_url();
 
         $this->session->set_flashdata('message', $data['mensagem']);
-        // die;
+        
         echo "<html>
             <meta charset='UTF-8'>
             <script type='text/javascript'>

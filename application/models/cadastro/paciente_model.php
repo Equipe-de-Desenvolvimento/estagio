@@ -736,7 +736,7 @@ class paciente_model extends BaseModel {
         $dataatual = $dia . '/' . $mes . '/' . $ano;
 
         try {
-            if ($_POST['txtcbo'] != $_POST['txtcbohidden']) {
+            if (isset($_POST['txtcbo']) && $_POST['txtcbo'] != $_POST['txtcbohidden']) {
                 $this->db->select('cbo_ocupacao_id');
                 $this->db->from('tb_cbo_ocupacao');
                 $this->db->orderby('cbo_ocupacao_id desc');
@@ -751,7 +751,7 @@ class paciente_model extends BaseModel {
                 $ocupacao_id = $last_id;
 
                 $this->db->set('profissao', $ocupacao_id);
-            } elseif ($_POST['txtcboID'] != "") {
+            } elseif (isset($_POST['txtcboID']) && $_POST['txtcboID'] != "") {
                 $this->db->set('profissao', $_POST['txtcboID']);
             }
 
@@ -836,12 +836,12 @@ class paciente_model extends BaseModel {
 //                $this->db->set('data_emissao', $_POST['data_emissao']);
 //            }
 
-            if ($_POST['convenio'] != '' && $_POST['convenio'] != 'OUTROS') { 
+            if (isset($_POST['convenio']) && $_POST['convenio'] != '' && $_POST['convenio'] != 'OUTROS') { 
                 $this->db->set('convenio_id', $_POST['convenio']);
             }else{
                 $this->db->set('convenio_id', null);
             }
-            if ($_POST['outroplano'] != '') { 
+            if (isset($_POST['outroplano']) && $_POST['outroplano'] != '') { 
                 $this->db->set('outro_convenio', $_POST['outroplano']);
             }else{
                  $this->db->set('outro_convenio', null);
@@ -864,7 +864,7 @@ class paciente_model extends BaseModel {
                   $this->db->set('indicacao', null);
             }
             
-            if ($_POST['instagram'] != '') {
+            if (isset($_POST['instagram']) && $_POST['instagram'] != '') {
                 $this->db->set('instagram', $_POST['instagram']);
             }else{
                  $this->db->set('instagram', null);
@@ -890,7 +890,7 @@ class paciente_model extends BaseModel {
             }else{
                 $this->db->set('nascimento_conjuge', null);   
             }
-            if ($_POST['vencimento_carteira'] != '') {
+            if (isset($_POST['vencimento_carteira']) && $_POST['vencimento_carteira'] != '') {
                 $this->db->set('vencimento_carteira', date("Y-m-d", strtotime(str_replace("/", "-", $_POST['vencimento_carteira']))));
             }else{
                 $this->db->set('vencimento_carteira', null);   
@@ -900,12 +900,12 @@ class paciente_model extends BaseModel {
             }else{
                  $this->db->set('cnh', null); 
             }
-            if ($_POST['vencimento_cnh'] != '') {
+            if (isset($_POST['vencimento_cnh']) && $_POST['vencimento_cnh'] != '') {
                 $this->db->set('vencimento_cnh', date("Y-m-d", strtotime(str_replace("/", "-", $_POST['vencimento_cnh']))));
             }else{
                   $this->db->set('vencimento_cnh', null); 
             }
-            if ($_POST['escolaridade'] != '') {
+            if (isset($_POST['escolaridade']) && $_POST['escolaridade'] != '') {
                 $this->db->set('escolaridade_id', $_POST['escolaridade']);
             }else{
                $this->db->set('escolaridade_id', null); 
@@ -938,12 +938,12 @@ class paciente_model extends BaseModel {
             }else{
                  $this->db->set('empresa',null);  
             }
-            if ($_POST['raca_cor'] != '') {
+            if (isset($_POST['raca_cor']) && $_POST['raca_cor'] != '') {
                 $this->db->set('raca_cor', $_POST['raca_cor']);
             }else{
                 $this->db->set('raca_cor',null);   
             }
-            if ($_POST['estado_civil_id'] != '') {
+            if (isset($_POST['estado_civil_id']) && $_POST['estado_civil_id'] != '') {
                 $this->db->set('estado_civil_id', $_POST['estado_civil_id']);
             }else{
                   $this->db->set('estado_civil_id',null); 
@@ -995,7 +995,7 @@ class paciente_model extends BaseModel {
             }else{
                 $this->db->set('logradouro',null);  
             }
-            if($_POST['convenionumero'] != ""){
+            if(isset($_POST['convenionumero']) && $_POST['convenionumero'] != ""){
              $this->db->set('convenionumero', $_POST['convenionumero']);
             }else{
                 $this->db->set('convenionumero',null);  
@@ -1017,7 +1017,7 @@ class paciente_model extends BaseModel {
             }else{
                 $this->db->set('municipio_id', null); 
             }
-            if ($_POST['txtcboID'] != '') {
+            if (isset($_POST['txtcboID']) && $_POST['txtcboID'] != '') {
                 $this->db->set('profissao', $_POST['txtcboID']);
             }else{
                  $this->db->set('profissao', null);
@@ -1046,7 +1046,7 @@ class paciente_model extends BaseModel {
                 $this->db->set('instituicao_id', $this->session->userdata('instituicao_id'));
             }
             
-            die();
+          
             if ($_POST['paciente_id'] == "") {// insert
                 $this->db->set('data_cadastro', $data);
                 $this->db->set('operador_cadastro', $operador_id);
@@ -1109,12 +1109,12 @@ class paciente_model extends BaseModel {
         // $this->db->set('nome_vaga', $_POST['vaganome']);
         $this->db->set('tipo_vaga', $_POST['tipovaga']);
         $this->db->set('qtde_vagas', $_POST['qtdvagas']);
-        if(isset($_POST['convenio_id']) && $_POST['convenio_id'] != "" && $_POST['tipodavaga'] != "2"){
+        if(isset($_POST['convenio_id']) && $_POST['convenio_id'] != ""){
           $this->db->set('convenio_id', $_POST['convenio_id']);
         }else{
              $this->db->set('convenio_id', null); 
         }
-        if(isset($_POST['instituicao_id']) && $_POST['instituicao_id'] != ""  && $_POST['tipodavaga'] != "2"){
+        if(isset($_POST['instituicao_id']) && $_POST['instituicao_id'] != ""){
            $this->db->set('instituicao_id', $_POST['instituicao_id']);
         }else{
            $this->db->set('instituicao_id', null); 
@@ -1406,11 +1406,13 @@ class paciente_model extends BaseModel {
         return $this->db->get()->result();
     }
       
-    function alunosadequados($instituicao_id){
+    function alunosadequados($instituicao_id=0){
         $this->db->select('');
         $this->db->from('tb_paciente');
         $this->db->where('status_estagio', 'ADEQUADO');
-        $this->db->where('instituicao_id', $instituicao_id);
+        if($instituicao_id != 0){
+         $this->db->where('instituicao_id', $instituicao_id); 
+        }
         $this->db->where('associado_a_vaga', 'f'); 
         return $this->db->get()->result();
     }
