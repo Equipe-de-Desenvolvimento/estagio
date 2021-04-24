@@ -376,6 +376,171 @@ document.addEventListener('DOMContentLoaded', function() {
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
+  eventClick: function(info) {
+      var carga_horario_id = info.event._def.resourceIds[0];
+    
+     var start = info.event.start;
+      var end = info.event.end || start;
+      start = (start.getHours()).toString().padStart(2, '0')+':'+(start.getMinutes()).toString().padStart(2, '0');
+      end = (end.getHours()).toString().padStart(2, '0')+':'+(end.getMinutes()).toString().padStart(2, '0');
+    
+//       console.log(start);
+//       console.log(end);
+     
+      
+//        $('#calendar').fullCalendar('removeEvents', info.event.);
+
+//    alert('Event: ' + info.event.title);
+//    alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+//    alert('View: ' + info.view.type);
+//
+//    // change the border color just for fun
+//    info.el.style.borderColor = 'red';
+
+   $.confirm({
+                title: 'Editar Dados!',
+                boxWidth: '36%',
+                useBootstrap: false,
+                theme: 'modern',
+                type: 'blue',
+                typeAnimated: true,
+//                icon: 'fas fa-briefcase-medical',
+                content: '' +
+            '<form action="" class="formName">' + 
+            '<div class="">'+
+                '<div class="col-lg-5">' +
+                '<label>Horario Inicial</label>' +
+                '<input type="text" name="horario_inicial" value='+start+' id="horario_inicial" onclick="ativarmascara()"  placeholder="00:00" class="form-control" required />' +
+                '</div>' +
+
+                '<div class="col-lg-5">' +
+                 '<label>Horario Final</label>' +
+                '<input type="text" name="horario_final" value='+end+' id="horario_final"  onclick="ativarmascara()"  placeholder="00:00" class="form-control" required />' +
+                '</div>' +  
+            '</div>'+
+            '<br><br>'+
+            '</form>',
+               buttons: {
+                   confirm:{
+                    text: 'Confirmar',
+                    action: function () {  
+                      var vaga_id = $("#vaga_id").val(); 
+                    
+                      var date_marcada = info.event.startStr.replace('-03:00', '').split("T");
+                      date_marcada = date_marcada[0]
+//                       $.alert('Confirmed!'); 
+//                       console.log(date_marcada);
+                        $.ajax({
+                            type: "POST",
+                            data: {
+                                vaga_id: vaga_id,
+                                horario_inicial: $("#horario_inicial").val(),
+                                horario_final: $("#horario_final").val(),
+                                data:date_marcada,
+                                carga_horario_id:carga_horario_id
+                            },
+                            url: "<?= base_url() ?>cadastros/pacientes/salvarcargahorario/",
+                            dataType: 'json',
+                            success: function(data) {
+                                info.event.remove();
+                                $.alert('Horário salvo com Sucesso!');
+//                                var date = new Date(info.startStr + 'T00:00:00');
+//                                var dateend = new Date(info.endStr + 'T00:00:00');
+//                                console.log(data);
+                                calendar.addEvent({
+                                    title: 'Horário',
+                                    description: '',
+                                    start: date_marcada+'T'+$("#horario_inicial").val(),
+                                    end: date_marcada+'T'+$("#horario_final").val(),
+//                                    url:"https://google.com",
+                                    allDay: false,
+                                    resourceId: data
+                                });
+//                                calendar.refresh()
+ 
+                                return true;
+                            },
+                            error: function(data) {
+                                $.alert('Erro ao gravar o Horário.');
+                                return true;
+                            }
+                        });
+                       
+//                        if(info.view.type == 'dayGridMonth'){
+//
+//                            var date = new Date(info.startStr + 'T00:00:00');
+//                            var dateend = new Date(info.endStr + 'T00:00:00');
+//
+//                            calendar.addEvent({
+//                              title: 'Horario Trabalho',
+//                              start: date,
+//                              end: dateend,
+//                              allDay: true
+//                            });
+//
+//                        }else{
+//                            var date = info.startStr.replace('-03:00', '');
+//                            var dateend = info.endStr.replace('-03:00', '');
+//
+//                            calendar.addEvent({
+//                              title: 'Horario Trabalho',
+//                              start: date,
+//                              end: dateend,
+//                              allDay: false
+//                            });
+//                        }
+                       
+                   }},
+                   cancel: {
+                       text: 'Cancelar',
+                         action: function () { 
+                              $.alert('Cancelado!');
+                       } 
+               }
+               ,
+                   somethingElse: {
+                       text: 'Excluir',
+                       btnClass: 'btn-red',
+//                       keys: ['enter', 'shift'],
+                       action: function(){
+                            info.event.remove();
+                                  var carga_horario_id = info.event._def.resourceIds[0];
+                                  
+                                  
+                                  $.ajax({
+                            type: "POST",
+                            data: {
+                                carga_horario_id:carga_horario_id
+                            },
+                            url: "<?= base_url() ?>cadastros/pacientes/excluirhorario/",
+                            dataType: 'json',
+                            success: function(data) {
+                                info.event.remove();
+                                $.alert('Horário excluido com Sucesso!');
+//                                var date = new Date(info.startStr + 'T00:00:00');
+//                                var dateend = new Date(info.endStr + 'T00:00:00');
+//                                console.log(data);
+                                
+//                                calendar.refresh()
+ 
+                                return true;
+                            },
+                            error: function(data) {
+                                $.alert('Erro ao gravar o Horário.');
+                                return true;
+                            }
+                        });
+//console.log(carga_horario_id);
+//                          $.alert('Something else?');
+                          
+                       }
+                   }
+               }
+           }); 
+           
+    
+    
+  },
     // dateClick: function(info) {
     // //   alert('clicked ' + info.dateStr);
     // },
@@ -401,7 +566,7 @@ document.addEventListener('DOMContentLoaded', function() {
 //                icon: 'fas fa-briefcase-medical',
                 content: '' +
             '<form action="" class="formName">' + 
-            '<div class="row">'+
+            '<div class="">'+
                 '<div class="col-lg-5">' +
                 '<label>Horario Inicial</label>' +
                 '<input type="text" name="horario_inicial" id="horario_inicial" onclick="ativarmascara()"  placeholder="00:00" class="form-control" required />' +
@@ -442,8 +607,9 @@ document.addEventListener('DOMContentLoaded', function() {
                                     description: '',
                                     start: date_marcada+'T'+$("#horario_inicial").val(),
                                     end: date_marcada+'T'+$("#horario_final").val(),
+//                                    url:"https://google.com",
                                     allDay: false,
-                                    resourceId: 1
+                                    resourceId: data
                                 });
  
                                 return true;

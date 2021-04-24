@@ -4130,14 +4130,26 @@ class paciente_model extends BaseModel {
     
     function salvarcargahorario(){
         $horario = date('Y-m-d H:i:s');
-        $operador = $this->session->userdata('operador_id');
-        $this->db->set('data_cadastro',$horario);
-        $this->db->set('operador_cadastro',$operador);
+        $operador = $this->session->userdata('operador_id'); 
         $this->db->set('data', $_POST['data']);
         $this->db->set('vaga_id',$_POST['vaga_id']);
         $this->db->set('horario_inicial',$_POST['horario_inicial']);
         $this->db->set('horario_final',$_POST['horario_final']);
-        $this->db->insert('tb_carga_horario');
+        
+        if(isset($_POST['carga_horario_id']) && $_POST['carga_horario_id'] != ""){
+            $this->db->set('data_atualizacao',$horario);
+            $this->db->set('operador_atualizacao',$operador);
+            $this->db->where('carga_horario_id',$_POST['carga_horario_id']); 
+            $this->db->update('tb_carga_horario');
+            $carga_horario_id = $_POST['carga_horario_id'];
+        }else{
+            $this->db->set('data_cadastro',$horario);
+            $this->db->set('operador_cadastro',$operador);
+            $this->db->insert('tb_carga_horario'); 
+            $carga_horario_id = $this->db->insert_id();
+        }
+        
+        return $carga_horario_id;
         
     }
     
@@ -4160,6 +4172,19 @@ class paciente_model extends BaseModel {
         $this->db->where('ae.aluno_id',$paciente_id);
         $this->db->where('ae.ativo','t');
         return $this->db->get()->result();   
+        
+    }
+    
+     function excluirhorario(){
+        $horario = date('Y-m-d H:i:s');
+        $operador = $this->session->userdata('operador_id'); 
+        $this->db->set('ativo','f');  
+        $this->db->set('data_atualizacao',$horario);
+        $this->db->set('operador_atualizacao',$operador);
+        $this->db->where('carga_horario_id',$_POST['carga_horario_id']); 
+        $this->db->update('tb_carga_horario');
+        $carga_horario_id = $_POST['carga_horario_id']; 
+        return $carga_horario_id;
         
     }
 

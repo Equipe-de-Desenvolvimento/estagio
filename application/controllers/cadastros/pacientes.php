@@ -2171,6 +2171,16 @@ function carregarpacientecenso($prontuario = null, $nome = null, $procedimento =
         
     }
     
+    function excluirhorario(){
+        $retorno = $this->paciente->excluirhorario(); 
+        if(count($retorno) > 0){
+            echo json_encode($retorno);
+        }else{
+            echo json_encode(false);
+        } 
+    }
+    
+    
     
 }
 ?>
