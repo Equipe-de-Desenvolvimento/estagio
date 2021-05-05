@@ -253,4 +253,12 @@ ALTER TABLE ponto.tb_carga_horario ALTER COLUMN ativo SET DEFAULT true;
 
 ALTER TABLE ponto.tb_carga_horario ADD COLUMN data date;
 
+--05/05/2021
+
+ALTER TABLE ponto.tb_responsavel_origem ADD COLUMN instituicao_id integer;
+ALTER TABLE ponto.tb_responsavel_origem ADD COLUMN informacaovaga_id integer;
+
+ALTER TABLE ponto.tb_responsavel_ifj ADD COLUMN setor integer;
+
+
 

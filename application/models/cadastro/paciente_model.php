@@ -578,7 +578,7 @@ class paciente_model extends BaseModel {
 
     private function instanciar($paciente_id) {
         if ($paciente_id != 0) {
-            $this->db->select('p.prontuario_antigo,p.observacao, tp.tipo_logradouro_id as codigo_logradouro,co.convenio_id as convenio,p.escolaridade_id, co.nome as descricaoconvenio,cbo.descricao as cbo_nome, tp.descricao,p.*,c.nome as cidade_desc,c.municipio_id as cidade_cod,p.whatsapp');
+            $this->db->select('p.instituicao_id,p.prontuario_antigo,p.observacao, tp.tipo_logradouro_id as codigo_logradouro,co.convenio_id as convenio,p.escolaridade_id, co.nome as descricaoconvenio,cbo.descricao as cbo_nome, tp.descricao,p.*,c.nome as cidade_desc,c.municipio_id as cidade_cod,p.whatsapp');
             $this->db->from('tb_paciente p');
             $this->db->join('tb_municipio c', 'c.municipio_id = p.municipio_id', 'left');
             $this->db->join('tb_convenio co', 'co.convenio_id = p.convenio_id', 'left');
@@ -660,6 +660,7 @@ class paciente_model extends BaseModel {
             $this->_matricula = $return[0]->matricula;
             $this->_data_inicial = $return[0]->data_inicial;
             $this->_data_final = $return[0]->data_final;
+            $this->_instituicao_id = $return[0]->instituicao_id;
         }
     }
 
@@ -1034,6 +1035,12 @@ class paciente_model extends BaseModel {
                 $this->db->set('senha_app', md5($_POST['txtSenhaapp']));
             } 
             
+            if(isset($_POST['instituicao_id']) && $_POST['instituicao_id'] != ''){
+                $this->db->set('instituicao_id', $_POST['instituicao_id']);
+            }else{
+                $this->db->set('instituicao_id', null);  
+            } 
+            
             $this->db->set('empresa_id', $empresa_id);
              
             
@@ -1406,7 +1413,7 @@ class paciente_model extends BaseModel {
         return $this->db->get()->result();
     }
       
-    function alunosadequados($instituicao_id=0){
+    function alunosadequados($instituicao_id=0){ 
         $this->db->select('');
         $this->db->from('tb_paciente');
         $this->db->where('status_estagio', 'ADEQUADO');
@@ -1479,11 +1486,13 @@ class paciente_model extends BaseModel {
     function listarvagasestagio($args = array()){
         $this->db->select('ve.vaga_id, ve.tipo_vaga, ve.qtde_vagas, 
                             i.nome_fantasia, i.instituicao_id, c.nome as convenio, ve.status_vaga, 
-                            c.convenio_id, ii.descricao as nome_vaga');
+                            c.convenio_id, ii.descricao as nome_vaga,id.descricao as disciplina,iis.descricao as setor');
         $this->db->from('tb_vagas_empresas ve');
         $this->db->join('tb_instituicao i', 'i.instituicao_id = ve.instituicao_id', 'left');
         $this->db->join('tb_convenio c', 've.convenio_id = c.convenio_id', 'left');
         $this->db->join('tb_informacaovaga ii', 've.curso = ii.informacaovaga_id', 'left');
+        $this->db->join('tb_informacaovaga id', 'id.informacaovaga_id = ve.disciplina', 'left');
+        $this->db->join('tb_informacaovaga iis', 'iis.informacaovaga_id = ve.setor', 'left');
         $this->db->where('ve.ativo', 't');
 
         if($this->session->userdata('instituicao_id') > 0){
@@ -1496,14 +1505,13 @@ class paciente_model extends BaseModel {
 
         if ($args) {
             if(isset($args['nome_vaga'])){
-                $this->db->where('ii.descricao ilike', '%' . $args ['nome_vaga'] . '%');
-                // $this->db->where("nome_vaga ilike %".$args['nome_vaga']."%");
+                $this->db->where('i.nome_fantasia ilike', '%' . $args ['nome_vaga'] . '%'); 
             }
             if(isset($args['tipo_vaga'])){
-                $this->db->where('ve.tipo_vaga ilike', '%' . $args ['tipo_vaga'] . '%');
+                $this->db->where('id.descricao ilike', '%' . $args ['tipo_vaga'] . '%');
             }
-            if(isset($args['instituicao_id'])){
-                $this->db->where('ve.instituicao_id', $args['instituicao_id']);
+            if(isset($args['instituicao_id']) && $args['instituicao_id'] != ""){
+                $this->db->where('ii.informacaovaga_id', $args['instituicao_id']);
             }
         }
         return $this->db;
@@ -1549,13 +1557,15 @@ class paciente_model extends BaseModel {
     }
 
     function listarresponsavelorigem($args = array()){
-        $this->db->select('responsavel_origem_id, nome, email, cargo');
-        $this->db->from('tb_responsavel_origem');
-        $this->db->where('ativo', 't');
+        $this->db->select('ro.responsavel_origem_id, ro.nome, ro.email, ro.cargo,ii.nome as intituicao,iv.descricao as origem');
+        $this->db->from('tb_responsavel_origem ro');
+        $this->db->join('tb_informacaovaga iv', 'iv.informacaovaga_id = ro.informacaovaga_id', 'left');
+        $this->db->join('tb_instituicao ii', 'ii.instituicao_id = ro.instituicao_id', 'left');
+        $this->db->where('ro.ativo', 't');
 
         if ($args) {
             if(isset($args['nome'])){
-                $this->db->where('nome ilike', '%' . $args ['nome'] . '%');
+                $this->db->where('ro.nome ilike', '%' . $args ['nome'] . '%');
             }
         }
 
@@ -1563,10 +1573,9 @@ class paciente_model extends BaseModel {
     }
 
     function cadastroresponsavelorigem($responsavel_origem_id){
-        $this->db->select('responsavel_origem_id, nome, email, cargo');
+        $this->db->select('responsavel_origem_id, nome, email, cargo,instituicao_id,informacaovaga_id');
         $this->db->from('tb_responsavel_origem');
-        $this->db->where('responsavel_origem_id', $responsavel_origem_id);
-
+        $this->db->where('responsavel_origem_id', $responsavel_origem_id); 
         return $this->db->get()->result();
     }
 
@@ -1578,6 +1587,17 @@ class paciente_model extends BaseModel {
         $this->db->set('email', $_POST['email']);
         $this->db->set('cargo', $_POST['cargo']);
 
+        if($_POST['instituicao_id']){
+             $this->db->set('instituicao_id', $_POST['instituicao_id']);
+        }else{
+             $this->db->set('instituicao_id', null);
+        }
+        if($_POST['curso']){
+           $this->db->set('informacaovaga_id', $_POST['curso']);   
+        }else{
+            $this->db->set('informacaovaga_id', null);    
+        } 
+        
         if($_POST['responsavel_origem_id'] > 0){
             $this->db->set('data_atualizacao', $horario);
             $this->db->set('operador_atualizacao', $operador_id);
@@ -1603,13 +1623,14 @@ class paciente_model extends BaseModel {
 
 
     function listarresponsavelifj($args = array()){
-        $this->db->select('responsavel_ifj_id, nome, email, cargo');
-        $this->db->from('tb_responsavel_ifj');
-        $this->db->where('ativo', 't');
+        $this->db->select('ri.responsavel_ifj_id, ri.nome, ri.email, ri.cargo,iv.descricao as setor');
+        $this->db->from('tb_responsavel_ifj ri');
+        $this->db->join('tb_informacaovaga iv','iv.informacaovaga_id = ri.setor','left');
+        $this->db->where('ri.ativo', 't');
 
         if ($args) {
             if(isset($args['nome'])){
-                $this->db->where('nome ilike', '%' . $args ['nome'] . '%');
+                $this->db->where('ri.nome ilike', '%' . $args ['nome'] . '%');
             }
         }
 
@@ -1617,10 +1638,9 @@ class paciente_model extends BaseModel {
     }
 
     function cadastroresponsavelifj($responsavel_ifj_id){
-        $this->db->select('responsavel_ifj_id, nome, email, cargo');
+        $this->db->select('responsavel_ifj_id, nome, email, cargo,setor');
         $this->db->from('tb_responsavel_ifj');
         $this->db->where('responsavel_ifj_id', $responsavel_ifj_id);
-
         return $this->db->get()->result();
     }
 
@@ -1631,6 +1651,12 @@ class paciente_model extends BaseModel {
         $this->db->set('nome', $_POST['nome']);
         $this->db->set('email', $_POST['email']);
         $this->db->set('cargo', $_POST['cargo']);
+        
+        if(isset($_POST['setor']) &&  $_POST['setor'] != ""){
+          $this->db->set('setor', $_POST['setor']);
+        }else{
+          $this->db->set('setor', null); 
+        }
 
         if($_POST['responsavel_ifj_id'] > 0){
             $this->db->set('data_atualizacao', $horario);

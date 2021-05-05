@@ -29,14 +29,15 @@
 
      <div class="table-responsive">
         <table  class="table table-bordered table-hover" id="dataTables-example">
-            <thead>
+       
                 <tr>
                     <th>Nome</th>
                     <th>Email</th>
                     <th>Cargo</th>
+                    <th>Setor</th>
                     <th colspan="2" align="center">Ações</th>
                 </tr>
-            </thead>
+            
             <tbody>
                 <?
                     $url = $this->utilitario->build_query_params(current_url(), $_GET);
@@ -47,29 +48,28 @@
                     isset($_GET['per_page']) ? $pagina = $_GET['per_page'] : $pagina = 0;
 
                     if ($total > 0) {
-                ?>
-                <tbody>
+                ?> 
                     <?
                     $lista = $this->paciente->listarresponsavelifj($_GET)->limit($limit, $pagina)->orderby("nome, cargo")->get()->result();
-                        foreach ($lista as $item) {
+                     foreach ($lista as $item) {
                     ?>
                             <tr>
                                 <td><?=$item->nome?></td>
                                 <td><?=$item->email?></td>
                                 <td><?=$item->cargo?></td>
+                                <td><?=$item->setor?></td>
                                 <td> <a class="btn btn-outline-default btn-sm" href="<?=base_url()?>cadastros/pacientes/cadastroresponsavelifj/<?=$item->responsavel_ifj_id?>">Editar</a>
                                 <a class="btn btn-outline-default btn-sm" href="<?=base_url()?>cadastros/pacientes/excluirinfomacaovagas/<?=$item->responsavel_ifj_id?>">Excluir</a></td>
                             </tr>
                     <?
                         }
                     ?>
-
-                </tbody>
+ 
                     <?}?>
             </tbody>
             <tfoot>
                     <tr>
-                    <th colspan="4">
+                    <th colspan="5">
                         <div class="pagination">
                             <?php $this->utilitario->paginacao($url, $total, $pagina, $limit); ?>
                             Total de Registros: <?= $total; ?>

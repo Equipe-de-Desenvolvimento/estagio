@@ -7,6 +7,8 @@
  $tecnico_recepcao_editar = @$empresapermissoes[0]->tecnico_recepcao_editar;
  $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
  $instituicao = $this->paciente->listarinstituicao_vagas();
+ $informacoes = $this->paciente->listarinformacaovaga()->get()->result();
+ 
 ?>
 <link href="<?= base_url() ?>css/cadastro/paciente-lista.css?v=1" rel="stylesheet"/>
     <div class="col-sm-12">
@@ -23,9 +25,11 @@
                                     <div class="col-lg-2">
                                         <label>Curso</label>
                                         <select name="instituicao_id" id="instituicao_id" class="form-control"> 
-                                            <option value="">Selecione</option>
-                                            <?foreach($instituicao as $item){?>
-                                                <option value="<?=$item->instituicao_id?>" <?=(@$_GET['instituicao_id'] == $item->instituicao_id)? 'selected': ''?>><?=$item->nome_fantasia?></option>
+                                            <option value="">Selecione</option> 
+                                            <?foreach($informacoes as $item){?>
+                                                   <?if($item->tipo == 'curso'){?>
+                                                       <option value="<?=$item->informacaovaga_id?>" <?=(@$_GET['instituicao_id'] == $item->informacaovaga_id)?'selected':''?>><?=$item->descricao?></option>
+                                                   <?}?>
                                             <?}?>
                                         </select>
                                     </div>
@@ -78,21 +82,24 @@
                                          <tbody>
                                                 <?php
                                                     $lista = $this->paciente->listarvagasestagio($_GET)->limit($limit, $pagina)->orderby("qtde_vagas", 'desc')->orderby("nome_vaga")->get()->result();
+//                                                   echo "<pre>";
+//                                                   
+//                                                   print_r($lista);
+                                                   
+                                                    
                                                     $estilo_linha = "tabela_content01";
                                                     $qtd_total_vagas = 0;
                                                      foreach ($lista as $item) {
+                                              
 
                                                         $qtd_total_vagas = $qtd_total_vagas + $item->qtde_vagas;
                                                     ($estilo_linha == "tabela_content01") ? $estilo_linha = "tabela_content02" : $estilo_linha = "tabela_content02";
                                                         ?>
                                                         <tr>
-                                                            <td ><?php echo $item->nome_vaga; ?></td>
-                                                            <?if($this->session->userdata('instituicao_id') == ''){?>
-                                                            <!-- <td ><?php echo $item->status_vaga; ?></td>  -->
-                                                            <?}?>
-                                                            <td ><?php echo $item->convenio; ?></td> 
                                                             <td ><?php echo $item->nome_fantasia; ?></td> 
-                                                            <td ><?php echo $item->tipo_vaga; ?></td>
+                                                            <td ><?php echo $item->nome_vaga; ?></td> 
+                                                            <td ><?php echo $item->disciplina; ?></td> 
+                                                            <td ><?php echo $item->setor; ?></td>
                                                             <td ><?php echo $item->qtde_vagas; ?></td>
 
                                                              <?if($this->session->userdata('instituicao_id') == ''){?>

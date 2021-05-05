@@ -205,7 +205,12 @@
                                 <input type="text" name="rg" <?= (in_array('rg', $campos_obrigatorios)) ? 'required' : '' ?>  id="txtDocumento" class="form-control" value="<?= @$obj[0]->_documento; ?>" />
                             </div>
                         </div>
-                         
+                        <div class="col-lg-2"> 
+                            <div>
+                               <label>Matrícula</label> 
+                               <input type="text"  placeholder="Matrícula" id="matricula" name="matricula"  class="form-control" value="<?= @$obj[0]->_matricula; ?>"/>
+                            </div> 
+                        </div>  
                      </div>
                 </div>
             </div>
@@ -319,16 +324,7 @@
                        <input type="text"  placeholder="Número da Apólice" id="num_apolice" name="num_apolice"  class="form-control" value="<?= @$obj[0]->_num_apolice; ?>"/>
                     </div> 
                 </div> 
-                <div class="col-lg-2">
-<!--                    <div>
-                       <label>Vigência da Apólice</label> 
-                       <input type="text"  placeholder="Vigência da Apólice" id="vigencia_apolice" name="vigencia_apolice"  class="form-control" value="<?= @$obj[0]->_vigencia_apolice; ?>"/>
-                    </div>-->
-                    <div>
-                       <label>Matrícula</label> 
-                       <input type="text"  placeholder="Matrícula" id="matricula" name="matricula"  class="form-control" value="<?= @$obj[0]->_matricula; ?>"/>
-                    </div> 
-                </div> 
+               
                  <div class="col-lg-2">
                     <div>
                        <label>Data Inicial</label> 
@@ -384,6 +380,20 @@
                         <label>Senha Usuario:</label>
                         <input type="password" name="txtSenhaapp" id="txtSenhaapp" class="form-control" >
                     </div>
+                    <div class="col-lg-3" >
+                        <label for="">Instituição de Origem</label>
+                        <select name="instituicao_id" id="instituicao_id" class="form-control" >
+                              <option value="">Selecione</option>
+                              <?php
+                               $instituicao= $this->paciente->listarinstituicaoorigem(); 
+
+                              foreach($instituicao as $item){?>
+                                  <option value="<?=$item->instituicao_id?>" <?=(@$obj[0]->_instituicao_id == $item->instituicao_id)?'selected':''?>><?= $item->nome; ?></option>
+                              <?php }?>
+                        </select>
+                    </div>
+        
+        
         </div>
 
 <!--        <fieldset>-->

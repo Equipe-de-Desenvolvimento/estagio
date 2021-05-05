@@ -199,6 +199,9 @@ class pacientes extends BaseController {
     function cadastroresponsavelorigem($responsavel_origem_id){
         $data['responsavel_origem_id'] = $responsavel_origem_id;
         $data['obj'] = $this->paciente->cadastroresponsavelorigem($responsavel_origem_id);
+        $data['informacoes'] = $this->paciente->listarinformacaovaga()->get()->result();
+        $data['instituicao'] = $this->paciente->listarinstituicaoorigem();
+       
         $this->loadView('cadastros/responsavelorigem-form', $data);
     }
 
@@ -219,6 +222,7 @@ class pacientes extends BaseController {
     function cadastroresponsavelifj($responsavel_ifj_id){
         $data['responsavel_ifj_id'] = $responsavel_ifj_id;
         $data['obj'] = $this->paciente->cadastroresponsavelifj($responsavel_ifj_id);
+        $data['informacoes'] = $this->paciente->listarinformacaovaga()->get()->result();
         $this->loadView('cadastros/responsavelifj-form', $data);
     }
 
@@ -844,6 +848,7 @@ class pacientes extends BaseController {
         $data['empresapermissoes'] = $this->guia->listarempresapermissoes();
         $data['ocupacao_mae'] = $data['empresapermissoes'][0]->ocupacao_mae;
         $data['obj'] = array($obj_paciente);
+       
         $data['idade'] = 1;
         $data['agendado'] = $agendado;
         $this->loadView('cadastros/paciente-ficha', $data);

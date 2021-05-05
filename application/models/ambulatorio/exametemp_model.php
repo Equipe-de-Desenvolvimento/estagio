@@ -9516,8 +9516,7 @@ class exametemp_model extends Model {
         $this->db->join('tb_instituicao i', 'i.instituicao_id = ci.instituicao_id', 'left');
         $this->db->where('ci.convenio_id', $convenio_id);
         $this->db->where('ci.ativo', 't');
-        $this->db->where('i.ativo', 't');
-
+        $this->db->where('i.ativo', 't'); 
         return $this->db->get()->result();
     }
 
