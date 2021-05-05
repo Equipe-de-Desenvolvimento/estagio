@@ -380,6 +380,7 @@
                         <label>Senha Usuario:</label>
                         <input type="password" name="txtSenhaapp" id="txtSenhaapp" class="form-control" >
                     </div>
+                    <?php    if(!($this->session->userdata('instituicao_id') > 0)){?>
                     <div class="col-lg-3" >
                         <label for="">Instituição de Origem</label>
                         <select name="instituicao_id" id="instituicao_id" class="form-control" >
@@ -392,7 +393,7 @@
                               <?php }?>
                         </select>
                     </div>
-        
+                    <?php }?>
         
         </div>
 

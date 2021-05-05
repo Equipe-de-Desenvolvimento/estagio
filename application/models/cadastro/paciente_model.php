@@ -1035,11 +1035,6 @@ class paciente_model extends BaseModel {
                 $this->db->set('senha_app', md5($_POST['txtSenhaapp']));
             } 
             
-            if(isset($_POST['instituicao_id']) && $_POST['instituicao_id'] != ''){
-                $this->db->set('instituicao_id', $_POST['instituicao_id']);
-            }else{
-                $this->db->set('instituicao_id', null);  
-            } 
             
             $this->db->set('empresa_id', $empresa_id);
              
@@ -1051,6 +1046,12 @@ class paciente_model extends BaseModel {
 
             if($this->session->userdata('instituicao_id') > 0){
                 $this->db->set('instituicao_id', $this->session->userdata('instituicao_id'));
+            }else{
+                if(isset($_POST['instituicao_id']) && $_POST['instituicao_id'] != ''){
+                    $this->db->set('instituicao_id', $_POST['instituicao_id']);
+                }else{
+                    $this->db->set('instituicao_id', null);  
+                }  
             }
             
           
