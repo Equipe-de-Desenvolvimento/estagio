@@ -19419,8 +19419,8 @@ ORDER BY ae.paciente_tcd_id)";
     }
 
     function listarempresa($empresa_id = null) {
-        if ($empresa_id == null) {
-            $empresa_id = $this->session->userdata('empresa_id');
+        if ($empresa_id == null) { 
+               $empresa_id = $this->session->userdata('empresa_id'); 
         }
 
         if($empresa_id == 'TODAS'){
@@ -19465,11 +19465,14 @@ ORDER BY ae.paciente_tcd_id)";
                             e.impressao_tipo, 
                             e.site_empresa,
                             e.cnpj,
-                            e.internacao');
+                            e.internacao,
+                            e.email_institucional');
         $this->db->from('tb_empresa e');
         $this->db->join('tb_municipio m', 'm.municipio_id = e.municipio_id', 'left');
-        $this->db->where('e.empresa_id', $empresa_id);
-
+        if($empresa_id > 0){
+          $this->db->where('e.empresa_id', $empresa_id);
+        }
+        $this->db->where('e.ativo','t');
         $this->db->orderby('e.empresa_id');
         $return = $this->db->get();
         return $return->result();

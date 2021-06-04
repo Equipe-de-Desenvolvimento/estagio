@@ -196,12 +196,12 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                                 </td>
 
                                                 <td>
-                                                            <?php if($item->associado_a_vaga == "t"){?>
-<!--                                                                <a style="width:120px;" class="btn btn-outline-default btn-round btn-sm" target="_blank"  href="<?= base_url() ?>cadastros/pacientes/carregartermo/<?= $item->paciente_id ?>">       
-                                                                           <b>Termo</b>
-                                                                  </a> 
-                                                               <br><br>-->
-                                                            <?php }?>
+                                                        <?php if($item->associado_a_vaga == "t"){?> 
+                                                             <a style="width:120px;" class="btn btn-outline-default btn-round btn-sm" target="_blank"  href="<?= base_url() ?>cadastros/pacientes/carregartermo/<?= $item->paciente_id ?>">       
+                                                                       <b>Termo</b>
+                                                             </a> 
+                                                           <br><br> 
+                                                        <?php }?>
 
                                                         <?php if ($item->status_estagio != "INCOMPLETO" && $item->status_estagio != "ADEQUADO") { ?>
                                                             <a style="width:120px;" class="btn btn-outline-default btn-round btn-sm"   onclick="javascript:window.open('<?= base_url() ?>cadastros/pacientes/adequadostatus/<?= $item->paciente_id ?>', '_blank', 'toolbar=no,Location=no,menubar=no, width=800,height=600');"  href="#!">       

@@ -9511,7 +9511,7 @@ class exametemp_model extends Model {
     }
 
     function listarinstituicaoconvenio($convenio_id){
-        $this->db->select('i.nome, i.instituicao_id');
+        $this->db->select('i.nome,i.nome_fantasia, i.instituicao_id');
         $this->db->from('tb_convenio_instituicao ci');
         $this->db->join('tb_instituicao i', 'i.instituicao_id = ci.instituicao_id', 'left');
         $this->db->where('ci.convenio_id', $convenio_id);

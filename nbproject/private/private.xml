@@ -11,6 +11,12 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/home/sisprod/projetos/estagio/application/views/cadastros/paciente-ficha.php</file>
+            <file>file:/home/sisprod/projetos/estagio/application/models/cadastro/paciente_model.php</file>
+            <file>file:/home/sisprod/projetos/estagio/application/controllers/cadastros/pacientes.php</file>
+            <file>file:/home/sisprod/projetos/estagio/application/views/cadastros/cadastrodevagas-form.php</file>
+            <file>file:/home/sisprod/projetos/estagio/application/views/cadastros/instituicao-ficha.php</file>
+        </group>
     </open-files>
 </project-private>

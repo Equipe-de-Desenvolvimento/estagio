@@ -221,7 +221,7 @@ class pacientes extends BaseController {
 
     function cadastroresponsavelifj($responsavel_ifj_id){
         $data['responsavel_ifj_id'] = $responsavel_ifj_id;
-        $data['obj'] = $this->paciente->cadastroresponsavelifj($responsavel_ifj_id);
+        $data['obj'] = $this->paciente->cadastroresponsavelifj($responsavel_ifj_id); 
         $data['informacoes'] = $this->paciente->listarinformacaovaga()->get()->result();
         $this->loadView('cadastros/responsavelifj-form', $data);
     }
@@ -285,7 +285,167 @@ class pacientes extends BaseController {
     }
 
     function gravaralunosvagas(){
+         $this->load->helper('directory');
         $teste = $this->paciente->gravaralunosvagas();
+        $empresa_id = $this->session->userdata('empresa_id');
+        $empresa = $this->guia->listarempresa($empresa_id); 
+      
+        $this->load->plugin('mpdf');  
+        foreach($_POST['aluno_id'] as $item){ 
+                $img = "<img width='280px' height='50px'  src='".base_url()."img/cabecalhotermo.png'>";
+                
+                $cabecalhopdf = "<table width=100% >
+                    <tr>
+                     <td style='border:0x solid white;'  height='30px;'  width=45% >".$img."</td>
+                     <td  style='text-align: center;border:0x solid black;'   >
+                        <table width='100%' style='border:0x solid black;'  >
+                        <tr>
+                            <td  style='border:1px solid black;   padding:8px;'>
+                               <b >TERMO DE COMPROMISSO DE ESTÁGIO</b>
+                            </td>
+                        </tr>
+                        </table>
+                     </td>
+                    </tr>
+                    </table><br>";      
+              
+
+                $data['instituicao'] = $this->paciente->listarinstituicaopaciente($item); 
+                $data['instituicao'][0]->objetivo = str_replace("<!-- pagebreak -->", '<pagebreak>', $data['instituicao'][0]->objetivo);
+                $data['instituicao'][0]->objetivo = str_replace("<head>", '', $data['instituicao'][0]->objetivo);
+                $data['instituicao'][0]->objetivo = str_replace("</head>", '', $data['instituicao'][0]->objetivo);
+                $data['instituicao'][0]->objetivo = str_replace("<html>", '', $data['instituicao'][0]->objetivo);
+                $data['instituicao'][0]->objetivo = str_replace("<body>", '', $data['instituicao'][0]->objetivo);
+                $data['instituicao'][0]->objetivo = str_replace("</html>", '', $data['instituicao'][0]->objetivo);
+                $data['instituicao'][0]->objetivo = str_replace("</body>", '', $data['instituicao'][0]->objetivo);
+                $data['instituicao'][0]->objetivo = str_replace('align="center"', '', $data['instituicao'][0]->objetivo);
+                $data['instituicao'][0]->objetivo = str_replace('align="left"', '', $data['instituicao'][0]->objetivo);
+                $data['instituicao'][0]->objetivo = str_replace('align="right"', '', $data['instituicao'][0]->objetivo);
+                $data['instituicao'][0]->objetivo = str_replace('align="justify"', '', $data['instituicao'][0]->objetivo);
+
+
+                $nome_instituicao = $data['instituicao'][0]->intituição;
+                $data['cargahoraria'] = $this->paciente->listarhorarioscalendario($data['instituicao'][0]->vaga_id);     
+                $empresa_id = $this->session->userdata('empresa_id');
+                $data['empresa'] = $this->guia->listarempresa($empresa_id);
+                $instituicao = $this->paciente->listarinstituicaopaciente($item); 
+                
+                
+                
+                 $rodapepdf = '<table>
+                        <tr>
+                            <td style="border:0px solid white; font-size: 9px;" >
+                                Termo de compromisso de estágio obrigatório – IJF<br> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border:0px solid white; font-size: 9px;" > 
+                                <b>Nome do aluno: '.$instituicao[0]->paciente.'</b><br> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border:0px solid white; font-size: 9px;" >  
+                                <b>Curso:'.$instituicao[0]->curso.' - Período de estágio: De <b>'.date('d/m/Y',strtotime($instituicao[0]->data_inicio)).'</b> a <b>'.date('d/m/Y',strtotime($instituicao[0]->data_final)).'</b></b>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border:0px solid white; font-size: 9px;" > 
+                                <b>Emissão do termo:</b> - Página {PAGENO} de {nbpg} 
+                            </td>
+                        </tr>
+                    </table>'; 
+                
+                $instituicao_id = $instituicao[0]->instituicao_id;
+
+                $texto = $this->load->View('cadastros/termoaluno', $data, true);
+                $nomepdf = "Termo-$nome_instituicao-$item.pdf";
+
+                pdftermopaciente($texto, $nomepdf, $cabecalhopdf, $rodapepdf,$item,$instituicao_id);
+            
+            
+                $instituicao = $this->paciente->listarinstituicaopaciente($item);  
+                $instituicao_id = $instituicao[0]->instituicao_id;
+                $mensagem = "Você deseja realmente confirmar o estágio no {$instituicao[0]->representante}";
+                $mensagem .=" <a href='".base_url()."cadastros/pacientes/confirmarestagio/$item'>Clique aqui para confirmar</a>";
+
+                $this->load->library('email');
+
+                $config['protocol'] = 'smtp';
+                $config['smtp_host'] = 'ssl://smtp.gmail.com';
+                $config['smtp_port'] = '465';
+                $config['smtp_user'] = 'stgsaude@gmail.com';
+                $config['smtp_pass'] = 'saude@stg*1202';
+                $config['validate'] = TRUE;
+                $config['mailtype'] = 'html';
+                $config['charset'] = 'utf-8';
+                $config['newline'] = "\r\n";
+
+                $this->email->initialize($config);
+                if (@$empresa[0]->email_institucional != '') {
+                    $this->email->from($empresa[0]->email_institucional, $empresa[0]->razao_social);
+                } else {
+                   $this->email->from('stgsaude@gmail.com',$empresa[0]->razao_social);   
+                } 
+
+                if($instituicao[0]->cns2 != '' || $instituicao[0]->cns2 != NULL){
+                   $this->email->cc($instituicao[0]->cns2);
+                }
+                $this->email->to($instituicao[0]->cns);
+                $this->email->subject("Você deseja realmente confirmar o estágio no {$instituicao[0]->representante}");
+                $this->email->message($mensagem);
+                $res = $this->email->send();  
+         }  
+/////////////////////Enviando para a instituição
+        $mensagem = "Em anexo está os Termos de Compromisso NS -  IJF";
+        $this->email->initialize($config);
+        if ($data['empresa'][0]->email_institucional != '') {
+            $this->email->from($data['empresa'][0]->email_institucional, $data['empresa'][0]->razao_social);
+        } else {
+           $this->email->from('stgsaude@gmail.com',$data['empresa'][0]->razao_social);   
+        }  
+        foreach($_POST['aluno_id'] as $item){  
+            $instituicao = $this->paciente->listarinstituicaopaciente($item);   
+            $instituicao_id = $instituicao[0]->instituicao_id; 
+            $arquivo_pasta = directory_map("./upload/novotermospacientes/$instituicao_id/$item/"); 
+              if($arquivo_pasta  != false){
+                foreach($arquivo_pasta as $value){ 
+                    $this->email->attach('./upload/novotermospacientes/'.$instituicao_id.'/'.$item.'/'.$value);
+                    
+                }  
+            }
+        }  
+        $this->email->to($instituicao[0]->email_instituicao); 
+        $this->email->subject("Todos Termos de Compromisso NS -  IJF ".date('Y')." {$instituicao[0]->representante}");
+        $this->email->message($mensagem);
+        $res = $this->email->send(); 
+        $this->email->clear(TRUE);
+         
+///////////////////Enviando para ijf 
+        
+        $mensagem = "Em anexo está os termos de Compromisso NS -  IJF";
+        $this->email->initialize($config); 
+        if ($data['empresa'][0]->email_institucional != '') {
+            $this->email->from($data['empresa'][0]->email_institucional, $data['empresa'][0]->razao_social);
+        } else {
+           $this->email->from('stgsaude@gmail.com',$data['empresa'][0]->razao_social);   
+        }  
+        
+        foreach($_POST['aluno_id'] as $item){  
+            $instituicao = $this->paciente->listarinstituicaopaciente($item);   
+            $instituicao_id = $instituicao[0]->instituicao_id; 
+            $arquivo_pasta = directory_map("./upload/novotermospacientes/$instituicao_id/$item/"); 
+              if($arquivo_pasta  != false){
+                foreach($arquivo_pasta as $value){ 
+                    $this->email->attach('./upload/novotermospacientes/'.$instituicao_id.'/'.$item.'/'.$value);
+                }  
+            }
+        }  
+        $this->email->to($instituicao[0]->email_representante); 
+        $this->email->subject("Todos Termos de Compromisso NS -  IJF ".date('Y')." {$instituicao[0]->representante}");
+        $this->email->message($mensagem);
+        $res = $this->email->send();  
+         
         redirect(base_url() . "seguranca/operador/pesquisarrecepcao");
     }
 
@@ -468,8 +628,12 @@ class pacientes extends BaseController {
         $data['empresapermissoes'] = $this->guia->listarempresapermissoes();
         $data['listaLogradouro'] = $this->paciente->listaTipoLogradouro();
         $data['listaconvenio'] = $this->paciente->listaconvenio();
+        $data['informacoes'] = $this->paciente->listarinformacaovaga()->get()->result();
+
         $obj_paciente = new paciente_model($paciente_id);
         $data['obj'] = array($obj_paciente);
+      
+         
         $this->loadView('cadastros/paciente-ficha', $data);
     }
 
@@ -848,7 +1012,9 @@ class pacientes extends BaseController {
         $data['empresapermissoes'] = $this->guia->listarempresapermissoes();
         $data['ocupacao_mae'] = $data['empresapermissoes'][0]->ocupacao_mae;
         $data['obj'] = array($obj_paciente);
-       
+        $data['instituicaocadastro'] = $this->paciente->listarinstituicaopaciente($paciente_id); 
+        $data['informacoes'] = $this->paciente->listarinformacaovaga()->get()->result();
+  
         $data['idade'] = 1;
         $data['agendado'] = $agendado;
         $this->loadView('cadastros/paciente-ficha', $data);
@@ -2163,15 +2329,45 @@ function carregarpacientecenso($prontuario = null, $nome = null, $procedimento =
     function carregartermo($paciente_id){
         $this->load->plugin('mpdf');
         
+        $img = "<img width='280px' height='50px'  src='".base_url()."img/cabecalhotermo.png'>";
+          
         $nomepdf = "Cadastrosfeitos-.pdf";
-        $cabecalhopdf = "";      
+        $cabecalhopdf = "<table width=100% >
+            <tr>
+             <td style='border:0x solid white;'  height='30px;'  width=45% >".$img."</td>
+             <td  style='text-align: center;border:0x solid black;'   >
+                <table width='100%' style='border:0x solid black;'  >
+                <tr>
+                    <td  style='border:1px solid black;   padding:8px;'>
+                       <b >TERMO DE COMPROMISSO DE ESTÁGIO</b>
+                    </td>
+                </tr>
+                </table>
+             </td>
+            </tr>
+            </table><br>";      
         $rodapepdf = ""; 
                             
         $data['instituicao'] = $this->paciente->listarinstituicaopaciente($paciente_id); 
-            
+        $data['cargahoraria'] = $this->paciente->listarhorarioscalendario($data['instituicao'][0]->vaga_id);     
+         $empresa_id = $this->session->userdata('empresa_id');
+         
+        $data['empresa'] = $this->guia->listarempresa($empresa_id); 
+        $data['instituicao'][0]->objetivo = str_replace("<!-- pagebreak -->", '<pagebreak>', $data['instituicao'][0]->objetivo);
+        $data['instituicao'][0]->objetivo = str_replace("<head>", '', $data['instituicao'][0]->objetivo);
+        $data['instituicao'][0]->objetivo = str_replace("</head>", '', $data['instituicao'][0]->objetivo);
+        $data['instituicao'][0]->objetivo = str_replace("<html>", '', $data['instituicao'][0]->objetivo);
+        $data['instituicao'][0]->objetivo = str_replace("<body>", '', $data['instituicao'][0]->objetivo);
+        $data['instituicao'][0]->objetivo = str_replace("</html>", '', $data['instituicao'][0]->objetivo);
+        $data['instituicao'][0]->objetivo = str_replace("</body>", '', $data['instituicao'][0]->objetivo);
+        $data['instituicao'][0]->objetivo = str_replace('align="center"', '', $data['instituicao'][0]->objetivo);
+        $data['instituicao'][0]->objetivo = str_replace('align="left"', '', $data['instituicao'][0]->objetivo);
+        $data['instituicao'][0]->objetivo = str_replace('align="right"', '', $data['instituicao'][0]->objetivo);
+        $data['instituicao'][0]->objetivo = str_replace('align="justify"', '', $data['instituicao'][0]->objetivo);
+         
         $texto = $this->load->View('cadastros/termoaluno', $data, true);
        
-          pdf($texto, $nomepdf, $cabecalhopdf, $rodapepdf);     
+        pdf($texto, $nomepdf, $cabecalhopdf, $rodapepdf);     
 
         
     }
@@ -2185,6 +2381,122 @@ function carregarpacientecenso($prontuario = null, $nome = null, $procedimento =
         } 
     }
     
+    
+    
+    
+    function confirmarestagio($paciente_id){
+        
+        $this->load->plugin('mpdf');
+        $this->load->helper('directory'); 
+           
+        $img = "<img width='280px' height='50px'  src='".base_url()."img/cabecalhotermo.png'>";
+          
+       
+        $cabecalhopdf = "<table width=100% >
+            <tr>
+             <td style='border:0x solid white;'  height='30px;'  width=45% >".$img."</td>
+             <td  style='text-align: center;border:0x solid black;'   >
+                <table width='100%' style='border:0x solid black;'  >
+                <tr>
+                    <td  style='border:1px solid black;   padding:8px;'>
+                       <b >TERMO DE COMPROMISSO DE ESTÁGIO</b>
+                    </td>
+                </tr>
+                </table>
+             </td>
+            </tr>
+            </table><br>";      
+
+                            
+        $data['instituicao'] = $this->paciente->listarinstituicaopaciente($paciente_id); 
+        $data['instituicao'][0]->objetivo = str_replace("<!-- pagebreak -->", '<pagebreak>', $data['instituicao'][0]->objetivo);
+        $data['instituicao'][0]->objetivo = str_replace("<head>", '', $data['instituicao'][0]->objetivo);
+        $data['instituicao'][0]->objetivo = str_replace("</head>", '', $data['instituicao'][0]->objetivo);
+        $data['instituicao'][0]->objetivo = str_replace("<html>", '', $data['instituicao'][0]->objetivo);
+        $data['instituicao'][0]->objetivo = str_replace("<body>", '', $data['instituicao'][0]->objetivo);
+        $data['instituicao'][0]->objetivo = str_replace("</html>", '', $data['instituicao'][0]->objetivo);
+        $data['instituicao'][0]->objetivo = str_replace("</body>", '', $data['instituicao'][0]->objetivo);
+        $data['instituicao'][0]->objetivo = str_replace('align="center"', '', $data['instituicao'][0]->objetivo);
+        $data['instituicao'][0]->objetivo = str_replace('align="left"', '', $data['instituicao'][0]->objetivo);
+        $data['instituicao'][0]->objetivo = str_replace('align="right"', '', $data['instituicao'][0]->objetivo);
+        $data['instituicao'][0]->objetivo = str_replace('align="justify"', '', $data['instituicao'][0]->objetivo);
+         
+      
+        $nome_instituicao = $data['instituicao'][0]->intituição;
+        $data['cargahoraria'] = $this->paciente->listarhorarioscalendario($data['instituicao'][0]->vaga_id);     
+        $empresa_id = $this->session->userdata('empresa_id');
+        $data['empresa'] = $this->guia->listarempresa($empresa_id); 
+        $instituicao = $this->paciente->listarinstituicaopaciente($paciente_id); 
+        $instituicao_id = $data['instituicao'][0]->instituicao_id;
+ 
+        $rodapepdf = '<table>
+            <tr>
+                <td style="border:0px solid white; font-size: 9px;" >
+                    Termo de compromisso de estágio obrigatório – IJF<br> 
+                </td>
+            </tr>
+            <tr>
+                <td style="border:0px solid white; font-size: 9px;" > 
+                    <b>Nome do aluno: '.$data['instituicao'][0]->paciente.'</b><br> 
+                </td>
+            </tr>
+            <tr>
+                <td style="border:0px solid white; font-size: 9px;" >  
+                    <b>Curso:'.$data['instituicao'][0]->curso.' - Período de estágio: De <b>'.date('d/m/Y',strtotime($data['instituicao'][0]->data_inicio)).'</b> a <b>'.date('d/m/Y',strtotime($data['instituicao'][0]->data_final)).'</b></b>
+                
+                </td>
+            </tr>
+            <tr>
+                <td style="border:0px solid white; font-size: 9px;" > 
+                    <b>Emissão do termo:</b> - Página {PAGENO} de {nbpg} 
+                </td>
+            </tr>
+        </table>'; 
+         
+        $texto = $this->load->View('cadastros/termoaluno', $data, true);
+        $nomepdf = "Termo-$nome_instituicao-$paciente_id.pdf";
+        
+        pdftermopaciente($texto, $nomepdf, $cabecalhopdf, $rodapepdf,$paciente_id,$instituicao_id); 
+          
+        $this->load->library('email'); 
+
+        $mensagem  = "Em anexo está o Termo de Compromisso NS -  IJF ".date('Y');
+
+        $config['protocol'] = 'smtp';
+        $config['smtp_host'] = 'ssl://smtp.gmail.com';
+        $config['smtp_port'] = '465';
+        $config['smtp_user'] = 'stgsaude@gmail.com';
+        $config['smtp_pass'] = 'saude@stg*1202';
+        $config['validate'] = TRUE;
+        $config['mailtype'] = 'html';
+        $config['charset'] = 'utf-8';
+        $config['newline'] = "\r\n";
+
+/////////Enviando email para o paciente 
+        $this->email->initialize($config);
+        if ($data['empresa'][0]->email_institucional != '') {
+            $this->email->from($data['empresa'][0]->email_institucional, $data['empresa'][0]->razao_social);
+        } else {
+           $this->email->from('stgsaude@gmail.com',$data['empresa'][0]->razao_social);   
+        } 
+        $arquivo_pasta = directory_map("./upload/novotermospacientes/$instituicao_id/$paciente_id/");
+
+        foreach($arquivo_pasta as $value){
+            $this->email->attach('./upload/novotermospacientes/'.$instituicao_id.'/'.$paciente_id.'/'.$value);
+        } 
+        if($instituicao[0]->cns2 != '' || $instituicao[0]->cns2 != NULL){
+           $this->email->cc($instituicao[0]->cns2);
+        }
+        $this->email->to($instituicao[0]->cns);
+        $this->email->subject("Termo de Compromisso NS -  IJF ".date('Y')." {$instituicao[0]->representante}");
+        $this->email->message($mensagem);
+        $res = $this->email->send();
+         
+        pdf($texto, $nomepdf, $cabecalhopdf, $rodapepdf);   
+  
+    }
+    
+   
     
     
 }
