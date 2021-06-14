@@ -268,3 +268,6 @@ ALTER TABLE ponto.tb_responsavel_ifj ADD COLUMN telefone_ifj character varying(1
 --04/06/2021
 
 ALTER TABLE ponto.tb_paciente ADD COLUMN curso_id integer;
+
+--14/06/2021
+ALTER TABLE ponto.tb_financeiro_credor_devedor ADD COLUMN convenio_id_financeiro integer;

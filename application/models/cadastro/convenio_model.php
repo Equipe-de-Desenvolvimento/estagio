@@ -2030,45 +2030,47 @@ class Convenio_model extends Model {
     function gravar() {
         try {
 //            $cnpj = str_replace("-", "", str_replace("/", "", str_replace(".", "", $_POST['txtCNPJ'])));
-//            $result = array();
-//            $this->db->select('financeiro_credor_devedor_id')->from('tb_financeiro_credor_devedor');
-//            $this->db->where('cnpj', $cnpj);
-//            $this->db->where('cnpj !=', '');
-//            $this->db->where('ativo', 't');
-//            $result = $this->db->get()->result();
-            // var_dump($result); die;
+            
+            $result = array();
+          
+            if ($_POST['txtconvenio_id'] != "") {
+                $this->db->select('financeiro_credor_devedor_id')->from('tb_financeiro_credor_devedor');
+                $this->db->where('convenio_id_financeiro', $_POST['txtconvenio_id']); 
+                $this->db->where('ativo', 't');
+                $result = $this->db->get()->result();
+            }  
+      
+            if (count($result) == 0) {
+                $this->db->set('razao_social', $_POST['txtNome']);
+                $this->db->set('cnpj', $cnpj);
+                $this->db->set('cep', $_POST['cep']);
+                $this->db->set('telefone', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['telefone']))));
+                $this->db->set('celular', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['celular']))));
+                if (isset($_POST['tipo_logradouro']) && $_POST['tipo_logradouro'] != "") {
+                    $this->db->set('tipo_logradouro_id', $_POST['tipo_logradouro']);
+                }
 
-//            if (count($result) == 0) {
-//                $this->db->set('razao_social', $_POST['txtNome']);
-//                $this->db->set('cnpj', $cnpj);
-//                $this->db->set('cep', $_POST['cep']);
-//                $this->db->set('telefone', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['telefone']))));
-//                $this->db->set('celular', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['celular']))));
-//                if (isset($_POST['tipo_logradouro']) && $_POST['tipo_logradouro'] != "") {
-//                    $this->db->set('tipo_logradouro_id', $_POST['tipo_logradouro']);
-//                }
-//
-//                if ($_POST['municipio_id'] != '') {
-//                    $this->db->set('municipio_id', $_POST['municipio_id']);
-//                }
-//                
-//
-//                $this->db->set('logradouro', $_POST['endereco']);
-//                $this->db->set('numero', $_POST['numero']);
-//                $this->db->set('bairro', $_POST['bairro']);
-//                $this->db->set('complemento', $_POST['complemento']);
-//                if ($_POST['municipio_id'] != "") {
-//                    $this->db->set('municipio_id', $_POST['municipio_id']);
-//                }
-//                $horario = date("Y-m-d H:i:s");
-//                $operador_id = $this->session->userdata('operador_id');
-//                $this->db->set('data_cadastro', $horario);
-//                $this->db->set('operador_cadastro', $operador_id);
-//                $this->db->insert('tb_financeiro_credor_devedor');
-//                $financeiro_credor_devedor_id = $this->db->insert_id();
-//            } else {
-//                $financeiro_credor_devedor_id = $result[0]->financeiro_credor_devedor_id;
-//            }
+                if ($_POST['municipio_id'] != '') {
+                    $this->db->set('municipio_id', $_POST['municipio_id']);
+                }
+                
+
+                $this->db->set('logradouro', $_POST['endereco']);
+                $this->db->set('numero', $_POST['numero']);
+                $this->db->set('bairro', $_POST['bairro']);
+                $this->db->set('complemento', $_POST['complemento']);
+                if ($_POST['municipio_id'] != "") {
+                    $this->db->set('municipio_id', $_POST['municipio_id']);
+                }
+                $horario = date("Y-m-d H:i:s");
+                $operador_id = $this->session->userdata('operador_id');
+                $this->db->set('data_cadastro', $horario);
+                $this->db->set('operador_cadastro', $operador_id);
+                $this->db->insert('tb_financeiro_credor_devedor');
+                $financeiro_credor_devedor_id = $this->db->insert_id();
+            } else {
+                $financeiro_credor_devedor_id = $result[0]->financeiro_credor_devedor_id;
+            }
 
             /* inicia o mapeamento no banco */
             $convenio_id = $_POST['txtconvenio_id'];
@@ -2229,6 +2231,7 @@ class Convenio_model extends Model {
                 $this->db->set('data_cadastro', $horario);
                 $this->db->set('operador_cadastro', $operador_id);
                 $this->db->insert('tb_convenio');
+                
                 $erro = $this->db->_error_message();
                 if (trim($erro) != "") // erro de banco
                     return -1;
@@ -2256,7 +2259,12 @@ class Convenio_model extends Model {
                 $exame_sala_id = $_POST['txtconvenio_id'];
                 $this->db->where('convenio_id', $convenio_id);
                 $this->db->update('tb_convenio');
+                   
             }
+            
+            $this->db->set('convenio_id_financeiro',$exame_sala_id);
+            $this->db->where('financeiro_credor_devedor_id',$financeiro_credor_devedor_id); 
+            $this->db->update('tb_financeiro_credor_devedor');
 
             /* Atualiza os valores no procedimento convenio baseado no valor de ajuste informado
               e no valor do porte que está la no cadastro do TUSS. */
