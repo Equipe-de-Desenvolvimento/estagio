@@ -2041,11 +2041,16 @@ class Convenio_model extends Model {
             }  
       
             if (count($result) == 0) {
-                $this->db->set('razao_social', $_POST['txtNome']);
-                $this->db->set('cnpj', $cnpj);
+                $this->db->set('razao_social', $_POST['txtNome']); 
+                if(isset($_POST['cep']) && $_POST['cep'] != ""){
                 $this->db->set('cep', $_POST['cep']);
+                }
+                if(isset($_POST['telefone']) && $_POST['telefone'] != ""){
                 $this->db->set('telefone', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['telefone']))));
+                }
+                if(isset($_POST['celular']) && $_POST['celular'] != ""){
                 $this->db->set('celular', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['celular']))));
+                }
                 if (isset($_POST['tipo_logradouro']) && $_POST['tipo_logradouro'] != "") {
                     $this->db->set('tipo_logradouro_id', $_POST['tipo_logradouro']);
                 }
