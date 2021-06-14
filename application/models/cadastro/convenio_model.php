@@ -2029,52 +2029,54 @@ class Convenio_model extends Model {
 
     function gravar() {
         try {
-            $cnpj = str_replace("-", "", str_replace("/", "", str_replace(".", "", $_POST['txtCNPJ'])));
-            $result = array();
-            $this->db->select('financeiro_credor_devedor_id')->from('tb_financeiro_credor_devedor');
-            $this->db->where('cnpj', $cnpj);
-            $this->db->where('cnpj !=', '');
-            $this->db->where('ativo', 't');
-            $result = $this->db->get()->result();
+//            $cnpj = str_replace("-", "", str_replace("/", "", str_replace(".", "", $_POST['txtCNPJ'])));
+//            $result = array();
+//            $this->db->select('financeiro_credor_devedor_id')->from('tb_financeiro_credor_devedor');
+//            $this->db->where('cnpj', $cnpj);
+//            $this->db->where('cnpj !=', '');
+//            $this->db->where('ativo', 't');
+//            $result = $this->db->get()->result();
             // var_dump($result); die;
 
-            if (count($result) == 0) {
-                $this->db->set('razao_social', $_POST['txtNome']);
-                $this->db->set('cnpj', $cnpj);
-                $this->db->set('cep', $_POST['cep']);
-                $this->db->set('telefone', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['telefone']))));
-                $this->db->set('celular', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['celular']))));
-                if (isset($_POST['tipo_logradouro']) && $_POST['tipo_logradouro'] != "") {
-                    $this->db->set('tipo_logradouro_id', $_POST['tipo_logradouro']);
-                }
-
-                if ($_POST['municipio_id'] != '') {
-                    $this->db->set('municipio_id', $_POST['municipio_id']);
-                }
-                
-
-                $this->db->set('logradouro', $_POST['endereco']);
-                $this->db->set('numero', $_POST['numero']);
-                $this->db->set('bairro', $_POST['bairro']);
-                $this->db->set('complemento', $_POST['complemento']);
-                if ($_POST['municipio_id'] != "") {
-                    $this->db->set('municipio_id', $_POST['municipio_id']);
-                }
-                $horario = date("Y-m-d H:i:s");
-                $operador_id = $this->session->userdata('operador_id');
-                $this->db->set('data_cadastro', $horario);
-                $this->db->set('operador_cadastro', $operador_id);
-                $this->db->insert('tb_financeiro_credor_devedor');
-                $financeiro_credor_devedor_id = $this->db->insert_id();
-            } else {
-                $financeiro_credor_devedor_id = $result[0]->financeiro_credor_devedor_id;
-            }
+//            if (count($result) == 0) {
+//                $this->db->set('razao_social', $_POST['txtNome']);
+//                $this->db->set('cnpj', $cnpj);
+//                $this->db->set('cep', $_POST['cep']);
+//                $this->db->set('telefone', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['telefone']))));
+//                $this->db->set('celular', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['celular']))));
+//                if (isset($_POST['tipo_logradouro']) && $_POST['tipo_logradouro'] != "") {
+//                    $this->db->set('tipo_logradouro_id', $_POST['tipo_logradouro']);
+//                }
+//
+//                if ($_POST['municipio_id'] != '') {
+//                    $this->db->set('municipio_id', $_POST['municipio_id']);
+//                }
+//                
+//
+//                $this->db->set('logradouro', $_POST['endereco']);
+//                $this->db->set('numero', $_POST['numero']);
+//                $this->db->set('bairro', $_POST['bairro']);
+//                $this->db->set('complemento', $_POST['complemento']);
+//                if ($_POST['municipio_id'] != "") {
+//                    $this->db->set('municipio_id', $_POST['municipio_id']);
+//                }
+//                $horario = date("Y-m-d H:i:s");
+//                $operador_id = $this->session->userdata('operador_id');
+//                $this->db->set('data_cadastro', $horario);
+//                $this->db->set('operador_cadastro', $operador_id);
+//                $this->db->insert('tb_financeiro_credor_devedor');
+//                $financeiro_credor_devedor_id = $this->db->insert_id();
+//            } else {
+//                $financeiro_credor_devedor_id = $result[0]->financeiro_credor_devedor_id;
+//            }
 
             /* inicia o mapeamento no banco */
             $convenio_id = $_POST['txtconvenio_id'];
             $this->db->set('nome', $_POST['txtNome']);
-            $this->db->set('razao_social', $_POST['txtrazaosocial']);
-            $this->db->set('cnpj', $cnpj);    
+            if(isset($_POST['txtrazaosocial'])){
+              $this->db->set('razao_social', $_POST['txtrazaosocial']);
+            }
+//            $this->db->set('cnpj', $cnpj);    
             // $this->db->set('registroans', $_POST['txtregistroans']);
             // $this->db->set('codigoidentificador', $_POST['txtcodigo']);
 
@@ -2241,8 +2243,7 @@ class Convenio_model extends Model {
                 $this->db->where("ativo", 't');
                 $this->db->orderby('empresa_id');
                 $empresas = $this->db->get()->result();
-                foreach ($empresas as $item) {
-
+                foreach ($empresas as $item) { 
                     $this->db->set('empresa_id', $item->empresa_id);
                     $this->db->set('convenio_id', $convenio_id);
                     $this->db->set('data_cadastro', $horario);
