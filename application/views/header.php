@@ -259,11 +259,13 @@ function debug($object) {
                         <li>
                             <a class="dropdown-item"  href="<?= base_url() ?>cadastros/pacientes">Aluno</a>
                         </li>
-                        
-                        <?if($this->session->userdata('perfil_id') != 9){?>
+                       <?if($this->session->userdata('perfil_id') != 9){?>
+                        <li>
+                             <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/convenio">Convênios</a>
+                        </li>  
                         <li>
                             <a class="dropdown-item" href="<?= base_url() ?>ambulatorio/modelolaudo/pesquisar">Instituição de Ensino</a>
-                        </li>
+                        </li> 
                         <?}?>
                         <li>
                             <a class="dropdown-item" href="<?= base_url() ?>cadastros/pacientes/solicitarvagas">Solicitação de Vaga</a>
@@ -499,9 +501,7 @@ function debug($object) {
                         </li>
 
                         <?if($this->session->userdata('perfil_id') != 9){?>
-                        <li>
-                             <a class="dropdown-item drop-head" href="<?= base_url() ?>cadastros/convenio">Cadastrar convênio</a>
-                        </li>
+                      
                         <!-- <li>
                             <a class="dropdown-item drop-head" href="<?= base_url() ?>ambulatorio/procedimentoplano">Convenios</a>
                         </li> -->

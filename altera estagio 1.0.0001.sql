@@ -260,5 +260,14 @@ ALTER TABLE ponto.tb_responsavel_origem ADD COLUMN informacaovaga_id integer;
 
 ALTER TABLE ponto.tb_responsavel_ifj ADD COLUMN setor integer;
 
+--01/06/2021
+
+ALTER TABLE ponto.tb_responsavel_ifj ADD COLUMN telefone_ifj character varying(100);
 
 
+--04/06/2021
+
+ALTER TABLE ponto.tb_paciente ADD COLUMN curso_id integer;
+
+--14/06/2021
+ALTER TABLE ponto.tb_financeiro_credor_devedor ADD COLUMN convenio_id_financeiro integer;

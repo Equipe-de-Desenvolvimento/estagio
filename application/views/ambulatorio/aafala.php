@@ -10,6 +10,9 @@ onclick="get_id('1','pt','fm');">
 onclick="get_id('1','pt','fm');">
 Ouça este texto</a></div>-->
 
+
+
+
 <?
 
 $paciente = $chamada[0]->paciente;

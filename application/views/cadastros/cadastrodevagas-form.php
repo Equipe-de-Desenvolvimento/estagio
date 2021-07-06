@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        <div class="col-lg-3"    >
+        <div class="col-lg-3" >
             <label for="">Instituição de Origem</label>
             <select name="instituicao_id" id="instituicao_id" class="form-control" required>
                   <option value="">Selecione</option>
@@ -240,9 +240,9 @@
                       instituicao_id = '<?=@$obj[0]->institu_id?>';
                       for (var c = 0; c < j.length; c++) {
                           if(instituicao_id == j[c].instituicao_id){
-                            options += '<option value="' + j[c].instituicao_id + '" selected>' + j[c].nome +'</option>';
+                            options += '<option value="' + j[c].instituicao_id + '" selected>' + j[c].nome_fantasia +'</option>';
                           }else{
-                            options += '<option value="' + j[c].instituicao_id + '">' + j[c].nome +'</option>';
+                            options += '<option value="' + j[c].instituicao_id + '">' + j[c].nome_fantasia +'</option>';
                           }
                           
                       }
@@ -272,7 +272,7 @@
                       options = '<option value=""></option>';
 
                       for (var c = 0; c < j.length; c++) {
-                          options += '<option value="' + j[c].instituicao_id + '">' + j[c].nome +'</option>';
+                          options += '<option value="' + j[c].instituicao_id + '">' + j[c].nome_fantasia +'</option>';
                       }
                       $('#instituicao_id option').remove();
                       $('#instituicao_id').append(options);

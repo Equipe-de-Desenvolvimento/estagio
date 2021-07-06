@@ -2029,21 +2029,28 @@ class Convenio_model extends Model {
 
     function gravar() {
         try {
-            $cnpj = str_replace("-", "", str_replace("/", "", str_replace(".", "", $_POST['txtCNPJ'])));
+//            $cnpj = str_replace("-", "", str_replace("/", "", str_replace(".", "", $_POST['txtCNPJ'])));
+            
             $result = array();
-            $this->db->select('financeiro_credor_devedor_id')->from('tb_financeiro_credor_devedor');
-            $this->db->where('cnpj', $cnpj);
-            $this->db->where('cnpj !=', '');
-            $this->db->where('ativo', 't');
-            $result = $this->db->get()->result();
-            // var_dump($result); die;
-
+          
+            if ($_POST['txtconvenio_id'] != "") {
+                $this->db->select('financeiro_credor_devedor_id')->from('tb_financeiro_credor_devedor');
+                $this->db->where('convenio_id_financeiro', $_POST['txtconvenio_id']); 
+                $this->db->where('ativo', 't');
+                $result = $this->db->get()->result();
+            }  
+      
             if (count($result) == 0) {
-                $this->db->set('razao_social', $_POST['txtNome']);
-                $this->db->set('cnpj', $cnpj);
+                $this->db->set('razao_social', $_POST['txtNome']); 
+                if(isset($_POST['cep']) && $_POST['cep'] != ""){
                 $this->db->set('cep', $_POST['cep']);
+                }
+                if(isset($_POST['telefone']) && $_POST['telefone'] != ""){
                 $this->db->set('telefone', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['telefone']))));
+                }
+                if(isset($_POST['celular']) && $_POST['celular'] != ""){
                 $this->db->set('celular', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['celular']))));
+                }
                 if (isset($_POST['tipo_logradouro']) && $_POST['tipo_logradouro'] != "") {
                     $this->db->set('tipo_logradouro_id', $_POST['tipo_logradouro']);
                 }
@@ -2073,8 +2080,10 @@ class Convenio_model extends Model {
             /* inicia o mapeamento no banco */
             $convenio_id = $_POST['txtconvenio_id'];
             $this->db->set('nome', $_POST['txtNome']);
-            $this->db->set('razao_social', $_POST['txtrazaosocial']);
-            $this->db->set('cnpj', $cnpj);    
+            if(isset($_POST['txtrazaosocial'])){
+              $this->db->set('razao_social', $_POST['txtrazaosocial']);
+            }
+//            $this->db->set('cnpj', $cnpj);    
             // $this->db->set('registroans', $_POST['txtregistroans']);
             // $this->db->set('codigoidentificador', $_POST['txtcodigo']);
 
@@ -2227,6 +2236,7 @@ class Convenio_model extends Model {
                 $this->db->set('data_cadastro', $horario);
                 $this->db->set('operador_cadastro', $operador_id);
                 $this->db->insert('tb_convenio');
+                
                 $erro = $this->db->_error_message();
                 if (trim($erro) != "") // erro de banco
                     return -1;
@@ -2241,8 +2251,7 @@ class Convenio_model extends Model {
                 $this->db->where("ativo", 't');
                 $this->db->orderby('empresa_id');
                 $empresas = $this->db->get()->result();
-                foreach ($empresas as $item) {
-
+                foreach ($empresas as $item) { 
                     $this->db->set('empresa_id', $item->empresa_id);
                     $this->db->set('convenio_id', $convenio_id);
                     $this->db->set('data_cadastro', $horario);
@@ -2255,7 +2264,12 @@ class Convenio_model extends Model {
                 $exame_sala_id = $_POST['txtconvenio_id'];
                 $this->db->where('convenio_id', $convenio_id);
                 $this->db->update('tb_convenio');
+                   
             }
+            
+            $this->db->set('convenio_id_financeiro',$exame_sala_id);
+            $this->db->where('financeiro_credor_devedor_id',$financeiro_credor_devedor_id); 
+            $this->db->update('tb_financeiro_credor_devedor');
 
             /* Atualiza os valores no procedimento convenio baseado no valor de ajuste informado
               e no valor do porte que está la no cadastro do TUSS. */

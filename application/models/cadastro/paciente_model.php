@@ -578,7 +578,7 @@ class paciente_model extends BaseModel {
 
     private function instanciar($paciente_id) {
         if ($paciente_id != 0) {
-            $this->db->select('p.instituicao_id,p.prontuario_antigo,p.observacao, tp.tipo_logradouro_id as codigo_logradouro,co.convenio_id as convenio,p.escolaridade_id, co.nome as descricaoconvenio,cbo.descricao as cbo_nome, tp.descricao,p.*,c.nome as cidade_desc,c.municipio_id as cidade_cod,p.whatsapp');
+            $this->db->select('p.curso_id,p.instituicao_id,p.prontuario_antigo,p.observacao, tp.tipo_logradouro_id as codigo_logradouro,co.convenio_id as convenio,p.escolaridade_id, co.nome as descricaoconvenio,cbo.descricao as cbo_nome, tp.descricao,p.*,c.nome as cidade_desc,c.municipio_id as cidade_cod,p.whatsapp');
             $this->db->from('tb_paciente p');
             $this->db->join('tb_municipio c', 'c.municipio_id = p.municipio_id', 'left');
             $this->db->join('tb_convenio co', 'co.convenio_id = p.convenio_id', 'left');
@@ -661,6 +661,7 @@ class paciente_model extends BaseModel {
             $this->_data_inicial = $return[0]->data_inicial;
             $this->_data_final = $return[0]->data_final;
             $this->_instituicao_id = $return[0]->instituicao_id;
+            $this->_curso_id = $return[0]->curso_id;
         }
     }
 
@@ -1034,13 +1035,14 @@ class paciente_model extends BaseModel {
             if(isset($_POST['txtSenhaapp']) && $_POST['txtSenhaapp'] != ''){
                 $this->db->set('senha_app', md5($_POST['txtSenhaapp']));
             } 
-            
-            
-            $this->db->set('empresa_id', $empresa_id);
              
-            
-
-            
+            $this->db->set('empresa_id', $empresa_id);
+              
+            if(isset($_POST['curso']) && $_POST['curso'] != ""){
+                $this->db->set('curso_id', $_POST['curso']); 
+            }else{
+                $this->db->set('curso_id', null);  
+            } 
 
             // $this->db->set('paciente_id',$_POST['txtPacienteId'] );
 
@@ -1441,8 +1443,9 @@ class paciente_model extends BaseModel {
 
     //      $this->db->set('data_inicio', $datainicio);
     //      $this->db->set('data_final', $datafinal);
-            $this->db->set('tipo_vaga', $_POST['tipodavaga']);
-
+            if(isset($_POST['tipodavaga']) && $_POST['tipodavaga'] != ""){
+             $this->db->set('tipo_vaga', $_POST['tipodavaga']);
+            }
             $this->db->set('aluno_id', $item);
             $this->db->set('instituicao_id', $_POST['instituicao_id']);
             $this->db->set('convenio_id', $_POST['convenio_id']);
@@ -1639,7 +1642,7 @@ class paciente_model extends BaseModel {
     }
 
     function cadastroresponsavelifj($responsavel_ifj_id){
-        $this->db->select('responsavel_ifj_id, nome, email, cargo,setor');
+        $this->db->select('responsavel_ifj_id, nome, email, cargo,setor,telefone_ifj');
         $this->db->from('tb_responsavel_ifj');
         $this->db->where('responsavel_ifj_id', $responsavel_ifj_id);
         return $this->db->get()->result();
@@ -1659,6 +1662,12 @@ class paciente_model extends BaseModel {
           $this->db->set('setor', null); 
         }
 
+        if(isset($_POST['telefone_ifj']) &&  $_POST['telefone_ifj'] != ""){
+          $this->db->set('telefone_ifj', str_replace("(", "", str_replace(")", "", str_replace("-", "", $_POST['telefone_ifj']))));
+        }else{
+          $this->db->set('telefone_ifj', null); 
+        }  
+      
         if($_POST['responsavel_ifj_id'] > 0){
             $this->db->set('data_atualizacao', $horario);
             $this->db->set('operador_atualizacao', $operador_id);
@@ -4141,7 +4150,7 @@ class paciente_model extends BaseModel {
           }
           
    function listarinstituicaoorigem() {
-        $this->db->select('i.nome, i.instituicao_id');
+        $this->db->select('i.nome,i.nome_fantasia, i.instituicao_id');
         $this->db->from('tb_instituicao i');  
         $this->db->where('i.ativo', 't');
         return $this->db->get()->result();
@@ -4186,16 +4195,57 @@ class paciente_model extends BaseModel {
         $this->db->from('tb_carga_horario');
         $this->db->where('ativo','t');
         $this->db->where('vaga_id',$vaga_id);
+        $this->db->orderby('data');
         return $this->db->get()->result();
         
     }
     
     function listarinstituicaopaciente($paciente_id){
         
-        $this->db->select('p.nome as paciente');
+        $this->db->select("i.instituicao_id,i.email as email_instituicao,i.telefone as telefone_instituicao,p.cns,p.cns2,p.seguradora,p.num_apolice,p.data_inicial as data_inicial_vigencia,p.data_final as data_final_vigencia,i.cnpj as cnpjempresa,i.endereco as enderecoempresa,p.matricula,p.nome as paciente,p.rg,p.cpf,p.logradouro,i.nome as intituição,i.nome_fantasia,
+            (select ii.descricao from ponto.tb_vagas_empresas ve 
+            LEFT JOIN ponto.tb_informacaovaga ii ON ve.curso = ii.informacaovaga_id
+            where i.instituicao_id = ve.instituicao_id and ve.ativo = 't' limit 1
+            ) as  curso,
+            (select ii.informacaovaga_id from ponto.tb_vagas_empresas ve 
+            LEFT JOIN ponto.tb_informacaovaga ii ON ve.curso = ii.informacaovaga_id
+            where i.instituicao_id = ve.instituicao_id and ve.ativo = 't' limit 1
+            ) as  curso_id,
+            (select ri.nome from ponto.tb_vagas_empresas ve 
+            LEFT JOIN ponto.tb_responsavel_ifj ri ON ve.responsavel_ijf = ri.responsavel_ifj_id
+            where i.instituicao_id = ve.instituicao_id and ve.ativo = 't' limit 1
+            ) as  representante,
+            (select ri.cargo from ponto.tb_vagas_empresas ve 
+            LEFT JOIN ponto.tb_responsavel_ifj ri ON ve.responsavel_ijf = ri.responsavel_ifj_id
+            where i.instituicao_id = ve.instituicao_id and ve.ativo = 't' limit 1
+            ) as  cargo,
+            (select ri.email from ponto.tb_vagas_empresas ve 
+            LEFT JOIN ponto.tb_responsavel_ifj ri ON ve.responsavel_ijf = ri.responsavel_ifj_id
+            where i.instituicao_id = ve.instituicao_id and ve.ativo = 't' limit 1
+            ) as  email_representante,
+            (select ri.telefone_ifj from ponto.tb_vagas_empresas ve 
+            LEFT JOIN ponto.tb_responsavel_ifj ri ON ve.responsavel_ijf = ri.responsavel_ifj_id
+            where i.instituicao_id = ve.instituicao_id and ve.ativo = 't' limit 1
+            ) as  telefone_ifj,
+            (select ve.data_inicio from ponto.tb_vagas_empresas ve 
+            LEFT JOIN ponto.tb_responsavel_ifj ri ON ve.responsavel_ijf = ri.responsavel_ifj_id
+            where i.instituicao_id = ve.instituicao_id and ve.ativo = 't' limit 1
+            ) as  data_inicio,
+            (select ve.data_final from ponto.tb_vagas_empresas ve 
+            LEFT JOIN ponto.tb_responsavel_ifj ri ON ve.responsavel_ijf = ri.responsavel_ifj_id
+            where i.instituicao_id = ve.instituicao_id and ve.ativo = 't' limit 1
+            ) as  data_final,
+            (select ve.vaga_id from ponto.tb_vagas_empresas ve 
+            LEFT JOIN ponto.tb_responsavel_ifj ri ON ve.responsavel_ijf = ri.responsavel_ifj_id
+            where i.instituicao_id = ve.instituicao_id and ve.ativo = 't' limit 1
+            ) as  vaga_id,
+            (select ve.objetivo from ponto.tb_vagas_empresas ve 
+            LEFT JOIN ponto.tb_responsavel_ifj ri ON ve.responsavel_ijf = ri.responsavel_ifj_id
+            where i.instituicao_id = ve.instituicao_id and ve.ativo = 't' limit 1
+            ) as  objetivo");
         $this->db->from('tb_aluno_estagio ae');
         $this->db->join('tb_paciente p','p.paciente_id = ae.aluno_id','left');
-        $this->db->join('tb_instituicao i', 'i.instituicao_id = ae.instituicao_id', 'left'); 
+        $this->db->join('tb_instituicao i', 'i.instituicao_id = ae.instituicao_id', 'left');  
         $this->db->where('ae.aluno_id',$paciente_id);
         $this->db->where('ae.ativo','t');
         return $this->db->get()->result();   
@@ -4215,6 +4265,60 @@ class paciente_model extends BaseModel {
         
     }
 
+    
+    function listaralunosinstituicao($instituicao_id){
+        
+        $this->db->select("p.paciente_id,i.instituicao_id,p.cns,p.cns2,p.seguradora,p.num_apolice,p.data_inicial as data_inicial_vigencia,p.data_final as data_final_vigencia,i.cnpj as cnpjempresa,i.endereco as enderecoempresa,p.matricula,p.nome as paciente,p.rg,p.cpf,p.logradouro,i.nome as intituição,i.nome_fantasia,
+            (select ii.descricao from ponto.tb_vagas_empresas ve 
+            LEFT JOIN ponto.tb_informacaovaga ii ON ve.curso = ii.informacaovaga_id
+            where i.instituicao_id = ve.instituicao_id and ve.ativo = 't' limit 1
+            ) as  curso,
+            (select ri.nome from ponto.tb_vagas_empresas ve 
+            LEFT JOIN ponto.tb_responsavel_ifj ri ON ve.responsavel_ijf = ri.responsavel_ifj_id
+            where i.instituicao_id = ve.instituicao_id and ve.ativo = 't' limit 1
+            ) as  representante,
+            (select ri.cargo from ponto.tb_vagas_empresas ve 
+            LEFT JOIN ponto.tb_responsavel_ifj ri ON ve.responsavel_ijf = ri.responsavel_ifj_id
+            where i.instituicao_id = ve.instituicao_id and ve.ativo = 't' limit 1
+            ) as  cargo,
+            (select ri.email from ponto.tb_vagas_empresas ve 
+            LEFT JOIN ponto.tb_responsavel_ifj ri ON ve.responsavel_ijf = ri.responsavel_ifj_id
+            where i.instituicao_id = ve.instituicao_id and ve.ativo = 't' limit 1
+            ) as  email_representante,
+            (select ri.telefone_ifj from ponto.tb_vagas_empresas ve 
+            LEFT JOIN ponto.tb_responsavel_ifj ri ON ve.responsavel_ijf = ri.responsavel_ifj_id
+            where i.instituicao_id = ve.instituicao_id and ve.ativo = 't' limit 1
+            ) as  telefone_ifj,
+            (select ve.data_inicio from ponto.tb_vagas_empresas ve 
+            LEFT JOIN ponto.tb_responsavel_ifj ri ON ve.responsavel_ijf = ri.responsavel_ifj_id
+            where i.instituicao_id = ve.instituicao_id and ve.ativo = 't' limit 1
+            ) as  data_inicio,
+            (select ve.data_final from ponto.tb_vagas_empresas ve 
+            LEFT JOIN ponto.tb_responsavel_ifj ri ON ve.responsavel_ijf = ri.responsavel_ifj_id
+            where i.instituicao_id = ve.instituicao_id and ve.ativo = 't' limit 1
+            ) as  data_final,
+            (select ve.vaga_id from ponto.tb_vagas_empresas ve 
+            LEFT JOIN ponto.tb_responsavel_ifj ri ON ve.responsavel_ijf = ri.responsavel_ifj_id
+            where i.instituicao_id = ve.instituicao_id and ve.ativo = 't' limit 1
+            ) as  vaga_id,
+            (select ve.objetivo from ponto.tb_vagas_empresas ve 
+            LEFT JOIN ponto.tb_responsavel_ifj ri ON ve.responsavel_ijf = ri.responsavel_ifj_id
+            where i.instituicao_id = ve.instituicao_id and ve.ativo = 't' limit 1
+            ) as  objetivo");
+        $this->db->from('tb_aluno_estagio ae');
+        $this->db->join('tb_paciente p','p.paciente_id = ae.aluno_id','left');
+        $this->db->join('tb_instituicao i', 'i.instituicao_id = ae.instituicao_id', 'left');  
+        $this->db->where('i.instituicao_id',$instituicao_id);
+        $this->db->where('ae.ativo','t');
+        $this->db->where('p.paciente_id is not null');
+        $this->db->groupby('i.instituicao_id,p.paciente_id');
+        return $this->db->get()->result();   
+        
+        
+        
+        
+        
+    }
 }
 
 ?>

@@ -51,7 +51,7 @@
                                 <?= (in_array('cnpj', $campos_obrigatorios)) ? 'required' : '' ?> 
                             </div>
                             <div>
-                                <label>Telefone 1*</label>
+                                <label>Telefone para contatos relativos a estágios*</label>
                             <?
                             if (@$obj->_telefone != '' && strlen(@$obj->_telefone) > 3) {
 
@@ -70,7 +70,7 @@
                     
                             </div>
                             <div>
-                                <label>Telefone 2*</label>
+                                <label>Telefone 2</label>
                             <?
                             if (@$obj[0]->_telefone != '' && strlen(@$obj[0]->telefone) > 3) {
 
@@ -101,7 +101,7 @@
                                 $whatsapp = '';
                             }
                             ?>
-                        <input type="text"  placeholder="(99)9999-9999" id="txtTelefone2" class="form-control" name="telefone2"  value="<?= @$obj[0]->telefone2; ?>" <?= (in_array('telefone2', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                        <input type="text"  placeholder="(99)9999-9999" id="txtTelefone2" class="form-control" name="telefone2"  value="<?= @$obj[0]->telefone2; ?>"  />
 
                          </div>
                          <div>
@@ -125,11 +125,7 @@
                             <label>Número</label>
                                 <input type="text" id="numero" class="form-control" name="numero"  value="<?= @$obj[0]->numero; ?>" required="true" placeholder="Número da Instituição" />
                         </div> 
-                        <div>
-                            <label>Município</label>  
-                            <input type="hidden" id="txtCidadeID" class="texto_id" name="municipio_id" value="<?= @$obj[0]->municipio_id; ?>" readonly="true" />
-                            <input type="text" id="txtCidade"  class="form-control" placeholder="Município"  name="txtCidade" value="<?= @$obj[0]->municipio; ?>"  <?= (in_array('municipio', $campos_obrigatorios)) ? 'required' : '' ?>/>
-                        </div>
+                        
 
                         <div>
                             <label>Complemento</label>
@@ -139,6 +135,11 @@
                             <label>Bairro</label>
                             <input type="text" name="bairro" placeholder="Bairro"  id="bairro" class="form-control" value="<?= @$obj[0]->bairro; ?>" />
                          </div> 
+                        <div>
+                            <label>Município</label>  
+                            <input type="hidden" id="txtCidadeID" class="texto_id" name="municipio_id" value="<?= @$obj[0]->municipio_id; ?>" readonly="true" />
+                            <input type="text" id="txtCidade"  class="form-control" placeholder="Município"  name="txtCidade" value="<?= @$obj[0]->municipio; ?>"  <?= (in_array('municipio', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                        </div>
                       
                     </div>
                  
@@ -148,23 +149,33 @@
                             <label>Observa&ccedil;&atilde;o</label>
                             <textarea cols="70" rows="2" class="form-control" name="observacao" placeholder="Observação" id="observacao"><?= @$obj[0]->observacao; ?></textarea><br/>
                         </div> 
+                          <div class="col-lg-5">
+                            <label>Nome usu&aacute;rio *</label>
+                            <input type="text" id="txtUsuario" name="txtUsuario"  class="form-control" value="<?= @$obj[0]->usuario; ?>" />
+                        </div>
+
+                        <div class="col-lg-5">
+                            <label>Senha: *</label>
+                            <input type="password" name="txtSenha" id="txtSenha" class="form-control" value=""  />
+                        </div> 
                     </div>
+                        
                 </div>
             </div>   
             
             <div class="alert alert-primary"><b>Convênio</b></div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-lg-3">
+<!--                        <div class="col-lg-3">
                             <label>Nome do Responsável Pelo Convênio *</label>
                             <input type="text" id="txtConvenio" name="convenio" class="form-control" value="<?= @$obj[0]->convenio; ?>"   placeholder="Convênio">
-                        </div>   
-                        <div class="col-lg-2">
+                        </div>   -->
+<!--                        <div class="col-lg-2">
                             <label>Email *</label>
                             <input type="text"  placeholder="Email" id="txtEmail_convenio" onchange="validaremail()" name="email_convenio"  class="form-control" value="<?= @$obj[0]->email_convenio; ?>" />
                              <?= (in_array('email', $campos_obrigatorios)) ? 'required' : '' ?>
-                        </div>
-                        <div class="col-lg-2">
+                        </div>-->
+<!--                        <div class="col-lg-2">
                         <label>Telefone *</label>
                             <?
                             if (@$obj->_telefone_convenio != '' && strlen(@$obj->_telefone_convenio) > 3) {
@@ -180,33 +191,17 @@
                                 ?>
                             
                             <input type="text"  placeholder="(99)9999-99999" id="txtTelefone_convenio" name="telefone_convenio" class="form-control celular"  value="<?= @$obj[0]->telefone_convenio; ?>" <?= (in_array('telefone_convenio', $campos_obrigatorios)) ? 'required' : '' ?>/>
-                        </div>
+                        </div>-->
                         <div class="col-lg-3">
                             <label>Observação</label>
                             <input type="text" name="observacao_convenio" placeholder="Observações"  id="observacao_convenio" class="form-control" value="<?= @$obj[0]->observacao_convenio; ?>" />
                         </div>
-
+                       
                     </div>
-
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <label>Nome usu&aacute;rio *</label>
-                            <input type="text" id="txtUsuario" name="txtUsuario"  class="form-control" value="<?= @$obj[0]->usuario; ?>" />
-                        </div>
-
-                        <div class="col-lg-3">
-                            <label>Senha: *</label>
-                            <input type="password" name="txtSenha" id="txtSenha" class="form-control" value=""  />
-                        </div> 
-                     
-                    </div>
-
-
-                    
+   
                 </div> 
-            </div>  
-
-            <div class="alert alert-primary"><b>Financeiro</b></div>
+            </div>   
+            <div class="alert alert-primary"><b>Responsável Financeiro por assuntos dos convênios</b></div>
                 <div class="panel-body infodados">
                     <div class="row">
                         <div class="col-lg-3">
@@ -242,7 +237,7 @@
                     </div>
                 </div> 
             </div>    
-            <div class="alert alert-primary"><b>Jurídico</b></div>
+            <div class="alert alert-primary"><b>Responsável Jurídico por assuntos dos convênios</b></div>
                 <div class="panel-body infodados">
                     <div class="row">
                         <div class="col-lg-3">
