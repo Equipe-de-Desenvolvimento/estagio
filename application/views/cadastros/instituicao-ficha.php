@@ -163,9 +163,9 @@
                 </div>
             </div>   
             
-            <div class="alert alert-primary"><b>Convênio</b></div>
+            <!-- <div class="alert alert-primary"><b>Convênio</b></div>
                 <div class="panel-body">
-                    <div class="row">
+                    <div class="row"> -->
 <!--                        <div class="col-lg-3">
                             <label>Nome do Responsável Pelo Convênio *</label>
                             <input type="text" id="txtConvenio" name="convenio" class="form-control" value="<?= @$obj[0]->convenio; ?>"   placeholder="Convênio">
@@ -192,14 +192,14 @@
                             
                             <input type="text"  placeholder="(99)9999-99999" id="txtTelefone_convenio" name="telefone_convenio" class="form-control celular"  value="<?= @$obj[0]->telefone_convenio; ?>" <?= (in_array('telefone_convenio', $campos_obrigatorios)) ? 'required' : '' ?>/>
                         </div>-->
-                        <div class="col-lg-3">
+                        <!-- <div class="col-lg-3">
                             <label>Observação</label>
                             <input type="text" name="observacao_convenio" placeholder="Observações"  id="observacao_convenio" class="form-control" value="<?= @$obj[0]->observacao_convenio; ?>" />
-                        </div>
+                        </div> -->
                        
-                    </div>
+                    <!-- </div>
    
-                </div> 
+                </div>  -->
             </div>   
             <div class="alert alert-primary"><b>Responsável Financeiro por assuntos dos convênios</b></div>
                 <div class="panel-body infodados">
@@ -228,7 +228,7 @@
                             }
                                 ?>
                             
-                            <input type="text"  placeholder="(99)9999-99999" id="txtTelefone_financeiro" name="telefone_financeiro" class="form-control celular"  value="<?= @$obj[0]->telefone_financeiro; ?>" <?= (in_array('telefone_financeiro', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                            <input type="text"  placeholder="(99)9999-99999" id="txtTelefone_financeiro" name="telefone_financeiro" class="form-control celular"  value="<?= @$obj[0]->telefone_financeiro; ?>"/>
                         </div>
                         <div class="col-lg-3">
                             <label>Observação</label>
@@ -264,7 +264,7 @@
                             }
                                 ?>
                             
-                            <input type="text"  placeholder="(99)9999-99999" id="txtTelefone_juridico" name="telefone_juridico" class="form-control celular"  value="<?= @$obj[0]->telefone_juridico; ?>" <?= (in_array('telefone_juridico', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                            <input type="text"  placeholder="(99)9999-99999" id="txtTelefone_juridico" name="telefone_juridico" class="form-control celular"  value="<?= @$obj[0]->telefone_juridico; ?>" />
                             <!--<button class="btn btn-outline-danger btn-sm" type=button id="btnWhats" onclick="pegarWhats();"> WP </button>-->
                         </div>
                         <div class="col-lg-3">

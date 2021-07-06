@@ -43,9 +43,7 @@
                            
                             <div>
                                 <label>Email Alternativo </label>
-                                <input type="text" id="txtemailalternativo" name="email_alternativo" placeholder="Email Alternativo" onchange="validaremail2()" class="form-control" value="<?= @$obj[0]->_email; ?>"
-                                
-                                    <?= (in_array('email2', $campos_obrigatorios)) ? 'required' : '' ?>/>
+                                <input type="text" id="txtemailalternativo" name="email_alternativo" placeholder="Email Alternativo" onchange="validaremail2()" class="form-control" value="<?= @$obj[0]->_email; ?>"/>
                             </div>
                             <div>
                                 <label>Sexo*</label>
@@ -69,6 +67,8 @@
                                 </select>
                             </div>
                         </div>
+
+                        
                         
                         <div class="col-lg-2">
                             
@@ -84,6 +84,42 @@
                                     }
                                     ?>"
                                 onblur="calculoIdade()"  >
+                            </div>
+
+                            <?
+                        if (@$obj[0]->_telefone != '' && strlen(@$obj[0]->_telefone) > 3) {
+
+                            if (preg_match('/\(/', @$obj[0]->_telefone)) {
+                                $telefone = @$obj[0]->_telefone;
+                            } else {
+                                $telefone = "(" . substr(@$obj[0]->_telefone, 0, 2) . ")" . substr(@$obj[0]->_telefone, 2, strlen(@$obj[0]->_telefone) - 2);
+                            }
+                        } else {
+                            $telefone = '';
+                        }
+                        if (@$obj[0]->_celular != '' && strlen(@$obj[0]->_celular) > 3) {
+                            if (preg_match('/\(/', @$obj[0]->_celular)) {
+                                $celular = @$obj[0]->_celular;
+                            } else {
+                                $celular = "(" . substr(@$obj[0]->_celular, 0, 2) . ")" . substr(@$obj[0]->_celular, 2, strlen(@$obj[0]->_celular) - 2);
+                            }
+                        } else {
+                            $celular = '';
+                        }
+                        if (@$obj[0]->_whatsapp != '' && strlen(@$obj[0]->_whatsapp) > 3) {
+                            if (preg_match('/\(/', @$obj[0]->_whatsapp)) {
+                                $whatsapp = @$obj[0]->_whatsapp;
+                            } else {
+                                $whatsapp = "(" . substr(@$obj[0]->_whatsapp, 0, 2) . ")" . substr(@$obj[0]->_whatsapp, 2, strlen(@$obj[0]->_whatsapp) - 2);
+                            }
+                        } else {
+                            $whatsapp = '';
+                        }
+                        ?>
+
+                            <div>
+                                <label>Celular</label>
+                                <input type="text" id="txtCelular" class="form-control" name="celular" value="<?= @$celular; ?>"  required="true"/>
                             </div>
                            
                             
@@ -110,7 +146,10 @@
                                     <label>Idade</label>
                                     <input type="text" name="idade2" id="idade2" class="form-control" readonly/>
                          </div>    
+                         
+                         
                     </div>            
+                    
 
                             <!-- <div>
                                 <label>Fotografia</label>
@@ -248,56 +287,23 @@
                                 <input type="text" id="bairro" class="form-control" name="bairro" value="<?= @$obj[0]->_bairro; ?>" />
                             </div>   
                         </div>
-                        <?
-                        if (@$obj[0]->_telefone != '' && strlen(@$obj[0]->_telefone) > 3) {
-
-                            if (preg_match('/\(/', @$obj[0]->_telefone)) {
-                                $telefone = @$obj[0]->_telefone;
-                            } else {
-                                $telefone = "(" . substr(@$obj[0]->_telefone, 0, 2) . ")" . substr(@$obj[0]->_telefone, 2, strlen(@$obj[0]->_telefone) - 2);
-                            }
-                        } else {
-                            $telefone = '';
-                        }
-                        if (@$obj[0]->_celular != '' && strlen(@$obj[0]->_celular) > 3) {
-                            if (preg_match('/\(/', @$obj[0]->_celular)) {
-                                $celular = @$obj[0]->_celular;
-                            } else {
-                                $celular = "(" . substr(@$obj[0]->_celular, 0, 2) . ")" . substr(@$obj[0]->_celular, 2, strlen(@$obj[0]->_celular) - 2);
-                            }
-                        } else {
-                            $celular = '';
-                        }
-                        if (@$obj[0]->_whatsapp != '' && strlen(@$obj[0]->_whatsapp) > 3) {
-                            if (preg_match('/\(/', @$obj[0]->_whatsapp)) {
-                                $whatsapp = @$obj[0]->_whatsapp;
-                            } else {
-                                $whatsapp = "(" . substr(@$obj[0]->_whatsapp, 0, 2) . ")" . substr(@$obj[0]->_whatsapp, 2, strlen(@$obj[0]->_whatsapp) - 2);
-                            }
-                        } else {
-                            $whatsapp = '';
-                        }
-                        ?>
+                        
                         <div class="col-lg-2">
                                <div>
                                 <label>N&uacute;mero</label>
                                 <input type="text" id="txtNumero" class="form-control" name="numero" value="<?= @$obj[0]->_numero; ?>" required="true"/>
                             </div>
-                            <div>
-                                <label>Celular</label>
-                                <input type="text" id="txtCelular" class="form-control" name="celular" value="<?= @$celular; ?>"  required="true"/>
-                                <!-- <button class="btn btn-outline-danger btn-sm"  type=button id="btnWhats" onclick="pegarWhats2();"> WP? </button> -->
-                            </div>
+                            
                             
                         </div>
                    
                        
                     
-                        <div class="col-lg-2">
+                        <!-- <div class="col-lg-2">
                             <label>Observa&ccedil;&atilde;o</label>
                             <textarea cols="70" rows="3" class="form-control" name="observacao" placeholder="Observações" id="observacao"><?= @$obj[0]->_observacao; ?></textarea><br/>
                         </div>   
-                    </div>
+                    </div> -->
                 </div>
             </div>
  

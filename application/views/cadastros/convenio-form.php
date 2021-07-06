@@ -105,13 +105,13 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
                     </div>
             </fieldset>
             <br>
-            <fieldset>
+            <!-- <fieldset>
                 <div class="alert alert-primary"><b> Detalhes</b></div>
                     <div class="row">
                             <div class="col-lg-2">
                                     <label for="">Valor por Estagiario</label>
                                     <input type="text" id="valor" class="form-control" name="valor_por_estagio" value="<?=@$obj->_valor_por_estagio?>">    
-                            </div>
+                            </div> -->
                         <!-- <div class="col-lg-2">
                             <div>
                                 <label>Tabela</label>
@@ -234,11 +234,11 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
                                 <input type="number" id="dia_aquisicao" name="dia_aquisicao" class="form-control" value="<?= @$obj->_dia_aquisicao; ?>" max="31" min="1"/>
                             </div>
                         </div>  -->
-                    </div>
+                    <!-- </div>
 
             </fieldset>
-                <br>
-            <fieldset>
+                <br> -->
+            <!-- <fieldset>
                 <div class="alert alert-primary"><b>Condi&ccedil;&atilde;o de recebimento</b></div>
                     <div class="row">
                         <div class="col-lg-2"> 
@@ -270,7 +270,7 @@ $medicinadotrabalho = $empresapermissoes[0]->medicinadotrabalho;
                         </div>
                     </div>
 
-            </fieldset>
+            </fieldset> -->
             <br>
                 <div>
                     <button type="submit" class="btn btn-outline-default btn-sm" name="btnEnviar">Enviar</button>
