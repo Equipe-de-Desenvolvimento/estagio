@@ -237,19 +237,19 @@ class Convenio extends BaseController {
 
         $this->session->set_flashdata('message', $data['mensagem']);
 
-        if (isset($_POST['associaconvenio'])) {
+        // if (isset($_POST['associaconvenio'])) {
             
-            set_time_limit(7200); // Limite de tempo de execução: 2h. Deixe 0 (zero) para sem limite
-            ignore_user_abort(true); // Não encerra o processamento em caso de perda de conexão
+        //     set_time_limit(7200); // Limite de tempo de execução: 2h. Deixe 0 (zero) para sem limite
+        //     ignore_user_abort(true); // Não encerra o processamento em caso de perda de conexão
 
-            if ($_POST['txtconvenio_id'] > 0) {
-                $convenio_id = $_POST['txtconvenio_id'];
-                $this->convenio->removerprocedimentosnaopertenceprincipal($convenio_id);
-                $this->convenio->removerpercentuaisnaopertenceprincipal($convenio_id);
-            }
-        } else {
-            $this->convenio->removeassociacoescomoutrosconvenios($convenio_id);
-        }
+        //     if ($_POST['txtconvenio_id'] > 0) {
+        //         $convenio_id = $_POST['txtconvenio_id'];
+        //         $this->convenio->removerprocedimentosnaopertenceprincipal($convenio_id);
+        //         $this->convenio->removerpercentuaisnaopertenceprincipal($convenio_id);
+        //     }
+        // } else {
+        //     $this->convenio->removeassociacoescomoutrosconvenios($convenio_id);
+        // }
  
         redirect(base_url() . "cadastros/convenio/empresaconvenio/".$convenio_id);
     }

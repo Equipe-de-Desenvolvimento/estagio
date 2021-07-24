@@ -368,6 +368,7 @@ class pacientes extends BaseController {
                 $instituicao_id = $instituicao[0]->instituicao_id;
                 $mensagem = "Você deseja realmente confirmar o estágio no {$instituicao[0]->representante}";
                 $mensagem .=" <a href='".base_url()."cadastros/pacientes/confirmarestagio/$item'>Clique aqui para confirmar</a>";
+                $mensagem .="<br><br> <a href='".base_url()."cadastros/pacientes/criarloginesenha/$item'>Clique aqui para Criar seu Usuario e Senha</a>";
 
                 $this->load->library('email');
 
@@ -447,6 +448,22 @@ class pacientes extends BaseController {
         $res = $this->email->send();  
          
         redirect(base_url() . "seguranca/operador/pesquisarrecepcao");
+    }
+
+    function criarloginesenha($paciente_id){
+        $data['paciente_id'] = $paciente_id;
+        $this->loadView('cadastros/criarloginesenhas-ficha', $data);
+    }
+
+    function salvarlogin(){
+        $this->paciente->salvarlogin();
+
+        echo '.';
+        echo '<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>';
+        echo '<link href="'.base_url().'bootstrap/vendor/alert/dist/sweetalert.css" rel="stylesheet" type="text/css" />';
+        echo '<script src="'.base_url().'bootstrap/vendor/alert/dist/sweetalert.min.js" type="text/javascript"></script>';
+        
+        echo '<script type="text/javascript">swal("Sucesso!", "Login e Senha foram alterados com sucesso!", "success")</script>';
     }
 
     function cadastrodevagas($vagas_id){
@@ -2388,7 +2405,7 @@ function carregarpacientecenso($prontuario = null, $nome = null, $procedimento =
         
         $this->load->plugin('mpdf');
         $this->load->helper('directory'); 
-           
+        
         $img = "<img width='280px' height='50px'  src='".base_url()."img/cabecalhotermo.png'>";
           
        

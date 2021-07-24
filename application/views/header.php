@@ -1,8 +1,8 @@
 <?
 //Da erro no home
-if ($this->session->userdata('autenticado') != true) {
-    redirect(base_url() . "login/index/login004", "refresh");
-}
+//if ($this->session->userdata('autenticado') != true) {
+//    redirect(base_url() . "login/index/login004", "refresh");
+//}
 $perfil_id = $this->session->userdata('perfil_id');
 $operador_id = $this->session->userdata('operador_id');
 
@@ -247,10 +247,11 @@ function debug($object) {
                 </div>
             </div>
         </div>
-
+        <?if($this->session->userdata('operador_id') > 0){?>
         <ul class="navbar-nav mr-auto">
             <!-- MENUS START -->
             <li class="dropdown">
+                
                 <a class="dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" >
                     <i class="fa fa-address-book-o fa-fw"></i>Cadastro
                 </a>
@@ -700,6 +701,7 @@ function debug($object) {
             </li>
         </ul>
     </div>
+    <?}?>
 </nav>
 </body>
 

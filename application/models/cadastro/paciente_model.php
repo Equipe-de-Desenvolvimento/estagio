@@ -3797,9 +3797,9 @@ class paciente_model extends BaseModel {
             $this->db->set('email_financeiro', $_POST['email_financeiro']); 
         }
         
-        if($_POST['observacao_convenio'] != ''){
-            $this->db->set('observacao_convenio', $_POST['observacao_convenio']);
-        }
+        // if($_POST['observacao_convenio'] != ''){
+        //     $this->db->set('observacao_convenio', $_POST['observacao_convenio']);
+        // }
         
         if($_POST['observacao_financeiro'] != ''){
             $this->db->set('observacao_financeiro', $_POST['observacao_financeiro']);
@@ -4313,11 +4313,13 @@ class paciente_model extends BaseModel {
         $this->db->where('p.paciente_id is not null');
         $this->db->groupby('i.instituicao_id,p.paciente_id');
         return $this->db->get()->result();   
-        
-        
-        
-        
-        
+    }
+
+    function salvarlogin(){
+        $this->db->set('usuario_app', $_POST['usuario']);
+        $this->db->set('senha_app', md5($_POST['senha']));
+        $this->db->where('paciente_id', $_POST['paciente_id']);
+        $this->db->update('tb_paciente');
     }
 }
 
