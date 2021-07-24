@@ -203,7 +203,7 @@ $valores_recepcao = @$empresapermissoes[0]->valores_recepcao;
                                                            <br><br> 
                                                         <?php }?>
 
-                                                        <?php if ($item->status_estagio != "INCOMPLETO" && $item->status_estagio != "ADEQUADO") { ?>
+                                                        <?php if ($item->status_estagio != "INCOMPLETO" && $item->status_estagio != "ADEQUADO" && $perfil_id == "1") { ?>
                                                             <a style="width:120px;" class="btn btn-outline-default btn-round btn-sm"   onclick="javascript:window.open('<?= base_url() ?>cadastros/pacientes/adequadostatus/<?= $item->paciente_id ?>', '_blank', 'toolbar=no,Location=no,menubar=no, width=800,height=600');"  href="#!">       
                                                                 <b>Adequado</b>
                                                             </a>

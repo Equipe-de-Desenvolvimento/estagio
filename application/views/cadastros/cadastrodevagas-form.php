@@ -75,7 +75,7 @@
 
         <div class="col-lg-3">
             <label for="">Curso</label>
-            <select name="curso" id="" class="form-control" required>
+            <select name="curso" id="curso" class="form-control" required>
                   <option value="">Selecione</option>
                   <?foreach($informacoes as $item){?>
                     <?if($item->tipo == 'curso'){?>
@@ -111,6 +111,12 @@
                   <?foreach($respijf as $item){?>
                         <option value="<?=$item->responsavel_ifj_id?>" <?=(@$obj[0]->responsavel_ijf == $item->responsavel_ifj_id)?'selected':''?>><?=$item->nome?></option>
                   <?}?>
+            </select>
+        </div>
+        <div class="col-lg-3">
+            <label for="">Representante da Unidade</label>
+            <select name="representante_unidade_id" id="representante_unidade_id" class="form-control" >
+                
             </select>
         </div>
     </div>
@@ -196,6 +202,9 @@
  <script  src="<?= base_url() ?>bootstrap/vendor/confirm/jquery-confirm.min.js" type="text/javascript"></script>
   
 <script>
+    
+    
+
     function ativarmascara(){ 
          $('#horario_inicial').mask("99:99");
          $('#horario_final').mask("99:99");
@@ -234,27 +243,45 @@
     
     $(function () {
         if($('#convenio_id').val != ''){
+            var instituicao_id = '<?=@$obj[0]->institu_id?>';
             $.getJSON('<?= base_url() ?>autocomplete/listarinstituicaoconvenio', {convenio_id: $('#convenio_id').val()}, function (j) {
-                      options = '<option value=""></option>';
-
+                      options = '<option value=""></option>'; 
                       instituicao_id = '<?=@$obj[0]->institu_id?>';
                       for (var c = 0; c < j.length; c++) {
                           if(instituicao_id == j[c].instituicao_id){
                             options += '<option value="' + j[c].instituicao_id + '" selected>' + j[c].nome_fantasia +'</option>';
                           }else{
                             options += '<option value="' + j[c].instituicao_id + '">' + j[c].nome_fantasia +'</option>';
-                          }
-                          
+                          } 
                       }
                       $('#instituicao_id option').remove();
                       $('#instituicao_id').append(options);
                       $('.carregando').hide();
-                  });
+            });
+            
+              if($('#curso').val() != "" &&  instituicao_id != ""){ 
+                    $.getJSON('<?= base_url() ?>autocomplete/listarrepresentanteunidade', {curso_id: $('#curso').val(),instituicao_id:instituicao_id}, function (j) {
+                        var options = '<option value="">Selecione</option>'; 
+                        for (var c = 0; c < j.length; c++) {
+                            var representante_unidade_id = '<?=@$obj[0]->representante_unidade_id?>';  
+                            if(representante_unidade_id == j[c].representante_unidade_id){
+                               options += '<option value="' + j[c].representante_unidade_id + '" selected>' + j[c].nome +'</option>';
+                            }else{
+                               options += '<option value="' + j[c].representante_unidade_id + '">' + j[c].nome +'</option>';
+                            }
+                        }
+                        $('#representante_unidade_id option').remove();
+                        $('#representante_unidade_id').append(options);
+                        $('.carregando').hide();
+                    });
+             }
+             
+             
         }else{
             $('#instituicao_id').html('<option value="">Selecione um Convenio</option>');
         }
 
-
+ 
         if($('#convenio_id').val != ''){
             $.getJSON('<?= base_url() ?>autocomplete/valorestagioporconvenio', {convenio_id: $('#convenio_id').val()}, function (j) {
                     $('#valorconvenio').val(j[0].valor_por_estagio);
@@ -262,6 +289,9 @@
         }else{
             $('#valorconvenio').val(''); 
         }
+        
+        
+        
     });
 
       $(function () {
@@ -362,6 +392,7 @@ toolbar_items_size: 'small',
 
 
 document.addEventListener('DOMContentLoaded', function() {
+
   var calendarEl = document.getElementById('calendar');
 
   var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -689,5 +720,45 @@ document.addEventListener('DOMContentLoaded', function() {
   calendar.render();
 });
 
+ 
+ $(function () {
+          $('#curso').change(function () { 
+            if ($(this).val()) {
+                $('.carregando').show();                                                  
+                $.getJSON('<?= base_url() ?>autocomplete/listarrepresentanteunidade', {curso_id: $('#curso').val(),instituicao_id:$("#instituicao_id").val()}, function (j) {
+                    var options = '<option value="">Selecione</option>';
+
+                    for (var c = 0; c < j.length; c++) {
+                        options += '<option value="' + j[c].representante_unidade_id + '">' + j[c].nome +'</option>';
+                    }
+                    $('#representante_unidade option').remove();
+                    $('#representante_unidade').append(options);
+                    $('.carregando').hide();
+                });
+
+            } else {
+                $('#representante_unidade').html('<option value="">Selecione</option>');
+            }  
+ });
+});
+ $(function () {
+          $('#instituicao_id').change(function () { 
+            if ($(this).val()) {
+                $('.carregando').show();                                                  
+                $.getJSON('<?= base_url() ?>autocomplete/listarrepresentanteunidade', {curso_id: $('#curso').val(),instituicao_id:$("#instituicao_id").val()}, function (j) {
+                    var options = '<option value="">Selecione</option>'; 
+                    for (var c = 0; c < j.length; c++) {
+                        options += '<option value="' + j[c].representante_unidade_id + '">' + j[c].nome +'</option>';
+                    }
+                    $('#representante_unidade option').remove();
+                    $('#representante_unidade').append(options);
+                    $('.carregando').hide();
+                });
+
+            } else {
+                $('#representante_unidade').html('<option value="">Selecione</option>');
+            }  
+ });
+});
 
 </script>

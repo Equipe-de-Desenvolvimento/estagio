@@ -105,7 +105,7 @@
             </tr>
             <tr>
                 <td class="tamanhopadrao"></td>
-                <td class="tamanhopadrao"></td>
+                <td class="tamanhopadrao"><?= $instituicao[0]->representante_unidade; ?></td>
                 <td class="tamanhopadrao"><?= $instituicao[0]->curso; ?></td>
                 <td class="tamanhopadrao"><?= $instituicao[0]->matricula; ?></td>
             </tr> 
@@ -116,7 +116,7 @@
             </tr>
             <tr>
                 <td class="tamanhopadrao"><?= $instituicao[0]->cargo; ?></td>
-                <td></td> 
+                <td class="tamanhopadrao"><?= $instituicao[0]->representante_unidade_cargo; ?></td> 
             </tr>
             <tr class="fundo2 tamanho1">
                 <td id="negrito" class="tamanhopadrao">Telefone  institucional relativo ao estágio</td>

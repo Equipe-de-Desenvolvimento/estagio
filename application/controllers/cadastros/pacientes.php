@@ -79,23 +79,23 @@ class pacientes extends BaseController {
 
             // $config['upload_path'] = "/home/vivi/projetos/clinica/upload/consulta/" . $paciente_id . "/";
             $config['upload_path'] = "./upload/arquivoestagio/" . $paciente_id . "/" . $tipoarquivo;
-            $config['allowed_types'] = 'gif|jpg|BMP|bmp|png|jpeg|pdf|doc|docx|xls|xlsx|ppt|zip|rar|xml|txt';
+            $config['allowed_types'] = 'gif|jpg|BMP|bmp|png|jpeg|pdf';
             $config['max_size'] = '0';
             $config['overwrite'] = FALSE;
             $config['encrypt_name'] = FALSE;
             $this->load->library('upload', $config);
             if (!$this->upload->do_upload()) {
                 $error = array('error' => $this->upload->display_errors());
+                $erro_detectado = $error['error'] ;
                 if ($error['error'] == '<p>The uploaded file exceeds the maximum allowed size in your PHP configuration file.</pre>') {
                     @$erro_detectado = 'O Arquivo enviado excede o tamanho máximo permitido.';
                 }
-                $data['mensagem'] = 'Erro, ' . $erro_detectado;
+                $data['mensagem'] = 'Erro, ' . str_replace(Array("<p>","</p>"), "", $erro_detectado);
+                 
             } else {
                 $error = null;
                 $data = array('upload_data' => $this->upload->data());
-                $data['mensagem'] = 'Sucesso ao enviar Arquivo.';
-
-
+                $data['mensagem'] = 'Sucesso ao enviar Arquivo.'; 
                 $this->load->helper('directory');
                 $documentos = $this->operador_m->listardocumentosprofissional();
                 $i = 0;
@@ -112,13 +112,15 @@ class pacientes extends BaseController {
                     $this->paciente->mudarstatusestagio($paciente_id, 'COMPLETO');
                 }
             }
-        }
-
-        $this->session->set_flashdata('message', $data['mensagem']);
-
-//        var_dump($error); die;
-
-        redirect(base_url() . "cadastros/pacientes/anexararquivo/$paciente_id");
+        }  
+        $base_url = base_url() . "cadastros/pacientes/anexararquivo/$paciente_id";
+        echo "<html>
+            <meta charset='UTF-8'>
+            <script type='text/javascript'>
+                alert('".$data['mensagem']."');
+                window.location.href = '{$base_url}'; 
+            </script>
+            </html>"; 
     }
 
     function excluirdocumentacao($paciente_id, $documentacao_profissional_id, $arquivo) {
@@ -474,9 +476,7 @@ class pacientes extends BaseController {
         $data['informacoes'] = $this->paciente->listarinformacaovaga()->get()->result();
         $data['resporigem'] = $this->paciente->listarrespnorigem();
         $data['respijf'] = $this->paciente->listarrespnijf();
-        // echo '<pre>';
-        // print_r($data['obj']);
-        // die;
+          
         $this->loadView('cadastros/cadastrodevagas-form', $data);
     }
 
@@ -2365,7 +2365,8 @@ function carregarpacientecenso($prontuario = null, $nome = null, $procedimento =
             </table><br>";      
         $rodapepdf = ""; 
                             
-        $data['instituicao'] = $this->paciente->listarinstituicaopaciente($paciente_id); 
+        $data['instituicao'] = $this->paciente->listarinstituicaopaciente($paciente_id);
+          
         $data['cargahoraria'] = $this->paciente->listarhorarioscalendario($data['instituicao'][0]->vaga_id);     
          $empresa_id = $this->session->userdata('empresa_id');
          
@@ -2512,7 +2513,30 @@ function carregarpacientecenso($prontuario = null, $nome = null, $procedimento =
         pdf($texto, $nomepdf, $cabecalhopdf, $rodapepdf);   
   
     }
+     
+    function representanteunidade($args = array()){
+         $this->loadView('cadastros/representanteunidade-lista', $args);
+    }
     
+    function cadastrorepresentanteunidade($representante_unidade_id){
+        $data['representante_unidade_id'] = $representante_unidade_id;
+        $data['obj'] = $this->paciente->cadastrorepresentanteunidade($representante_unidade_id);
+        $data['informacoes'] = $this->paciente->listarinformacaovaga()->get()->result();
+        $data['instituicao'] = $this->paciente->listarinstituicaoorigem();
+       
+        $this->loadView('cadastros/representanteunidade-form', $data);
+    }
+    
+    function gravarrepresentanteunidade(){
+        $this->paciente->gravarrepresentanteunidade();
+        redirect(base_url() . "cadastros/pacientes/representanteunidade");
+    }
+    
+    
+    function excluirrepresentanteunidade($representante_unidade_id){
+        $this->paciente->excluirrepresentanteunidade($representante_unidade_id);
+        redirect(base_url() . "cadastros/pacientes/representanteunidade");
+    }
    
     
     

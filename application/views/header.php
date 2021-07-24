@@ -267,6 +267,9 @@ function debug($object) {
                         <li>
                             <a class="dropdown-item" href="<?= base_url() ?>ambulatorio/modelolaudo/pesquisar">Instituição de Ensino</a>
                         </li> 
+                        <li>
+                            <a class="dropdown-item" href="<?= base_url() ?>cadastros/pacientes/representanteunidade">Representante da Unidade</a>
+                        </li> 
                         <?}?>
                         <li>
                             <a class="dropdown-item" href="<?= base_url() ?>cadastros/pacientes/solicitarvagas">Solicitação de Vaga</a>

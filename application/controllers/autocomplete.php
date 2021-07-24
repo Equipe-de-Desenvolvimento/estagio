@@ -5875,6 +5875,13 @@ class Autocomplete extends Controller {
         echo json_encode($result);
     }
                     
+      function listarrepresentanteunidade(){
+        $result = Array();
+        if (isset($_GET['instituicao_id']) && isset($_GET['curso_id']) && $_GET['instituicao_id'] > 0 && $_GET['curso_id'] > 0) {
+            $result = $this->paciente_m->buscapresentanteunidade($_GET['instituicao_id'],$_GET['curso_id']);
+        }  
+        echo json_encode($result);
+    }
     
 }
 

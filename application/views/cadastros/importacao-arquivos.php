@@ -8,7 +8,7 @@ $convenios = $this->convenio->listarconvenionaodinheiro();
             <?// form_open_multipart(base_url() . 'seguranca/operador/importararquivooperador'); ?>
             <form method="POST" action="<?=base_url() . 'cadastros/pacientes/importararquivooperador'?>" enctype="multipart/form-data">
             <table>                
-                <label>Informe o arquivo para importa&ccedil;&atilde;o</label><br>
+                <label>Informe o arquivo para importa&ccedil;&atilde;o (gif, jpg, bmp, png, jpeg, pdf)</label><br>
                 <input type="file" multiple="" name="arquivos[]"/>
                 <select name="tipoarquivo" required="">
                     <option value="">Selecione</option>

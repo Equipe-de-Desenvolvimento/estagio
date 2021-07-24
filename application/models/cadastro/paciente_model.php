@@ -1129,6 +1129,14 @@ class paciente_model extends BaseModel {
         }else{
            $this->db->set('instituicao_id', null); 
         }
+        
+        if(isset($_POST['representante_unidade_id']) && $_POST['representante_unidade_id'] != ""){
+           $this->db->set('representante_unidade_id', $_POST['representante_unidade_id']);
+        }else{
+           $this->db->set('representante_unidade_id', null); 
+        }
+        
+        
         $this->db->set('formacao', $_POST['formacao']);
         $this->db->set('curso', $_POST['curso']);
         $this->db->set('disciplina', $_POST['disciplina']);
@@ -4242,7 +4250,15 @@ class paciente_model extends BaseModel {
             (select ve.objetivo from ponto.tb_vagas_empresas ve 
             LEFT JOIN ponto.tb_responsavel_ifj ri ON ve.responsavel_ijf = ri.responsavel_ifj_id
             where i.instituicao_id = ve.instituicao_id and ve.ativo = 't' limit 1
-            ) as  objetivo");
+            ) as  objetivo,
+            (select ru.nome from ponto.tb_vagas_empresas ve 
+            LEFT JOIN ponto.tb_representante_unidade ru ON ve.representante_unidade_id = ru.representante_unidade_id
+            where i.instituicao_id = ve.instituicao_id and ve.ativo = 't' limit 1
+            ) as  representante_unidade,
+            (select ru.cargo from ponto.tb_vagas_empresas ve 
+            LEFT JOIN ponto.tb_representante_unidade ru ON ve.representante_unidade_id = ru.representante_unidade_id
+            where i.instituicao_id = ve.instituicao_id and ve.ativo = 't' limit 1
+            ) as  representante_unidade_cargo");
         $this->db->from('tb_aluno_estagio ae');
         $this->db->join('tb_paciente p','p.paciente_id = ae.aluno_id','left');
         $this->db->join('tb_instituicao i', 'i.instituicao_id = ae.instituicao_id', 'left');  
@@ -4321,6 +4337,82 @@ class paciente_model extends BaseModel {
         $this->db->where('paciente_id', $_POST['paciente_id']);
         $this->db->update('tb_paciente');
     }
+    
+     function gravarrepresentanteunidade(){
+        $horario = date("Y-m-d H:i:s");
+        $operador_id = $this->session->userdata('operador_id');
+
+        $this->db->set('nome', $_POST['nome']);
+        $this->db->set('email', $_POST['email']);
+        $this->db->set('cargo', $_POST['cargo']);
+
+        if($_POST['instituicao_id']){
+             $this->db->set('instituicao_id', $_POST['instituicao_id']);
+        }else{
+             $this->db->set('instituicao_id', null);
+        }
+        if($_POST['curso']){
+           $this->db->set('informacaovaga_id', $_POST['curso']);   
+        }else{
+            $this->db->set('informacaovaga_id', null);    
+        } 
+        
+        if($_POST['representante_unidade_id'] > 0){
+            $this->db->set('data_atualizacao', $horario);
+            $this->db->set('operador_atualizacao', $operador_id);
+            $this->db->where('representante_unidade_id', $_POST['representante_unidade_id']);
+            $this->db->update('tb_representante_unidade');
+        }else{
+            $this->db->set('data_cadastro', $horario);
+            $this->db->set('operador_cadastro', $operador_id);
+            $this->db->insert('tb_representante_unidade');
+        }
+    }
+    
+      function listarrepresentanteunidade($args = array()){
+        $this->db->select('ro.representante_unidade_id, ro.nome, ro.email, ro.cargo,ii.nome as intituicao,iv.descricao as origem');
+        $this->db->from('tb_representante_unidade ro');
+        $this->db->join('tb_informacaovaga iv', 'iv.informacaovaga_id = ro.informacaovaga_id', 'left');
+        $this->db->join('tb_instituicao ii', 'ii.instituicao_id = ro.instituicao_id', 'left');
+        $this->db->where('ro.ativo', 't');
+
+        if ($args) {
+            if(isset($args['nome'])){
+                $this->db->where('ro.nome ilike', '%' . $args ['nome'] . '%');
+            }
+        }
+
+        return $this->db;
+    }
+    
+    function cadastrorepresentanteunidade($representante_unidade_id){
+        $this->db->select('representante_unidade_id, nome, email, cargo,instituicao_id,informacaovaga_id');
+        $this->db->from('tb_representante_unidade');
+        $this->db->where('representante_unidade_id', $representante_unidade_id); 
+        return $this->db->get()->result();
+    }
+    
+    function excluirrepresentanteunidade($representante_unidade_id){
+        $horario = date("Y-m-d H:i:s");
+        $operador_id = $this->session->userdata('operador_id'); 
+        $this->db->set('ativo', 'f');
+        $this->db->set('data_atualizacao', $horario);
+        $this->db->set('operador_atualizacao', $operador_id);
+        $this->db->where('representante_unidade_id', $representante_unidade_id);
+        $this->db->update('tb_representante_unidade');
+    }
+    
+    function buscapresentanteunidade($instituicao_id,$curso_id){
+        $this->db->select('ro.representante_unidade_id, ro.nome');
+        $this->db->from('tb_representante_unidade ro');
+        $this->db->join('tb_informacaovaga iv', 'iv.informacaovaga_id = ro.informacaovaga_id', 'left');
+        $this->db->join('tb_instituicao ii', 'ii.instituicao_id = ro.instituicao_id', 'left');
+        $this->db->where('ro.ativo', 't'); 
+        $this->db->where('ro.instituicao_id', $instituicao_id);
+        $this->db->where('ro.informacaovaga_id', $curso_id);  
+        return $this->db->get()->result(); 
+    }
+
 }
 
 ?>
