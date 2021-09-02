@@ -38,7 +38,7 @@
                 <br>
                 
 
-                <form action="<?=base_url()?>cadastros/pacientes/gravaralunosvagas" method="post">
+                <form action="<?=base_url()?>cadastros/pacientes/gravaralunosvagas" method="post" onsubmit='disableButton()'>
                     <input type="text" value="<?= $item->qtde_vagas?>" id="limite_alunos" name="limite_alunos" hidden="">
                     <table>
                         <tr>
@@ -99,7 +99,13 @@
 <script type="text/javascript" src="<?= base_url() ?>js/chosen/docsupport/init.js"></script>
 
 <script>
-    
+     function disableButton() {
+        var btn = document.getElementById('Adicionar');
+        btn.disabled = true; 
+        document.getElementById("Adicionar").value = 'Por favor Aguarde,Enviando Termo para Aluno...';
+    }
+
+
     $(document).ready(function(){
         $("#aluno_id").change(function(){ 
           var total = $("#aluno_id :selected").length; 

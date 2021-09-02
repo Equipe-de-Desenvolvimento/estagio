@@ -270,6 +270,7 @@
                                options += '<option value="' + j[c].representante_unidade_id + '">' + j[c].nome +'</option>';
                             }
                         }
+                        
                         $('#representante_unidade_id option').remove();
                         $('#representante_unidade_id').append(options);
                         $('.carregando').hide();
@@ -731,13 +732,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     for (var c = 0; c < j.length; c++) {
                         options += '<option value="' + j[c].representante_unidade_id + '">' + j[c].nome +'</option>';
                     }
-                    $('#representante_unidade option').remove();
-                    $('#representante_unidade').append(options);
+                    $('#representante_unidade_id option').remove();
+                    $('#representante_unidade_id').append(options);
                     $('.carregando').hide();
                 });
 
             } else {
-                $('#representante_unidade').html('<option value="">Selecione</option>');
+                $('#representante_unidade_id').html('<option value="">Selecione</option>');
             }  
  });
 });
